@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB5sIk3WGEdJtNGcJ5DnBXgXYlPzAmsr0k",
@@ -6,8 +7,11 @@ const firebaseConfig = {
   projectId: "kompad-a9b60",
   storageBucket: "kompad-a9b60.appspot.com",
   messagingSenderId: "431772304435",
-  appId: "1:431772304435:web:aafe5ce57f7954e4d88f46"
+  appId: "1:431772304435:web:aafe5ce57f7954e4d88f46",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+export const provider = new GoogleAuthProvider();
+export const auth = getAuth();
