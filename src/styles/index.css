@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* 
+.titlebar {
+  @apply flex justify-between p-1
+} */
+
+body {
+  @apply border border-gray-400 h-screen;
+}
+
+@import url("./scrollbar.css");
+@import url("./prosemirror.css");
+@import url("./tiptap.css");
+@import url("./button.css");

@@ -1,0 +1,9 @@
+.tiptap-main-content {
+  @apply p-4;
+  height: calc(100vh - 25px);
+  overflow: auto;
+}
+
+.tiptab-format-actions {
+  @apply flex flex-nowrap gap-1 px-4 py-2 overflow-x-auto justify-center;
+}

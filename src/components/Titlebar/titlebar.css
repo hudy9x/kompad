@@ -1,0 +1,6 @@
+.titlebar {
+  /* @apply flex justify-between p-1 */
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
