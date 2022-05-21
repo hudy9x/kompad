@@ -30,7 +30,7 @@ function TitlebarAction() {
   };
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex items-center">
       <span onClick={onMinimize} className="ttb-icon ttb-min">
         <VscChromeMinimize />
       </span>

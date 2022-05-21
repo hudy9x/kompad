@@ -1,6 +1,11 @@
 .titlebar {
-  /* @apply flex justify-between p-1 */
-  display: flex;
-  justify-content: space-between;
-  padding: 0.25rem;
+  @apply hover:bg-gray-50 cursor-pointer flex justify-between;
+}
+
+.ttb-icon {
+  @apply text-base hover:bg-gray-100 cursor-pointer px-1.5 py-0.5;
+}
+
+.ttb-icon.ttb-close {
+  @apply text-red-500;
 }
