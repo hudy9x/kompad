@@ -7,7 +7,7 @@ function Titlebar({ children }: { children?: JSX.Element | JSX.Element[] }) {
     <div data-tauri-drag-region className="titlebar">
       <div className="flex gap-4">
         <span className="ttb-icon">
-          <GoThreeBars />
+          {/* <GoThreeBars /> */}
           {/* <img src={logosvg} width={18} /> */}
         </span>
         {children ? children : null}

@@ -10,7 +10,29 @@ body {
   @apply border border-gray-400 h-screen;
 }
 
+.App {
+  @apply flex;
+}
+
+.sidebar {
+  @apply w-72 border-r;
+}
+
+.App main {
+  @apply flex-grow;
+}
+
+.pad-list {
+  height: calc(100vh - 52px - 54px - 53px - 11px);
+  @apply overflow-y-auto;
+}
+
+.layout-clear .titlebar {
+  @apply fixed w-full hover:bg-transparent
+}
+
 @import url("./scrollbar.css");
 @import url("./prosemirror.css");
 @import url("./tiptap.css");
 @import url("./button.css");
+@import url("./sign.css");

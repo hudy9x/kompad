@@ -1,0 +1,27 @@
+.sign-container {
+  @apply bg-gray-100 flex items-center justify-center;
+  height: calc(100vh - 2px);
+}
+
+.sign {
+  @apply p-8 bg-white shadow-xl w-96;
+  @apply rounded-lg;
+}
+
+.sign-up{
+  /* width: 450px; */
+  /* @apply w-96 */
+}
+.sign-title {
+  @apply text-2xl font-bold;
+}
+
+.sign-desc {
+  @apply text-gray-400 text-sm mt-3;
+}
+
+.input-group {
+  @apply mt-4;
+}
+
+
