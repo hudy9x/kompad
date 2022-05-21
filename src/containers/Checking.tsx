@@ -12,7 +12,7 @@ export default function Checking() {
   console.log(checking, user)
 
   if (user) {
-    return <Navigate to="/pad/1" />;
+    return <Navigate to="/app/pad/1" />;
   }
 
   return <Navigate to="/signin" />;

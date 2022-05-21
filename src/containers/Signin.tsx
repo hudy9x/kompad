@@ -14,7 +14,7 @@ function Signin() {
     onSubmit: ({ email, password }) => {
       signIn(email, password).then((user) => {
         if (user) {
-          navigate("/pad/1");
+          navigate("/app/pad/1");
         } else {
           alert("username or password invalid");
         }

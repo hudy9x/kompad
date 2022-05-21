@@ -27,6 +27,10 @@ body {
   @apply overflow-y-auto;
 }
 
+.layout-clear .titlebar {
+  @apply fixed w-full hover:bg-transparent
+}
+
 @import url("./scrollbar.css");
 @import url("./prosemirror.css");
 @import url("./tiptap.css");
