@@ -8,10 +8,7 @@
   @apply rounded-lg;
 }
 
-.sign-up{
-  /* width: 450px; */
-  /* @apply w-96 */
-}
+
 .sign-title {
   @apply text-2xl font-bold;
 }
@@ -24,4 +21,7 @@
   @apply mt-4;
 }
 
-
+.selected-avatar {
+  /* @apply outline-indigo-500; */
+  outline-color: #6366f1 !important;
+}
