@@ -1,0 +1,81 @@
+.message-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  pointer-events: none;
+  color: rgb(123, 123, 123);
+  font-size: 0.85rem;
+}
+
+.message-container {
+  max-height: 100px;
+  opacity: 1;
+  margin: auto;
+  padding-bottom: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.message-container.hide {
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+  transform: translateY(-100px);
+}
+
+.message {
+  max-width: 300px;
+  background: white;
+  border-radius: 0.25rem;
+  padding: 0.5rem 0.825rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation-name: message-show;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.message p {
+  margin: 0;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.message svg {
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+}
+.message.success svg {
+  color: rgb(38, 216, 38);
+}
+.message.error svg {
+  color: rgb(240, 87, 87);
+}
+.message.info svg {
+  color: rgb(20, 121, 238);
+}
+.message.warn svg {
+  color: rgb(255, 204, 37);
+}
+
+@keyframes message-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
