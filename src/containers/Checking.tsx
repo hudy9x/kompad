@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../providers/Authenticator";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Checking() {
   const { checking, user } = useAuth();
@@ -9,7 +9,7 @@ export default function Checking() {
     return null;
   }
 
-  console.log(checking, user)
+  console.log(checking, user);
 
   if (user) {
     return <Navigate to="/app/pad/1" />;

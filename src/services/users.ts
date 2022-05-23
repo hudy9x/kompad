@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../libs/firebase";
 
 export enum EUserStatus {
@@ -16,8 +16,6 @@ export interface IUser {
   createdAt?: Timestamp;
   status?: EUserStatus;
 }
-
-const collectionName = collection(db, "users");
 
 export const addUser = async (user: IUser) => {
   const { uid, address, email, dateOfBirth, fullname, photoURL } = user;
