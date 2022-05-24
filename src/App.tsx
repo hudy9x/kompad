@@ -5,6 +5,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Checking from "./containers/Checking";
 import NotFound from "./containers/NotFound";
 import Pad from "./containers/Pad";
+import PadContent from "./containers/Pads/PadContent";
+import PadEmpty from "./containers/Pads/PadEmpty";
 import Signin from "./containers/Signin";
 import Signout from "./containers/Signout";
 import Signup from "./containers/Signup";
@@ -23,13 +25,16 @@ function App() {
           </Route>
           <Route path="/app" element={<Layout />}>
             <Route
-              path="pad/:id"
+              path="pad"
               element={
                 <PrivateRoute>
                   <Pad />
                 </PrivateRoute>
               }
-            />
+            >
+              <Route index element={<PadEmpty />}></Route>
+              <Route path=":id" element={<PadContent />}></Route>
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
