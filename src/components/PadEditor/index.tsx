@@ -5,7 +5,7 @@ import Typography from "@tiptap/extension-typography";
 
 import MenuBar from "./Menubar";
 
-export default () => {
+export default function PadEditor () {
   const editor = useEditor({
     extensions: [StarterKit, Highlight, Typography],
     editorProps: {
@@ -51,4 +51,4 @@ display: none;
       <MenuBar editor={editor} />
     </div>
   );
-};
+}

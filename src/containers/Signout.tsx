@@ -14,7 +14,7 @@ function Signout() {
         navigate("/signin");
       }
     );
-  }, []);
+  }, [navigate]);
 
   return <></>;
 }

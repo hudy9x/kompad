@@ -1,9 +1,4 @@
-import {
-  HiOutlineLogout,
-  HiOutlinePlus,
-  HiOutlineSearch,
-} from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { HiOutlinePlus, HiOutlineSearch } from "react-icons/hi";
 import UserSection from "./UserSection";
 
 export default function Sidebar() {
@@ -38,7 +33,7 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <ul role="list" className="pad-list divide-y divide-gray-200">
+      <ul className="pad-list divide-y divide-gray-200">
         {messages.map((message) => (
           <li
             key={message.id}
@@ -46,7 +41,7 @@ export default function Sidebar() {
           >
             <div className="flex justify-between space-x-3">
               <div className="min-w-0 flex-1">
-                <a href="#" className="block focus:outline-none">
+                <span className="block focus:outline-none">
                   <span className="absolute inset-0" aria-hidden="true" />
                   <p className="text-sm font-medium text-gray-900 truncate">
                     {message.sender}
@@ -54,7 +49,7 @@ export default function Sidebar() {
                   <p className="text-sm text-gray-500 truncate">
                     {message.subject}
                   </p>
-                </a>
+                </span>
               </div>
               <time
                 dateTime={message.datetime}

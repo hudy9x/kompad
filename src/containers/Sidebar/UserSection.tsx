@@ -5,11 +5,9 @@ import { useCurrentUser } from "../../hooks/useCurrentUser";
 function UserSection() {
   const { info } = useCurrentUser();
 
-  console.log(info);
-
   return (
     <div className="bg-gray-50 px-4 py-3 border-y border-t-gray-200 border-b-gray-400 flex items-center justify-between">
-      <a href="#" className="flex-shrink-0 group block">
+      <div className="flex-shrink-0 group block">
         <div className="flex items-center">
           <div>
             <img
@@ -27,7 +25,7 @@ function UserSection() {
             </p>
           </div>
         </div>
-      </a>
+      </div>
 
       <Link to={"/signout"}>
         <HiOutlineLogout

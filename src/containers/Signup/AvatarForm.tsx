@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { HiOutlineCheck } from "react-icons/hi";
 import Modal from "../../components/Modal";
 import { getAllPublicAvatars } from "../../services/files";
 
