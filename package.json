@@ -21,6 +21,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "autoprefixer": "^10.4.7",
+    "dayjs": "^1.11.2",
     "firebase": "^9.8.1",
     "formik": "^2.2.9",
     "postcss": "^8.4.14",
