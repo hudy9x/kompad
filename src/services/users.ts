@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, Timestamp } from "firebase/firestore";
 import { db } from "../libs/firebase";
 
 export enum EUserStatus {
@@ -17,8 +17,6 @@ export interface IUser {
   status?: EUserStatus;
 }
 
-const collectionName = collection(db, "users");
-
 export const addUser = async (user: IUser) => {
   const { uid, address, email, dateOfBirth, fullname, photoURL } = user;
 
@@ -33,4 +31,14 @@ export const addUser = async (user: IUser) => {
   });
 
   return 1;
+};
+
+export const getUser = async (uid: string): Promise<IUser | null> => {
+  const user = await getDoc(doc(db, "users", uid));
+
+  if (user.exists()) {
+    return user.data() as IUser;
+  } else {
+    return null;
+  }
 };

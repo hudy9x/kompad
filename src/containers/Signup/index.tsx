@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   HiOutlineMail,
   HiOutlineLockClosed,
-  HiKey,
   HiClipboardCheck,
   HiOutlineCalendar,
   HiOutlineUser,
@@ -13,7 +12,6 @@ import { signIn, signUp } from "../../services/sign";
 import AvatarForm from "./AvatarForm";
 import { addUser } from "../../services/users";
 import { toTimestame } from "../../libs/date";
-import { Timestamp } from "firebase/firestore";
 import { message } from "../../components/message";
 import { useState } from "react";
 

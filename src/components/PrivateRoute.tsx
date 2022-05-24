@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../providers/Authenticator";
+import { useAuth } from "../hooks/useAuth";
 import LoadingRoute from "./LoadingRoute";
 
 interface IPrivateRouteProps {

@@ -1,5 +1,5 @@
-import { onAuthStateChanged, User } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 import { auth } from "../libs/firebase";
 
 interface IAuthenUser {
@@ -18,8 +18,6 @@ export const AuthenContext = createContext<IAuthenContext>({
   checking: true,
   user: null,
 });
-
-// AuthenContext.Provider;
 
 interface AuthenProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -59,9 +57,4 @@ export const AuthenProvider = ({ children }: AuthenProviderProps) => {
   return (
     <AuthenContext.Provider value={authInfo}>{children}</AuthenContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const authenUser = useContext(AuthenContext);
-  return authenUser;
 };
