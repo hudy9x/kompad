@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { getPadsByUid, IPad } from "../../services/pads";
 
 function PadList() {
+  const { user } = useAuth();
+  const { id } = useParams();
   const messages = Array(12)
     .fill(1)
     .map((value, index) => ({
@@ -12,48 +18,61 @@ function PadList() {
         "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum",
     }));
 
+  const [pads, setPads] = useState<IPad[]>([]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      getPadsByUid(user.uid).then((pads) => {
+        if (!pads) {
+          return;
+        }
+
+        setPads(pads);
+      });
+    }
+  }, [user?.uid]);
+
   return (
     <ul className="pad-list divide-y divide-gray-200">
-      {messages.map((message) => (
+      {pads.map((pad) => (
         <li
-          key={message.id}
-          className="relative  bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+          key={pad.id}
+          className={`${
+            id === pad.id ? "bg-gray-100" : ""
+          } relative cursor-pointer bg-white py-5 px-4 hover:bg-gray-50`}
         >
-          <div className="flex justify-between space-x-3">
-            <div className="min-w-0 flex-1">
-              <span className="block focus:outline-none">
-                <span className="absolute inset-0" aria-hidden="true" />
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {message.sender}
-                </p>
-                <p className="text-sm text-gray-500 truncate">
-                  {message.subject}
-                </p>
+          <Link to={`/app/pad/${pad.id}`}>
+            <div className="flex justify-between space-x-3">
+              <div className="min-w-0 flex-1">
+                <span className="block focus:outline-none">
+                  <span className="absolute inset-0" aria-hidden="true" />
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {pad.title} - {pad.id}
+                  </p>
+                  <p className="text-sm text-gray-500 truncate">
+                    {/* {pad.content} */}
+                  </p>
+                </span>
+              </div>
+              <time
+                // dateTime={pad.datetime}
+                className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
+              >
+                {/* {message.time} */}
+              </time>
+            </div>
+            <div className="flex gap-1 mt-3">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                Badge
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                Badge
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                Badge
               </span>
             </div>
-            <time
-              dateTime={message.datetime}
-              className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
-            >
-              {message.time}
-            </time>
-          </div>
-          <div className="flex gap-1 mt-3">
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-              Badge
-            </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-              Badge
-            </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-              Badge
-            </span>
-          </div>
-          {/* <div className="mt-1">
-              <p className="line-clamp-2 text-sm text-gray-600">
-                {message.preview}
-              </p>
-            </div> */}
+          </Link>
         </li>
       ))}
     </ul>

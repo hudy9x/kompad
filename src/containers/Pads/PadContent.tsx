@@ -8,19 +8,22 @@ function PadContent() {
   const [pad, setPad] = useState({ title: "", content: "" });
 
   useEffect(() => {
-    console.log(id);
     if (id) {
       getPadById(id).then((res) => {
         if (!res) return;
 
-        setPad({
-          title: res.title,
-          content: res.content,
-        });
+        setPad((prevPad) => ({
+          ...prevPad,
+          ...{
+            title: res.title,
+            content: res.content,
+          },
+        }));
       });
     }
   }, [id]);
 
+  console.log("new Id", id);
   return (
     <>
       {pad.content && id ? <PadEditor id={id} content={pad.content} /> : null}

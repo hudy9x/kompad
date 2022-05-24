@@ -5,14 +5,13 @@ import {
   getDoc,
   getDocs,
   query,
-  setDoc,
   Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../libs/firebase";
 
-interface IPad {
+export interface IPad {
   id?: string;
   uid: string;
   title: string;
@@ -22,11 +21,33 @@ interface IPad {
   updatedAt: Timestamp;
 }
 
-export const getPadsByUid = async (uid: string) => {
+export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
   try {
     const q = query(collection(db, "pads"), where("uid", "==", uid));
     const pads = await getDocs(q);
-  } catch (error) {}
+
+    if (pads.empty) {
+      return [];
+    }
+
+    const padList: IPad[] = [];
+    pads.forEach((pad) => {
+      const padData = pad.data() as IPad;
+      padList.push({
+        id: pad.id,
+        uid: padData.uid,
+        title: padData.title,
+        tags: padData.tags,
+        content: padData.content,
+        createdAt: padData.createdAt,
+        updatedAt: padData.updatedAt,
+      });
+    });
+
+    return padList;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const getPadById = async (id: string): Promise<IPad | null> => {
