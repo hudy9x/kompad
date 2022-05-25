@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { Timestamp } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -11,18 +10,6 @@ dayjs.extend(relativeTime);
 function PadList() {
   const { user } = useAuth();
   const { id } = useParams();
-  const messages = Array(12)
-    .fill(1)
-    .map((value, index) => ({
-      id: index + 1,
-      subject: "Velit placeat sit ducimus non sed",
-      sender: "Gloria Roberston",
-      time: "1d ago",
-      datetime: "2021-01-27T16:35",
-      preview:
-        "Doloremque dolorem maiores assumenda dolorem facilis. Velit vel in a rerum",
-    }));
-
   const [pads, setPads] = useState<IPad[]>([]);
 
   useEffect(() => {
