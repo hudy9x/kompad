@@ -40,9 +40,7 @@ function PadList() {
   return (
     <ul className="pad-list divide-y divide-gray-200">
       {pads.map((pad) => {
-        console.log(pad.updatedAt);
         const d = dayjs(pad.updatedAt.toDate());
-        console.log(d.fromNow());
         return (
           <li
             key={pad.id}
@@ -65,7 +63,7 @@ function PadList() {
                 </div>
                 <time
                   // dateTime={d.fromNow()}
-                  className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
+                  className="flex-shrink-0 whitespace-nowrap text-xs text-gray-500"
                 >
                   {d.fromNow()}
                 </time>

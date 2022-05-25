@@ -1,9 +1,22 @@
+.tiptap-container {
+  position: relative;
+}
+
 .tiptap-main-content {
-  @apply p-4;
+  @apply p-4 pb-8;
   height: calc(100vh - 25px);
   overflow: auto;
 }
 
 .tiptab-format-actions {
-  @apply flex flex-nowrap gap-1 px-4 py-2 overflow-x-auto justify-center;
+  @apply flex flex-nowrap py-2 overflow-x-auto justify-center;
+  @apply bg-gray-900 rounded-md;
+}
+
+.tiptap-action-group {
+  @apply flex justify-center px-2;
+}
+
+.character-count {
+  @apply px-2 text-center border-t border-gray-200 absolute bottom-0 right-0 text-xs bg-gray-50 w-full;
 }

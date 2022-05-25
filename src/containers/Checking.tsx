@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { getCache } from "../libs/localCache";
 
 export default function Checking() {
   const { checking, user } = useAuth();
@@ -9,10 +10,9 @@ export default function Checking() {
     return null;
   }
 
-  console.log(checking, user);
-
   if (user) {
-    return <Navigate to="/app/pad/1" />;
+    const currentPad = getCache("currentPad") || "";
+    return <Navigate to={`/app/pad/${currentPad}`} />;
   }
 
   return <Navigate to="/signin" />;

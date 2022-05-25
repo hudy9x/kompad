@@ -1,6 +1,6 @@
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../libs/firebase";
-import { getCacheArray, setCache } from "../libs/localCache";
+import { getCacheArray, setCacheJSON } from "../libs/localCache";
 
 // Create a reference under which you want to list
 const listRef = ref(storage, "avatars/public");
@@ -25,7 +25,7 @@ export const getAllPublicAvatars = () => {
 
         const urls = await Promise.all(promise);
 
-        setCache(key, urls);
+        setCacheJSON(key, urls);
         resolve(urls);
       })
       .catch((error) => {

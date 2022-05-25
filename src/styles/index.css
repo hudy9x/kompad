@@ -15,7 +15,7 @@ body {
 }
 
 .sidebar {
-  @apply w-72 border-r;
+  @apply w-64 border-r;
 }
 
 .App main {
@@ -28,7 +28,11 @@ body {
 }
 
 .layout-clear .titlebar {
-  @apply fixed w-full hover:bg-transparent
+  @apply fixed w-full hover:bg-transparent;
+}
+
+::selection {
+  @apply bg-indigo-500 text-white;
 }
 
 @import url("./scrollbar.css");

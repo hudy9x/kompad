@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PadEditor from "../../components/PadEditor";
-import { getPadById } from "../../services/pads";
+import { getPadById, saveCurrentPad } from "../../services/pads";
 
 function PadContent() {
   const { id } = useParams();
@@ -9,6 +9,7 @@ function PadContent() {
 
   useEffect(() => {
     if (id) {
+      saveCurrentPad(id);
       getPadById(id).then((res) => {
         if (!res) return;
 
@@ -23,7 +24,6 @@ function PadContent() {
     }
   }, [id]);
 
-  console.log("new Id", id);
   return (
     <>
       {pad.content && id ? <PadEditor id={id} content={pad.content} /> : null}
