@@ -4,6 +4,8 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
+  orderBy,
   query,
   Timestamp,
   updateDoc,
@@ -32,9 +34,46 @@ export const saveCurrentPad = (id: string) => {
   setLocalCache("currentPad", id);
 };
 
+export const getPadsByUidQuery = (
+  uid: string,
+  callback: (pad: IPad[]) => void
+) => {
+  const q = query(
+    collection(db, "pads"),
+    where("uid", "==", uid),
+    orderBy("updatedAt", "desc")
+  );
+
+  onSnapshot(q, (pads) => {
+    if (pads.empty) {
+      return [];
+    }
+
+    const padList: IPad[] = [];
+    pads.forEach((pad) => {
+      const padData = pad.data() as IPad;
+      padList.push({
+        id: pad.id,
+        uid: padData.uid,
+        title: padData.title,
+        tags: padData.tags,
+        content: padData.content,
+        createdAt: padData.createdAt,
+        updatedAt: padData.updatedAt,
+      });
+    });
+
+    callback(padList);
+  });
+};
+
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
   try {
-    const q = query(collection(db, "pads"), where("uid", "==", uid));
+    const q = query(
+      collection(db, "pads"),
+      where("uid", "==", uid),
+      orderBy("updatedAt", "desc")
+    );
     const pads = await getDocs(q);
 
     if (pads.empty) {
@@ -57,6 +96,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
 
     return padList;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
