@@ -1,5 +1,3 @@
-import { HiOutlinePlus } from "react-icons/hi";
-
 interface IButtonProp {
   onClick: () => void;
   children: JSX.Element | JSX.Element[];

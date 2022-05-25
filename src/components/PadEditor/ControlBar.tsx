@@ -4,9 +4,7 @@ import {
   AiOutlineCheckSquare,
   AiOutlineHighlight,
   AiOutlineItalic,
-  AiOutlineOrderedList,
   AiOutlineStrikethrough,
-  AiOutlineUnorderedList,
 } from "react-icons/ai";
 
 interface IControlBarProps {

@@ -3,14 +3,20 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useAuth } from "../../hooks/useAuth";
 import { addPad } from "../../services/pads";
+import { usePadStore } from "../../store";
 
 function PadNew() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const increaseNewPaddAdded = usePadStore(
+    (state) => state.increaseNewPaddAdded
+  );
+
   const createNewPad = async () => {
     if (!user || !user.uid) return;
     const id = await addPad(user.uid);
     navigate(`/app/pad/${id}`);
+    increaseNewPaddAdded();
   };
   return (
     <div className="px-4 pb-4 border-b border-gray-200">

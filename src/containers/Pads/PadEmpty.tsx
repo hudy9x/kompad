@@ -7,7 +7,7 @@ export default function PadEmpty() {
       style={{ height: "calc(100vh - 25px)" }}
     >
       <div className="text-center">
-        <img src={FolderPng} className="w-52 m-auto" />
+        <img alt="" src={FolderPng} className="w-52 m-auto" />
 
         <h3 className="mt-2 text-2xl font-medium text-gray-900">
           No pad selected
