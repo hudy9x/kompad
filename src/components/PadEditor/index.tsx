@@ -1,4 +1,10 @@
-import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  Editor,
+  EditorOptions,
+  EditorEvents,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
@@ -6,6 +12,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 
 import MenuBar from "./Menubar";
 import { updatePad } from "../../services/pads";
+import { useCallback, useEffect, useState } from "react";
 
 interface IPadEditorProp {
   id: string;
@@ -19,6 +26,8 @@ const PlaceholderConfig = Placeholder.configure({
 let timer = 0;
 
 export default function PadEditor({ id, content }: IPadEditorProp) {
+  const [update, setUpdate] = useState(0);
+
   const editor = useEditor({
     extensions: [StarterKit, Highlight, Typography, PlaceholderConfig],
     editorProps: {
@@ -29,6 +38,13 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
     },
     content: content,
     onUpdate: ({ editor }) => {
+      setUpdate((prevUpdate) => prevUpdate + 1);
+    },
+  });
+
+  useEffect(() => {
+    console.log(editor);
+    if (editor) {
       if (timer) {
         clearTimeout(timer);
       }
@@ -46,9 +62,15 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
         }
 
         updatePad({ id, title: newTitle, content: editor.getHTML() });
-      }, 1200) as unknown as number;
-    },
-  });
+      }, 600) as unknown as number;
+    }
+  }, [update]);
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(content);
+    }
+  }, [content]);
 
   return (
     <div className="tiptap-container">
