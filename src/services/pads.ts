@@ -10,6 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../libs/firebase";
+import { setLocalCache } from "../libs/localCache";
 
 export interface IPad {
   id?: string;
@@ -20,6 +21,16 @@ export interface IPad {
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
+
+/**
+ * Save current editting pad
+ * Next time, when you opening Kompad
+ * This value will be used for redirecting to the pad that you working on
+ * @param id
+ */
+export const saveCurrentPad = (id: string) => {
+  setLocalCache("currentPad", id);
+};
 
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
   try {

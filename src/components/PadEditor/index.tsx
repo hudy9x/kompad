@@ -1,18 +1,16 @@
-import {
-  useEditor,
-  EditorContent,
-  Editor,
-  EditorOptions,
-  EditorEvents,
-} from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
 import Placeholder from "@tiptap/extension-placeholder";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
+import ListItem from "@tiptap/extension-list-item";
+import CharacterCount from "@tiptap/extension-character-count";
 
-import MenuBar from "./Menubar";
+import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IPadEditorProp {
   id: string;
@@ -25,11 +23,39 @@ const PlaceholderConfig = Placeholder.configure({
 
 let timer = 0;
 
+const HighlightConfigure = Highlight.configure({
+  multicolor: true,
+});
+
+const TaskListConfigure = TaskList.configure({
+  HTMLAttributes: {
+    class: "task-list",
+  },
+});
+
+const limit = null;
+const CharacterCountConfigure = CharacterCount.configure({
+  limit,
+});
+
+const extensions = [
+  StarterKit,
+  HighlightConfigure,
+  Typography,
+  PlaceholderConfig,
+  TaskListConfigure,
+  TaskItem.configure({
+    nested: true,
+  }),
+  ListItem,
+  CharacterCountConfigure,
+];
+
 export default function PadEditor({ id, content }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
 
   const editor = useEditor({
-    extensions: [StarterKit, Highlight, Typography, PlaceholderConfig],
+    extensions: extensions,
     editorProps: {
       attributes: {
         class:
@@ -74,8 +100,15 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
 
   return (
     <div className="tiptap-container">
-      <EditorContent editor={editor} className="tiptap-main-content" />
-      <MenuBar editor={editor} />
+      <EditorContent
+        editor={editor}
+        className="tiptap-main-content"
+        spellCheck={false}
+      />
+      <ControlBar editor={editor} />
+      <div className="character-count">
+        {editor && editor.storage.characterCount.words()} words
+      </div>
     </div>
   );
 }
