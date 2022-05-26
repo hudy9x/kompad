@@ -2,7 +2,7 @@ export const setCacheJSON = (key: string, value: unknown) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const setLocalCache = (key: string, value: string) => {
+export const setCache = (key: string, value: string) => {
   localStorage.setItem(key, value);
 };
 

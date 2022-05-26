@@ -35,7 +35,7 @@ function PadList() {
             key={pad.id}
             className={`${
               id === pad.id ? "bg-gray-100" : ""
-            } relative cursor-pointer bg-white py-5 px-4 hover:bg-gray-50`}
+            } relative cursor-pointer bg-white py-2 px-4 hover:bg-gray-50`}
           >
             <Link to={`/app/pad/${pad.id}`}>
               <div className="flex flex-col justify-between">

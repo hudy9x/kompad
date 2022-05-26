@@ -11,6 +11,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
 import { useEffect, useState } from "react";
+import { shortCutAcion } from "../Shortcut/ShortcutAction";
 
 interface IPadEditorProp {
   id: string;
@@ -106,6 +107,9 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
         editor={editor}
         className="tiptap-main-content"
         spellCheck={false}
+        onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
+          shortCutAcion(ev);
+        }}
       />
       <ControlBar editor={editor} />
       <div className="character-count">

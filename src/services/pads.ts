@@ -12,7 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../libs/firebase";
-import { setLocalCache } from "../libs/localCache";
+import { setCache } from "../libs/localCache";
 
 export interface IPad {
   id?: string;
@@ -31,7 +31,7 @@ export interface IPad {
  * @param id
  */
 export const saveCurrentPad = (id: string) => {
-  setLocalCache("currentPad", id);
+  setCache("currentPad", id);
 };
 
 export const getPadsByUidQuery = (
