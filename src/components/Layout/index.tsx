@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../containers/Sidebar";
+import Shortcut from "../Shortcut/Shortcut";
 
 export default function Layout() {
   return (
@@ -8,6 +9,7 @@ export default function Layout() {
       <main>
         <Outlet />
       </main>
+      <Shortcut />
     </>
   );
 }
