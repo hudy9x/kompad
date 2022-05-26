@@ -7,15 +7,11 @@
 } */
 
 body {
-  @apply border border-gray-400 h-screen;
+  @apply border border-gray-400 dark:border-gray-900 h-screen;
 }
 
 .App {
   @apply flex;
-}
-
-.sidebar {
-  @apply w-64 border-r;
 }
 
 .App main {
@@ -40,3 +36,5 @@ body {
 @import url("./tiptap.css");
 @import url("./button.css");
 @import url("./sign.css");
+@import url("./sidebar.css");
+@import url("./pad.css");

@@ -30,6 +30,26 @@
   flex: 1 1 auto;
 }
 
+.ProseMirror * {
+  @apply dark:text-gray-400;
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5 {
+  @apply dark:text-gray-300;
+}
+
+.ProseMirror hr {
+  @apply dark:border-gray-700;
+}
+
+.ProseMirror mark {
+  @apply dark:text-gray-900
+}
+
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
@@ -50,6 +70,7 @@
   background-clip: padding-box;
   border-radius: 8px;
   background-color: rgb(182, 182, 182);
+  @apply dark:bg-gray-900;
 }
 
 ::-webkit-scrollbar-track {
