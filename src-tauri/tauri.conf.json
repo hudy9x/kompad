@@ -65,8 +65,8 @@
         "visible": false
       },
       {
-        "width": 400,
-        "height": 200,
+        "width": 345,
+        "height": 370,
         "decorations": false,
         "center": true,
         "url": "splashscreen.html",
