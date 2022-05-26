@@ -14,6 +14,7 @@ fn main() {
             tauri::async_runtime::spawn(async move {
                 // initialize your app here instead of sleeping :)
                 println!("Initializing...");
+                // std::thread::sleep(std::time::Duration::from_millis(700));
                 std::thread::sleep(std::time::Duration::from_secs(2));
                 println!("Done initializing.");
 

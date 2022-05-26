@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="theme-color" content="#1f2937">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
@@ -9,6 +11,11 @@
       body {
         margin: 0;
         padding: 0;
+        background-color: #1f2937;
+        border: 1px solid #111827;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
       }
       *,
       *::before,
@@ -61,6 +68,7 @@
 
       main {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -70,11 +78,558 @@
         font-size: 2rem;
         font-weight: bold;
       }
+
+      .loader {
+        height: 345px;
+        width: 36%;
+        text-align: center;
+        padding: 1em;
+        margin: 0 auto 1em;
+        display: inline-block;
+        vertical-align: top;
+        position: fixed;
+        bottom: -186px;
+        left: 0;
+      }
+
+      .loader-2{
+        left: 91px;
+      }
+
+      .loader-3{
+        left: 182px;
+      }
+
+      .loader-4{
+        left: 273px;
+      }
+
+      .loader svg path,
+      .loader svg rect {
+        fill: #364356;
+      }
+
+      .status {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-family: sans-serif;
+        color: white;
+      }
     </style>
   </head>
   <body>
     <main>
-      <span>Loading</span>
+      <!-- ICON -->
+      <svg
+        width="152"
+        height="172"
+        viewBox="0 0 152 172"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g filter="url(#filter0_d_114_2)">
+          <path
+            d="M19 99.0668C19 95.3849 21.9848 92.4001 25.6667 92.4001H69.1333C72.8152 92.4001 75.8 95.3849 75.8 99.0668V130.533C75.8 134.215 72.8152 137.2 69.1333 137.2H25.6667C21.9848 137.2 19 134.215 19 130.533V99.0668Z"
+            fill="#68738E"
+          />
+          <path
+            d="M77.9333 99.0668C77.9333 95.3849 80.9181 92.4001 84.6 92.4001H124.333C128.015 92.4001 131 95.3849 131 99.0668V130.533C131 134.215 128.015 137.2 124.333 137.2H84.6C80.9181 137.2 77.9333 134.215 77.9333 130.533V99.0668Z"
+            fill="#293044"
+          />
+          <path
+            d="M56.3334 92.4001H93.6667V137.2H56.3334V92.4001Z"
+            fill="#495577"
+          />
+          <g filter="url(#filter1_d_114_2)">
+            <path
+              d="M19 20.4C19 17.4545 21.3878 15.0667 24.3333 15.0667H125.667C128.612 15.0667 131 17.4545 131 20.4V116.933C131 119.879 128.612 122.267 125.667 122.267H24.3333C21.3878 122.267 19 119.879 19 116.933V20.4Z"
+              fill="#EBEBEB"
+            />
+            <path
+              d="M24.3333 15.5667H125.667C128.336 15.5667 130.5 17.7306 130.5 20.4V116.933C130.5 119.603 128.336 121.767 125.667 121.767H24.3333C21.664 121.767 19.5 119.603 19.5 116.933V20.4C19.5 17.7306 21.664 15.5667 24.3333 15.5667Z"
+              stroke="#C2C2C2"
+            />
+          </g>
+          <path
+            d="M31.5333 11.0667C31.5333 8.26842 33.8017 6 36.6 6H38.7333C41.5316 6 43.8 8.26842 43.8 11.0667V19.6C43.8 22.3982 41.5316 24.6667 38.7333 24.6667H36.6C33.8017 24.6667 31.5333 22.3982 31.5333 19.6V11.0667Z"
+            fill="#68738E"
+          />
+          <path
+            d="M56.4237 11.0667C56.4237 8.26842 58.6921 6 61.4904 6H63.6237C66.4219 6 68.6904 8.26842 68.6904 11.0667V19.6C68.6904 22.3982 66.4219 24.6667 63.6237 24.6667H61.4904C58.6921 24.6667 56.4237 22.3982 56.4237 19.6V11.0667Z"
+            fill="#68738E"
+          />
+          <path
+            d="M81.3728 11.0667C81.3728 8.26842 83.6412 6 86.4395 6H88.5728C91.371 6 93.6395 8.26842 93.6395 11.0667V19.6C93.6395 22.3982 91.371 24.6667 88.5728 24.6667H86.4395C83.6412 24.6667 81.3728 22.3982 81.3728 19.6V11.0667Z"
+            fill="#68738E"
+          />
+          <path
+            d="M106.322 11.0667C106.322 8.26842 108.59 6 111.389 6H113.522C116.32 6 118.589 8.26842 118.589 11.0667V19.6C118.589 22.3982 116.32 24.6667 113.522 24.6667H111.389C108.59 24.6667 106.322 22.3982 106.322 19.6V11.0667Z"
+            fill="#68738E"
+          />
+          <path
+            d="M76.48 54.6401L59.568 73.8481L58.952 73.2321L49.712 83.7041L48.536 76.5361L67.52 54.6401H76.48ZM52.344 54.6401V91.6001H44.616V54.6401H52.344ZM61.696 67.4081L76.928 91.6001H68.08L55.76 71.7201L61.696 67.4081Z"
+            fill="#383F52"
+          />
+          <path
+            d="M110.68 85.5732V91.5999H81.9333V85.5732H110.68Z"
+            fill="#383F52"
+          />
+        </g>
+        <defs>
+          <filter
+            id="filter0_d_114_2"
+            x="0"
+            y="0"
+            width="152"
+            height="171.2"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dx="1" dy="14" />
+            <feGaussianBlur stdDeviation="10" />
+            <feComposite in2="hardAlpha" operator="out" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow_114_2"
+            />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow_114_2"
+              result="shape"
+            />
+          </filter>
+          <filter
+            id="filter1_d_114_2"
+            x="19"
+            y="15.0667"
+            width="112"
+            height="114.2"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dy="7" />
+            <feComposite in2="hardAlpha" operator="out" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="BackgroundImageFix"
+              result="effect1_dropShadow_114_2"
+            />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="effect1_dropShadow_114_2"
+              result="shape"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <h2 class="status">STARTING</h2>
+
+      <!-- LOADING ICON -->
+      <div class="loader loader-4" title="7">
+        <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 30"
+          style="enable-background: new 0 0 50 50"
+          xml:space="preserve"
+        >
+          <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="8" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="16" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+        </svg>
+      </div>
+
+      <!-- LOADING ICON -->
+      <div class="loader loader-3" title="7">
+        <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 30"
+          style="enable-background: new 0 0 50 50"
+          xml:space="preserve"
+        >
+          <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="8" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="16" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+        </svg>
+      </div>
+      <!-- LOADING ICON -->
+      <div class="loader loader-2" title="7">
+        <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 30"
+          style="enable-background: new 0 0 50 50"
+          xml:space="preserve"
+        >
+          <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="8" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="16" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+        </svg>
+      </div>
+      <div class="loader loader--style8" title="7">
+        <svg
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          width="100%"
+          height="100%"
+          viewBox="0 0 24 30"
+          style="enable-background: new 0 0 50 50"
+          xml:space="preserve"
+        >
+          <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="8" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.15s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+          <rect x="16" y="10" width="4" height="10" fill="#333" opacity="0.2">
+            <animate
+              attributeName="opacity"
+              attributeType="XML"
+              values="0.2; 1; .2"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="height"
+              attributeType="XML"
+              values="10; 20; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="y"
+              attributeType="XML"
+              values="10; 5; 10"
+              begin="0.3s"
+              dur="0.6s"
+              repeatCount="indefinite"
+            />
+          </rect>
+        </svg>
+      </div>
     </main>
   </body>
 </html>
