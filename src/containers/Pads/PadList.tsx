@@ -27,15 +27,15 @@ function PadList() {
   }, [user?.uid, newPadAdded]);
 
   return (
-    <ul className="pad-list divide-y divide-gray-200">
+    <ul className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
       {pads.map((pad) => {
         const d = dayjs(pad.updatedAt.toDate());
         return (
           <li
             key={pad.id}
             className={`${
-              id === pad.id ? "bg-gray-100" : ""
-            } relative cursor-pointer bg-white py-2 px-4 hover:bg-gray-50`}
+              id === pad.id ? "bg-gray-100 dark:bg-gray-900" : "dark:bg-gray-800"
+            } relative cursor-pointer bg-white py-2 px-4 hover:bg-gray-50  dark:hover:bg-gray-900`}
           >
             <Link to={`/app/pad/${pad.id}`}>
               <div className="flex flex-col justify-between">
@@ -45,7 +45,7 @@ function PadList() {
                     <time className="flex-shrink-0 whitespace-nowrap text-xs text-gray-500">
                       <i>{d.fromNow()}</i>
                     </time>
-                    <h2 className="text-base font-medium text-gray-900 truncate">
+                    <h2 className="text-base font-medium text-gray-900 dark:text-gray-300 truncate">
                       {pad.title}
                     </h2>
                     <p className="text-sm text-gray-500 truncate">
@@ -55,14 +55,8 @@ function PadList() {
                 </div>
               </div>
               <div className="flex gap-1 mt-3">
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                  Badge
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
-                  Badge
-                </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Badge
+                <span className="pad-tag">
+                  <i>#</i> Badge
                 </span>
               </div>
             </Link>

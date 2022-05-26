@@ -1,5 +1,5 @@
 .titlebar {
-  @apply hover:bg-gray-50 cursor-pointer flex justify-between;
+  @apply hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer flex justify-between;
 }
 
 .ttb-icon {

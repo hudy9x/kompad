@@ -1,0 +1,4 @@
+.pad-tag {
+  font-size: 0.625rem;
+  @apply flex uppercase;
+}
