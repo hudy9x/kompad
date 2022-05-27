@@ -7,11 +7,14 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import ListItem from "@tiptap/extension-list-item";
 import CharacterCount from "@tiptap/extension-character-count";
+import Image from '@tiptap/extension-image'
+
 
 import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
 import { useEffect, useState } from "react";
 import { shortCutAcion } from "../Shortcut/ShortcutAction";
+import FixedControlBar from "./FixedControlBar";
 
 interface IPadEditorProp {
   id: string;
@@ -50,6 +53,7 @@ const extensions = [
   }),
   ListItem,
   CharacterCountConfigure,
+  Image
 ];
 
 export default function PadEditor({ id, content }: IPadEditorProp) {
@@ -103,6 +107,7 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
 
   return (
     <div className="tiptap-container">
+      <FixedControlBar editor={editor} />
       <EditorContent
         editor={editor}
         className="tiptap-main-content"
