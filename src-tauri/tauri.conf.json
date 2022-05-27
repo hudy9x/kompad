@@ -62,6 +62,8 @@
         "resizable": true,
         "title": "Kompad",
         "width": 1000,
+        "minWidth": 730,
+        "minHeight": 650,
         "visible": false
       },
       {
