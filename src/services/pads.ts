@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -131,6 +132,14 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
     return docRef.id;
   } catch (error) {
     return null;
+  }
+};
+
+export const delPad = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, "pads", id));
+  } catch (error) {
+    console.log(error);
   }
 };
 
