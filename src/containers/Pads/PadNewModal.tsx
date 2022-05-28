@@ -53,7 +53,7 @@ export default function PadNewModal() {
         onSubmit={formik.handleSubmit}
         className="text-gray-900 dark:text-gray-300"
       >
-        <h3 className="text-lg leading-6 font-medium pb-4 border-b dark:border-gray-800">
+        <h3 className="text-lg leading-6 font-medium pb-4 border-b dark:border-gray-700">
           Create new pad
         </h3>
 
@@ -69,7 +69,7 @@ export default function PadNewModal() {
                 id="pad-title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-800 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function PadNewModal() {
                 id="pad-desc"
                 value={formik.values.desc}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-800 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           </div>
