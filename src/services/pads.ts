@@ -18,6 +18,7 @@ export interface IPad {
   id?: string;
   uid: string;
   title: string;
+  shortDesc?: string;
   tags: string[];
   content: string;
   createdAt: Timestamp;
@@ -115,7 +116,25 @@ export const getPadById = async (id: string): Promise<IPad | null> => {
   }
 };
 
-export const addPad = async (uid: string) => {
+export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
+  try {
+    const docRef = await addDoc(collection(db, "pads"), {
+      uid,
+      title: title,
+      shortDesc,
+      tags: [],
+      content: "Write something 💪🏻",
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+    });
+
+    return docRef.id;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const quickAddPad = async (uid: string) => {
   try {
     const docRef = await addDoc(collection(db, "pads"), {
       uid,

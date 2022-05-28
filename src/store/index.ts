@@ -1,11 +1,20 @@
 import create from "zustand";
 
-interface IPadStore {
-  newPadAdded: number;
+export interface IPadStore {
+  newPadModalStatus: boolean;
+  newPadAdded: number; // just notify to pad list that a new pad was created
   increaseNewPaddAdded: () => void;
+  setNewPadModalStatus: (status: boolean) => void;
 }
 
 export const usePadStore = create<IPadStore>((set) => ({
+  newPadModalStatus: false,
+  setNewPadModalStatus: (status: boolean) =>
+    set((state) => ({
+      ...state,
+      ...{ newPadModalStatus: status },
+    })),
+
   newPadAdded: 0,
   increaseNewPaddAdded: () =>
     set((state) => {
@@ -14,3 +23,5 @@ export const usePadStore = create<IPadStore>((set) => ({
       };
     }),
 }));
+
+export const { setState: setPadStoreState } = usePadStore;
