@@ -1,10 +1,10 @@
 .sign-container {
-  @apply bg-gray-100 flex items-center justify-center;
+  @apply bg-gray-100 flex items-center justify-center dark:bg-gray-800;
   height: calc(100vh - 2px);
 }
 
 .sign {
-  @apply p-8 bg-white shadow-xl w-96;
+  @apply p-8 bg-white shadow-xl w-96 dark:bg-gray-700;
   @apply rounded-lg;
 }
 
@@ -24,4 +24,12 @@
 .selected-avatar {
   /* @apply outline-indigo-500; */
   outline-color: #6366f1 !important;
+}
+
+.sign-form input {
+  @apply dark:bg-gray-800 dark:border-gray-800
+}
+
+.sign-form a {
+  @apply dark:text-indigo-400
 }
