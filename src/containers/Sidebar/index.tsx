@@ -2,6 +2,7 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { useSettingStore } from "../../store/settings";
 import PadList from "../Pads/PadList";
 import PadNew from "../Pads/PadNew";
+import PadSearch from "../PadSearch";
 import UserSection from "./UserSection";
 
 export default function Sidebar() {
@@ -20,6 +21,7 @@ export default function Sidebar() {
 
       <PadNew />
       <PadList />
+      <PadSearch />
       <UserSection />
     </aside>
   );
