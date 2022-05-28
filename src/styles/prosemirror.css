@@ -30,6 +30,14 @@
   flex: 1 1 auto;
 }
 
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+}
+.ProseMirror img.ProseMirror-selectednode {
+  outline: 3px solid #68cef8;
+}
+
 .ProseMirror * {
   @apply dark:text-gray-400;
 }
@@ -47,7 +55,7 @@
 }
 
 .ProseMirror mark {
-  @apply dark:text-gray-900
+  @apply dark:text-gray-900;
 }
 
 ::-webkit-scrollbar {
