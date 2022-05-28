@@ -1,36 +1,51 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
-
-interface IPeo {
-  id: number;
-  name: string;
-  url: string;
-}
-
-const people: IPeo[] = [
-  { id: 1, name: "Leslie Alexander", url: "#" },
-  { id: 2, name: "Kenton Towne", url: "#" },
-  { id: 3, name: "Therese Wunsch", url: "#" },
-  { id: 4, name: "Benedict Kessler", url: "#" },
-  { id: 5, name: "Katelyn Rohan", url: "#" },
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { useAuth } from "../../hooks/useAuth";
+import { IPad, getPadsByUid } from "../../services/pads";
+import { useNavigate } from "react-router-dom";
+import { usePadStore } from "../../store";
 
 export default function PadSearch() {
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [pads, setPads] = useState<IPad[]>([]);
 
-  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
+  const searchModalStatus = usePadStore((state) => state.searchModalStatus);
+  const setSearchModalStatus = usePadStore(
+    (state) => state.setSearchModalStatus
+  );
 
-  const filteredPeople =
+  const filteredPads =
     query === ""
       ? []
-      : people.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase());
+      : pads.filter((pad) => {
+          return pad.title.toLowerCase().includes(query.toLowerCase());
         });
+
+  useEffect(() => {
+    setOpen(searchModalStatus);
+  }, [searchModalStatus]);
+
+  useEffect(() => {
+    setSearchModalStatus(open);
+
+    // eslint-disable-next-line
+  }, [open]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      getPadsByUid(user.uid).then((pads) => {
+        if (!pads) {
+          return;
+        }
+
+        setPads(pads);
+      });
+    }
+  }, [user?.uid]);
 
   return (
     <Transition.Root
@@ -62,52 +77,54 @@ export default function PadSearch() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 dark:divide-gray-900 overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
               <Combobox
                 onChange={(value) => {
-                  console.log(value);
+                  const pad = value as unknown as IPad;
+                  setOpen(false);
+                  navigate(`/app/pad/${pad.id}`);
                 }}
                 value={``}
               >
-                <div className="relative">
+                <div id="pad-search" className="relative">
                   <HiOutlineSearch
                     className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 dark:text-gray-300 placeholder-gray-400 focus:ring-0 sm:text-sm"
                     placeholder="Search..."
                     onChange={(event) => setQuery(event.target.value)}
                   />
                 </div>
 
-                {filteredPeople.length > 0 && (
+                {filteredPads.length > 0 && (
                   <Combobox.Options
                     static
                     className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
                   >
-                    {filteredPeople.map((person) => (
-                      <Combobox.Option key={person.id} value={person}>
+                    {filteredPads.map((pad) => (
+                      <Combobox.Option key={pad.id} value={pad}>
                         {/* {person.name} */}
                         {({ active, selected }) => (
-                          <li
+                          <div
                             className={`${
                               active
-                                ? "bg-blue-500 text-white"
-                                : "bg-white text-black"
-                            }`}
+                                ? "bg-indigo-500 text-white"
+                                : "bg-white text-black dark:bg-gray-800 dark:text-gray-300"
+                            } px-4 py-2`}
                           >
                             {selected && <HiOutlineCheck />}
-                            {person.name}
-                          </li>
+                            {pad.title}
+                          </div>
                         )}
                       </Combobox.Option>
                     ))}
                   </Combobox.Options>
                 )}
 
-                {query !== "" && filteredPeople.length === 0 && (
-                  <p className="p-4 text-sm text-gray-500">No people found.</p>
+                {query !== "" && filteredPads.length === 0 && (
+                  <p className="p-4 text-sm text-gray-500">No pad found.</p>
                 )}
               </Combobox>
             </Dialog.Panel>

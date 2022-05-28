@@ -8,12 +8,14 @@ export const shortCutAcion = (
 ) => {
   const ctrlKey = ev.ctrlKey;
   const key = ev.key.toLowerCase();
-  // const alt = ev.altKey;
+  const alt = ev.altKey;
   const shift = ev.shiftKey;
+  const esc = key === "escape";
 
   ev.stopPropagation();
   ev.preventDefault();
 
+  // Open/Close sidebar
   if (shift && ctrlKey && key === "b") {
     setSettingState(
       produce<ISettingStore>((state) => {
@@ -23,10 +25,29 @@ export const shortCutAcion = (
     );
   }
 
+  // Open new pad modal
   if (ctrlKey && key === "n") {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.newPadModalStatus = true;
+      })
+    );
+  }
+
+  // Open search pallete
+  if (alt && key === "p") {
+    setPadStoreState(
+      produce<IPadStore>((state) => {
+        state.searchModalStatus = true;
+      })
+    );
+  }
+
+  // Close search pallete if it visible
+  if (esc && document.getElementById("pad-search")) {
+    setPadStoreState(
+      produce<IPadStore>((state) => {
+        state.searchModalStatus = false;
       })
     );
   }

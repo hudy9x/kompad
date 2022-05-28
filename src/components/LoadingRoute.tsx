@@ -1,9 +1,5 @@
-import React from 'react'
-
 function LoadingRoute() {
-  return (
-    <div>LoadingRoute</div>
-  )
+  return <div className="text-center mt-40">Loading ...</div>;
 }
 
-export default LoadingRoute
+export default LoadingRoute;
