@@ -5,13 +5,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { getPadsByUid, IPad } from "../../services/pads";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { usePadStore } from "../../store";
+import PadDelete from "./PadDelete";
 
 dayjs.extend(relativeTime);
 
 function PadList() {
   const { user } = useAuth();
   const { id } = useParams();
-  const newPadAdded = usePadStore((state) => state.newPadAdded);
+  const newPadAdded = usePadStore((state) => state.needToUpdate);
   const [pads, setPads] = useState<IPad[]>([]);
 
   useEffect(() => {
@@ -34,8 +35,10 @@ function PadList() {
           <li
             key={pad.id}
             className={`${
-              id === pad.id ? "bg-gray-100 dark:bg-gray-900" : "dark:bg-gray-800"
-            } relative cursor-pointer bg-white py-2 px-4 hover:bg-gray-50  dark:hover:bg-gray-900`}
+              id === pad.id
+                ? "bg-gray-100 dark:bg-gray-900"
+                : "dark:bg-gray-800"
+            } relative group cursor-pointer bg-white py-2 px-4 hover:bg-gray-50  dark:hover:bg-gray-900`}
           >
             <Link to={`/app/pad/${pad.id}`}>
               <div className="flex flex-col justify-between">
@@ -60,6 +63,9 @@ function PadList() {
                 </span>
               </div>
             </Link>
+            <div className="opacity-0 group-hover:opacity-100 transition-all absolute top-0 right-0 m-1">
+              <PadDelete id={pad.id || ""} />
+            </div>
           </li>
         );
       })}

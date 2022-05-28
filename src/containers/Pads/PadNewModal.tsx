@@ -14,7 +14,7 @@ export default function PadNewModal() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const increaseNewPaddAdded = usePadStore(
-    (state) => state.increaseNewPaddAdded
+    (state) => state.setNeedToUpdate
   );
 
   const formik = useFormik({
