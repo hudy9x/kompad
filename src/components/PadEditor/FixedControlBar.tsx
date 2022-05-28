@@ -60,7 +60,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
-          className={`control-icon flex items-center ${
+          className={`control-icon flex items-center text-xs justify-center ${
             editor.isActive("heading", { level: 1 }) ? "is-active" : ""
           }`}
         >
@@ -70,7 +70,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
-          className={`control-icon flex items-center ${
+          className={`control-icon flex items-center text-xs justify-center ${
             editor.isActive("heading", { level: 2 }) ? "is-active" : ""
           }`}
         >
@@ -80,7 +80,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
-          className={`control-icon flex items-center ${
+          className={`control-icon flex items-center text-xs justify-center ${
             editor.isActive("heading", { level: 3 }) ? "is-active" : ""
           }`}
         >
@@ -90,7 +90,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
-          className={`control-icon flex items-center ${
+          className={`control-icon flex items-center text-xs justify-center ${
             editor.isActive("heading", { level: 4 }) ? "is-active" : ""
           }`}
         >
