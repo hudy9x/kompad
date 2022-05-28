@@ -1,5 +1,6 @@
 import produce from "immer";
 import { setCache } from "../../libs/localCache";
+import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
 
 export const shortCutAcion = (
@@ -23,5 +24,10 @@ export const shortCutAcion = (
   }
 
   if (ctrlKey && key === "n") {
+    setPadStoreState(
+      produce<IPadStore>((state) => {
+        state.newPadModalStatus = true;
+      })
+    );
   }
 };
