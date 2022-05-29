@@ -8,6 +8,7 @@ import {
   HiOutlineUserCircle,
 } from "react-icons/hi";
 import DarkMode from "./DarkMode";
+import { showShortcutModal } from "../../store/modal";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -36,13 +37,15 @@ export default function Settings() {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <div
+                  onClick={() => {
+                    showShortcutModal();
+                  }}
                   className={classNames(
                     active
                       ? "bg-gray-600 text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm"
+                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineLightningBolt
@@ -50,18 +53,17 @@ export default function Settings() {
                     aria-hidden="true"
                   />
                   Shortcut keys
-                </a>
+                </div>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <div
                   className={classNames(
                     active
                       ? "bg-gray-600 text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm"
+                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineUserCircle
@@ -69,22 +71,21 @@ export default function Settings() {
                     aria-hidden="true"
                   />
                   User profile
-                </a>
+                </div>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <div
                   className={classNames(
                     active
                       ? "bg-gray-600 text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center justify-between px-4 py-2 text-sm"
+                    "group flex items-center justify-between px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <DarkMode />
-                </a>
+                </div>
               )}
             </Menu.Item>
             <Menu.Item>
@@ -95,7 +96,7 @@ export default function Settings() {
                     active
                       ? "bg-gray-600 text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm"
+                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineLogout
