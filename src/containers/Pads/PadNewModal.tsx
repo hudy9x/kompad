@@ -37,7 +37,6 @@ export default function PadNewModal() {
 
   // watch shortcut key triggers
   useEffect(() => {
-    console.log("status", status);
     setVisible(status);
   }, [status]);
 

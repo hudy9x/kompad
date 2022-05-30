@@ -103,7 +103,6 @@ const _hide = ({
 const _clear = ({ root, container }: MessageClearFuncRetType) => {
   setTimeout(() => {
     // const isGreaterV18 = _isReactV18OrGreater();
-    console.log(root);
     // if (isGreaterV18) {
     //   root.unmount();
     // } else {

@@ -8,7 +8,6 @@ import UserSection from "./UserSection";
 
 export default function Sidebar() {
   const sidebar = useSettingStore((state) => state.view.sidebar);
-  console.log(sidebar);
 
   return (
     <aside className={`sidebar ${sidebar ? "" : "hidden"}`}>

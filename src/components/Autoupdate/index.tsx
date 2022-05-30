@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
+import { useEffect, useState } from "react";
 import { relaunch } from "@tauri-apps/api/process";
 import { emit, listen } from "@tauri-apps/api/event";
 import Modal from "../Modal";
-import {
-  HiOutlineExclamation,
-  HiOutlineInformationCircle,
-} from "react-icons/hi";
 import { IoInformationOutline } from "react-icons/io5";
 import { useModalStore } from "../../store/modal";
+import { message } from "../message";
 
 function Autoupdate() {
   const updateStatus = useModalStore((state) => state.modals.update);
@@ -22,12 +18,45 @@ function Autoupdate() {
 
   useEffect(() => {
     setUpdateStatus("update", visible);
+
+    // eslint-disable-next-line
   }, [visible]);
 
   useEffect(() => {
-    listen("tauri://update-status", function (res) {
-      console.log("New status: ", res.payload);
-    });
+    let e = "";
+    listen<{ error: string | null; status: string }>(
+      "tauri://update-status",
+      function (res) {
+        const { error, status } = res.payload;
+        if (error) {
+          if (e === error) {
+            return;
+          }
+
+          console.log(error);
+          message.error(error);
+          e = error;
+
+          return;
+        }
+
+        if (status === "UPTODATE") {
+          // message.info("App version is latest !");
+          return;
+        }
+
+        if (status === "DOWNLOADED") {
+          message.info("Downloaded");
+        }
+
+        if (status === "DONE") {
+          message.success("Done");
+          relaunch();
+        }
+
+        console.log(status);
+      }
+    );
   });
 
   const doUpdate = () => {
@@ -51,8 +80,8 @@ function Autoupdate() {
             </h3>
             <div className="mt-2">
               <p className="text-sm text-gray-500">
-                An update to the latest version is available. 
-                Would you like to install it now ?
+                An update to the latest version is available. Would you like to
+                install it now ?
               </p>
             </div>
           </div>

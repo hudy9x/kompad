@@ -8,12 +8,12 @@ function ShortcutModal() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    console.log("shortcutStatus:", shortcutStatus);
     setVisible(shortcutStatus);
   }, [shortcutStatus]);
 
   useEffect(() => {
     setShortcurVisible("shorcut", visible);
+    // eslint-disable-next-line
   }, [visible]);
 
   const shortcutKeys = [

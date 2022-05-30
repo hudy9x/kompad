@@ -56,7 +56,7 @@
         "https://komersions.vercel.app/api/release/{{target}}/{{current_version}}"
       ],
       "dialog": false,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDFEREJDQzY1MzNGNDVCQTMKUldTalcvUXpaY3piSFRxc3dlbDEyVVFLOXRwL28zdTVCd1UxZVFTNHZIZUxRbXMrOS9VK0pyVmIK"
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENCNTcyM0Y5RUVCRTk1NzQKUldSMGxiN3UrU05YeTZpYkxRTitkWTVWWkI1ZnI1RVBQVHRaOWpqWnN5cHIvcTJBeHRLdkZPU3MK"
     },
     "windows": [
       {

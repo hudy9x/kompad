@@ -1,7 +1,6 @@
 import { getVersion } from "@tauri-apps/api/app";
 import { emit, listen } from "@tauri-apps/api/event";
 import { useEffect, useState } from "react";
-import { HiOutlineInformationCircle } from "react-icons/hi";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { showUpdateModal } from "../../store/modal";
 import Settings from "../Settings";
@@ -12,7 +11,9 @@ function UserSection() {
   const { info } = useCurrentUser();
 
   const openUpdateModal = () => {
-    showUpdateModal();
+    if (updateAvailable) {
+      showUpdateModal();
+    }
   };
 
   useEffect(() => {
@@ -21,6 +22,7 @@ function UserSection() {
     });
 
     listen("tauri://update-available", function (res) {
+      console.log('tauri://update-available', res)
       setUpdateAvailable(true);
     });
 
