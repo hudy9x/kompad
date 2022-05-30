@@ -3,6 +3,7 @@ import produce from "immer";
 
 interface IModalList {
   shorcut: boolean;
+  update: boolean;
 }
 
 type IModalKeys = keyof IModalList;
@@ -16,6 +17,7 @@ export interface IModalStore {
 export const useModalStore = create<IModalStore>((set) => ({
   modals: {
     shorcut: false,
+    update: false,
   },
   setVisible: (type, status) =>
     set(
@@ -31,4 +33,9 @@ export const { getState: getModalState, setState: setModalState } =
 export const showShortcutModal = () => {
   const modalState = getModalState();
   modalState.setVisible("shorcut", true);
+};
+
+export const showUpdateModal = () => {
+  const modalState = getModalState();
+  modalState.setVisible("update", true);
 };
