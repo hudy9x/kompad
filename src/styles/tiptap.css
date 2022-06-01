@@ -39,5 +39,5 @@
 
 .controlbar-container .is-active .control-icon,
 .controlbar-container .control-icon.is-active {
-  @apply bg-gray-400 text-white dark:bg-gray-900 dark:text-gray-200;
+  @apply bg-gray-500 border-gray-500 text-white dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200;
 }
