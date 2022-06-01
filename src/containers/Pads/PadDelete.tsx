@@ -22,7 +22,7 @@ function PadDelete({ id }: { id: string }) {
         setDeleting(false);
         message.success("Deleted pad successfully");
       }}
-      className="w-8 h-8 p-2 rounded-md text-white hover:bg-gray-800"
+      className="w-7 h-7 p-1.5 rounded-md text-gray-600 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
     />
   );
 }

@@ -10,7 +10,7 @@ import {
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
-import { MdRedo, MdUndo } from "react-icons/md";
+// import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
