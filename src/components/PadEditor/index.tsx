@@ -7,8 +7,7 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import ListItem from "@tiptap/extension-list-item";
 import CharacterCount from "@tiptap/extension-character-count";
-import Image from '@tiptap/extension-image'
-
+import Image from "@tiptap/extension-image";
 
 import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
@@ -53,7 +52,7 @@ const extensions = [
   }),
   ListItem,
   CharacterCountConfigure,
-  Image
+  Image,
 ];
 
 export default function PadEditor({ id, content }: IPadEditorProp) {
@@ -63,8 +62,9 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
     extensions: extensions,
     editorProps: {
       attributes: {
-        class:
-          "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
+        class: "",
+        // class:
+        //   "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
       },
     },
     content: content,
@@ -108,14 +108,16 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
   return (
     <div className="tiptap-container">
       <FixedControlBar editor={editor} />
-      <EditorContent
-        editor={editor}
-        className="tiptap-main-content"
-        spellCheck={false}
-        onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
-          shortCutAcion(ev);
-        }}
-      />
+      <div className="tiptap-box">
+        <EditorContent
+          editor={editor}
+          className="tiptap-main-content"
+          spellCheck={false}
+          onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
+            shortCutAcion(ev);
+          }}
+        />
+      </div>
       <ControlBar editor={editor} />
       <div className="character-count">
         {editor && editor.storage.characterCount.words()} words

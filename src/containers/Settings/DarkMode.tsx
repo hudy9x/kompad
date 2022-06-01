@@ -16,12 +16,12 @@ export default function DarkMode() {
       <div className="flex items-center">
         {enabled ? (
           <MdOutlineNightlight
-            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-300"
+            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
             aria-hidden="true"
           />
         ) : (
           <MdOutlineLightMode
-            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-300"
+            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
             aria-hidden="true"
           />
         )}

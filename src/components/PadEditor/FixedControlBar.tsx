@@ -28,7 +28,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
   return (
     <div className="fixed-controlbar">
-      <div className="controlbar-container flex flex-wrap gap-1 justify-center">
+      <div className="controlbar-container flex flex-wrap gap-1">
         <button
           className={`${editor.isActive("bold") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -126,12 +126,12 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <AiOutlineDash className="control-icon" />
         </button>
-        <button onClick={() => editor.chain().focus().undo().run()}>
+        {/* <button onClick={() => editor.chain().focus().undo().run()}>
           <MdUndo className="control-icon" />
         </button>
         <button onClick={() => editor.chain().focus().redo().run()}>
           <MdRedo className="control-icon" />
-        </button>
+        </button> */}
 
         <button
           onClick={() => {

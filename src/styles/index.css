@@ -7,7 +7,7 @@
 } */
 
 body {
-  @apply border border-gray-400 dark:bg-gray-800 dark:border-gray-900 h-screen;
+  @apply border border-gray-400 dark:bg-gray-800 dark:border-gray-900 h-screen overflow-hidden;
 }
 
 .App {

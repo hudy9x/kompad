@@ -2,11 +2,18 @@
   position: relative;
   @apply dark:bg-gray-800;
 }
-
+.tiptap-box {
+  @apply overflow-y-auto;
+}
 .tiptap-main-content {
-  @apply p-4 pb-8;
+  @apply px-8 pb-8 lg:w-[700px] m-auto;
   height: calc(100vh - 25px - 64px);
-  overflow: auto;
+  /* overflow: auto; */
+  font-size: 16px; /* base font size */
+}
+
+.fixed-controlbar {
+  @apply px-8 py-4 lg:w-[700px] m-auto;
 }
 
 .tiptab-format-actions {
@@ -22,17 +29,12 @@
   @apply px-2 text-center border-t dark:text-gray-400 border-gray-200 absolute bottom-0 right-0 text-xs bg-gray-50 dark:bg-gray-800 dark:border-gray-900 w-full;
 }
 
-.fixed-controlbar {
-  @apply p-4;
-  /* @apply absolute top-0 left-0 w-full */
-}
-
 .controlbar-container {
   @apply m-auto;
 }
 
 .control-icon {
-  @apply w-8 h-8 p-2 rounded-md text-gray-600 bg-gray-100 hover:bg-gray-200 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600;
+  @apply w-8 h-8 p-2 rounded-md text-gray-600 bg-white border hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600;
 }
 
 .controlbar-container .is-active .control-icon,
