@@ -110,7 +110,7 @@ export default function PadSearch() {
                           <div
                             className={`${
                               active
-                                ? "bg-indigo-500 text-white"
+                                ? "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-white"
                                 : "bg-white text-black dark:bg-gray-800 dark:text-gray-300"
                             } px-4 py-2`}
                           >

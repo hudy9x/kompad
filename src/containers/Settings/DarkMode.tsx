@@ -44,7 +44,7 @@ export default function DarkMode() {
           aria-hidden="true"
           className={classNames(
             enabled
-              ? "bg-indigo-600 dark:bg-indigo-400"
+              ? "bg-yellow-600 dark:bg-yellow-400"
               : "bg-gray-200 dark:bg-gray-900",
             "pointer-events-none absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"
           )}

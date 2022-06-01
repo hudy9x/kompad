@@ -89,7 +89,7 @@ function Autoupdate() {
         <div className="mt-5 sm:mt-4 sm:ml-10 sm:pl-4 sm:flex">
           <button
             type="button"
-            className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 sm:w-auto sm:text-sm"
+            className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-yellow-900 bg-yellow-400 hover:bg-yellow-300 sm:w-auto sm:text-sm"
             onClick={doUpdate}
           >
             Update

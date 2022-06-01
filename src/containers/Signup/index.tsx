@@ -114,7 +114,7 @@ function Signup() {
                   id="fullname"
                   onChange={formik.handleChange}
                   value={formik.values.fullname}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                   placeholder="Fullname"
                 />
               </div>
@@ -138,7 +138,7 @@ function Signup() {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                   placeholder="Email"
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -161,7 +161,7 @@ function Signup() {
                   placeholder="Password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -186,7 +186,7 @@ function Signup() {
                     formik.setFieldValue("dateOfBirth", ev.target.value);
                   }}
                   value={formik.values.dateOfBirth}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -209,7 +209,7 @@ function Signup() {
                   placeholder="Address"
                   onChange={formik.handleChange}
                   value={formik.values.address}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -217,18 +217,18 @@ function Signup() {
             <div className="input-group">
               <button
                 type="submit"
-                className="inline-flex w-full justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex w-full justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
               >
                 Sign up
               </button>
             </div>
 
             <div className="input-group">
-              <p className="text-gray-500 text-xs">
+              <p className="text-gray-400 text-xs">
                 Already have an account?{" "}
                 <Link
                   to={"/signin"}
-                  className="text-indigo-600 hover:underline"
+                  className="text-yellow-500 hover:underline"
                 >
                   Back to sign in
                 </Link>

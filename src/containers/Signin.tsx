@@ -53,7 +53,7 @@ function Signin() {
                   id="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                   placeholder="Email"
                 />
               </div>
@@ -79,7 +79,7 @@ function Signin() {
                   id="password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                   placeholder="Password"
                 />
               </div>
@@ -88,18 +88,18 @@ function Signin() {
             <div className="input-group">
               <button
                 type="submit"
-                className="inline-flex w-full uppercase justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex w-full uppercase justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
               >
                 Sign in
               </button>
             </div>
 
             <div className="input-group">
-              <p className="text-gray-500 text-xs">
+              <p className="text-gray-400 text-xs">
                 Don't have an account yet?{" "}
                 <Link
                   to={"/signup"}
-                  className="text-indigo-600 hover:underline"
+                  className="text-yellow-600 hover:underline"
                 >
                   Create Account
                 </Link>

@@ -68,7 +68,7 @@ export default function PadNewModal() {
                 id="pad-title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-yellow-400 focus:border-yellow-400 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -82,7 +82,7 @@ export default function PadNewModal() {
                 id="pad-desc"
                 value={formik.values.desc}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-yellow-400 focus:border-yellow-400 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function PadNewModal() {
             <div className="flex gap-4 flex-row-reverse">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
               >
                 Create
               </button>
