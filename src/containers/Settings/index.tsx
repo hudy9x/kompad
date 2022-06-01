@@ -43,13 +43,13 @@ export default function Settings() {
                   }}
                   className={classNames(
                     active
-                      ? "bg-gray-600 text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineLightningBolt
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-300"
+                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
                     aria-hidden="true"
                   />
                   Shortcut keys
@@ -61,13 +61,13 @@ export default function Settings() {
                 <div
                   className={classNames(
                     active
-                      ? "bg-gray-600 text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineUserCircle
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-300"
+                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
                     aria-hidden="true"
                   />
                   User profile
@@ -79,7 +79,7 @@ export default function Settings() {
                 <div
                   className={classNames(
                     active
-                      ? "bg-gray-600 text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center justify-between px-4 py-2 text-sm cursor-pointer"
                   )}
@@ -94,13 +94,13 @@ export default function Settings() {
                   to={"/signout"}
                   className={classNames(
                     active
-                      ? "bg-gray-600 text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
                   <HiOutlineLogout
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-300"
+                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
                     aria-hidden="true"
                   />
                   <span>Sign out</span>

@@ -5,7 +5,68 @@
 .ProseMirror {
   caret-color: rgb(33, 164, 220);
   caret-shape: bar;
+  font-size: 1em;
+  line-height: 1.5;
 }
+
+.ProseMirror h4 {
+  @apply text-lg;
+}
+.ProseMirror h3 {
+  @apply text-xl;
+}
+.ProseMirror h2 {
+  @apply text-2xl;
+}
+.ProseMirror h1 {
+  @apply text-3xl;
+}
+
+/* Spacing */
+.ProseMirror p,
+.ProseMirror h4,
+.ProseMirror h3,
+.ProseMirror h2,
+.ProseMirror h1,
+.ProseMirror blockquote,
+.ProseMirror img {
+  @apply mb-8;
+}
+
+.ProseMirror ul p,
+.ProseMirror ol p {
+  @apply mb-4;
+}
+
+.ProseMirror hr {
+  @apply my-8;
+}
+
+.ProseMirror code {
+  @apply bg-gray-100 px-1 rounded-sm text-gray-600 dark:bg-gray-700;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply pl-12 mb-8;
+}
+
+.ProseMirror ul {
+  @apply list-disc;
+}
+
+.ProseMirror ol {
+  @apply list-decimal;
+}
+
+.ProseMirror blockquote {
+  @apply border-l-4 pl-8 italic font-serif text-lg text-gray-600;
+}
+
+.ProseMirror blockquote p{
+  @apply mb-4;
+}
+
 
 .ProseMirror ul[data-type="taskList"] {
   list-style: none;
@@ -32,23 +93,29 @@
 
 .ProseMirror img {
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   height: auto;
 }
 .ProseMirror img.ProseMirror-selectednode {
   outline: 3px solid #68cef8;
 }
 
-.ProseMirror * {
-  @apply dark:text-gray-400;
-}
+/* DARK MODE */
 
 .ProseMirror h1,
 .ProseMirror h2,
 .ProseMirror h3,
 .ProseMirror h4,
 .ProseMirror h5 {
+  @apply dark:text-gray-100;
+}
+
+.ProseMirror p, 
+.ProseMirror code {
   @apply dark:text-gray-300;
 }
+
 
 .ProseMirror hr {
   @apply dark:border-gray-700;
@@ -56,34 +123,4 @@
 
 .ProseMirror mark {
   @apply dark:text-gray-900;
-}
-
-::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-}
-
-::-webkit-scrollbar-button {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-::-webkit-scrollbar-corner {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  border: 4px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 8px;
-  background-color: rgb(182, 182, 182);
-  @apply dark:bg-gray-900;
-}
-
-::-webkit-scrollbar-track {
-  border: 4px solid transparent;
-  background-clip: padding-box;
-  border-radius: 8px;
-  background-color: transparent;
 }
