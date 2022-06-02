@@ -9,11 +9,12 @@ import {
 } from "react-icons/hi";
 import { useFormik } from "formik";
 import { signIn, signUp } from "../../services/sign";
-import AvatarForm from "./AvatarForm";
 import { addUser } from "../../services/users";
 import { toTimestame } from "../../libs/date";
 import { message } from "../../components/message";
 import { useState } from "react";
+import AvatarForm from "../AvatarForm";
+import { isValidPassword } from "../../libs/password";
 
 function Signup() {
   const navigate = useNavigate();
@@ -35,6 +36,17 @@ function Signup() {
       if (loading) return;
 
       setLoading(true);
+
+      if (!isValidPassword(password)) {
+        message.error(`Should be 8-16 characters
+Have uppercase letter
+Have lowercase letter
+Have at least 1 digit
+And not have spaces`);
+
+        setLoading(false);
+        return;
+      }
 
       signUp(email, password)
         .then(async (userCredential) => {
@@ -65,6 +77,10 @@ function Signup() {
 
             case "auth/internal-error":
               message.error("Internal error");
+              break;
+
+            case "auth/email-already-in-use":
+              message.error("Email already in use");
               break;
 
             default:
@@ -237,17 +253,6 @@ function Signup() {
           </form>
         </div>
       </div>
-
-      {/* <button
-        onClick={() => {
-          signIn("huudai09@gmail.com", "test123").then((useCredential) => {
-            navigate("/pad/1");
-          });
-        }}
-        className="btn"
-      >
-        Sign in with Email
-      </button> */}
     </div>
   );
 }

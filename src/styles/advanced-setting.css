@@ -1,0 +1,37 @@
+.setting-menu-item {
+  @apply rounded-md px-3 py-2 flex items-center text-sm font-medium dark:text-gray-400;
+  @apply dark:hover:bg-gray-600 dark:hover:text-gray-400;
+}
+
+.setting-menu-item.active {
+  @apply bg-gray-50 text-yellow-500 hover:text-yellow-600 hover:bg-white;
+  @apply dark:bg-gray-700;
+}
+
+.setting-menu-item .icon {
+  @apply flex-shrink-0 -ml-1 mr-3 h-6 w-6;
+  @apply text-gray-400 group-hover:text-gray-500;
+}
+
+.setting-menu-item.active .icon {
+  @apply text-yellow-500 group-hover:text-yellow-500;
+}
+
+.advanced-setting-card {
+  @apply bg-white py-6 px-4 space-y-6 sm:p-6;
+  @apply dark:bg-gray-700;
+}
+
+.card-bottom {
+  @apply px-4 py-3 bg-gray-50 text-right sm:px-6 border-t border-gray-200;
+  @apply dark:bg-gray-700 dark:border-t-gray-800;
+}
+
+.title {
+  @apply text-lg leading-6 font-medium text-gray-900 dark:text-gray-300;
+}
+
+.paragraph {
+  @apply mt-1 text-sm text-gray-500 dark:text-gray-400;
+}
+

@@ -48,9 +48,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box !important;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
-  white-space: normal;
+  white-space: pre;
 }
 
 .message svg {

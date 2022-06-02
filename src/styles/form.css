@@ -1,0 +1,9 @@
+.form-control label {
+  @apply block text-sm text-gray-700 dark:text-gray-400;
+}
+
+.form-control input {
+  @apply focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md;
+  @apply dark:bg-gray-800 dark:border-gray-800 dark:text-gray-400;
+  @apply read-only:bg-gray-100 read-only:text-gray-400 dark:read-only:bg-gray-800 dark:read-only:text-gray-600;
+}

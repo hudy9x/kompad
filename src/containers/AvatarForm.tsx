@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import Modal from "../../components/Modal";
-import { getAllPublicAvatars } from "../../services/files";
+import { getAllPublicAvatars } from "../services/files";
+import Modal from "../components/Modal";
+// import { getAllPublicAvatars } from "../../services/files";
 
 interface IAvatarFormProps {
+  defaultValue?: string;
   onSelect: (selected: string) => void;
 }
 
-function AvatarForm({ onSelect }: IAvatarFormProps) {
+function AvatarForm({
+  onSelect,
+  defaultValue = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+}: IAvatarFormProps) {
   const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState(
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-  );
+  const [selected, setSelected] = useState(defaultValue);
   const [publicAvatars, setPublicAvatars] = useState<string[]>([]);
 
   useEffect(() => {
@@ -18,6 +21,10 @@ function AvatarForm({ onSelect }: IAvatarFormProps) {
       setPublicAvatars(publicAvatars);
     });
   }, []);
+
+  useEffect(() => {
+    setSelected(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div>
