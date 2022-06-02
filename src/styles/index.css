@@ -32,6 +32,8 @@ body {
 }
 
 @import url("./scrollbar.css");
+@import url("./form.css");
+@import url("./advanced-setting.css");
 @import url("./prosemirror.css");
 @import url("./tiptap.css");
 @import url("./button.css");

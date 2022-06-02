@@ -58,7 +58,8 @@ export default function Settings() {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <div
+                <Link
+                  to="/setting/profile"
                   className={classNames(
                     active
                       ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
@@ -71,7 +72,7 @@ export default function Settings() {
                     aria-hidden="true"
                   />
                   User profile
-                </div>
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>
