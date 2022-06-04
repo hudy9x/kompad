@@ -15,6 +15,7 @@ import { updatePad } from "../../services/pads";
 import { useEffect, useState } from "react";
 import { shortCutAcion } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
+import ErrorCapture from "../ErrorCapture";
 
 interface IPadEditorProp {
   id: string;
@@ -110,22 +111,24 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
   }, [content]);
 
   return (
-    <div className="tiptap-container">
-      <FixedControlBar editor={editor} />
-      <div className="tiptap-box">
-        <EditorContent
-          editor={editor}
-          className="tiptap-main-content"
-          spellCheck={false}
-          onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
-            shortCutAcion(ev);
-          }}
-        />
+    <ErrorCapture>
+      <div className="tiptap-container">
+        <FixedControlBar editor={editor} />
+        <div className="tiptap-box">
+          <EditorContent
+            editor={editor}
+            className="tiptap-main-content"
+            spellCheck={false}
+            onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
+              shortCutAcion(ev);
+            }}
+          />
+        </div>
+        <ControlBar editor={editor} />
+        <div className="character-count">
+          {editor && editor.storage.characterCount.words()} words
+        </div>
       </div>
-      <ControlBar editor={editor} />
-      <div className="character-count">
-        {editor && editor.storage.characterCount.words()} words
-      </div>
-    </div>
+    </ErrorCapture>
   );
 }

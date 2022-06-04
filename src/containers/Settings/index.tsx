@@ -4,11 +4,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import {
   HiOutlineLightningBolt,
-  HiOutlineLogout,
   HiOutlineUserCircle,
 } from "react-icons/hi";
 import DarkMode from "./DarkMode";
 import { showShortcutModal } from "../../store/modal";
+import { AiOutlinePoweroff } from "react-icons/ai";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -100,7 +100,7 @@ export default function Settings() {
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
                 >
-                  <HiOutlineLogout
+                  <AiOutlinePoweroff
                     className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
                     aria-hidden="true"
                   />

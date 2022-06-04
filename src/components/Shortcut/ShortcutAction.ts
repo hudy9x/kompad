@@ -1,3 +1,4 @@
+// import { appWindow, LogicalSize } from "@tauri-apps/api/window";
 import produce from "immer";
 import { setCache } from "../../libs/localCache";
 import { IPadStore, setPadStoreState } from "../../store";
@@ -20,6 +21,7 @@ export const shortCutAcion = (
     setSettingState(
       produce<ISettingStore>((state) => {
         setCache("SETTING_VIEW_SIDEBAR", !state.view.sidebar ? "1" : "0");
+        // appWindow.setSize(new LogicalSize(1200, 500))
         state.view.sidebar = !state.view.sidebar;
       })
     );
