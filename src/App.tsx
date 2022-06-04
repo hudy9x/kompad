@@ -6,6 +6,7 @@ import LayoutClear from "./components/Layout/LayoutClear";
 import PrivateRoute from "./components/PrivateRoute";
 // import Profile from "./containers/AdvancedSettings/Profile";
 import Checking from "./containers/Checking";
+import EmailVerification from "./containers/EmailVerification";
 // import NotFound from "./containers/NotFound";
 import Pad from "./containers/Pad";
 import PadContent from "./containers/Pads/PadContent";
@@ -33,6 +34,7 @@ function App() {
             <Route path="signin" element={<Signin />} />
             <Route path="signout" element={<Signout />} />
             <Route path="signup" element={<Signup />} />
+            <Route path="email-verification" element={<EmailVerification />} />
           </Route>
           <Route path="/app" element={<Layout />}>
             <Route
