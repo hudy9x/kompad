@@ -1,4 +1,5 @@
 import { Editor } from "@tiptap/react";
+import { useCallback } from "react";
 import {
   AiOutlineBold,
   AiOutlineCheckSquare,
@@ -10,10 +11,38 @@ import {
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
+import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
+  const setLink = useCallback(() => {
+    if (editor) {
+      const previousUrl = editor.getAttributes("link").href;
+      const url = window.prompt("URL", previousUrl);
+
+      // cancelled
+      if (url === null) {
+        return;
+      }
+
+      // empty
+      if (url === "") {
+        editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+        return;
+      }
+
+      // update link
+      editor
+        .chain()
+        .focus()
+        .extendMarkRange("link")
+        .setLink({ href: url })
+        .run();
+    }
+  }, [editor]);
+
   if (!editor) {
     return null;
   }
@@ -56,7 +85,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         {/* <Heading /> */}
 
-        <button
+        {/* <button
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -65,7 +94,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           }`}
         >
           <span>h1</span>
-        </button>
+        </button> */}
         <button
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -159,6 +188,9 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button onClick={addImage}>
           <BsCardImage className="control-icon" />
+        </button>
+        <button onClick={setLink}>
+          <IoLinkOutline className="control-icon" />
         </button>
       </div>
     </div>

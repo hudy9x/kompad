@@ -8,6 +8,7 @@ import TaskItem from "@tiptap/extension-task-item";
 import ListItem from "@tiptap/extension-list-item";
 import CharacterCount from "@tiptap/extension-character-count";
 import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
 
 import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
@@ -53,6 +54,9 @@ const extensions = [
   ListItem,
   CharacterCountConfigure,
   Image,
+  Link.configure({
+    openOnClick: false,
+  }),
 ];
 
 export default function PadEditor({ id, content }: IPadEditorProp) {
