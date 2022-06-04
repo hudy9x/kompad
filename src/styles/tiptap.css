@@ -3,17 +3,16 @@
   @apply dark:bg-gray-800;
 }
 .tiptap-box {
-  @apply overflow-y-auto;
+  @apply overflow-y-scroll;
 }
 .tiptap-main-content {
   @apply px-8 pb-8 md:w-[700px] xl:w-[800px] m-auto;
   height: calc(100vh - 25px - 64px);
-  /* overflow: auto; */
   font-size: 16px; /* base font size */
 }
 
 .fixed-controlbar {
-  @apply px-8 py-4 md:w-[700px] xl:w-[800px] m-auto;
+  @apply px-8 py-4 md:w-[700px] xl:w-[800px] m-auto mr-3.5 lg:mr-auto;
 }
 
 .tiptab-format-actions {

@@ -15,6 +15,8 @@ import { message } from "../../components/message";
 import { useState } from "react";
 import AvatarForm from "../AvatarForm";
 import { isValidPassword } from "../../libs/password";
+import { auth } from "../../libs/firebase";
+import { sendEmailVerification } from "firebase/auth";
 
 function Signup() {
   const navigate = useNavigate();
@@ -63,8 +65,10 @@ And not have spaces`);
 
           const res = await signIn(email, password);
 
+          auth.currentUser && (await sendEmailVerification(auth.currentUser));
+
           if (res) {
-            navigate("/app/pad/1");
+            navigate(`/email-verification?email=${email}`);
           }
         })
         .catch((error) => {
