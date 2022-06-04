@@ -9,7 +9,7 @@ export default function PadEmpty() {
       <div className="text-center">
         <img alt="" src={FolderPng} className="w-52 m-auto" />
 
-        <h3 className="mt-2 text-2xl font-medium text-gray-900">
+        <h3 className="mt-2 text-2xl font-medium text-gray-900 dark:text-gray-300">
           No pad selected
         </h3>
         <p className="mt-1 text-base text-gray-500">
