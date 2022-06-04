@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { message } from "../../components/message";
 import Modal from "../../components/Modal";
 import { useAuth } from "../../hooks/useAuth";
 import { addPad } from "../../services/pads";
+import { IPlan, isPlanExceed, updatePlanByUid } from "../../services/plans";
 import { usePadStore } from "../../store";
 
 export default function PadNewModal() {
@@ -13,9 +15,7 @@ export default function PadNewModal() {
 
   const { user } = useAuth();
   const navigate = useNavigate();
-  const increaseNewPaddAdded = usePadStore(
-    (state) => state.setNeedToUpdate
-  );
+  const increaseNewPaddAdded = usePadStore((state) => state.setNeedToUpdate);
 
   const formik = useFormik({
     initialValues: {
@@ -24,14 +24,28 @@ export default function PadNewModal() {
     },
     onSubmit: async (values) => {
       if (!user || !user.uid) return;
-      const id = await addPad({
-        uid: user.uid,
-        title: values.title,
-        shortDesc: values.desc,
-      });
-      navigate(`/app/pad/${id}`);
-      increaseNewPaddAdded();
-      setModalStatus(false);
+
+      try {
+        const planData = (await isPlanExceed()) as IPlan;
+
+        const id = await addPad({
+          uid: user.uid,
+          title: values.title,
+          shortDesc: values.desc,
+        });
+
+        updatePlanByUid({ currentRecord: planData.currentRecord + 1 });
+        navigate(`/app/pad/${id}`);
+        increaseNewPaddAdded();
+        setModalStatus(false);
+      } catch (error) {
+        console.log(error);
+        if (error === "EXCEED_PLAN") {
+          message.warning("Current plan is exceeded !");
+        } else {
+          message.error("Create new pad error !");
+        }
+      }
     },
   });
 

@@ -8,15 +8,14 @@ import {
   HiOutlineGlobe,
 } from "react-icons/hi";
 import { useFormik } from "formik";
-import { signIn, signUp } from "../../services/sign";
+import { signIn, signUp, verifyEmail } from "../../services/sign";
 import { addUser } from "../../services/users";
 import { toTimestame } from "../../libs/date";
 import { message } from "../../components/message";
 import { useState } from "react";
 import AvatarForm from "../AvatarForm";
 import { isValidPassword } from "../../libs/password";
-import { auth } from "../../libs/firebase";
-import { sendEmailVerification } from "firebase/auth";
+import { createFreePlan } from "../../services/plans";
 
 function Signup() {
   const navigate = useNavigate();
@@ -65,7 +64,8 @@ And not have spaces`);
 
           const res = await signIn(email, password);
 
-          auth.currentUser && (await sendEmailVerification(auth.currentUser));
+          await createFreePlan();
+          await verifyEmail();
 
           if (res) {
             navigate(`/email-verification?email=${email}`);
