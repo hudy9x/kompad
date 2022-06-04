@@ -22,6 +22,10 @@
   @apply text-3xl;
 }
 
+.ProseMirror a {
+  @apply text-yellow-600 dark:text-yellow-500 hover:underline;
+}
+
 /* Spacing */
 .ProseMirror p,
 .ProseMirror h4,
