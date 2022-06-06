@@ -16,7 +16,7 @@ jobs:
           repository: hudy9x/kompad-homepage
           token: ${{ secrets.KOMPAD_RELEASE_REPO_TOKEN }}
           ref: packaging
-
+          
       - name: generate new release text
         run: date > generated.txt &&
           git config user.name github-actions &&
