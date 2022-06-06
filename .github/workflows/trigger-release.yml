@@ -16,10 +16,12 @@ jobs:
           repository: hudy9x/kompad-releases
           token: ${{ secrets.KOMPAD_RELEASE_REPO_TOKEN }}
 
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
       - name: generate new release text
-        run: node run release
+        run: date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "new release"
+          git push
+
       
