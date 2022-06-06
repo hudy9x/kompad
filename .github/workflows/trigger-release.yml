@@ -1,0 +1,25 @@
+name: "trigger-release"
+on:
+  push:
+    branches:
+      - release
+jobs:
+  trigger-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+
+    steps:
+      - name: checkout public release repo
+        uses: actions/checkout@v3
+        with:
+          repository: hudy9x/kompad-releases
+          token: ${{ secrets.KOMPAD_RELEASE_REPO_TOKEN }}
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - name: generate new release text
+        run: node run release
+      
