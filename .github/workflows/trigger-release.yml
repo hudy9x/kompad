@@ -1,0 +1,27 @@
+name: "trigger-release"
+on:
+  push:
+    branches:
+      - release
+jobs:
+  trigger-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
+
+    steps:
+      - name: checkout public release repo
+        uses: actions/checkout@v3
+        with:
+          repository: hudy9x/kompad-releases
+          token: ${{ secrets.KOMPAD_RELEASE_REPO_TOKEN }}
+
+      - name: generate new release text
+        run: date > generated.txt &&
+          git config user.name github-actions &&
+          git config user.email github-actions@github.com &&
+          git add . &&
+          git commit -m "new release" &&
+          git push
+
+      
