@@ -67,28 +67,38 @@
   @apply border-l-4 pl-8 italic font-serif text-lg text-gray-600;
 }
 
-.ProseMirror blockquote p{
+.ProseMirror blockquote p {
   @apply mb-4;
 }
-
 
 .ProseMirror ul[data-type="taskList"] {
   list-style: none;
   padding: 0;
+  @apply flex flex-col gap-2;
 }
 
 .ProseMirror ul[data-type="taskList"] p {
   margin: 0;
+  @apply text-gray-600 dark:text-gray-300;
 }
 
 .ProseMirror ul[data-type="taskList"] li {
   display: flex;
+  @apply px-3 py-2 bg-white shadow-sm rounded-md border border-gray-200 dark:bg-gray-700 dark:border-gray-800;
 }
 
 .ProseMirror ul[data-type="taskList"] li > label {
   flex: 0 0 auto;
   margin-right: 0.5rem;
   user-select: none;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label input {
+  @apply -mt-1 rounded border border-gray-400 dark:bg-gray-400 dark:border-gray-700 cursor-pointer hover:bg-yellow-50 focus:ring-transparent focus:ring-offset-0;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label input:checked {
+  @apply bg-yellow-400 border-yellow-500;
 }
 
 .ProseMirror ul[data-type="taskList"] li > div {
@@ -115,11 +125,10 @@
   @apply dark:text-gray-100;
 }
 
-.ProseMirror p, 
+.ProseMirror p,
 .ProseMirror code {
   @apply dark:text-gray-300;
 }
-
 
 .ProseMirror hr {
   @apply dark:border-gray-700;
