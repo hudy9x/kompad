@@ -10,7 +10,7 @@ interface IAvatarFormProps {
 
 function AvatarForm({
   onSelect,
-  defaultValue = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+  defaultValue = "https://firebasestorage.googleapis.com/v0/b/kompad-a9b60.appspot.com/o/avatars%2Fpublic%2Fmen-6.png?alt=media&token=37e2e899-6cbb-4ed3-b2d8-b3fcb86dedad",
 }: IAvatarFormProps) {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(defaultValue);
@@ -18,6 +18,7 @@ function AvatarForm({
 
   useEffect(() => {
     getAllPublicAvatars().then((publicAvatars) => {
+      console.log(publicAvatars)
       setPublicAvatars(publicAvatars);
     });
   }, []);

@@ -186,7 +186,7 @@ And not have spaces`);
               </div>
             </div>
 
-            <div className="input-group">
+            <div className="input-group inp-date">
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Date of birth
               </label> */}
