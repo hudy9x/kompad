@@ -4,7 +4,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import {
   HiOutlineLightningBolt,
-  HiOutlineLogout,
   HiOutlineUserCircle,
 } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
