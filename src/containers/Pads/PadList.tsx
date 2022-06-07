@@ -58,9 +58,9 @@ function PadList() {
                 </div>
               </div>
               <div className="flex gap-1 mt-3">
-                <span className="pad-tag">
+                {/* <span className="pad-tag">
                   <i>#</i> Badge
-                </span>
+                </span> */}
               </div>
             </Link>
             <div className="opacity-0 group-hover:opacity-100 transition-all absolute top-0 right-0 m-1">
