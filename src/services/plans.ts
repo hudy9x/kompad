@@ -61,7 +61,7 @@ export const createFreePlan = async () => {
   try {
     await setDoc(doc(db, `/plans`, uid), {
       uid,
-      maxRecord: 50,
+      maxRecord: 20,
       currentRecord: 0,
       // expiredTime: dayjs
     });
