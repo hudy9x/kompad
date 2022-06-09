@@ -98,7 +98,7 @@
 }
 
 .ProseMirror ul[data-type="taskList"] li > label input:checked {
-  @apply bg-yellow-400 border-yellow-500;
+  @apply bg-emerald-500 border-emerald-500;
 }
 
 .ProseMirror ul[data-type="taskList"] li > div {

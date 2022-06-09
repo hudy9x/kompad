@@ -7,7 +7,6 @@ import { HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
 import DarkMode from "./DarkMode";
 import { showShortcutModal } from "../../store/modal";
-import { AiOutlinePoweroff } from "react-icons/ai";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
