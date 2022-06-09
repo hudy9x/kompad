@@ -38,7 +38,7 @@ const TaskListConfigure = TaskList.configure({
   },
 });
 
-const limit = null;
+const limit = 20000;
 const CharacterCountConfigure = CharacterCount.configure({
   limit,
 });
