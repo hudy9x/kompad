@@ -4,6 +4,7 @@
 )]
 
 use tauri::Manager;
+use window_shadows::set_shadow;
 
 fn main() {
     tauri::Builder::default()
@@ -17,6 +18,8 @@ fn main() {
                 // std::thread::sleep(std::time::Duration::from_millis(700));
                 std::thread::sleep(std::time::Duration::from_secs(2));
                 println!("Done initializing.");
+
+                set_shadow(&main_window, true).expect("Unsupported platform!");
 
                 // After it's done, close the splashscreen and display the main window
                 splashscreen_window.close().unwrap();
