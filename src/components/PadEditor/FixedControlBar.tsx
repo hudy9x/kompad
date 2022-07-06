@@ -10,6 +10,7 @@ import {
   AiOutlineStrikethrough,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
+import { BiCodeAlt } from "react-icons/bi";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
@@ -191,6 +192,13 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         </button>
         <button onClick={setLink}>
           <IoLinkOutline className="control-icon" />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().setCodeBlock().run()}
+          className={editor.isActive("codeBlock") ? "is-active" : ""}
+        >
+          <BiCodeAlt className="control-icon" />
         </button>
       </div>
     </div>

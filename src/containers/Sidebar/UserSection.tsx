@@ -30,7 +30,7 @@ function UserSection() {
   }, []);
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-800 px-4 py-3 border-y border-t-gray-200 border-b-gray-400 dark:border-t-gray-900 dark:border-b-gray-900 flex items-center justify-between">
+    <div className="bg-gray-50 dark:bg-gray-800 px-4 py-3 border-t border-t-gray-200 dark:border-t-gray-900 dark:border-b-gray-900 flex items-center justify-between">
       <div className="flex-shrink-0 group block">
         <div className="flex items-center">
           <div>
