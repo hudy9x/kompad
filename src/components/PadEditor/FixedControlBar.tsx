@@ -57,7 +57,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
   return (
     <div className="fixed-controlbar">
-      <div className="controlbar-container flex flex-wrap gap-1">
+      <div className="controlbar-container flex flex-nowrap gap-1">
         <button
           className={`${editor.isActive("bold") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -138,12 +138,12 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <AiOutlineOrderedList className="control-icon" />
         </button>
-        <button
+        {/* <button
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={editor.isActive("codeBlock") ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
-        </button>
+        </button> */}
         <button
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           className={editor.isActive("blockquote") ? "is-active" : ""}
@@ -191,6 +191,13 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         </button>
         <button onClick={setLink}>
           <IoLinkOutline className="control-icon" />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().setCodeBlock().run()}
+          className={editor.isActive("codeBlock") ? "is-active" : ""}
+        >
+          <BsCodeSlash className="control-icon" />
         </button>
       </div>
     </div>
