@@ -9,9 +9,8 @@ import ListItem from "@tiptap/extension-list-item";
 import CharacterCount from "@tiptap/extension-character-count";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
-import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import lowlight from 'lowlight'
-
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import * as lowlight from "lowlight";
 
 import ControlBar from "./ControlBar";
 import { updatePad } from "../../services/pads";
@@ -46,10 +45,12 @@ const CharacterCountConfigure = CharacterCount.configure({
   limit,
 });
 
+// @ts-ignore
+console.log("1111111111111", lowlight.lowlight);
 const CodeBlockLowlightConfigure = CodeBlockLowlight.configure({
-  lowlight,
-})
-
+  // @ts-ignore
+  lowlight: lowlight.lowlight,
+});
 
 const extensions = [
   StarterKit,
@@ -66,7 +67,7 @@ const extensions = [
   Link.configure({
     openOnClick: false,
   }),
-  CodeBlockLowlightConfigure
+  CodeBlockLowlightConfigure,
 ];
 
 export default function PadEditor({ id, content }: IPadEditorProp) {
