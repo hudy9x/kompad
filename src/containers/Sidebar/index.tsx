@@ -10,6 +10,10 @@ export default function Sidebar() {
   const sidebar = useSettingStore((state) => state.view.sidebar);
 
   return (
+    <>
+    <aside className="root-sidebar">
+      
+    </aside>
     <aside className={`sidebar flex-shrink-0 ${sidebar ? "" : "hidden"}`}>
       <div className="flex justify-between items-center px-4">
         <h2 className="py-3 text-xl font-bold">Kompad</h2>
@@ -22,5 +26,6 @@ export default function Sidebar() {
       <UserSection />
       <ShortcutModal />
     </aside>
+    </>
   );
 }
