@@ -6,26 +6,27 @@ import PadSearchIcon from "../PadSearch/PadSearchIcon";
 import ShortcutModal from "../Settings/ShortcutModal";
 import UserSection from "./UserSection";
 
+import RootSidebar from "./RootSidebar";
+
 export default function Sidebar() {
   const sidebar = useSettingStore((state) => state.view.sidebar);
 
   return (
     <>
-    <aside className="root-sidebar">
-      
-    </aside>
-    <aside className={`sidebar flex-shrink-0 ${sidebar ? "" : "hidden"}`}>
-      <div className="flex justify-between items-center px-4">
-        <h2 className="py-3 text-xl font-bold">Kompad</h2>
-        <PadSearchIcon />
-      </div>
+      <aside className={`sidebar flex-shrink-0 ${sidebar ? "" : "hidden"}`}>
+        <div className="flex">
+          <RootSidebar />
+          <div className="second-sidebar">
+            <div className="flex items-center gap-2 px-4 py-4 border-b border-gray-200 dark:border-gray-900">
+              <PadSearchIcon />
+              <PadNew />
+            </div>
 
-      <PadNew />
-      <PadList />
-      <PadSearch />
-      <UserSection />
-      <ShortcutModal />
-    </aside>
+            <PadList />
+            <PadSearch />
+          </div>
+        </div>
+      </aside>
     </>
   );
 }

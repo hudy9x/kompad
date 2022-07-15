@@ -6,6 +6,10 @@
   @apply flex justify-between p-1
 } */
 
+:root {
+  --user-section-height: 
+}
+
 body {
   @apply h-screen overflow-hidden;
 }
@@ -19,8 +23,21 @@ body {
 }
 
 .pad-list {
-  height: calc(100vh - 52px - 54px - 53px - 11px);
+  height: calc(100vh - 71px);
   @apply overflow-y-auto;
+}
+
+.root-sidebar .side-section {
+  height: calc(100vh - 61px - 44px);
+  @apply overflow-y-auto;
+}
+
+.pad-item-title {
+  @apply text-base font-medium text-gray-900 dark:text-gray-300;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }
 
 .layout-clear .titlebar {

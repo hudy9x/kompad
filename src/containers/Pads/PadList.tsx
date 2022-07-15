@@ -48,7 +48,8 @@ function PadList() {
                     <time className="flex-shrink-0 whitespace-nowrap text-xs text-gray-500">
                       <i>{d.fromNow()}</i>
                     </time>
-                    <h2 className="text-base font-medium text-gray-900 dark:text-gray-300 truncate">
+
+                    <h2 className="pad-item-title" title={pad.title}>
                       {pad.title}
                     </h2>
                     <p className="text-sm text-gray-500 truncate">
