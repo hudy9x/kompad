@@ -1,19 +1,11 @@
 import create from "zustand";
 import produce from "immer";
-
-interface IFolder {
-  id?: string;
-  title: string;
-  color: string;
-  uid: string;
-}
+import { IFolder } from "../services/folders";
 
 export interface IFolderStore {
   folders: IFolder[];
   updateFolders: (data: IFolder[]) => void;
 }
-
-// default values
 
 // configure store
 export const useFolderStore = create<IFolderStore>((set) => ({
@@ -25,6 +17,3 @@ export const useFolderStore = create<IFolderStore>((set) => ({
       })
     ),
 }));
-
-// export const { getState: getSettingState, setState: setSettingState,  } =
-//   useFolderStore;

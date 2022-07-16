@@ -45,8 +45,6 @@ const CharacterCountConfigure = CharacterCount.configure({
   limit,
 });
 
-// @ts-ignore
-console.log("1111111111111", lowlight.lowlight);
 const CodeBlockLowlightConfigure = CodeBlockLowlight.configure({
   // @ts-ignore
   lowlight: lowlight.lowlight,
