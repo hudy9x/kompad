@@ -1,9 +1,7 @@
-import { BiPlus } from "react-icons/bi";
-import { BsFolder } from "react-icons/bs";
-import { FcFolder, FcKindle } from "react-icons/fc";
-import { HiHashtag } from "react-icons/hi";
+import { FcKindle } from "react-icons/fc";
 import Folders from "../Folders";
 import ShortcutModal from "../Settings/ShortcutModal";
+import Tags from "../Tags";
 import UserSection from "./UserSection";
 
 function RootSidebar() {
@@ -26,24 +24,7 @@ function RootSidebar() {
         </section>
 
         <Folders />
-
-        <section className="sec-container">
-          <h2 className="sec-title group relative">
-            <HiHashtag className="text-blue-500" />
-            <span>Tags</span>
-            <BiPlus className="hidden group-hover:block absolute top-3 right-2 w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-500" />
-          </h2>
-          <div className="sec-content">
-            <div className="sec-item">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
-              <span>javascript</span>
-            </div>
-            <div className="sec-item">
-              <span className="w-1.5 h-1.5 bg-pink-400 rounded-full"></span>
-              <span>css</span>
-            </div>
-          </div>
-        </section>
+        <Tags />
       </div>
 
       <UserSection />
