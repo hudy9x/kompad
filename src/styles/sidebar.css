@@ -1,3 +1,37 @@
 .sidebar {
-  @apply w-64 border-r dark:border-r-gray-900 dark:bg-gray-800;
+  @apply border-r dark:border-r-gray-900 dark:bg-gray-800;
+  @apply bg-gray-50;
+}
+
+.second-sidebar {
+  @apply w-64
+}
+
+.root-sidebar{
+  @apply w-56 border-r;
+  @apply bg-gray-100
+}
+
+.root-sidebar .side-section {
+  @apply pb-3;
+
+}
+
+.root-sidebar .sec-title {
+  @apply px-4 py-3 text-xs font-medium uppercase text-gray-600;
+  @apply flex items-center gap-2;
+  @apply hover:bg-gray-50;
+}
+
+.root-sidebar .sec-item {
+  @apply px-4 py-1;
+  @apply flex gap-2 items-center text-sm text-gray-500;
+}
+
+.root-sidebar .sec-container{
+  @apply mb-4
+}
+
+.root-sidebar .sec-content {
+  @apply ml-5;
 }
