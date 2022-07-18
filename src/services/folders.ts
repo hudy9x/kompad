@@ -77,8 +77,6 @@ export const watchFolders = (
 ): Unsubscribe | null => {
   const user = auth.currentUser;
 
-  console.log(user);
-
   if (!user) {
     cb(true, []);
     return null;

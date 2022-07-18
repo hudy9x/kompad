@@ -8,12 +8,15 @@ import {
   onSnapshot,
   orderBy,
   query,
+  QueryConstraint,
   Timestamp,
+  Unsubscribe,
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../libs/firebase";
+import { auth, db } from "../libs/firebase";
 import { setCache } from "../libs/localCache";
+import { IPadQuery } from "../store/pad";
 
 export interface IPad {
   id?: string;
@@ -21,10 +24,13 @@ export interface IPad {
   title: string;
   shortDesc?: string;
   tags: string[];
+  folder?: string;
   content: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
+
+const COLLECTION_NAME = "pads";
 
 /**
  * Save current editting pad
@@ -72,7 +78,7 @@ export const getPadsByUidQuery = (
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
   try {
     const q = query(
-      collection(db, "pads"),
+      collection(db, COLLECTION_NAME),
       where("uid", "==", uid),
       orderBy("updatedAt", "desc")
     );
@@ -105,7 +111,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
 
 export const getPadById = async (id: string): Promise<IPad | null> => {
   try {
-    const pad = await getDoc(doc(db, "pads", id));
+    const pad = await getDoc(doc(db, COLLECTION_NAME, id));
     if (pad.exists()) {
       return pad.data() as IPad;
     }
@@ -119,7 +125,7 @@ export const getPadById = async (id: string): Promise<IPad | null> => {
 
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
-    const docRef = await addDoc(collection(db, "pads"), {
+    const docRef = await addDoc(collection(db, COLLECTION_NAME), {
       uid,
       title: title,
       shortDesc,
@@ -174,4 +180,60 @@ export const updatePad = async ({
     title,
     updatedAt: Timestamp.now(),
   });
+};
+
+export const watchPads = (
+  queries: IPadQuery,
+  cb: (err: boolean, data: IPad[]) => void
+): Unsubscribe | null => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    cb(true, []);
+    return null;
+  }
+
+  const conds: QueryConstraint[] = [where("uid", "==", user.uid), orderBy("updatedAt", "desc")];
+
+  if (queries.tag) {
+    conds.push(where("tags", "array-contains", queries.tag));
+  }
+
+  if (queries.folder) {
+    conds.push(where("folder", "==", queries.folder));
+  }
+
+  // if (queries.tag) {
+  //   conds.push(where('tags', 'array-contains', queries.tag))
+  // }
+
+  // const q = query(
+  //   collection(db, COLLECTION_NAME),
+  //   where("uid", "==", user.uid),
+  //   orderBy("updatedAt", "desc")
+  // );
+
+  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds]);
+
+  const unsub = onSnapshot(q, (qSnapshot) => {
+    const pads: IPad[] = [];
+
+    qSnapshot.docs.forEach((doc) => {
+      const padData = doc.data() as IPad;
+      pads.push({
+        id: doc.id,
+        uid: padData.uid,
+        title: padData.title,
+        tags: padData.tags,
+        folder: padData.folder,
+        content: padData.content,
+        createdAt: padData.createdAt,
+        updatedAt: padData.updatedAt,
+      });
+    });
+
+    cb(false, pads);
+  });
+
+  return unsub;
 };

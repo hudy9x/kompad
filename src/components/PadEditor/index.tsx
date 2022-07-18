@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { shortCutAcion } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
+// import PadInfo from "./PadInfo";
 
 interface IPadEditorProp {
   id: string;
@@ -121,6 +122,7 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
   return (
     <ErrorCapture>
       <div className="tiptap-container">
+        {/* <PadInfo /> */}
         <FixedControlBar editor={editor} />
         <div className="tiptap-box">
           <EditorContent

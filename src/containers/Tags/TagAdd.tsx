@@ -38,18 +38,27 @@ function TagAdd() {
     if (!inp.current) {
       return;
     }
+    const title = inp.current.value;
+
+    if (!title) {
+      setVisible(false);
+      setColor(COLORS[0]);
+      return;
+    }
 
     addTag({
-      title: inp.current.value,
+      title,
       color,
     })
       .then(() => {
-        setVisible(false);
         inp.current && (inp.current.value = "");
+        setVisible(false);
         setColor(COLORS[0]);
       })
       .catch((err) => {
         console.log(err);
+        setVisible(false);
+        setColor(COLORS[0]);
         message.error("Create folder Error");
       });
   }, [color]);
