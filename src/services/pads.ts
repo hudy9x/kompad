@@ -168,18 +168,53 @@ export const quickAddPad = async (uid: string) => {
 
 export const updatePad = async ({
   id,
-  title,
+  // title,
   content,
 }: {
   id: string;
-  title: string;
+  // title: string;
   content: string;
 }) => {
   updateDoc(doc(db, "pads", id), {
     content,
-    title,
+    // title,
     updatedAt: Timestamp.now(),
   });
+};
+
+export const updatePadMetadata = async ({
+  id,
+  title,
+  tags,
+  folder,
+}: {
+  id: string;
+  title?: string;
+  tags?: string[];
+  folder?: string;
+}) => {
+  const data: {
+    title?: string;
+    tags?: string[];
+    updatedAt?: Timestamp;
+    folder?: string;
+  } = {
+    updatedAt: Timestamp.now(),
+  };
+
+  if (title) {
+    data.title = title;
+  }
+
+  if (tags && tags.length) {
+    data.tags = tags;
+  }
+
+  if (folder) {
+    data.folder = folder;
+  }
+
+  updateDoc(doc(db, "pads", id), data);
 };
 
 export const watchPads = (
@@ -193,7 +228,10 @@ export const watchPads = (
     return null;
   }
 
-  const conds: QueryConstraint[] = [where("uid", "==", user.uid), orderBy("updatedAt", "desc")];
+  const conds: QueryConstraint[] = [
+    where("uid", "==", user.uid),
+    orderBy("updatedAt", "desc"),
+  ];
 
   if (queries.tag) {
     conds.push(where("tags", "array-contains", queries.tag));

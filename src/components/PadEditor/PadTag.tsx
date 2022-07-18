@@ -13,6 +13,12 @@ function PadTag({ selected, className = "" }: IPadTagsProps) {
 
   if (!filteredTags.length) {
     return null;
+    // return (
+    //   <div className="inline-flex gap-1 items-center bg-gray-100 px-1 rounded-md cursor-pointer hover:bg-gray-200">
+    //     <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+    //     <span className="text-xs text-gray-400">new tag</span>
+    //   </div>
+    // );
   }
 
   return (
