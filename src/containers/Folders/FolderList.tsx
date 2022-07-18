@@ -1,17 +1,13 @@
 import { Unsubscribe } from "firebase/firestore";
 import { useEffect } from "react";
-import { BsFolder } from "react-icons/bs";
-import { HiX } from "react-icons/hi";
 import { useAuth } from "../../hooks/useAuth";
-import { delFolder, watchFolders } from "../../services/folders";
+import { watchFolders } from "../../services/folders";
 import { useFolderStore } from "../../store/folder";
+import FolderItem from "./FolderItem";
 
 function FolderList() {
   const { user } = useAuth();
   const { folders, updateFolders } = useFolderStore();
-  const onDelete = (id: string) => {
-    delFolder(id);
-  };
 
   useEffect(() => {
     let unsub: Unsubscribe | null;
@@ -35,21 +31,7 @@ function FolderList() {
   return (
     <>
       {folders.map((folder) => {
-        return (
-          <div
-            key={folder.id}
-            className="flex items-center justify-between group cursor-pointer"
-          >
-            <div className="sec-item" key={folder.id}>
-              <BsFolder style={{ color: folder.color }} />
-              <span>{folder.title}</span>
-            </div>
-            <HiX
-              onClick={() => onDelete(folder.id || "")}
-              className="mr-5 group-hover:block hidden text-gray-400"
-            />
-          </div>
-        );
+        return <FolderItem key={folder.id} folder={folder} />;
       })}
     </>
   );
