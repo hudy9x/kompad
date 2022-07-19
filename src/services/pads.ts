@@ -123,6 +123,25 @@ export const getPadById = async (id: string): Promise<IPad | null> => {
   }
 };
 
+export const watchPadById = (
+  id: string,
+  cb: (err: boolean, data?: IPad) => void
+): Unsubscribe => {
+  const unsub = onSnapshot(doc(db, COLLECTION_NAME, id), (pad) => {
+    if (!pad.exists()) {
+      cb(true);
+      return;
+    }
+
+    const padData = pad.data() as IPad;
+    padData.id = pad.id;
+
+    cb(false, padData);
+  });
+
+  return unsub;
+};
+
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
@@ -149,6 +168,40 @@ export const delPad = async (id: string) => {
   }
 };
 
+export const delTagByPadId = async (pid: string, tid: string) => {
+  try {
+    if (!pid || !tid) return 0;
+
+    const pad = await getDoc(doc(db, "pads", pid));
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad;
+
+    await updateDoc(doc(db, "pads", pid), {
+      tags: padData.tags.filter((t) => t !== tid),
+    });
+
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+};
+export const delFolderByPadId = async (pid: string) => {
+  try {
+    if (!pid) return 0;
+
+    await updateDoc(doc(db, "pads", pid), {
+      folder: "",
+    });
+
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+};
+
 export const quickAddPad = async (uid: string) => {
   try {
     const docRef = await addDoc(collection(db, "pads"), {
@@ -168,18 +221,53 @@ export const quickAddPad = async (uid: string) => {
 
 export const updatePad = async ({
   id,
-  title,
+  // title,
   content,
 }: {
   id: string;
-  title: string;
+  // title: string;
   content: string;
 }) => {
   updateDoc(doc(db, "pads", id), {
     content,
-    title,
+    // title,
     updatedAt: Timestamp.now(),
   });
+};
+
+export const updatePadMetadata = async ({
+  id,
+  title,
+  tags,
+  folder,
+}: {
+  id: string;
+  title?: string;
+  tags?: string[];
+  folder?: string;
+}) => {
+  const data: {
+    title?: string;
+    tags?: string[];
+    updatedAt?: Timestamp;
+    folder?: string;
+  } = {
+    updatedAt: Timestamp.now(),
+  };
+
+  if (title) {
+    data.title = title;
+  }
+
+  if (tags && tags.length) {
+    data.tags = tags;
+  }
+
+  if (folder) {
+    data.folder = folder;
+  }
+
+  updateDoc(doc(db, "pads", id), data);
 };
 
 export const watchPads = (
@@ -193,7 +281,10 @@ export const watchPads = (
     return null;
   }
 
-  const conds: QueryConstraint[] = [where("uid", "==", user.uid), orderBy("updatedAt", "desc")];
+  const conds: QueryConstraint[] = [
+    where("uid", "==", user.uid),
+    orderBy("updatedAt", "desc"),
+  ];
 
   if (queries.tag) {
     conds.push(where("tags", "array-contains", queries.tag));

@@ -13,16 +13,17 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import * as lowlight from "lowlight";
 
 import ControlBar from "./ControlBar";
-import { updatePad } from "../../services/pads";
+import { IPad, updatePad } from "../../services/pads";
 import { useEffect, useState } from "react";
 import { shortCutAcion } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
-// import PadInfo from "./PadInfo";
+import PadInfo from "./PadInfo";
 
 interface IPadEditorProp {
   id: string;
   content: string;
+  data: IPad;
 }
 
 const PlaceholderConfig = Placeholder.configure({
@@ -69,7 +70,7 @@ const extensions = [
   CodeBlockLowlightConfigure,
 ];
 
-export default function PadEditor({ id, content }: IPadEditorProp) {
+export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
 
   const editor = useEditor({
@@ -77,8 +78,6 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
     editorProps: {
       attributes: {
         class: "",
-        // class:
-        //   "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
       },
     },
     content: content,
@@ -94,18 +93,7 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
       }
 
       timer = setTimeout(() => {
-        const { content } = editor.getJSON();
-        const title = content ? content[0] : null;
-        let newTitle = "";
-
-        if (title && title.content) {
-          newTitle = title.content.reduce((prev, next) => {
-            prev += next.text || "";
-            return prev;
-          }, "");
-        }
-
-        updatePad({ id, title: newTitle, content: editor.getHTML() });
+        updatePad({ id, content: editor.getHTML() });
       }, 600) as unknown as number;
     }
 
@@ -122,9 +110,9 @@ export default function PadEditor({ id, content }: IPadEditorProp) {
   return (
     <ErrorCapture>
       <div className="tiptap-container">
-        {/* <PadInfo /> */}
         <FixedControlBar editor={editor} />
         <div className="tiptap-box">
+          <PadInfo />
           <EditorContent
             editor={editor}
             className="tiptap-main-content"

@@ -63,10 +63,10 @@
         "fullscreen": false,
         "decorations": false,
         "center": true,
-        "height": 800,
+        "height": 900,
         "resizable": true,
         "title": "Kompad",
-        "width": 1200,
+        "width": 1360,
         "minWidth": 730,
         "minHeight": 650,
         "visible": false

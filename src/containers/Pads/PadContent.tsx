@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PadEditor from "../../components/PadEditor";
-import { getPadById, saveCurrentPad } from "../../services/pads";
+import { getPadById, IPad, saveCurrentPad } from "../../services/pads";
 
 function PadContent() {
   const { id } = useParams();
-  const [pad, setPad] = useState({ title: "", content: "" });
+  const [pad, setPad] = useState<IPad>();
 
   useEffect(() => {
     if (id) {
@@ -16,8 +16,15 @@ function PadContent() {
         setPad((prevPad) => ({
           ...prevPad,
           ...{
-            title: res.title,
             content: res.content,
+            createdAt: res.createdAt,
+            tags: res.tags,
+            title: res.title,
+            uid: res.uid,
+            updatedAt: res.updatedAt,
+            folder: res.folder || '',
+            id: res.id,
+            shortDesc: res.shortDesc
           },
         }));
       });
@@ -26,7 +33,7 @@ function PadContent() {
 
   return (
     <>
-      {pad.content && id ? <PadEditor id={id} content={pad.content} /> : null}
+      {pad && pad.content && id ? <PadEditor data={pad} id={id} content={pad.content} /> : null}
     </>
   );
 }
