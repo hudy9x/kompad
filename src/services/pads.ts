@@ -123,6 +123,25 @@ export const getPadById = async (id: string): Promise<IPad | null> => {
   }
 };
 
+export const watchPadById = (
+  id: string,
+  cb: (err: boolean, data?: IPad) => void
+): Unsubscribe => {
+  const unsub = onSnapshot(doc(db, COLLECTION_NAME, id), (pad) => {
+    if (!pad.exists()) {
+      cb(true);
+      return;
+    }
+
+    const padData = pad.data() as IPad;
+    padData.id = pad.id;
+
+    cb(false, padData);
+  });
+
+  return unsub;
+};
+
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
@@ -146,6 +165,40 @@ export const delPad = async (id: string) => {
     await deleteDoc(doc(db, "pads", id));
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const delTagByPadId = async (pid: string, tid: string) => {
+  try {
+    if (!pid || !tid) return 0;
+
+    const pad = await getDoc(doc(db, "pads", pid));
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad;
+
+    await updateDoc(doc(db, "pads", pid), {
+      tags: padData.tags.filter((t) => t !== tid),
+    });
+
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+};
+export const delFolderByPadId = async (pid: string) => {
+  try {
+    if (!pid) return 0;
+
+    await updateDoc(doc(db, "pads", pid), {
+      folder: "",
+    });
+
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 };
 

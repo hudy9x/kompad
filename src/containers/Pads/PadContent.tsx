@@ -15,7 +15,17 @@ function PadContent() {
 
         setPad((prevPad) => ({
           ...prevPad,
-          ...res,
+          ...{
+            content: res.content,
+            createdAt: res.createdAt,
+            tags: res.tags,
+            title: res.title,
+            uid: res.uid,
+            updatedAt: res.updatedAt,
+            folder: res.folder || '',
+            id: res.id,
+            shortDesc: res.shortDesc
+          },
         }));
       });
     }

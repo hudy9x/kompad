@@ -78,8 +78,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     editorProps: {
       attributes: {
         class: "",
-        // class:
-        //   "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none m-auto",
       },
     },
     content: content,
@@ -95,17 +93,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       }
 
       timer = setTimeout(() => {
-        // const { content } = editor.getJSON();
-        // const title = content ? content[0] : null;
-        // let newTitle = "";
-
-        // if (title && title.content) {
-        //   newTitle = title.content.reduce((prev, next) => {
-        //     prev += next.text || "";
-        //     return prev;
-        //   }, "");
-        // }
-
         updatePad({ id, content: editor.getHTML() });
       }, 600) as unknown as number;
     }
@@ -123,21 +110,21 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
   return (
     <ErrorCapture>
       <div className="tiptap-container">
-        <PadInfo info={data} />
-        {/* <FixedControlBar editor={editor} /> */}
+        <FixedControlBar editor={editor} />
         <div className="tiptap-box">
-          {/* <EditorContent
+          <PadInfo />
+          <EditorContent
             editor={editor}
             className="tiptap-main-content"
             spellCheck={false}
             onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
               shortCutAcion(ev);
             }}
-          /> */}
+          />
         </div>
-        {/* <ControlBar editor={editor} /> */}
+        <ControlBar editor={editor} />
         <div className="character-count">
-          {/* {editor && editor.storage.characterCount.words()} words */}
+          {editor && editor.storage.characterCount.words()} words
         </div>
       </div>
     </ErrorCapture>
