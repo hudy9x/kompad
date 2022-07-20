@@ -3,8 +3,6 @@ import PadList from "../Pads/PadList";
 import PadNew from "../Pads/PadNew";
 import PadSearch from "../PadSearch";
 import PadSearchIcon from "../PadSearch/PadSearchIcon";
-import ShortcutModal from "../Settings/ShortcutModal";
-import UserSection from "./UserSection";
 
 import RootSidebar from "./RootSidebar";
 
