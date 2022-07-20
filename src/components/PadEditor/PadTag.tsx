@@ -36,7 +36,7 @@ function PadTag({
         return (
           <div
             key={tag.id}
-            className="flex gap-1 items-center bg-gray-100 px-1 rounded-md group relative"
+            className="flex gap-1 items-center bg-gray-100 dark:bg-gray-700 px-1 rounded-md group relative"
           >
             <span
               style={{ backgroundColor: tag.color }}
