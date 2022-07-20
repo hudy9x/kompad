@@ -48,7 +48,7 @@
     "zustand": "^4.0.0-rc.1"
   },
   "scripts": {
-    "start": "cross-env BROWSER=none react-scripts start",
+    "start": "cross-env BROWSER=none cross-env PORT=1241 react-scripts start",
     "build": "react-scripts build",
     "build:app": "tauri build",
     "test": "react-scripts test",
