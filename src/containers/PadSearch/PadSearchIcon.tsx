@@ -15,7 +15,7 @@ function PadSearchIcon() {
       <input
         type="text"
         readOnly
-        className="shadow-sm block w-full cursor-pointer sm:text-sm border-gray-300 hover:bg-gray-50 rounded-md"
+        className="shadow-sm block w-full cursor-pointer sm:text-sm border-gray-300 hover:bg-gray-50 rounded-md dark:bg-gray-900 dark:border-gray-800"
         placeholder="Find your pad ..."
       />
       <HiOutlineSearch

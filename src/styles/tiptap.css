@@ -8,7 +8,7 @@
 
 .pad-infos {
   @apply px-8 pb-8 md:w-[700px] xl:w-[800px] m-auto;
-  @apply border-b border-dashed mb-4;
+  @apply border-b border-dashed mb-4 dark:border-gray-700;
 }
 
 .tiptap-main-content {

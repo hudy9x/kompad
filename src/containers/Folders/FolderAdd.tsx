@@ -105,12 +105,12 @@ function FolderAdd() {
           <input
             ref={inp}
             type="text"
-            className="py-1 pr-8 shadow-sm w-full block sm:text-sm border-gray-300 rounded-md"
+            className="py-1 pr-8 shadow-sm w-full block sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-800"
           />
           <span
             onClick={onSubmit}
             style={{ fontSize: "10px" }}
-            className="absolute px-1 h-5 leading-4 top-1.5 right-1.5 bg-gray-50 border rounded cursor-pointer"
+            className="absolute px-1 h-5 leading-4 top-[5px] right-1.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-700 rounded cursor-pointer"
             title="Choose folder color"
           >
             OK
@@ -132,7 +132,7 @@ function FolderAdd() {
               ref={colorContainerRef}
               className={`${
                 colorSelection ? "" : "hidden"
-              } absolute z-10 top-6 border left-0 p-4 bg-white shadow-md rounded-md`}
+              } absolute z-10 top-6 border left-0 p-4 bg-white dark:bg-gray-900 dark:border-transparent shadow-md rounded-md`}
             >
               <div className="grid grid-cols-6 gap-3">
                 {COLORS.map((color) => {
@@ -141,7 +141,7 @@ function FolderAdd() {
                       onClick={() => onSelectColor(color)}
                       key={color}
                       style={{ backgroundColor: color }}
-                      className="w-3 h-3 cursor-pointer rounded-full ring-2 ring-transparent ring-offset-1 hover:ring-indigo-500"
+                      className="w-3 h-3 cursor-pointer rounded-full ring-2 ring-transparent dark:ring-offset-gray-800 ring-offset-1 hover:ring-indigo-500"
                     ></span>
                   );
                 })}
@@ -160,7 +160,7 @@ function FolderAdd() {
           }, 100);
         }}
         style={{ display: visible ? "none" : "" }}
-        className={`sec-item hover:text-gray-700 cursor-pointer`}
+        className={`sec-item hover:text-gray-700 dark:hover:text-gray-400 cursor-pointer`}
       >
         <BiPlus />
         <span className="uppercase" style={{ fontSize: "0.65rem" }}>

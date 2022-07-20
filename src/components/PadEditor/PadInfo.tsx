@@ -45,7 +45,7 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
         ref={inpRef}
         // value={info.title}
         onChange={updateTitle}
-        className="mb-5 h-12 md:w-[700px] xl:w-[800px] m-auto text-4xl text-gray-700 font-extrabold outline-none"
+        className="mb-5 h-12 md:w-[700px] xl:w-[800px] m-auto text-4xl text-gray-700 font-extrabold outline-none dark:bg-transparent dark:text-gray-100"
         placeholder="Untitled"
       />
       <div className="pad-details space-y-2 text-gray-600">

@@ -8,8 +8,8 @@
 }
 
 .root-sidebar{
-  @apply w-56 border-r;
-  @apply bg-gray-100
+  @apply w-56 border-r dark:border-r-gray-900;
+  @apply bg-gray-100 dark:bg-gray-800
 }
 
 .root-sidebar .side-section {
@@ -18,9 +18,8 @@
 }
 
 .root-sidebar .sec-title {
-  @apply px-4 py-3 text-xs font-medium uppercase text-gray-600;
+  @apply px-4 py-3 text-xs font-medium uppercase text-gray-600 dark:text-gray-400;
   @apply flex items-center gap-2;
-  @apply hover:bg-gray-50;
 }
 
 .root-sidebar .sec-item {

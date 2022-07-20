@@ -14,7 +14,7 @@ function TagDelete({
 }) {
   return (
     <HiX
-      className={`cursor-pointer bg-gray-100 text-gray-400 hover:text-gray-700 h-3 ${className}`}
+      className={`cursor-pointer bg-gray-100 dark:bg-gray-700 dark:text-gray-200 text-gray-400 hover:text-gray-700 h-3 ${className}`}
       onClick={async () => {
         const result = await delTagByPadId(pid, tid);
         if (!result) {
