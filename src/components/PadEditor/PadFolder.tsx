@@ -1,4 +1,4 @@
-import { BsFolder } from "react-icons/bs";
+import { FaRegFolder } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import FolderDelete from "../../containers/Folders/FolderDelete";
 import FolderSelect from "../../containers/Folders/FolderSelect";
@@ -25,10 +25,10 @@ function PadFolder({ selected, allowUpdateIfEmpty = false }: IPadFolderProps) {
     <>
       {folder ? (
         <div className="flex gap-2 items-center text-xs text-gray-500 group">
-          <BsFolder style={{ color: folder.color }} />
+          <FaRegFolder style={{ color: folder.color }} />
           <span>{folder.title}</span>
           {allowUpdateIfEmpty ? (
-            <FolderDelete pid={id || ""} className="hidden group-hover:block" />
+            <FolderDelete pid={id || ""} className="hidden group-hover:block dark:bg-gray-900 rounded-full p-0.5" />
           ) : null}
         </div>
       ) : null}

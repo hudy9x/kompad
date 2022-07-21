@@ -12,8 +12,8 @@ function PadNew() {
 
   return (
     <div className="">
-      <Button onClick={createNewPad}>
-        <HiOutlinePlus className="h-5" aria-hidden="true" />
+      <Button onClick={createNewPad} size="px-2 py-2">
+        <HiOutlinePlus className="h-3" aria-hidden="true" />
       </Button>
       <PadNewModal />
     </div>

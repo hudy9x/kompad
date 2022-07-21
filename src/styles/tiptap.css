@@ -13,7 +13,7 @@
 
 .tiptap-main-content {
   @apply px-8 pb-8 md:w-[700px] xl:w-[800px] m-auto;
-  height: calc(100vh - 25px - 64px);
+  height: calc(100vh - 25px - 64px - 188px);
   font-size: 16px; /* base font size */
 }
 

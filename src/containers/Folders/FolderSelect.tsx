@@ -7,8 +7,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { useAuth } from "../../hooks/useAuth";
 import { classNames } from "../../libs/utils";
 import { useFolderStore } from "../../store/folder";
-import { BsFolder } from "react-icons/bs";
 import { watchFolders } from "../../services/folders";
+import { FaRegFolder } from "react-icons/fa";
 
 interface IFolderSelectProps {
   onChange?: (id: string) => void;
@@ -45,7 +45,7 @@ function FolderSelect({ onChange }: IFolderSelectProps) {
         <div>
           <Menu.Button className="bg-gray-100 dark:bg-gray-900 rounded-full flex items-center text-gray-400 hover:text-gray-600 ">
             <span className="sr-only">Open options</span>
-            <BsFolder className="h-5 w-5 p-1" aria-hidden="true" />
+            <FaRegFolder className="h-5 w-5 p-1" aria-hidden="true" />
           </Menu.Button>
         </div>
 
@@ -70,7 +70,7 @@ function FolderSelect({ onChange }: IFolderSelectProps) {
                           "cursor-pointer text-gray-400 dark:hover:text-gray-400 flex items-center hover:text-gray-700 px-4 py-2 text-sm space-x-3 hover:bg-gray-50 dark:hover:bg-gray-800"
                         )}
                       >
-                        <BsFolder style={{ color: folder.color }} />
+                        <FaRegFolder style={{ color: folder.color }} />
                         <span>{folder.title}</span>
                       </div>
                     )}

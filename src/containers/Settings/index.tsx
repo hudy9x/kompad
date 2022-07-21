@@ -31,7 +31,7 @@ export default function Settings() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="-right-3 absolute bottom-8 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+        <Menu.Items className="-right-16 absolute bottom-8 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
@@ -41,7 +41,7 @@ export default function Settings() {
                   }}
                   className={classNames(
                     active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
@@ -60,7 +60,7 @@ export default function Settings() {
                   to="/setting/profile"
                   className={classNames(
                     active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
@@ -78,7 +78,7 @@ export default function Settings() {
                 <div
                   className={classNames(
                     active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center justify-between px-4 py-2 text-sm cursor-pointer"
                   )}
@@ -95,7 +95,7 @@ export default function Settings() {
                   href={"https://github.com/hudy9x/kompad-homepage/issues"}
                   className={classNames(
                     active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}
@@ -114,7 +114,7 @@ export default function Settings() {
                   to={"/signout"}
                   className={classNames(
                     active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-gray-300"
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
                       : "text-gray-700 dark:text-gray-300",
                     "group flex items-center px-4 py-2 text-sm cursor-pointer"
                   )}

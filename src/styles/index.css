@@ -6,10 +6,6 @@
   @apply flex justify-between p-1
 } */
 
-:root {
-  --user-section-height: 
-}
-
 body {
   @apply h-screen overflow-hidden;
 }
@@ -36,7 +32,7 @@ body {
   @apply text-base font-medium text-gray-900 dark:text-gray-300;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;  
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
