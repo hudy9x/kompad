@@ -38,8 +38,8 @@ export default function LayoutSetting() {
         </Link>
         <span>Settings</span>
       </h2>
-      <div className="grid grid-cols-4 ">
-        <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-1">
+      <div className="grid grid-cols-4 mt-4">
+        <aside className="py-6 px-2 mx-4 sm:px-6 lg:py-0 lg:px-0 lg:col-span-1">
           <nav className="space-y-1">
             {navigation.map((item) => (
               <NavLink
@@ -64,7 +64,7 @@ export default function LayoutSetting() {
           </nav>
         </aside>
 
-        <div className="col-span-3 pt-6 pr-6">
+        <div className="col-span-3 pr-6">
           <Outlet />
         </div>
       </div>

@@ -1,6 +1,5 @@
-import React from "react";
-import { BsFolder } from "react-icons/bs";
 import { HiX } from "react-icons/hi";
+import { FaRegFolder } from "react-icons/fa";
 import { delFolder, IFolder } from "../../services/folders";
 import { usePadListStore } from "../../store/pad";
 
@@ -27,7 +26,7 @@ function FolderItem({ folder }: IFolderItemProps) {
   return (
     <div className="flex items-center justify-between group cursor-pointer">
       <div className="sec-item" onClick={onSelectFolder}>
-        <BsFolder style={{ color: folder.color }} />
+        <FaRegFolder style={{ color: folder.color }} />
         <span className={isActive}>{folder.title}</span>
       </div>
       <HiX
