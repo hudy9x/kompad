@@ -6,6 +6,7 @@ import {
   onSnapshot,
   query,
   Unsubscribe,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { auth, db } from "../libs/firebase";
@@ -72,5 +73,29 @@ export const delTag = async (id: string) => {
     await deleteDoc(doc(db, COLLECTION_NAME, id));
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const editTag = async ({
+  id,
+  title,
+  color,
+}: {
+  id: string;
+  title: string;
+  color: string;
+}) => {
+  try {
+    const res = await updateDoc(doc(db, COLLECTION_NAME, id), {
+      title,
+      color,
+    });
+
+    console.log(res);
+
+    return 1;
+  } catch (error) {
+    console.log(error);
+    return 0;
   }
 };
