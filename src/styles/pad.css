@@ -4,17 +4,24 @@
 }
 
 .pad-list .pad-item {
-  @apply relative  cursor-pointer bg-white py-3 px-4 hover:bg-gray-50  dark:hover:bg-gray-700;
+  @apply relative;
+  @apply relative  cursor-pointer bg-white py-3 px-4;
 }
 
 .pad-list .pad-item.active {
-  @apply relative;
   @apply dark:bg-gray-800;
 }
 
 .pad-list .pad-item.active:before {
-  @apply absolute top-0 left-0 bg-gray-500 dark:bg-gray-400;
-  content: '';
+  @apply absolute top-0 left-0 bg-gray-600 dark:bg-gray-400;
+  content: "";
+  width: 3px;
+  height: 100%;
+}
+
+.pad-list .pad-item:hover:before {
+  @apply absolute top-0 left-0 bg-gray-400 dark:bg-gray-600;
+  content: "";
   width: 3px;
   height: 100%;
 }
