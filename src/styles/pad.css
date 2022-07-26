@@ -12,16 +12,18 @@
   @apply dark:bg-gray-800;
 }
 
-.pad-list .pad-item.active:before {
-  @apply absolute top-0 left-0 bg-gray-600 dark:bg-gray-400;
+.pad-list .pad-item:hover:before,
+.pad-list .pad-item.active:before{
+  @apply absolute top-0 left-0;
   content: "";
   width: 3px;
   height: 100%;
 }
 
+.pad-list .pad-item.active:before {
+  @apply bg-gray-600 dark:bg-gray-400;
+}
+
 .pad-list .pad-item:hover:before {
-  @apply absolute top-0 left-0 bg-gray-400 dark:bg-gray-600;
-  content: "";
-  width: 3px;
-  height: 100%;
+  @apply bg-gray-400 dark:bg-gray-600;
 }
