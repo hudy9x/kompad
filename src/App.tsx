@@ -14,6 +14,7 @@ import PadEmpty from "./containers/Pads/PadEmpty";
 import Signin from "./containers/Signin";
 import Signout from "./containers/Signout";
 import Signup from "./containers/Signup";
+import { isDesktopApp } from "./libs/utils";
 import { AuthenProvider } from "./providers/Authenticator";
 
 const lz = React.lazy;
@@ -25,8 +26,9 @@ const Plan = lz(() => import("./containers/AdvancedSettings/Plan"));
 const NotFound = lz(() => import("./containers/NotFound"));
 
 function App() {
+  const isWebversion = !isDesktopApp();
   return (
-    <div className="App">
+    <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
         <Routes>
           <Route path="/" element={<LayoutClear />}>

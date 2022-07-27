@@ -31,7 +31,7 @@ function UserSection() {
 
       emit("tauri://update");
     }
-  }, []);
+  }, [isApp]);
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 px-4 py-3 border-t border-t-gray-200 dark:border-t-gray-800 dark:border-b-gray-900 flex items-center justify-between">
