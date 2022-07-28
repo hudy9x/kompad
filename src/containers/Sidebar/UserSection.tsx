@@ -2,6 +2,7 @@ import { getVersion } from "@tauri-apps/api/app";
 import { emit, listen } from "@tauri-apps/api/event";
 import { useEffect, useState } from "react";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { isDesktopApp } from "../../libs/utils";
 import { showUpdateModal } from "../../store/modal";
 import Settings from "../Settings";
 
@@ -9,25 +10,28 @@ function UserSection() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [version, setVersion] = useState("");
   const { info } = useCurrentUser();
+  const isApp = isDesktopApp();
 
   const openUpdateModal = () => {
-    if (updateAvailable) {
+    if (updateAvailable && isApp) {
       showUpdateModal();
     }
   };
 
   useEffect(() => {
-    getVersion().then((version) => {
-      setVersion(version);
-    });
+    if (isApp) {
+      getVersion().then((version) => {
+        setVersion(version);
+      });
 
-    listen("tauri://update-available", function (res) {
-      console.log('tauri://update-available', res)
-      setUpdateAvailable(true);
-    });
+      listen("tauri://update-available", function (res) {
+        console.log("tauri://update-available", res);
+        setUpdateAvailable(true);
+      });
 
-    emit("tauri://update");
-  }, []);
+      emit("tauri://update");
+    }
+  }, [isApp]);
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 px-4 py-3 border-t border-t-gray-200 dark:border-t-gray-800 dark:border-b-gray-900 flex items-center justify-between">
@@ -56,7 +60,7 @@ function UserSection() {
                 title={`${updateAvailable ? "New version available" : ""}`}
                 className="hover:text-gray-400"
               >
-                v{version}
+                {isApp ? `v${version}` : 'Web app'}
               </span>
 
               {updateAvailable ? (

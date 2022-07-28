@@ -7,18 +7,18 @@
 }
 
 .pad-infos {
-  @apply px-8 pb-8 md:w-[700px] xl:w-[800px] m-auto;
+  @apply px-8 pb-8 w-[700px] xl:w-[800px] m-auto;
   @apply border-b border-dashed mb-4 dark:border-gray-700;
 }
 
 .tiptap-main-content {
-  @apply px-8 pb-8 md:w-[700px] xl:w-[800px] m-auto;
+  @apply px-8 pb-8 w-[700px] xl:w-[800px] m-auto;
   height: calc(100vh - 25px - 64px - 188px);
   font-size: 16px; /* base font size */
 }
 
 .fixed-controlbar {
-  @apply px-8 py-4 md:w-[700px] xl:w-[800px] m-auto mr-3.5 lg:mr-auto;
+  @apply px-6 py-4 w-[700px] xl:w-[800px] m-auto;
 }
 
 .tiptab-format-actions {

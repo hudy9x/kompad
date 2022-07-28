@@ -2,3 +2,28 @@
   font-size: 0.625rem;
   @apply flex uppercase;
 }
+
+.pad-list .pad-item {
+  @apply relative;
+  @apply relative  cursor-pointer bg-white py-3 px-4;
+}
+
+.pad-list .pad-item.active {
+  @apply dark:bg-gray-800;
+}
+
+.pad-list .pad-item:hover:before,
+.pad-list .pad-item.active:before{
+  @apply absolute top-0 left-0;
+  content: "";
+  width: 3px;
+  height: 100%;
+}
+
+.pad-list .pad-item.active:before {
+  @apply bg-gray-600 dark:bg-gray-400;
+}
+
+.pad-list .pad-item:hover:before {
+  @apply bg-gray-400 dark:bg-gray-600;
+}

@@ -7,6 +7,12 @@ import "./styles/index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+declare global {
+  interface Window {
+    __TAURI__: unknown;
+  }
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
