@@ -19,6 +19,8 @@ import { shortCutAcion } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
+// import Diagram from "../"
+import NodeDiagram from '../../nodes/NodeDiagram'
 
 interface IPadEditorProp {
   id: string;
@@ -68,6 +70,7 @@ const extensions = [
     openOnClick: false,
   }),
   CodeBlockLowlightConfigure,
+  NodeDiagram,
 ];
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
@@ -80,7 +83,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         class: "",
       },
     },
-    content: content,
+    //    content: content,
+    content: `<react-component></react-component>`,
     onUpdate: ({ editor }) => {
       setUpdate((prevUpdate) => prevUpdate + 1);
     },

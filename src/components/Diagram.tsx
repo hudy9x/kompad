@@ -2,9 +2,9 @@ import { NodeViewWrapper } from '@tiptap/react'
 import mermaid from 'mermaid'
 import { useEffect } from 'react'
 
-const randId = () => Math.round((Math.random() * 0xfffff).toString(16))
+const randId = () => Math.round((Math.random() * 0xfffff)).toString(16)
 
-export default function Diagram({ children }) {
+export default function Diagram() {
   useEffect(() => {
     console.log(mermaid)
   })
