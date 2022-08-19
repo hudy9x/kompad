@@ -20,7 +20,7 @@ import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
 // import Diagram from "../"
-import NodeDiagram from '../../nodes/NodeDiagram'
+import DiagramExtension from '../../extensions/Diagram'
 
 interface IPadEditorProp {
   id: string;
@@ -70,7 +70,7 @@ const extensions = [
     openOnClick: false,
   }),
   CodeBlockLowlightConfigure,
-  NodeDiagram,
+  DiagramExtension,
 ];
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {

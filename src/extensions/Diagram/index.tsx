@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import Diagram from '../components/Diagram'
+import Diagram from './Extension'
 
 export default Node.create({
   name: 'reactComponent',
