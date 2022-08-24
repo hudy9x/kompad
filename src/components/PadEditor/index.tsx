@@ -86,6 +86,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //    content: content,
     content: `<react-component></react-component>`,
     onUpdate: ({ editor }) => {
+      console.log(editor.getHTML(), editor.getJSON(), editor.getText())
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });
