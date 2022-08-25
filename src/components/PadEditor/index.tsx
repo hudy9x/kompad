@@ -20,7 +20,7 @@ import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
 // import Diagram from "../"
-import DiagramExtension from '../../extensions/Diagram'
+import DiagramExtension from "../../extensions/Diagram";
 
 interface IPadEditorProp {
   id: string;
@@ -83,18 +83,18 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         class: "",
       },
     },
-    //    content: content,
-    content: `<diagram-component graph="stateDiagram-v2
-    [*] --> Still
-    Still --> [*]
+    content: content,
+    //     content: `<diagram-component graph="stateDiagram-v2
+    //     [*] --> Still
+    //     Still --> [*]
 
-    Still --> Moving
-    Moving --> Still
-    Moving --> Crash
-    Crash --> [*]
-"></diagram-component>`,
+    //     Still --> Moving
+    //     Moving --> Still
+    //     Moving --> Crash
+    //     Crash --> [*]
+    // "></diagram-component>`,
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML(), editor.getJSON(), editor.getText())
+      console.log(editor.getHTML(), editor.getJSON(), editor.getText());
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });

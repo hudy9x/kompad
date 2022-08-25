@@ -15,7 +15,7 @@
   text-transform: uppercase;
   /* color: #fff; */
   position: absolute;
-  top: 0;
+  top: -0.2rem;
   padding: 0.25rem 0.75rem;
   border-radius: 0 0 0.5rem 0.5rem;
 }
@@ -29,6 +29,7 @@
   width: 100%;
   padding: 0;
   border: none;
+  color: black;
   background: transparent;
 }
 
@@ -43,3 +44,7 @@
 .diagram-showcase svg {
   margin: auto;
 }
+
+/* .diagram-showcase svg span {
+  color: black !important;
+} */
