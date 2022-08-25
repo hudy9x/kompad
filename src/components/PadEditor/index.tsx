@@ -84,7 +84,15 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       },
     },
     //    content: content,
-    content: `<react-component></react-component>`,
+    content: `<diagram-component graph="stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+"></diagram-component>`,
     onUpdate: ({ editor }) => {
       console.log(editor.getHTML(), editor.getJSON(), editor.getText())
       setUpdate((prevUpdate) => prevUpdate + 1);

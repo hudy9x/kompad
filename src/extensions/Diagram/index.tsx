@@ -1,30 +1,37 @@
-import { mergeAttributes, Node } from '@tiptap/core'
-import { ReactNodeViewRenderer } from '@tiptap/react'
-import Diagram from './Extension'
+import { mergeAttributes, Node } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+
+import "./style.css";
+import Component from "./Component";
 
 export default Node.create({
-  name: 'reactComponent',
-  group: 'block',
-  content: 'inline*',
+  name: "diagramComponent",
+
+  group: "block",
+
   atom: true,
+
+  addAttributes() {
+    return {
+      graph: {
+        default: "",
+      },
+    };
+  },
+
   parseHTML() {
     return [
       {
-        tag: 'react-component',
-        getAttrs(node) {
-          console.log(node)
-          return {
-            name: 1
-          }
-        },
-      }      
-    ]
+        tag: "diagram-component",
+      },
+    ];
   },
-  renderHTML({ HTMLAttributes }) {
-    return ['react-component', mergeAttributes(HTMLAttributes)]
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(Diagram)
-  }
-})
 
+  renderHTML({ HTMLAttributes }) {
+    return ["diagram-component", mergeAttributes(HTMLAttributes)];
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(Component);
+  },
+});
