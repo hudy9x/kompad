@@ -45,6 +45,12 @@
   margin: auto;
 }
 
-/* .diagram-showcase svg span {
+/* FIX: turn color to black when selection mode is enabled */
+.diagram-component textarea::selection {
   color: black !important;
-} */
+}
+
+.diagram-component svg span::selection {
+  color: black !important;
+}
+

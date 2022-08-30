@@ -44,6 +44,7 @@ body {
   @apply bg-indigo-500 text-white;
 }
 
+
 @import url("./scrollbar.css");
 @import url("./form.css");
 @import url("./advanced-setting.css");

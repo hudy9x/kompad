@@ -94,7 +94,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML(), editor.getJSON(), editor.getText());
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });
@@ -106,6 +105,9 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       }
 
       timer = setTimeout(() => {
+        console.log('=====================')
+        console.log(id)
+        console.log(editor.getHTML())
         updatePad({ id, content: editor.getHTML() });
       }, 600) as unknown as number;
     }
