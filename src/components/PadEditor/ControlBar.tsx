@@ -19,7 +19,13 @@ const ControlBar = ({ editor }: IControlBarProps) => {
   return (
     <>
       {editor ? (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: [500, 200] }}>
+        <BubbleMenu editor={editor} shouldShow={(props) => {
+          if ('lastSelectedViewDesc' in props.editor.view) {
+            const view = props.editor.view as any;
+            return false;
+          }
+          return true;
+        }} tippyOptions={{ duration: [500, 200] }}>
           <div className="tiptab-format-actions divide-x divide-gray-700">
             <div className="tiptap-action-group">
               <button
@@ -62,9 +68,8 @@ const ControlBar = ({ editor }: IControlBarProps) => {
                 onClick={() =>
                   editor.chain().focus().toggleHeading({ level: 2 }).run()
                 }
-                className={`w-8 h-8 flex items-center justify-center rounded-md text-white hover:bg-gray-800 ${
-                  editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-                }`}
+                className={`w-8 h-8 flex items-center justify-center rounded-md text-white hover:bg-gray-800 ${editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+                  }`}
               >
                 <span className=" whitespace-nowrap ">H2</span>
               </button>

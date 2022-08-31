@@ -7,6 +7,7 @@ import {
   AiOutlineHighlight,
   AiOutlineItalic,
   AiOutlineOrderedList,
+  AiOutlinePartition,
   AiOutlineStrikethrough,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
@@ -198,6 +199,13 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           className={editor.isActive("codeBlock") ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().insertContent(`<diagram-component graph=""></diagram-component>`).run()}
+          // className={editor.isActive("codeBlock") ? "is-active" : ""}
+        >
+          <AiOutlinePartition className="control-icon" />
         </button>
       </div>
     </div>

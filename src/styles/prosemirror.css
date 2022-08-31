@@ -153,24 +153,41 @@
   padding: 0;
 }
 
-
-
-.ProseMirror pre .hljs-comment, .ProseMirror pre .hljs-quote {
+.ProseMirror pre .hljs-comment,
+.ProseMirror pre .hljs-quote {
   color: #616161;
 }
-.ProseMirror pre .hljs-variable, .ProseMirror pre .hljs-template-variable, .ProseMirror pre .hljs-attribute, .ProseMirror pre .hljs-tag, .ProseMirror pre .hljs-name, .ProseMirror pre .hljs-regexp, .ProseMirror pre .hljs-link, .ProseMirror pre .hljs-selector-id, .ProseMirror pre .hljs-selector-class {
+.ProseMirror pre .hljs-variable,
+.ProseMirror pre .hljs-template-variable,
+.ProseMirror pre .hljs-attribute,
+.ProseMirror pre .hljs-tag,
+.ProseMirror pre .hljs-name,
+.ProseMirror pre .hljs-regexp,
+.ProseMirror pre .hljs-link,
+.ProseMirror pre .hljs-selector-id,
+.ProseMirror pre .hljs-selector-class {
   color: #f98181;
 }
-.ProseMirror pre .hljs-number, .ProseMirror pre .hljs-meta, .ProseMirror pre .hljs-built_in, .ProseMirror pre .hljs-builtin-name, .ProseMirror pre .hljs-literal, .ProseMirror pre .hljs-type, .ProseMirror pre .hljs-params {
+.ProseMirror pre .hljs-number,
+.ProseMirror pre .hljs-meta,
+.ProseMirror pre .hljs-built_in,
+.ProseMirror pre .hljs-builtin-name,
+.ProseMirror pre .hljs-literal,
+.ProseMirror pre .hljs-type,
+.ProseMirror pre .hljs-params {
   color: #fbbc88;
 }
-.ProseMirror pre .hljs-string, .ProseMirror pre .hljs-symbol, .ProseMirror pre .hljs-bullet {
+.ProseMirror pre .hljs-string,
+.ProseMirror pre .hljs-symbol,
+.ProseMirror pre .hljs-bullet {
   color: #b9f18d;
 }
-.ProseMirror pre .hljs-title, .ProseMirror pre .hljs-section {
+.ProseMirror pre .hljs-title,
+.ProseMirror pre .hljs-section {
   color: #faf594;
 }
-.ProseMirror pre .hljs-keyword, .ProseMirror pre .hljs-selector-tag {
+.ProseMirror pre .hljs-keyword,
+.ProseMirror pre .hljs-selector-tag {
   color: #70cff8;
 }
 .ProseMirror pre .hljs-emphasis {
@@ -178,4 +195,9 @@
 }
 .ProseMirror pre .hljs-strong {
   font-weight: 700;
+}
+
+.ProseMirror-hideselection .diagram-showcase svg span {
+  color: black;
+  caret-color: black;
 }

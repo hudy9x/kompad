@@ -19,6 +19,8 @@ import { shortCutAcion } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
+// import Diagram from "../"
+import DiagramExtension from "../../extensions/Diagram";
 
 interface IPadEditorProp {
   id: string;
@@ -68,6 +70,7 @@ const extensions = [
     openOnClick: false,
   }),
   CodeBlockLowlightConfigure,
+  DiagramExtension,
 ];
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
@@ -81,6 +84,15 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       },
     },
     content: content,
+    //     content: `<diagram-component graph="stateDiagram-v2
+    //     [*] --> Still
+    //     Still --> [*]
+
+    //     Still --> Moving
+    //     Moving --> Still
+    //     Moving --> Crash
+    //     Crash --> [*]
+    // "></diagram-component>`,
     onUpdate: ({ editor }) => {
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
@@ -93,7 +105,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       }
 
       timer = setTimeout(() => {
-        updatePad({ id, content: editor.getHTML() });
+        const html = editor.getHTML();
+        updatePad({ id, content: html });
       }, 600) as unknown as number;
     }
 
@@ -102,6 +115,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
 
   useEffect(() => {
     if (editor) {
+      editor.commands.clearContent();
       editor.commands.setContent(content);
     }
     // eslint-disable-next-line

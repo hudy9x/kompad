@@ -1,0 +1,56 @@
+.diagram-component {
+  background: #faf594;
+  border: 3px solid #0d0d0d;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  position: relative;
+  padding: 1.5rem;
+}
+
+.diagram-component .label {
+  background-color: #0d0d0d;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+  /* color: #fff; */
+  position: absolute;
+  top: -0.2rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.diagram-component .content {
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.diagram-container textarea {
+  width: 100%;
+  padding: 0;
+  border: none;
+  color: black;
+  background: transparent;
+}
+
+.diagram-container {
+  display: flex;
+}
+
+.diagram-showcase {
+  width: 100%;
+}
+
+.diagram-showcase svg {
+  margin: auto;
+}
+
+/* FIX: turn color to black when selection mode is enabled */
+.diagram-component textarea::selection {
+  color: black !important;
+}
+
+.diagram-component svg span::selection {
+  color: black !important;
+}
+
