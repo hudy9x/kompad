@@ -21,7 +21,6 @@ const ControlBar = ({ editor }: IControlBarProps) => {
       {editor ? (
         <BubbleMenu editor={editor} shouldShow={(props) => {
           if ('lastSelectedViewDesc' in props.editor.view) {
-            const view = props.editor.view as any;
             return false;
           }
           return true;
