@@ -105,10 +105,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       }
 
       timer = setTimeout(() => {
-        console.log('=====================')
-        console.log(id)
-        console.log(editor.getHTML())
-        updatePad({ id, content: editor.getHTML() });
+        const html = editor.getHTML();
+        updatePad({ id, content: html });
       }, 600) as unknown as number;
     }
 
@@ -117,6 +115,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
 
   useEffect(() => {
     if (editor) {
+      editor.commands.clearContent();
       editor.commands.setContent(content);
     }
     // eslint-disable-next-line

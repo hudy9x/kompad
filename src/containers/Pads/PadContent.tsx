@@ -13,7 +13,6 @@ function PadContent() {
       getPadById(id).then((res) => {
         if (!res) return;
 
-        console.log('get content', id, res.content)
         setPad((prevPad) => ({
           ...prevPad,
           ...{
