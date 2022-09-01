@@ -1,4 +1,4 @@
-import { FcKindle } from "react-icons/fc";
+import Category from "../Category";
 import Folders from "../Folders";
 import ShortcutModal from "../Settings/ShortcutModal";
 import Tags from "../Tags";
@@ -15,14 +15,7 @@ function RootSidebar() {
       </div>
 
       <div className="side-section">
-        <section className="sec-container">
-          <h2 className="sec-title">
-            <FcKindle />
-            <span>All notes</span>
-          </h2>
-          <div className="sec-content"></div>
-        </section>
-
+        <Category /> 
         <Folders />
         <Tags />
       </div>

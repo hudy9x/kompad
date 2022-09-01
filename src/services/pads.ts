@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -283,7 +284,7 @@ export const watchPads = (
 
   const conds: QueryConstraint[] = [
     where("uid", "==", user.uid),
-    orderBy("updatedAt", "desc"),
+    //    orderBy("updatedAt", "desc"),
   ];
 
   if (queries.tag) {
@@ -293,6 +294,15 @@ export const watchPads = (
   if (queries.folder) {
     conds.push(where("folder", "==", queries.folder));
   }
+
+  if (queries.recently) {
+    conds.push(orderBy('updatedAt', 'desc'))
+    conds.push(limit(5))
+  } else {
+    conds.push(orderBy('createdAt', 'desc'))
+  }
+
+  console.log(queries)
 
   // if (queries.tag) {
   //   conds.push(where('tags', 'array-contains', queries.tag))
