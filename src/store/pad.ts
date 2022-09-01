@@ -5,6 +5,8 @@ import { IPad } from "../services/pads";
 export interface IPadQuery {
   tag: string;
   folder: string;
+  recently?: boolean;
+  important?: boolean;
 }
 
 export interface IPadStore {
@@ -14,6 +16,7 @@ export interface IPadStore {
   filterByAll: (query: IPadQuery) => void;
   filterByTag: (id: string) => void;
   filterByFolder: (id: string) => void;
+  filterByRecently: () => void;
   updatePadList: (data: IPad[]) => void;
 }
 
@@ -23,6 +26,8 @@ export const usePadListStore = create<IPadStore>((set) => ({
   query: {
     tag: "",
     folder: "",
+    recently: true,
+    important: false,
   },
 
   clearFilter: () =>
@@ -31,6 +36,8 @@ export const usePadListStore = create<IPadStore>((set) => ({
         state.query = {
           tag: "",
           folder: "",
+          recently: false,
+          important: false
         };
       })
     ),
@@ -48,6 +55,12 @@ export const usePadListStore = create<IPadStore>((set) => ({
         state.query.folder = id;
       })
     ),
+
+  filterByRecently: () => {
+    set(produce<IPadStore>(state => {
+      state.query.recently = !state.query.recently
+    }))
+  },
 
   filterByAll: (query: IPadQuery) =>
     set(
