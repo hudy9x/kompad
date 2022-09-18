@@ -27,6 +27,7 @@ export interface IPad {
   tags: string[];
   folder?: string;
   content: string;
+  important: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -67,6 +68,7 @@ export const getPadsByUidQuery = (
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        important: padData.important,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
       });
@@ -98,6 +100,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        important: padData.important,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
       });
@@ -168,6 +171,41 @@ export const delPad = async (id: string) => {
     console.log(error);
   }
 };
+
+export const importantPad = async (id: string) => {
+  try {
+    const selectedIDRef = doc(db, "pads", id);
+
+    const pad = await getDoc(doc(db,"pads",id));
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad;
+    
+    await updateDoc(selectedIDRef,{
+      important: !padData.important,
+    })
+  } catch(err) {
+    console.log(err);
+    return 0;
+  }
+}
+export const statusImporantPad = async (id: string) => {
+  try {
+    const pad = await getDoc(doc(db,"pads",id));
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad;
+    console.log(padData);
+    if(padData.important) {
+      return true;
+    } else {
+      return false;
+    }
+
+  } catch(err) {
+    return 0;
+  }
+}
 
 export const delTagByPadId = async (pid: string, tid: string) => {
   try {
@@ -328,6 +366,7 @@ export const watchPads = (
         tags: padData.tags,
         folder: padData.folder,
         content: padData.content,
+        important: padData.important,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
       });

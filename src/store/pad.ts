@@ -17,6 +17,7 @@ export interface IPadStore {
   filterByTag: (id: string) => void;
   filterByFolder: (id: string) => void;
   filterByRecently: () => void;
+  filterByImportant: () => void;
   updatePadList: (data: IPad[]) => void;
 }
 
@@ -58,10 +59,18 @@ export const usePadListStore = create<IPadStore>((set) => ({
 
   filterByRecently: () => {
     set(produce<IPadStore>(state => {
+      state.query.important = false;
       state.query.recently = !state.query.recently
     }))
   },
-
+  filterByImportant: () => {
+    set(
+      produce<IPadStore>((state) => {
+        state.query.recently = false;
+        state.query.important = !state.query.important; // active important
+      })
+    );
+  },
   filterByAll: (query: IPadQuery) =>
     set(
       produce<IPadStore>((state) => {
