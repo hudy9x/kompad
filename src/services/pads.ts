@@ -176,36 +176,34 @@ export const importantPad = async (id: string) => {
   try {
     const selectedIDRef = doc(db, "pads", id);
 
-    const pad = await getDoc(doc(db,"pads",id));
+    const pad = await getDoc(doc(db, "pads", id));
     if (!pad.exists()) return 0;
 
     const padData = pad.data() as IPad;
-    
-    await updateDoc(selectedIDRef,{
+
+    await updateDoc(selectedIDRef, {
       important: !padData.important,
-    })
-  } catch(err) {
+    });
+  } catch (err) {
     console.log(err);
     return 0;
   }
-}
+};
 export const statusImporantPad = async (id: string) => {
   try {
-    const pad = await getDoc(doc(db,"pads",id));
+    const pad = await getDoc(doc(db, "pads", id));
     if (!pad.exists()) return 0;
 
     const padData = pad.data() as IPad;
-    console.log(padData);
-    if(padData.important) {
+    if (padData.important) {
       return true;
     } else {
       return false;
     }
-
-  } catch(err) {
+  } catch (err) {
     return 0;
   }
-}
+};
 
 export const delTagByPadId = async (pid: string, tid: string) => {
   try {
@@ -334,44 +332,43 @@ export const watchPads = (
   }
 
   if (queries.recently) {
-    conds.push(orderBy('updatedAt', 'desc'))
-    conds.push(limit(5))
+    conds.push(orderBy("updatedAt", "desc"));
+    conds.push(limit(5));
   } else {
-    conds.push(orderBy('createdAt', 'desc'))
+    conds.push(orderBy("createdAt", "desc"));
   }
 
-  console.log(queries)
+  if (queries.important) {
+    conds.push(where("important", '==', true));
+  }
 
-  // if (queries.tag) {
-  //   conds.push(where('tags', 'array-contains', queries.tag))
-  // }
-
-  // const q = query(
-  //   collection(db, COLLECTION_NAME),
-  //   where("uid", "==", user.uid),
-  //   orderBy("updatedAt", "desc")
-  // );
+  if (queries.tag) {
+    conds.push(where('tags', 'array-contains', queries.tag))
+  }
 
   const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds]);
-
+  console.log(conds);
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = [];
 
     qSnapshot.docs.forEach((doc) => {
       const padData = doc.data() as IPad;
-      pads.push({
-        id: doc.id,
-        uid: padData.uid,
-        title: padData.title,
-        tags: padData.tags,
-        folder: padData.folder,
-        content: padData.content,
-        important: padData.important,
-        createdAt: padData.createdAt,
-        updatedAt: padData.updatedAt,
-      });
+      try {
+        pads.push({
+          id: doc.id,
+          uid: padData.uid,
+          title: padData.title,
+          tags: padData.tags,
+          folder: padData.folder,
+          content: padData.content,
+          important: padData.important,
+          createdAt: padData.createdAt,
+          updatedAt: padData.updatedAt,
+        });
+      } catch(err) {
+        console.log(err);
+      }
     });
-
     cb(false, pads);
   });
 
