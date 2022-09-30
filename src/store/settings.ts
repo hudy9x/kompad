@@ -6,7 +6,9 @@ export interface ISettingStore {
   view: {
     sidebar: boolean;
   };
+  resizeWindow: () => void;
   toggleSideBar: () => void;
+  defaultWindow: () => void;
 }
 
 // default values
@@ -18,6 +20,16 @@ export const useSettingStore = create<ISettingStore>((set) => ({
   view: {
     sidebar: sidebar,
   },
+  resizeWindow : () => set(
+    produce<ISettingStore>((state) => {
+      state.view.sidebar = false;
+    })
+  ),
+  defaultWindow: () => set(
+    produce<ISettingStore>((state) => {
+      state.view.sidebar = true;
+    })
+  ),
   toggleSideBar: () =>
     set(
       produce<ISettingStore>((state) => {
@@ -26,5 +38,5 @@ export const useSettingStore = create<ISettingStore>((set) => ({
     ),
 }));
 
-export const { getState: getSettingState, setState: setSettingState } =
+export const { getState: getSettingState, setState: setSettingState} =
   useSettingStore;
