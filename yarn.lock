@@ -1596,11 +1596,6 @@
   "resolved" "https://registry.npmjs.org/@headlessui/react/-/react-1.6.6.tgz"
   "version" "1.6.6"
 
-"@heroicons/react@^2.0.11":
-  "integrity" "sha512-bASjOgSSaYj8HqXWsOqaBiB6ZLalE/g90WYGgZ5lPm4KCCG7wPXntY4kzHf5NrLh6UBAcnPwvbiw1Ne9GYfJtw=="
-  "resolved" "https://registry.npmjs.org/@heroicons/react/-/react-2.0.11.tgz"
-  "version" "2.0.11"
-
 "@humanwhocodes/config-array@^0.9.2":
   "integrity" "sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw=="
   "resolved" "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.9.5.tgz"
@@ -9041,7 +9036,7 @@
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-2.0.4.tgz"
   "version" "2.0.4"
 
-"react-icons@^4.3.1":
+"react-icons@^4.4.0":
   "integrity" "sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg=="
   "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.4.0.tgz"
   "version" "4.4.0"

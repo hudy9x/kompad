@@ -13,7 +13,6 @@ function FolderList() {
     let unsub: Unsubscribe | null;
     if (user) {
       unsub = watchFolders((err, data) => {
-        console.log(err);
         if (err) {
           return;
         }

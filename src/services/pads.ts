@@ -68,7 +68,7 @@ export const getPadsByUidQuery = (
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
-        important: padData.important,
+        important: false,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
       });
@@ -100,7 +100,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
-        important: padData.important,
+        important: false,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
       });
@@ -347,7 +347,6 @@ export const watchPads = (
   }
 
   const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds]);
-  console.log(conds);
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = [];
 
