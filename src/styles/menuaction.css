@@ -1,0 +1,24 @@
+.btn-dropdown:hover {
+  @apply text-gray-600 dark:text-gray-300
+}
+.menuaction-items {
+  @apply bg-white dark:bg-gray-900;
+  @apply divide-y divide-gray-100 dark:divide-gray-700
+}
+.menuaction-hover:hover {
+  @apply dark:bg-gray-700  
+}
+.menuaction-hover:hover .menuaction-item {
+  @apply text-gray-900 dark:text-white ;
+}
+.menuaction-item-icon {
+  @apply dark:text-gray-400;  
+}
+.menuaction-item {
+  @apply mr-3 h-5 w-5;
+  @apply text-gray-500;
+}
+.menuaction-item-text {
+  @apply dark:text-white
+}
+

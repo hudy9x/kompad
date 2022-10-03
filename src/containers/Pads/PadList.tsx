@@ -23,9 +23,7 @@ function PadList() {
         if (err) {
           return;
         }
-
         updatePadList(pads);
-        console.log(pads,'padlist');
       });
     }
 

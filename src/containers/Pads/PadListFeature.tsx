@@ -1,73 +1,75 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useState } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { useNavigate } from 'react-router-dom'
 import {
-  ArchiveBoxIcon,
-  ArrowRightCircleIcon,
-  ChevronDownIcon,
-  DocumentDuplicateIcon,
-  HeartIcon,
-  PencilSquareIcon,
-  TrashIcon,
-  UserPlusIcon,
-} from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
-import { usePadStore } from "../../store";
-import { delPad, importantPad, statusImporantPad } from "../../services/pads";
-import { message } from "../../components/message";
-import { decreasePlanRecord } from "../../services/plans";
+  HiOutlineArchive,
+  HiOutlineArrowCircleRight,
+  HiOutlineDocumentDuplicate,
+  HiOutlineDotsVertical,
+  HiOutlinePencilAlt,
+  HiOutlineStar,
+  HiOutlineTrash,
+  HiOutlineUserAdd,
+} from 'react-icons/hi'
+import { usePadStore } from '../../store'
+import { delPad, importantPad, statusImporantPad } from '../../services/pads'
+import { message } from '../../components/message'
+import { decreasePlanRecord } from '../../services/plans'
 
 function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function PadListFeature({
   id,
   statusImportant,
 }: {
-  id: string;
-  statusImportant: boolean;
+  id: string
+  statusImportant: boolean
 }) {
-  const [deleting, setDeleting] = useState(false);
-  const navigate = useNavigate();
-  const setNeedToUpdate = usePadStore((state) => state.setNeedToUpdate);
+  const [deleting, setDeleting] = useState(false)
+  const navigate = useNavigate()
+  const setNeedToUpdate = usePadStore((state) => state.setNeedToUpdate)
 
   const handleDeleteItem = async () => {
     if (deleting) {
-      message.warning("The pad is in deleting process");
-      return;
+      message.warning('The pad is in deleting process')
+      return
     }
 
-    setDeleting(true);
+    setDeleting(true)
 
-    await delPad(id);
-    await decreasePlanRecord();
+    await delPad(id)
+    await decreasePlanRecord()
 
-    setNeedToUpdate();
-    setDeleting(false);
-    navigate("/app/pad/");
-    message.success("Deleted pad successfully");
-  };
+    setNeedToUpdate()
+    setDeleting(false)
+    navigate('/app/pad/')
+    message.success('Deleted pad successfully')
+  }
 
   const handleImportantItem = async () => {
-    await importantPad(id);
-    const notifyImportant = await statusImporantPad(id);
-    navigate("/app/pad/important");
+    await importantPad(id)
+    const notifyImportant = await statusImporantPad(id)
+    navigate('/app/pad/important')
     if (notifyImportant) {
-      message.success("Important pad successfully");
+      message.success('Important pad successfully')
     } else {
-      message.error("Remove important");
+      message.error('Remove important')
     }
   }
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className=" justify-center rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 ">
-          <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+        <Menu.Button className="btn-dropdown justify-center rounded-md text-gray-500 px-4 py-2 text-sm font-medium">
+          <HiOutlineDotsVertical
+            className="-mr-1 ml-2 h-5 w-5"
+            aria-hidden="true"
+          />
         </Menu.Button>
       </div>
-
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -77,7 +79,7 @@ export default function PadListFeature({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="menuaction-items absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-999">
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
@@ -85,15 +87,19 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                 >
-                  <PencilSquareIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlinePencilAlt
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Edit</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Edit
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -103,15 +109,19 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                 >
-                  <DocumentDuplicateIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineDocumentDuplicate
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Duplicate</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Duplicate
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -123,15 +133,19 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                 >
-                  <ArchiveBoxIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineArchive
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Archive</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Archive
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -141,15 +155,19 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                 >
-                  <ArrowRightCircleIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineArrowCircleRight
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Move</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Move
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -161,15 +179,19 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                 >
-                  <UserPlusIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineUserAdd
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Share</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Share
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -179,17 +201,25 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                   onClick={handleImportantItem}
                 >
-                  <HeartIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineStar
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
-                    style={statusImportant ? {color:"red"} : {color: "#4B5563"}}
+                    style={
+                      statusImportant
+                        ? { color: 'red' }
+                        : { color: 'text-gray-500' }
+                    }
                   />
-                  <span>Add to favoirites</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Important
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -201,16 +231,20 @@ export default function PadListFeature({
                 <a
                   href="#"
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "group flex items-center px-4 py-2 text-sm"
+                    active
+                      ? 'bg-gray-100 text-gray-900 dark:bg-gray-700'
+                      : 'text-gray-700',
+                    'group menuaction-hover flex items-center px-4 py-2 text-sm'
                   )}
                   onClick={handleDeleteItem}
                 >
-                  <TrashIcon
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                  <HiOutlineTrash
+                    className="menuaction-item menuaction-item-icon"
                     aria-hidden="true"
                   />
-                  <span>Delete</span>
+                  <span className="menuaction-item menuaction-item-text">
+                    Delete
+                  </span>
                 </a>
               )}
             </Menu.Item>
@@ -218,5 +252,5 @@ export default function PadListFeature({
         </Menu.Items>
       </Transition>
     </Menu>
-  );
+  )
 }
