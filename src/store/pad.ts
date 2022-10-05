@@ -59,6 +59,7 @@ export const usePadListStore = create<IPadStore>((set) => ({
 
   filterByRecently: () => {
     set(produce<IPadStore>(state => {
+      state.query.important = false;
       state.query.recently = !state.query.recently
     }))
   },
