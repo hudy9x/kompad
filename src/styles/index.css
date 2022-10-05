@@ -44,15 +44,13 @@ body {
   @apply bg-indigo-500 text-white;
 }
 
-
-@import url("./scrollbar.css");
-@import url("./form.css");
-@import url("./advanced-setting.css");
-@import url("./prosemirror.css");
-@import url("./tiptap.css");
-@import url("./button.css");
-@import url("./sign.css");
-@import url("./sidebar.css");
-@import url("./pad.css");
-@import url("./menuaction.css");
-
+@import url('./scrollbar.css');
+@import url('./form.css');
+@import url('./advanced-setting.css');
+@import url('./prosemirror.css');
+@import url('./tiptap.css');
+@import url('./button.css');
+@import url('./sign.css');
+@import url('./sidebar.css');
+@import url('./pad.css');
+@import url('./pad-actions.css');

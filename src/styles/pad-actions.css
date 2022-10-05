@@ -1,0 +1,24 @@
+.btn-dropdown:hover {
+  @apply text-gray-600 dark:text-gray-300;
+}
+.dropdown {
+  @apply bg-white dark:bg-gray-900;
+  @apply divide-y divide-gray-100 dark:divide-gray-700;
+}
+.dropdown-content:hover {
+  @apply bg-gray-100 dark:bg-gray-700;
+}
+.dropdown-icon {
+  @apply mr-3 h-5 w-5;
+  @apply text-gray-500;
+  @apply dark:text-gray-400;
+}
+.dropdown-icon--active {
+  @apply dark:text-yellow-200;
+  @apply text-yellow-400;
+}
+.dropdown-text {
+  @apply mr-3 h-5 w-5;
+  @apply text-gray-500;
+  @apply dark:text-white;
+}
