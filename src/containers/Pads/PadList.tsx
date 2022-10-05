@@ -4,11 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { watchPads } from "../../services/pads";
 import relativeTime from "dayjs/plugin/relativeTime";
-import PadDelete from "./PadDelete";
 import { usePadListStore } from "../../store/pad";
 import PadTag from "../../components/PadEditor/PadTag";
 import PadFolder from "../../components/PadEditor/PadFolder";
 import { Unsubscribe } from "firebase/firestore";
+import PadActions from "./PadActions";
 
 dayjs.extend(relativeTime);
 
@@ -32,7 +32,7 @@ function PadList() {
     return () => {
       unsub && unsub();
     };
-    
+
     // eslint-disable-next-line
   }, [user?.uid, query]);
 
@@ -43,11 +43,10 @@ function PadList() {
         return (
           <li
             key={pad.id}
-            className={`${
-              id === pad.id
+            className={`${id === pad.id
                 ? "active"
                 : "dark:bg-gray-800"
-            } pad-item group`}
+              } pad-item group`}
           >
             <Link to={`/app/pad/${pad.id}`}>
               <div className="flex flex-col justify-between">
@@ -72,7 +71,7 @@ function PadList() {
               <PadTag className="mt-1" selected={pad.tags} />
             </Link>
             <div className="opacity-0 group-hover:opacity-100 transition-all absolute top-0 right-0 m-1">
-              <PadDelete id={pad.id || ""} />
+              <PadActions data={pad} />
             </div>
           </li>
         );

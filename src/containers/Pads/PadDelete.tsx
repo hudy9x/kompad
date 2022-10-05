@@ -6,32 +6,40 @@ import { message } from "../../components/message";
 import { decreasePlanRecord } from "../../services/plans";
 import { useNavigate } from "react-router-dom";
 
-function PadDelete({ id }: { id: string }) {
+export const PadDelete = ({ idx }: { idx: string }) => {
   const [deleting, setDeleting] = useState(false);
-  const navigate = useNavigate();
-  const setNeedToUpdate = usePadStore((state) => state.setNeedToUpdate);
+    const navigate = useNavigate();
+    const setNeedToUpdate = usePadStore((state) => state.setNeedToUpdate);
 
+  const handleDeleteItem = async (e: any) => {
+    if (deleting) {
+      message.warning("The pad is in deleting process");
+      return;
+    }
+
+    setDeleting(true);
+
+    await delPad(idx);
+    await decreasePlanRecord();
+
+    setNeedToUpdate();
+    setDeleting(false);
+    navigate("/app/pad/");
+    message.success("Deleted pad successfully");
+  }
   return (
-    <HiOutlineTrash
-      onClick={async () => {
-        if (deleting) {
-          message.warning("The pad is in deleting process");
-          return;
-        }
-
-        setDeleting(true);
-
-        await delPad(id);
-        await decreasePlanRecord();
-
-        setNeedToUpdate();
-        setDeleting(false);
-        navigate("/app/pad/");
-        message.success("Deleted pad successfully");
-      }}
-      className="w-7 h-7 p-1.5 rounded-md text-gray-600 hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-    />
-  );
+      <a
+        href="#delete"
+        className="group dropdown-content flex items-center px-4 py-2 text-sm"
+        onClick={handleDeleteItem}
+      >
+        <HiOutlineTrash
+          aria-hidden="true"
+          className="dropdown-icon"
+        />
+        <span className="dropdown-text">Delete</span>
+      </a>
+  )
 }
 
 export default PadDelete;
