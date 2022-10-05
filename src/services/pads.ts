@@ -18,6 +18,7 @@ import {
 import { auth, db } from "../libs/firebase";
 import { setCache } from "../libs/localCache";
 import { IPadQuery } from "../store/pad";
+import { message } from '../components/message'
 
 export interface IPad {
   id?: string;
@@ -29,6 +30,7 @@ export interface IPad {
   content: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
+  important: boolean;
 }
 
 const COLLECTION_NAME = "pads";
@@ -69,6 +71,7 @@ export const getPadsByUidQuery = (
         content: padData.content,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
+        important: false,
       });
     });
 
@@ -100,6 +103,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         content: padData.content,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
+        important: false,
       });
     });
 
@@ -295,6 +299,10 @@ export const watchPads = (
     conds.push(where("folder", "==", queries.folder));
   }
 
+  if (queries.important) {
+    conds.push(where('important', '==', true))
+  }
+
   if (queries.recently) {
     conds.push(orderBy('updatedAt', 'desc'))
     conds.push(limit(5))
@@ -330,6 +338,7 @@ export const watchPads = (
         content: padData.content,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
+        important: padData.important,
       });
     });
 
@@ -338,3 +347,25 @@ export const watchPads = (
 
   return unsub;
 };
+
+export const setImportant = async (id: string) => {
+  try {
+    const selectedIDRef = doc(db, 'pads', id)
+
+    const pad = await getDoc(doc(db, 'pads', id))
+    if (!pad.exists()) return 0
+
+    const padData = pad.data() as IPad
+    if (padData.important) {
+      message.error('Remove important')
+    } else {
+      message.success('Important pad successfully')
+    }
+    await updateDoc(selectedIDRef, {
+      important: !padData.important,
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}

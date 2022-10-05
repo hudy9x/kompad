@@ -24,7 +24,8 @@ function PadContent() {
             updatedAt: res.updatedAt,
             folder: res.folder || '',
             id: res.id,
-            shortDesc: res.shortDesc
+            shortDesc: res.shortDesc,
+            important: res.important
           },
         }));
       });
