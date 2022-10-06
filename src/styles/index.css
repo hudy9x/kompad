@@ -31,6 +31,7 @@ body {
 .pad-item-title {
   @apply text-base font-medium text-gray-900 dark:text-gray-300;
   display: -webkit-box;
+  word-break: break-all;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
