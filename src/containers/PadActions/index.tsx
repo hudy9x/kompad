@@ -13,40 +13,32 @@ import PadDelete from "./PadDelete";
 export default function PadActions({ data }: { data: IPad }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button className="btn-dropdown justify-center rounded-md text-gray-500 px-4 py-2 text-sm font-medium">
-        <HiOutlineDotsVertical
-          className="-mr-1 ml-2 h-5 w-5"
-          aria-hidden="true"
-        />
-      </Menu.Button>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="dropdown absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg focus:outline-none z-999">
+      <Transition show={true}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0">
+        <Menu.Items className="dropdown absolute left-0 z-20 mt-2 w-56 origin-top-right rounded-md shadow-lg focus:outline-none z-999">
           <div className="py-1">
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadEdit />
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadDuplicate />
             </Menu.Item>
           </div>
           <div className="py-1">
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadArchive />
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadMove />
             </Menu.Item>
           </div>
           <div className="py-1">
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadShare />
             </Menu.Item>
             <Menu.Item>
@@ -54,7 +46,7 @@ export default function PadActions({ data }: { data: IPad }) {
             </Menu.Item>
           </div>
           <div className="py-1">
-            <Menu.Item>
+            <Menu.Item as="div">
               <PadDelete idx={data.id!} />
             </Menu.Item>
           </div>
@@ -63,3 +55,4 @@ export default function PadActions({ data }: { data: IPad }) {
     </Menu>
   );
 }
+
