@@ -38,18 +38,18 @@ function PadList() {
   }, [user?.uid, query]);
 
   return (
-    <ul className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
+    <div className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
       {pads.map((pad) => {
         const d = dayjs(pad.updatedAt.toDate());
         return (
-          <li
-            key={pad.id}
-            className={`${id === pad.id
-              ? "active"
-              : "dark:bg-gray-800"
-              } pad-item group`}
-          >
-            <ContextMenu>
+          <ContextMenu key={pad.id}>
+            <div
+              key={pad.id}
+              className={`${id === pad.id
+                ? "active"
+                : "dark:bg-gray-800"
+                } pad-item group`}
+            >
               <Link to={`/app/pad/${pad.id}`}>
                 <div className="flex flex-col justify-between">
                   <div className="min-w-0 flex-1">
@@ -75,11 +75,11 @@ function PadList() {
               <ContextMenu.Items>
                 <PadActions data={pad} />
               </ContextMenu.Items>
-            </ContextMenu>
-          </li>
+            </div>
+          </ContextMenu>
         );
       })}
-    </ul>
+    </div>
   );
 }
 

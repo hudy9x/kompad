@@ -28,7 +28,7 @@ export default function ContextMenu({ children }: IContextMenu) {
     ev.preventDefault();
 
     setPosition({
-      top: clientY,
+      top: clientY - 24,
       left: clientX
     })
 
@@ -45,32 +45,40 @@ export default function ContextMenu({ children }: IContextMenu) {
 ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Element | JSX.Element[] }) {
   const ctxRef = useRef<HTMLDivElement>(null)
   const { top, left, visible, setVisible } = useContext(MenuContext)
- 
-  useEffect(() => {
-    if (visible && ctxRef.current) {
-      ctxRef.current.focus();
-    }
-  }, [visible])
 
-  useEffect(()=> {
+  useEffect(() => {
     const clickOutsideHandler = (ev: MouseEvent) => {
-      if (!ctxRef.current) {
+      const target = ev.target;
+      if (!ctxRef.current || !target) {
         return;
       }
 
-      console.log(ev)
+      const menuElem = ctxRef.current;
+
+      if (visible && !menuElem.contains(target as Node)) {
+        setVisible(false);
+      }
     }
 
-    document.addEventListener('click', clickOutsideHandler)
+    const pressEscHandler = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape' && visible) {
+        setVisible(false)
+      }
+    }
 
+    document.addEventListener('mousedown', clickOutsideHandler)
+    document.addEventListener('keydown', pressEscHandler)
     return () => {
-      document.removeEventListener('click', clickOutsideHandler);
+      document.removeEventListener('mousedown', clickOutsideHandler)
+      document.removeEventListener('keydown', pressEscHandler)
     }
   })
 
-  return <div tabIndex={-1}
+  if (!visible) return null
+
+  return <div
     ref={ctxRef}
-    className={`ctx-dropdown fixed z-10 ${visible ? '' : 'hidden'}`}
+    className={`ctx-dropdown fixed z-10`}
     style={{ top, left }}>
     {children}
   </div>
