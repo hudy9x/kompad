@@ -357,7 +357,7 @@ export const setImportant = async (id: string) => {
 
     const padData = pad.data() as IPad
     if (padData.important) {
-      message.error('Remove important')
+      message.success('Remove important')
     } else {
       message.success('Important pad successfully')
     }

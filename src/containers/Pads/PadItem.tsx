@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { Link } from "react-router-dom"
+import { HiOutlineStar, HiStar } from 'react-icons/hi'
 
 import PadTag from "../../components/PadEditor/PadTag";
 import PadFolder from "../../components/PadEditor/PadFolder";
@@ -44,6 +45,9 @@ export default function PadItem({ active, pad }: IPadItemProps) {
         </div>
       </div>
       <PadTag className="mt-1" selected={pad.tags} />
+      <div className="pad-as-important absolute bottom-5 right-4">
+        { pad.important ? <HiStar className="text-gray-400 dark:text-gray-500" /> : <HiOutlineStar className="text-gray-300 dark:text-gray-700" /> }
+      </div>
     </Link>
     <ContextMenu.Items>
       <PadActions data={pad} />
