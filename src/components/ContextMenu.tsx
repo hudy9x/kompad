@@ -84,3 +84,8 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
   </div>
 }
 
+export const useContextMenu = () => {
+  const data = useContext(MenuContext)
+  return data;
+}
+

@@ -27,3 +27,7 @@
 .pad-list .pad-item:hover:before {
   @apply bg-gray-400 dark:bg-gray-600;
 }
+
+.pad-list .pad-item.context-menu-opened {
+  background: #182134 !important;
+}
