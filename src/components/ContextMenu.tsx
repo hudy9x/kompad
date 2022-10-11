@@ -66,13 +66,8 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
       }
     }
 
-    // const hideMenuHandler = () => {
-    //   setVisible(false)
-    // }
-
     document.addEventListener('mousedown', clickOutsideHandler)
     document.addEventListener('keydown', pressEscHandler)
-    // ctxRef.current && ctxRef.current.addEventListener('click', hideMenuHandler)
     return () => {
       document.removeEventListener('mousedown', clickOutsideHandler)
       document.removeEventListener('keydown', pressEscHandler)

@@ -25,5 +25,3 @@ yarn-error.log*
 
 .tauri
 
-#api
-firebase.ts
