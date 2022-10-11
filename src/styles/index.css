@@ -1,10 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-.titlebar {
-  @apply flex justify-between p-1
-} */
 
 body {
   @apply h-screen overflow-hidden;
@@ -54,3 +50,5 @@ body {
 @import url("./sign.css");
 @import url("./sidebar.css");
 @import url("./pad.css");
+@import url("./dropdown.css");
+
