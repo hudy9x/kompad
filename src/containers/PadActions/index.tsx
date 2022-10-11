@@ -1,6 +1,4 @@
-import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { HiOutlineDotsVertical } from "react-icons/hi";
 import { IPad } from "../../services/pads";
 import { PadImportant } from "./PadImportant";
 import { PadShare } from "./PadShare";
