@@ -29,5 +29,5 @@
 }
 
 .pad-list .pad-item.context-menu-opened {
-  background: #182134 !important;
+  @apply bg-gray-100 dark:bg-gray-700;
 }
