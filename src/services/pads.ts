@@ -27,10 +27,20 @@ export interface IPad {
   shortDesc?: string;
   tags: string[];
   folder?: string;
+  cover?: string;
   content: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   important: boolean;
+}
+
+interface IUpdatedPad {
+  id: string;
+  title?: string;
+  tags?: string[];
+  folder?: string;
+  cover?: string;
+  updatedAt?: Timestamp;
 }
 
 const COLLECTION_NAME = "pads";
@@ -245,18 +255,9 @@ export const updatePadMetadata = async ({
   title,
   tags,
   folder,
-}: {
-  id: string;
-  title?: string;
-  tags?: string[];
-  folder?: string;
-}) => {
-  const data: {
-    title?: string;
-    tags?: string[];
-    updatedAt?: Timestamp;
-    folder?: string;
-  } = {
+  cover,
+}: IUpdatedPad) => {
+  const data: Partial<IUpdatedPad> = {
     updatedAt: Timestamp.now(),
   };
 
@@ -270,6 +271,10 @@ export const updatePadMetadata = async ({
 
   if (folder) {
     data.folder = folder;
+  }
+
+  if (cover) {
+    data.cover = cover
   }
 
   updateDoc(doc(db, "pads", id), data);

@@ -23,6 +23,7 @@ function PadContent() {
             uid: res.uid,
             updatedAt: res.updatedAt,
             folder: res.folder || '',
+            cover: res.cover || '',
             id: res.id,
             shortDesc: res.shortDesc,
             important: res.important

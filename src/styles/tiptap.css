@@ -3,12 +3,11 @@
   @apply dark:bg-gray-800;
 }
 .tiptap-box {
-  @apply overflow-y-scroll;
+  /*@apply overflow-y-scroll;*/
 }
 
 .pad-infos {
   @apply px-8 pb-8 w-[700px] xl:w-[800px] m-auto;
-  @apply border-b border-dashed mb-4 dark:border-gray-700;
 }
 
 .tiptap-main-content {

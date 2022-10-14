@@ -3,6 +3,8 @@ import { Unsubscribe } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IPad, updatePadMetadata, watchPadById } from "../../services/pads";
+import PadCover from "./PadCover";
+import PadCoverImage from "./PadCoverImage";
 import PadFolder from "./PadFolder";
 import PadTag from "./PadTag";
 
@@ -40,28 +42,32 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
   const created = dayjs(info.createdAt.toDate()).format("YYYY/MM/DD");
 
   return (
-    <div className="pad-infos">
-      <input
-        ref={inpRef}
-        // value={info.title}
-        onChange={updateTitle}
-        className="mb-5 h-12 md:w-[700px] xl:w-[800px] m-auto text-4xl text-gray-700 font-extrabold outline-none dark:bg-transparent dark:text-gray-100"
-        placeholder="Untitled"
-      />
-      <div className="pad-details space-y-2 text-gray-600">
-        <div className="flex items-center text-sm">
-          <span className="text-gray-400 w-32">Created at:</span>
-          <span>{created}</span>
-        </div>
-        <div className="flex items-center text-sm">
-          <span className="text-gray-400 w-32">Tags:</span>
-          <PadTag allowUpdateIfEmpty={true} selected={info.tags} />
-        </div>
-        <div className="flex items-center text-sm">
-          <span className="text-gray-400 w-32">Folder:</span>
-          <div className="flex gap-2">
-            <PadFolder allowUpdateIfEmpty={true} selected={info.folder || ""} />
+    <div className="pad-info-wrapper relative">
+      <PadCoverImage pad={info} />
+      <div className="pad-infos relative z-10" style={{paddingTop: 70}}>
+        <input
+          ref={inpRef}
+          // value={info.title}
+          onChange={updateTitle}
+          className="mb-5 h-12 md:w-[700px] xl:w-[800px] m-auto text-4xl text-gray-700 font-extrabold outline-none dark:bg-transparent dark:text-gray-100"
+          placeholder="Untitled"
+        />
+        <div className="pad-details space-y-2 text-gray-600 grid grid-cols-2">
+          <div className="flex items-center text-sm">
+            <span className="text-gray-400 w-32">Created at:</span>
+            <span className="text-gray-400">{created}</span>
           </div>
+          <div className="flex items-center text-sm">
+            <span className="text-gray-400 w-32">Tags:</span>
+            <PadTag allowUpdateIfEmpty={true} selected={info.tags} />
+          </div>
+          <div className="flex items-center text-sm">
+            <span className="text-gray-400 w-32">Folder:</span>
+            <div className="flex gap-2">
+              <PadFolder allowUpdateIfEmpty={true} selected={info.folder || ""} />
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
