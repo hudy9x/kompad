@@ -15,8 +15,8 @@ body {
 }
 
 .pad-list {
-  height: calc(100vh - 71px);
-  @apply overflow-y-auto;
+  /* height: calc(100vh - 71px); */
+  /* @apply overflow-y-auto; */
 }
 
 .root-sidebar .side-section {

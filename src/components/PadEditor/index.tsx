@@ -21,6 +21,7 @@ import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
 // import Diagram from "../"
 import DiagramExtension from "../../extensions/Diagram";
+import ScrollBar from "../ScrollBar";
 
 interface IPadEditorProp {
   id: string;
@@ -126,15 +127,17 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
         <div className="tiptap-box">
-          <PadInfo />
-          <EditorContent
-            editor={editor}
-            className="tiptap-main-content"
-            spellCheck={false}
-            onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
-              shortCutAcion(ev);
-            }}
-          />
+          <ScrollBar height="calc(100vh - 64px - 20px)">
+            <PadInfo />
+            <EditorContent
+              editor={editor}
+              className="tiptap-main-content"
+              spellCheck={false}
+              onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
+                shortCutAcion(ev);
+              }}
+            />
+          </ScrollBar>
         </div>
         <ControlBar editor={editor} />
         <div className="character-count">

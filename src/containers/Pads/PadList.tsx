@@ -8,6 +8,7 @@ import { usePadListStore } from "../../store/pad";
 import { Unsubscribe } from "firebase/firestore";
 import ContextMenu from "../../components/ContextMenu";
 import PadItem from "./PadItem";
+import ScrollBar from "../../components/ScrollBar";
 
 dayjs.extend(relativeTime);
 
@@ -36,15 +37,17 @@ function PadList() {
   }, [user?.uid, query]);
 
   return (
-    <div className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
-      {pads.map((pad) => {
-        return (
-          <ContextMenu key={pad.id}>
-           <PadItem active={id===pad.id} pad={pad} />
-         </ContextMenu>
-        );
-      })}
-    </div>
+    <ScrollBar height="calc(100vh - 71px)">
+      <div className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
+        {pads.map((pad) => {
+          return (
+            <ContextMenu key={pad.id}>
+              <PadItem active={id === pad.id} pad={pad} />
+            </ContextMenu>
+          );
+        })}
+      </div>
+    </ScrollBar>
   );
 }
 
