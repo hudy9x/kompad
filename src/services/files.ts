@@ -1,5 +1,3 @@
-import { __ } from "@headlessui/react/dist/types";
-import dayjs from "dayjs";
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { auth, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
@@ -14,7 +12,7 @@ const _uploadFile: TUploadFileFunc = (filePath, file) => {
     }).catch((error) => {
       console.log('_uploadFile', error)
       reject('ERROR')
-    }) 
+    })
   })
 
 };
@@ -56,7 +54,7 @@ export const uploadFileToPad = (filePath: string, file: File): ReturnType<TUploa
   const user = auth.currentUser
   if (!user || !user.uid) return Promise.resolve('ERROR');
 
-  const {uid} = user;
+  const { uid } = user;
   const path = `pads/${uid}/${filePath}`;
 
   return _uploadFile(path, file)
@@ -79,13 +77,11 @@ export const deleteFile = (filePath: string): Promise<boolean> => {
     deleteObject(fileRef).then(() => {
       resolve(true)
     }).catch(err => {
-      const {error} = err
-      console.dir(err)
       if (err.code === 'storage/object-not-found') {
         return resolve(true)
       }
       reject(false)
-    } )
+    })
   })
 }
 

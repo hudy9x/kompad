@@ -3,7 +3,6 @@ import { Unsubscribe } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IPad, updatePadMetadata, watchPadById } from "../../services/pads";
-import PadCover from "./PadCover";
 import PadCoverImage from "./PadCoverImage";
 import PadFolder from "./PadFolder";
 import PadTag from "./PadTag";
