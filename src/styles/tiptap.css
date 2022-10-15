@@ -3,17 +3,16 @@
   @apply dark:bg-gray-800;
 }
 .tiptap-box {
-  @apply overflow-y-scroll;
+  @apply overflow-y-auto;
 }
 
 .pad-infos {
   @apply px-8 pb-8 w-[700px] xl:w-[800px] m-auto;
-  @apply border-b border-dashed mb-4 dark:border-gray-700;
 }
 
 .tiptap-main-content {
-  @apply px-8 pb-8 w-[700px] xl:w-[800px] m-auto;
-  height: calc(100vh - 25px - 64px - 188px);
+  @apply px-8 pt-2 pb-8 w-[700px] xl:w-[800px] m-auto;
+  height: calc(100vh - 25px - 64px - 225px);
   font-size: 16px; /* base font size */
 }
 
