@@ -31,3 +31,13 @@
 .pad-list .pad-item.context-menu-opened {
   @apply bg-gray-100 dark:bg-gray-700;
 }
+
+.pad-details .tag-item, 
+.pad-details .tag-select-btn{
+  @apply bg-opacity-40;
+} 
+
+.pad-details .tag-title,
+.pad-details .tag-select-btn{
+  @apply text-gray-300;
+}

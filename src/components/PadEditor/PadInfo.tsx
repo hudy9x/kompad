@@ -44,30 +44,30 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
   return (
     <div className="pad-info-wrapper relative">
       <PadCoverImage pad={info} />
-      <div className="pad-infos relative z-10" style={{paddingTop: 70}}>
+      <div className="pad-infos relative z-10" style={{ paddingTop: 70 }}>
         <input
           ref={inpRef}
           // value={info.title}
           onChange={updateTitle}
-          className="mb-5 h-12 md:w-[700px] xl:w-[800px] m-auto text-4xl text-gray-700 font-extrabold outline-none dark:bg-transparent dark:text-gray-100"
+          className="mb-5 h-12 sm:w-full md:w-[700px] xl:w-[800px] m-auto text-4xl font-extrabold outline-none bg-transparent text-gray-100"
           placeholder="Untitled"
         />
         <div className="pad-details space-y-2 text-gray-600 grid grid-cols-2">
           <div className="flex items-center text-sm">
-            <span className="text-gray-400 w-32">Created at:</span>
-            <span className="text-gray-400">{created}</span>
+            <span className="text-gray-400 pr-3">Created at:</span>
+            <span className="text-gray-500">{created}</span>
           </div>
           <div className="flex items-center text-sm">
-            <span className="text-gray-400 w-32">Tags:</span>
+            <span className="text-gray-400 pr-3">Tags:</span>
             <PadTag allowUpdateIfEmpty={true} selected={info.tags} />
           </div>
           <div className="flex items-center text-sm">
-            <span className="text-gray-400 w-32">Folder:</span>
+            <span className="text-gray-400 pr-3">Folder:</span>
             <div className="flex gap-2">
               <PadFolder allowUpdateIfEmpty={true} selected={info.folder || ""} />
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
