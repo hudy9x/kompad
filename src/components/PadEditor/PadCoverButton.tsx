@@ -5,7 +5,7 @@ interface Props {
   id: string
 }
 
-export default function PadCover({ id }: Props) {
+export default function PadCoverButton({ id }: Props) {
 
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const filePath = `pad-cover-${id}`

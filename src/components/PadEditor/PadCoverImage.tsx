@@ -1,5 +1,5 @@
 import { IPad } from "../../services/pads"
-import PadCover from "./PadCover"
+import PadCoverButton from "./PadCoverButton"
 
 export default function PadCoverImage({ pad }: { pad: IPad }) {
   console.log(pad)
@@ -11,6 +11,6 @@ export default function PadCoverImage({ pad }: { pad: IPad }) {
       backgroundPosition: 'center',
       backgroundSize: `100%`
     }}>
-    {pad.id ? <PadCover id={pad.id} /> : null}
+    {pad.id ? <PadCoverButton id={pad.id} /> : null}
   </div>
 }
