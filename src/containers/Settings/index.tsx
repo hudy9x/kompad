@@ -3,16 +3,19 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BiCommentError } from "react-icons/bi";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineColorSwatch, HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
 import DarkMode from "./DarkMode";
 import { showShortcutModal } from "../../store/modal";
+import { useThemeStore } from "../../store/themes";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Settings() {
+  const { setVisible: setThemeVisible } = useThemeStore()
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -108,6 +111,28 @@ export default function Settings() {
                 </a>
               )}
             </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <div
+                  onClick={() => {
+                    setThemeVisible(true) 
+                  }}
+                  className={classNames(
+                    active
+                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
+                      : "text-gray-700 dark:text-gray-300",
+                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
+                  )}
+                >
+                  <HiOutlineColorSwatch
+                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    aria-hidden="true"
+                  />
+                  <span>Theme color</span>
+                </div>
+              )}
+            </Menu.Item>
+
             <Menu.Item>
               {({ active }) => (
                 <Link

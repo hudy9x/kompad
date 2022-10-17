@@ -3,6 +3,7 @@ import Autoupdate from "../Autoupdate";
 import Sidebar from "../../containers/Sidebar";
 import Shortcut from "../Shortcut/Shortcut";
 import { isDesktopApp } from "../../libs/utils";
+import ThemeColor from "../../containers/Theme";
 
 export default function Layout() {
   return (
@@ -12,6 +13,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Shortcut />
+      <ThemeColor/>
       {isDesktopApp() ? <Autoupdate /> : null}
     </>
   );
