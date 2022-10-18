@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore"
+import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore"
 import { db } from "../libs/firebase"
 
 interface IThemeConfig {
@@ -17,10 +17,14 @@ export interface ITheme {
   downloadCounter: number
   version: string
   rating: number
+  createdAt?: Timestamp
+  updatedAt?: Timestamp
 }
 
+const COLLECTION_NAME = "themes"
+
 export const getThemes = async (): Promise<ITheme[]> => {
-  const themeRef = await getDocs(collection(db, "themes"))
+  const themeRef = await getDocs(collection(db, COLLECTION_NAME))
 
   if (themeRef.empty) {
     return []
@@ -46,4 +50,16 @@ export const getThemes = async (): Promise<ITheme[]> => {
 
   return themes
 }
+
+// export const addTheme = async (theme: ITheme) => {
+// try {
+//     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
+//
+//     });
+//
+//     return docRef.id;
+//   } catch (error) {
+//     return null;
+//   }
+// }
 
