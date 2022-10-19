@@ -1,5 +1,6 @@
 import {
   HiOutlineChevronLeft,
+  HiOutlineColorSwatch,
   HiOutlineKey,
   HiOutlineUserCircle,
 } from "react-icons/hi";
@@ -19,6 +20,13 @@ const navigation = [
     icon: HiOutlineKey,
     current: false,
   },
+  {
+    name: "Themes",
+    href: "/setting/theme",
+    icon: HiOutlineColorSwatch,
+    current: false,
+  },
+
   // {
   //   name: "Plan & Billing",
   //   href: "/setting/plan",
@@ -46,10 +54,9 @@ export default function LayoutSetting() {
                 key={item.name}
                 to={item.href}
                 className={({ isActive }) =>
-                  `setting-menu-item group ${
-                    isActive
-                      ? "active"
-                      : "text-gray-900 hover:text-gray-900 hover:bg-gray-50"
+                  `setting-menu-item group ${isActive
+                    ? "active"
+                    : "text-gray-900 hover:text-gray-900 hover:bg-gray-50"
                   }`
                 }
                 aria-current={item.current ? "page" : undefined}

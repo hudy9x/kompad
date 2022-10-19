@@ -2,6 +2,7 @@ import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore"
 import { db } from "../libs/firebase"
 
 interface IThemeConfig {
+  id: string
   name: string
   config: string
 }
@@ -13,7 +14,7 @@ export interface ITheme {
   desc: string
   images: string[]
   icon: string
-  themes: IThemeConfig[] 
+  themes: IThemeConfig[]
   downloadCounter: number
   version: string
   rating: number

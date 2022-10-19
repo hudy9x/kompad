@@ -14,8 +14,10 @@ import PadEmpty from "./containers/Pads/PadEmpty";
 import Signin from "./containers/Signin";
 import Signout from "./containers/Signout";
 import Signup from "./containers/Signup";
+import ThemeColor from "./containers/Theme";
 import { isDesktopApp } from "./libs/utils";
 import { AuthenProvider } from "./providers/Authenticator";
+import { useThemeStore } from "./store/themes";
 
 const lz = React.lazy;
 
@@ -27,6 +29,8 @@ const NotFound = lz(() => import("./containers/NotFound"));
 
 function App() {
   const isWebversion = !isDesktopApp();
+  const { config: themeConfig } = useThemeStore()
+  console.log('themeConfig', themeConfig)
   return (
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
@@ -65,6 +69,7 @@ function App() {
             <Route path="profile" element={<Profile />}></Route>
             <Route path="password" element={<Password />}></Route>
             <Route path="plan" element={<Plan />}></Route>
+            <Route path="theme" element={<ThemeColor />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>

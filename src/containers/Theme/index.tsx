@@ -14,8 +14,6 @@ interface IInstalledTheme {
 }
 
 export default function ThemeColor() {
-  const [open, setOpen] = useState(false)
-  const { visible, setVisible } = useThemeStore()
   const [themes, setThemes] = useState<ITheme[]>([]);
   const [installed, setInstalled] = useState<IInstalledTheme>({})
   const [searchKey, setSearchKey] = useState('');
@@ -34,14 +32,6 @@ export default function ThemeColor() {
   const onSearch = (value: string) => {
     setSearchKey(value)
   }
-
-  useEffect(() => {
-    setOpen(visible)
-  }, [visible])
-
-  useEffect(() => {
-    setVisible(open)
-  }, [open])
 
   useEffect(() => {
     getUserSetting().then(setting => {
@@ -64,20 +54,19 @@ export default function ThemeColor() {
     })
   }, [])
 
-  return <Modal padding="p-0" visible={open} setVisible={setOpen}>
-    <div className="relative rounded-md shadow-sm">
+  return <div className="rounded-md border border-gray-200 shadow-sm bg-gray-50"><div className="relative">
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-5">
         <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
       </div>
       <input
         onChange={(ev) => onSearch(ev.target.value)}
         type="text"
-        className="block w-full border-none py-4 pl-14 sm:text-sm shadow-sm"
+        className="rounded-t-md block w-full border-none py-4 pl-14 sm:text-sm shadow-sm"
         placeholder={'Find you theme'}
       />
     </div>
 
-    <div className="pt-2 bg-gray-50" style={{ minWidth: 360, minHeight: 100 }}>
+    <div className="pt-2" style={{ minHeight: 100 }}>
       <ScrollBar height="500px">
         {themes.map(theme => {
 
@@ -90,7 +79,7 @@ export default function ThemeColor() {
 
           return <div className="theme-item px-5 py-2 flex items-start gap-5" key={theme.id}>
             <img src={theme.icon} alt="" style={{ width: 65, height: 65 }} className="rounded-lg bg-gray-900" />
-            <div className="theme-content space-y-0.5 -mt-1 w-64">
+            <div className="theme-content space-y-0.5 -mt-1 w-full">
               <div className="theme-header flex items-center justify-between">
                 <h2 className="text-base font-semibold">{theme.name}</h2>
                 <div className="theme-counter flex items-center justify-between gap-2">
@@ -110,5 +99,5 @@ export default function ThemeColor() {
         })}
       </ScrollBar>
     </div>
-  </Modal>
+    </div>
 }

@@ -1,6 +1,5 @@
 
-import { updatePassword } from "firebase/auth";
-import { doc, getDoc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../libs/firebase";
 import { ITheme } from "./themes";
 
@@ -10,6 +9,7 @@ export enum EUserStatus {
 }
 
 export interface IUserThemeSettings {
+  id: string
   name: string
   config: string
   active: boolean
@@ -38,6 +38,7 @@ export const installTheme = async (theme: ITheme): Promise<number> => {
 
   themeList.forEach(t => {
     settings.themes?.push({
+      id: t.id,
       name: t.name,
       config: t.config,
       active: false,
@@ -69,7 +70,30 @@ export const uninstallTheme = async (themeId: string): Promise<number> => {
   await setDoc(docRef, settings)
 
   return 1;
+}
 
+export const selectTheme = async (id: string): Promise<number> => {
+  const user = auth.currentUser
+  if (!user?.uid) { return 0 }
+
+  const uid = user.uid
+  const docRef = doc(db, COLLECTION_NAME, uid);
+  const userSetting = await getDoc(docRef);
+  let settings: IUserSettings = { themes: [] }
+
+  if (userSetting.exists()) {
+    settings = userSetting.data()
+  }
+
+  if (settings.themes) {
+    settings.themes = settings.themes.map(t => {
+      t.active = t.id === id;
+      return t;
+    })
+  }
+
+  await setDoc(docRef, settings)
+  return 1
 }
 
 export const getUserSetting = async (): Promise<IUserSettings> => {
@@ -85,20 +109,4 @@ export const getUserSetting = async (): Promise<IUserSettings> => {
 
   return settingRef.data() as IUserSettings
 }
-
-// export const updateUserById = async (uid: string, user: Partial<IUser>) => {
-//   try {
-//     const { fullname, photoURL, dateOfBirth, address } = user;
-//     await updateDoc(doc(db, "users", uid), {
-//       fullname,
-//       photoURL,
-//       dateOfBirth,
-//       address,
-//     });
-//
-//     return 1;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
