@@ -4,7 +4,7 @@ import Modal from '../../components/Modal'
 import ScrollBar from '../../components/ScrollBar'
 import { HiCheckCircle, HiOutlineCheckCircle } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
-import { getUserSetting, selectTheme} from '../../services/user-settings'
+import { getUserSetting, selectTheme } from '../../services/user-settings'
 import { useAuth } from '../../hooks/useAuth'
 
 export default function ThemeUser() {
@@ -28,6 +28,10 @@ export default function ThemeUser() {
   }
 
   useEffect(() => {
+    setPreview(selectedTheme)
+  }, [selectedTheme])
+
+  useEffect(() => {
     setOpen(visible);
   }, [visible])
 
@@ -44,7 +48,7 @@ export default function ThemeUser() {
   }, [user?.uid])
 
   useEffect(() => {
-    
+
     const onKeyPress = (ev: KeyboardEvent) => {
       const key = ev.key
       const len = themes.length;
@@ -55,31 +59,24 @@ export default function ThemeUser() {
         return
       }
 
-      let nextPreview = '' 
+      let nextPreview = ''
+
+      if (!["ArrowUp", "ArrowDown"].includes(key)) {
+        return;
+      }
+
       for (let i = 0; i < len; i++) {
         const t = themes[i]
         if (t.id !== preview) {
           continue
         }
-
         
-        switch (key) {
-          case "ArrowUp":
-            nextPreview = themes[i - 1].id || ''
-            break;
-
-          case "ArrowDown":
-            nextPreview = themes[i + 1].id || ''
-            break;
-
-          default:
-            break;
-        }
-
+        const dir = key === "ArrowUp" ? -1 : 1;
+        nextPreview = themes[i + dir].id || "" 
         break;
       }
 
-      nextPreview && setPreview(nextPreview)                      
+      nextPreview && setPreview(nextPreview)
     }
 
     document.addEventListener('keyup', onKeyPress)
@@ -87,7 +84,7 @@ export default function ThemeUser() {
     return () => {
       document.removeEventListener('keyup', onKeyPress)
     }
-  
+
   }, [themes, preview])
 
   useEffect(() => {
@@ -131,11 +128,11 @@ export default function ThemeUser() {
         </kbd>
         <span className="text-gray-700 text-xs">Up</span>
         <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
-         ↓
+          ↓
         </kbd>
         <span className="text-gray-700 text-xs">Down</span>
- <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
-         Enter
+        <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
+          Enter
         </kbd>
 
         <span className="text-gray-700 text-xs">Select</span>
