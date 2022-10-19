@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useThemeStore } from '../../store/themes'
+import { setThemConfigToStorage, useThemeStore } from '../../store/themes'
 import Modal from '../../components/Modal'
 import ScrollBar from '../../components/ScrollBar'
 import { HiCheckCircle, HiOutlineCheckCircle } from 'react-icons/hi'
@@ -17,6 +17,7 @@ export default function ThemeUser() {
   const onSelect = (id: string, config: string) => {
     setOpen(false);
     setSearchKey('');
+    setThemConfigToStorage(config)
     selectTheme(id).then(() => {
       // setUpdateCounter(updateCounter + 1)
       setSelected(id, config)

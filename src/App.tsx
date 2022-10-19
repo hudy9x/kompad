@@ -17,7 +17,7 @@ import Signup from "./containers/Signup";
 import ThemeColor from "./containers/Theme";
 import { isDesktopApp } from "./libs/utils";
 import { AuthenProvider } from "./providers/Authenticator";
-import { useThemeStore } from "./store/themes";
+import { getThemeConfigFromStorage } from "./store/themes";
 
 const lz = React.lazy;
 
@@ -29,7 +29,7 @@ const NotFound = lz(() => import("./containers/NotFound"));
 
 function App() {
   const isWebversion = !isDesktopApp();
-  const { config: themeConfig } = useThemeStore()
+  const themeConfig = getThemeConfigFromStorage()
   console.log('themeConfig', themeConfig)
   return (
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
