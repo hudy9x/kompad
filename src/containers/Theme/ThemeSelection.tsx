@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { setThemConfigToStorage, useThemeStore } from '../../store/themes'
+import { useThemeStore } from '../../store/themes'
 import Modal from '../../components/Modal'
 import ScrollBar from '../../components/ScrollBar'
-import { HiCheckCircle, HiOutlineCheckCircle } from 'react-icons/hi'
+import { HiCheckCircle, HiOutlineMinusCircle } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
-import { getUserSetting, selectTheme } from '../../services/user-settings'
+import { getUserSetting, selectTheme, setThemeConfigToStorage } from '../../services/user-settings'
 import { useAuth } from '../../hooks/useAuth'
+import { Link } from 'react-router-dom'
 
 export default function ThemeUser() {
   const { user } = useAuth()
@@ -17,7 +18,7 @@ export default function ThemeUser() {
   const onSelect = (id: string, config: string) => {
     setOpen(false);
     setSearchKey('');
-    setThemConfigToStorage(config)
+    setThemeConfigToStorage(config)
     selectTheme(id).then(() => {
       // setUpdateCounter(updateCounter + 1)
       setSelected(id, config)
@@ -71,9 +72,9 @@ export default function ThemeUser() {
         if (t.id !== preview) {
           continue
         }
-        
+
         const dir = key === "ArrowUp" ? -1 : 1;
-        nextPreview = themes[i + dir].id || "" 
+        nextPreview = themes[i + dir].id || ""
         break;
       }
 
@@ -119,25 +120,19 @@ export default function ThemeUser() {
 
           return <div onClick={() => onSelect(theme.id, theme.config)} className={`${isPreview} theme-item px-5 py-2 flex items-center justify-between gap-5 border-b cursor-pointer hover:bg-gray-100 hover:text-gray-600`} key={index}>
             <h2 className="text-sm text-gray-500">{theme.name}</h2>
-            {selectedTheme === theme.id ? <HiCheckCircle className="text-yellow-500" /> : <HiOutlineCheckCircle className="text-gray-300" />}
+            {selectedTheme === theme.id ? <HiCheckCircle className="text-yellow-500" /> : <HiOutlineMinusCircle className="text-gray-300" />}
           </div>
         })}
       </ScrollBar>
-      <div className="flex items-center gap-2 px-5 py-3 border-t bg-white">
-        <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
-          ↑
-        </kbd>
-        <span className="text-gray-700 text-xs">Up</span>
-        <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
-          ↓
-        </kbd>
-        <span className="text-gray-700 text-xs">Down</span>
-        <kbd className="inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 ">
-          Enter
-        </kbd>
-
-        <span className="text-gray-700 text-xs">Select</span>
-
+      <div className="flex items-center justify-between w-full bg-white border-t px-5 py-3">
+        <div className="flex items-center gap-2">
+          <kbd className="kbd-btn">↑</kbd>
+          <kbd className="kbd-btn">↓</kbd>
+          <kbd className="kbd-btn">Enter</kbd>
+        </div>
+        <Link to="/setting/theme" className="inline-flex">
+          <kbd className="kbd-btn">+ New theme</kbd>
+        </Link>
       </div>
     </div>
   </Modal>

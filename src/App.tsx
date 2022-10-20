@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import LayoutClear from "./components/Layout/LayoutClear";
@@ -15,9 +15,9 @@ import Signin from "./containers/Signin";
 import Signout from "./containers/Signout";
 import Signup from "./containers/Signup";
 import ThemeColor from "./containers/Theme";
+import ThemeSetting from "./containers/Theme/ThemeSetting";
 import { isDesktopApp } from "./libs/utils";
 import { AuthenProvider } from "./providers/Authenticator";
-import { getThemeConfigFromStorage } from "./store/themes";
 
 const lz = React.lazy;
 
@@ -29,11 +29,11 @@ const NotFound = lz(() => import("./containers/NotFound"));
 
 function App() {
   const isWebversion = !isDesktopApp();
-  const themeConfig = getThemeConfigFromStorage()
-  console.log('themeConfig', themeConfig)
+
   return (
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
+        <ThemeSetting>
         <Routes>
           <Route path="/" element={<LayoutClear />}>
             <Route index element={<Checking />} />
@@ -74,6 +74,7 @@ function App() {
           </Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
+        </ThemeSetting>
       </AuthenProvider>
     </div>
   );

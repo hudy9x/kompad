@@ -4,10 +4,9 @@
 
 body {
   @apply h-screen overflow-hidden;
-}
-
-.App {
-  @apply flex;
+  --common-backgroundColor: 'red';
+  --common-textColor: 'red';
+  --common-primaryColor: 'yellow';
 }
 
 .App main {

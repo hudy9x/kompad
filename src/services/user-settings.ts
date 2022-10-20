@@ -1,6 +1,7 @@
 
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../libs/firebase";
+import { setCache, getCache } from "../libs/localCache";
 import { ITheme } from "./themes";
 
 export enum EUserStatus {
@@ -108,5 +109,33 @@ export const getUserSetting = async (): Promise<IUserSettings> => {
   }
 
   return settingRef.data() as IUserSettings
+}
+
+export const getThemeConfigFromStorage = async () => {
+  try {
+
+    const theme = getCache('THEME');
+    console.log('theme', theme)
+    if (theme) return JSON.parse(theme)
+
+    const setting = await getUserSetting()
+    console.log(setting)
+    if (!setting.themes) return {}
+
+    const activeTheme = setting.themes.find(t => t.active === true)
+    const config = activeTheme && activeTheme.config ? activeTheme.config : "{}"
+    setThemeConfigToStorage(config)
+
+    return JSON.parse(config) 
+
+  } catch (error) {
+    console.log('getThemeconfig Error', error)
+    return {}
+  }
+
+}
+
+export const setThemeConfigToStorage = (value: string) => {
+  setCache("THEME", value)
 }
 
