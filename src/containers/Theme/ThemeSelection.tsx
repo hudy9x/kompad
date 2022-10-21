@@ -8,6 +8,8 @@ import { getUserSetting, selectTheme, setThemeConfigToStorage } from '../../serv
 import { useAuth } from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
 
+let currentTheme = ''
+let markAsThemeSelected = false;
 export default function ThemeUser() {
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
@@ -15,10 +17,31 @@ export default function ThemeUser() {
   const [searchKey, setSearchKey] = useState('');
   const [preview, setPreview] = useState(selectedTheme)
 
+  const getThemeSettingElem = () => document.getElementById("theme-setting")
+
+  const setThemeSetting = (config: string) => {
+    const themeSettingElem = getThemeSettingElem()
+    if (!themeSettingElem) return;
+
+    try {
+      const cssVars = JSON.parse(config)
+      const css = []
+      for (let variable in cssVars) {
+        css.push(`--${variable}: ${cssVars[variable]}`)
+      }
+
+      themeSettingElem.setAttribute('style', css.join(';'))
+    } catch (error) {
+      console.log('setThemeSetting Error', error)
+    }
+  }
+
   const onSelect = (id: string, config: string) => {
+    markAsThemeSelected = true
     setOpen(false);
     setSearchKey('');
     setThemeConfigToStorage(config)
+    setThemeSetting(config)
     selectTheme(id).then(() => {
       // setUpdateCounter(updateCounter + 1)
       setSelected(id, config)
@@ -29,11 +52,36 @@ export default function ThemeUser() {
     setSearchKey(value)
   }
 
+  const cachingCurrentTheme = () => {
+    console.log('opened')
+    const themeSettingElem = getThemeSettingElem()
+    if (!themeSettingElem) {
+      return;
+    }
+    currentTheme = themeSettingElem.getAttribute('style') || ''
+
+  }
+
+  const rollbackToDefaultTheme = () => {
+    if (markAsThemeSelected) {
+      markAsThemeSelected = false;
+      return;
+    }
+
+    const themeSettingElem = getThemeSettingElem()
+    if (!themeSettingElem) {
+      return;
+    }
+    themeSettingElem.setAttribute('style', currentTheme)
+  }
+
   useEffect(() => {
     setPreview(selectedTheme)
   }, [selectedTheme])
 
   useEffect(() => {
+    visible && cachingCurrentTheme()
+    !visible && rollbackToDefaultTheme()
     setOpen(visible);
   }, [visible])
 
@@ -56,8 +104,8 @@ export default function ThemeUser() {
       const len = themes.length;
 
       if (key === 'Enter') {
-        const find = themes.find(t => t.id === preview)
-        onSelect(preview, find?.config || '')
+        const found = themes.find(t => t.id === preview)
+        found && onSelect(preview, found.config || '')
         return
       }
 
@@ -74,7 +122,11 @@ export default function ThemeUser() {
         }
 
         const dir = key === "ArrowUp" ? -1 : 1;
-        nextPreview = themes[i + dir].id || ""
+        const nTheme = themes[i + dir]
+        nextPreview = nTheme.id || ""
+
+        // preview theme when pressing up/down key - it'll be rollbacked after closing the theme selection modal
+        setThemeSetting(nTheme.config)
         break;
       }
 

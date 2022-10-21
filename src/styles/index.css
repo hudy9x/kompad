@@ -4,31 +4,22 @@
 
 body {
   @apply h-screen overflow-hidden;
-  --common-backgroundColor: 'red';
-  --common-textColor: 'red';
-  --common-primaryColor: 'yellow';
+
+  --common-text-color: rgb(209 213 219);
+
+  --common-border-color: rgb(17 24 39);
+  --sidebar-background-color: rgb(17 24 39);
+  --sidebar-text-color: rgb(107 114 128);
+  --sidebar-text-color-hover: rgb(156 163 175);
+  --sidebar-title-color: rgb(156 163 175);
+
+  --sidebar-user-setting-border-color: rgb(31 41 55);
+  --sidebar2-background-color: rgb(31 41 55);
+
 }
 
 .App main {
   @apply flex-grow;
-}
-
-.pad-list {
-  /* height: calc(100vh - 71px); */
-  /* @apply overflow-y-auto; */
-}
-
-.root-sidebar .side-section {
-  height: calc(100vh - 61px - 44px);
-  @apply overflow-y-auto;
-}
-
-.pad-item-title {
-  @apply text-base font-medium text-gray-900 dark:text-gray-300;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .layout-clear .titlebar {

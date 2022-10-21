@@ -126,7 +126,9 @@ export const getThemeConfigFromStorage = async () => {
     const config = activeTheme && activeTheme.config ? activeTheme.config : "{}"
     setThemeConfigToStorage(config)
 
-    return JSON.parse(config) 
+    console.log(activeTheme)
+
+    return JSON.parse(config)
 
   } catch (error) {
     console.log('getThemeconfig Error', error)

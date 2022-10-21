@@ -8,10 +8,10 @@ interface Props {
 }
 
 interface cssVars {
-  [key: string ]: string
+  [key: string]: string
 }
 
-export default function ThemeSetting({children}: Props) {
+export default function ThemeSetting({ children }: Props) {
   const { user } = useAuth()
   const { config } = useThemeStore()
   const [cssVars, setCssVars] = useState<CSSProperties>({})
@@ -21,7 +21,7 @@ export default function ThemeSetting({children}: Props) {
 
     for (const cssVar in themeConfig) {
       const cssValue = themeConfig[cssVar];
-      cssVars[`--${cssVar}`] = cssValue;
+      cssVars[`${cssVar}`] = cssValue;
     }
 
     setCssVars(cssVars as CSSProperties)
@@ -33,7 +33,7 @@ export default function ThemeSetting({children}: Props) {
     }
   }, [user, config])
 
-  return <div className="flex" style={cssVars}>
-  {children}
+  return <div id="theme-setting" className="flex" style={cssVars}>
+    {children}
   </div>
 }

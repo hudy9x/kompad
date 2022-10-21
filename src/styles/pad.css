@@ -3,9 +3,30 @@
   @apply flex uppercase;
 }
 
+.pad-list {
+  /* @apply divide-y; */
+  /* @apply divide-gray-200 dark:divide-gray-900; */
+}
+
+.pad-list > :not([hidden]):not(:last-child) {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--common-border-color);
+}
+
 .pad-list .pad-item {
   @apply relative;
-  @apply relative  cursor-pointer bg-white py-3 px-4;
+  @apply relative dark:bg-gray-800 cursor-pointer bg-white py-3 px-4;
+  background-color: var(--sidebar2-background-color)
+}
+
+.pad-item-title {
+  @apply text-base font-medium text-gray-900;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--common-text-color);
 }
 
 .pad-list .pad-item.active {

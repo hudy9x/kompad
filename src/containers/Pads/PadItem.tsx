@@ -20,7 +20,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
   return <div
     className={`${active
       ? "active"
-      : "dark:bg-gray-800"
+      : ""
       } ${isContextMenuDisplayed ? 'context-menu-opened' : ''} pad-item group`}
   >
     <Link to={`/app/pad/${pad.id}`}>
@@ -46,7 +46,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
       </div>
       <PadTag className="mt-1" selected={pad.tags} />
       <div className="pad-as-important absolute bottom-5 right-4">
-        { pad.important ? <HiStar className="text-gray-400 dark:text-gray-500" /> : <HiOutlineStar className="text-gray-300 dark:text-gray-700" /> }
+        {pad.important ? <HiStar className="text-gray-400 dark:text-gray-500" /> : <HiOutlineStar className="text-gray-300 dark:text-gray-700" />}
       </div>
     </Link>
     <ContextMenu.Items>

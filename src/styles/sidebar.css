@@ -3,28 +3,46 @@
   @apply bg-gray-50;
 }
 
+.root-sidebar .side-section {
+  height: calc(100vh - 61px - 44px);
+  @apply overflow-y-auto;
+}
+
 .second-sidebar {
-  @apply w-64
+  @apply w-64;
+  background-color: var(--sidebar2-background-color);
+}
+
+.second-sidebar-header{
+  @apply flex items-center gap-2 px-4 py-4 border-b;
+  @apply border-gray-200 dark:border-gray-900;
+  border-color: var(--common-border-color);
 }
 
 .root-sidebar{
-  @apply w-56 border-r dark:border-r-gray-900;
-  @apply bg-gray-100 dark:bg-gray-900
+  @apply w-56 border-r;
+  background-color: var(--sidebar-background-color);
+  border-color: var(--common-border-color);
 }
 
 .root-sidebar .side-section {
   @apply pb-3;
-
 }
 
 .root-sidebar .sec-title {
-  @apply px-4 py-3 text-xs font-medium uppercase text-gray-600 dark:text-gray-400;
+  @apply px-4 py-3 text-xs font-medium uppercase;
   @apply flex items-center gap-2;
+  color: var(--sidebar-title-color);
 }
 
 .root-sidebar .sec-item {
   @apply px-4 py-1;
-  @apply flex gap-2 items-center text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-400;
+  @apply flex gap-2 items-center text-sm ;
+  color: var(--sidebar-text-color);
+}
+
+.root-sidebar .sec-item:hover{
+  color: var(--sidebar-text-color-hover);
 }
 
 .root-sidebar .sec-container{
@@ -33,4 +51,25 @@
 
 .root-sidebar .sec-content {
   @apply ml-5;
+}
+
+.user-settings {
+  @apply px-4 py-3 border-t;
+  @apply flex items-center justify-between;
+  border-top-color: var(--sidebar-user-setting-border-color);
+}
+
+.usetting-fullname {
+  @apply text-sm font-medium;
+  color: var(--sidebar-title-color);
+}
+
+.app-version {
+  @apply text-xs font-medium flex items-center gap-1;
+  color: var(--sidebar-text-color);
+}
+
+.brand-name {
+  @apply py-3 text-sm font-bold;
+  color: var(--sidebar-title-color);
 }

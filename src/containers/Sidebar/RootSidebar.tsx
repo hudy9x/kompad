@@ -11,11 +11,11 @@ function RootSidebar() {
         {/* <div className="h-8 w-8 p-1 rounded bg-gray-500">
           <img src="/logo128.png" alt="" className="w-full" />
         </div> */}
-        <h2 className="py-3 text-sm font-bold">Kompad</h2>
+        <h2 className="brand-name">Kompad</h2>
       </div>
 
       <div className="side-section">
-        <Category /> 
+        <Category />
         <Folders />
         <Tags />
       </div>
