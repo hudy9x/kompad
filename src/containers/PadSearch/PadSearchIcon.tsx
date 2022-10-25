@@ -15,7 +15,7 @@ function PadSearchIcon() {
       <input
         type="text"
         readOnly
-        className="shadow-sm py-1 pl-7 block w-full text-sm cursor-pointer border-gray-300 hover:bg-gray-50 rounded-md dark:bg-gray-900 dark:border-gray-800"
+        className="pad-search-btn"
         placeholder="Search ..."
       />
       <HiOutlineSearch

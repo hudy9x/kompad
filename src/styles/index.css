@@ -6,6 +6,16 @@ body {
   @apply h-screen overflow-hidden;
 
   --common-text-color: rgb(209 213 219);
+  --common-dark-text-color: rgb(107 114 128);
+  --common-text-hover-color: rgb(165 170 179);
+  --common-bg-color: rgb(31 41 55);
+  --common-dark-bg-color: rgb(17 24 39);
+  --common-light-bg-color: rgb(55 65 81);
+  --common-border-hl-color: rgb(253 227 124);
+
+  --common-btn-bg-color: rgb(55 65 81);
+  --common-btn-bg-hover-color: rgb(75 85 99);
+  --common-btn-bg-active-color: rgb(17 24 39);
 
   --common-border-color: rgb(17 24 39);
   --sidebar-background-color: rgb(17 24 39);
@@ -16,10 +26,16 @@ body {
   --sidebar-user-setting-border-color: rgb(31 41 55);
   --sidebar2-background-color: rgb(31 41 55);
 
+  --editor-text-color: rgb(209 213 219);
+  --editor-link-text-color: rgb(251 210 81);
+  --editor-quote-text-color: rgb(249 247 193);
+
+  color: var(--common-text-color);
 }
 
 .App main {
   @apply flex-grow;
+  background-color: var(--common-bg-color);
 }
 
 .layout-clear .titlebar {

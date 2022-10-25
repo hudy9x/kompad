@@ -7,6 +7,7 @@
   caret-shape: bar;
   font-size: 1em;
   line-height: 1.5;
+  color: var(--editor-text-color);
 }
 
 .ProseMirror h4 {
@@ -23,7 +24,8 @@
 }
 
 .ProseMirror a {
-  @apply text-yellow-600 dark:text-yellow-500 hover:underline;
+  @apply hover:underline cursor-pointer;
+  color: var(--editor-link-text-color);
 }
 
 /* Spacing */
@@ -36,6 +38,14 @@
 .ProseMirror img {
   @apply mb-8;
 }
+
+.ProseMirror h4,
+.ProseMirror h3,
+.ProseMirror h2,
+.ProseMirror h1{
+  @apply font-bold;
+}
+
 
 .ProseMirror ul p,
 .ProseMirror ol p {
@@ -64,7 +74,9 @@
 }
 
 .ProseMirror blockquote {
-  @apply border-l-4 pl-8 italic font-serif text-lg text-gray-600;
+  @apply border-l-4 pl-8 italic font-serif text-lg;
+  color: var(--editor-quote-text-color);
+  border-color: var(--common-border-hl-color);
 }
 
 .ProseMirror blockquote p {
@@ -145,6 +157,7 @@
   color: #fff;
   font-family: "JetBrainsMono", monospace;
   padding: 0.75rem 1rem;
+  margin-bottom: 2rem;
 }
 .ProseMirror pre code {
   background: none !important;

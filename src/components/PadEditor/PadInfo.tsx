@@ -43,7 +43,7 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
   return (
     <div className="pad-info-wrapper relative">
       <PadCoverImage pad={info} />
-      <div className="pad-infos relative z-10" style={{ paddingTop: 70 }}>
+      <div className="pad-infos relative" style={{ paddingTop: 70 }}>
         <input
           ref={inpRef}
           // value={info.title}

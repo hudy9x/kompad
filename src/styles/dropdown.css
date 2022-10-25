@@ -1,6 +1,8 @@
 .dropdown {
-  @apply bg-white dark:bg-gray-900;
+  @apply border shadow-lg bg-white dark:bg-gray-900 z-10;
   @apply divide-y divide-gray-100 dark:divide-gray-800;
+  background-color: var(--common-dark-bg-color);
+  border-color: var(--common-light-bg-color);
 }
 .dropdown-content:hover {
   @apply bg-gray-100 dark:bg-gray-700;

@@ -10,7 +10,7 @@ import PadDelete from "./PadDelete";
 
 export default function PadActions({ data }: { data: IPad }) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left z-10">
       <Transition show={true}
         enter="transition duration-100 ease-out"
         enterFrom="transform scale-95 opacity-0"
@@ -18,7 +18,7 @@ export default function PadActions({ data }: { data: IPad }) {
         leave="transition duration-75 ease-out"
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0">
-        <Menu.Items className="dropdown absolute left-0 z-20 mt-2 w-56 origin-top-right rounded-md shadow-lg focus:outline-none z-999">
+        <Menu.Items className="dropdown absolute left-0 mt-2 w-56 origin-top-right rounded-md shadow-lg focus:outline-none z-30">
           <div className="py-1">
             <Menu.Item as="div">
               <PadEdit />

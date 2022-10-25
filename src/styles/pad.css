@@ -29,6 +29,14 @@
   color: var(--common-text-color);
 }
 
+.pad-unimportant-icon { 
+  color: var(--common-dark-text-color);
+}
+
+.pad-important-icon { 
+  color: var(--common-text-color);
+}
+
 .pad-list .pad-item.active {
   @apply dark:bg-gray-800;
 }
@@ -51,6 +59,7 @@
 
 .pad-list .pad-item.context-menu-opened {
   @apply bg-gray-100 dark:bg-gray-700;
+  background-color: var(--common-dark-bg-color);
 }
 
 .pad-details .tag-item, 

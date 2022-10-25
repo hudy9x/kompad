@@ -1,6 +1,6 @@
 .sidebar {
-  @apply border-r dark:border-r-gray-900 dark:bg-gray-800;
-  @apply bg-gray-50;
+  @apply border-r;
+  border-right-color: var(--common-border-color);
 }
 
 .root-sidebar .side-section {
@@ -17,6 +17,17 @@
   @apply flex items-center gap-2 px-4 py-4 border-b;
   @apply border-gray-200 dark:border-gray-900;
   border-color: var(--common-border-color);
+}
+
+.pad-search-btn[type="text"] {
+  @apply py-1 pl-7 block w-full text-sm cursor-pointer rounded-md;
+  @apply border-gray-300 hover:bg-gray-50 dark:bg-gray-900 dark:border-gray-800;
+  background-color: var(--common-dark-bg-color);
+  border-color: var(--common-border-color);
+}
+
+.pad-search-btn[type="text"]:hover{
+  background-color: var(--common-light-bg-color)
 }
 
 .root-sidebar{
