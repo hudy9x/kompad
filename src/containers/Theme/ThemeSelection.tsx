@@ -148,19 +148,18 @@ export default function ThemeUser() {
   }, [open])
 
   return <Modal padding="p-0" visible={open} setVisible={setOpen}>
-    <div className="relative rounded-md shadow-sm" >
+    <div className="theme-search" >
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-5">
         <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
       </div>
       <input
         onChange={(ev) => onSearch(ev.target.value)}
         type="text"
-        className="block w-full border-none py-4 pl-14 sm:text-sm shadow-sm"
         placeholder={'Find you theme'}
       />
     </div>
 
-    <div className="bg-gray-50" style={{ minWidth: 360, minHeight: 100 }}>
+    <div className="" style={{ minWidth: 360, minHeight: 100 }}>
       <ScrollBar height="300px">
         {themes.map((theme, index) => {
 
@@ -168,15 +167,16 @@ export default function ThemeUser() {
             return <></>;
           }
 
-          const isPreview = theme.id === preview ? 'bg-gray-100 text-gray-600' : '';
+          const isPreview = theme.id === preview ? 'is-preview' : '';
 
-          return <div onClick={() => onSelect(theme.id, theme.config)} className={`${isPreview} theme-item px-5 py-2 flex items-center justify-between gap-5 border-b cursor-pointer hover:bg-gray-100 hover:text-gray-600`} key={index}>
-            <h2 className="text-sm text-gray-500">{theme.name}</h2>
-            {selectedTheme === theme.id ? <HiCheckCircle className="text-yellow-500" /> : <HiOutlineMinusCircle className="text-gray-300" />}
+          return <div onClick={() => onSelect(theme.id, theme.config)} 
+            className={`${isPreview} theme-item`} key={index}>
+            <h2 className="text-sm">{theme.name}</h2>
+            {selectedTheme === theme.id ? <HiCheckCircle className="theme-status-active" /> : <HiOutlineMinusCircle className="theme-status" />}
           </div>
         })}
       </ScrollBar>
-      <div className="flex items-center justify-between w-full bg-white border-t px-5 py-3">
+      <div className="modal-footer">
         <div className="flex items-center gap-2">
           <kbd className="kbd-btn">↑</kbd>
           <kbd className="kbd-btn">↓</kbd>

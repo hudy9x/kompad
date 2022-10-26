@@ -1,0 +1,12 @@
+.modal {
+  @apply shadow-lg rounded-lg relative text-left overflow-hidden shadow-xl transform transition-all ;
+  background-color: var(--modal-bg-color);
+  border: 1px solid var(--common-border-light-color);
+}
+
+.modal-footer {
+  @apply flex items-center justify-between w-full border-t px-5 py-3;
+  background-color: var(--modal-footer-bg-color);
+  border-top-color: var(--common-border-light-color);
+}
+

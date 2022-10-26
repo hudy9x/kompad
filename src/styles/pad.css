@@ -70,3 +70,10 @@
 .pad-details .tag-select-btn{
   @apply text-gray-300;
 }
+
+.tag-item{
+  @apply flex gap-1 items-center py-0.5 px-2 rounded-md relative;
+  @apply bg-opacity-90;
+  background-color: var(--common-dark-bg-color);
+}
+

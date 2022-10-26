@@ -6,16 +6,22 @@ body {
   @apply h-screen overflow-hidden;
 
   --common-text-color: rgb(209 213 219);
+  --common-semidark-text-color: rgb(160 167 177);
   --common-dark-text-color: rgb(107 114 128);
   --common-text-hover-color: rgb(165 170 179);
   --common-bg-color: rgb(31 41 55);
   --common-dark-bg-color: rgb(17 24 39);
   --common-light-bg-color: rgb(55 65 81);
   --common-border-hl-color: rgb(253 227 124);
+  --common-border-light-color: rgb(55 65 81);
 
   --common-btn-bg-color: rgb(55 65 81);
   --common-btn-bg-hover-color: rgb(75 85 99);
   --common-btn-bg-active-color: rgb(17 24 39);
+  
+  --common-primary-color: rgb(234 179 8);
+  --common-primary-hover-color: rgb(253 224 71);
+  --common-primary-text-color: rgb(113 63 18);
 
   --common-border-color: rgb(17 24 39);
   --sidebar-background-color: rgb(17 24 39);
@@ -30,7 +36,34 @@ body {
   --editor-link-text-color: rgb(251 210 81);
   --editor-quote-text-color: rgb(249 247 193);
 
+  --modal-bg-color: rgb(31 41 55);
+  --modal-footer-bg-color: rgb(31 41 55);
+
   color: var(--common-text-color);
+}
+
+.bg{
+  background-color: var(--common-bg-color);
+}
+
+.bg-light{
+  background-color: var(--common-light-bg-color);
+}
+
+.text-color-base{
+  color: var(--common-text-color);
+}
+
+.text-color-light {
+  color: var(--common-semidark-text-color);
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--common-border-light-color);
+}
+
+.div-y > :not(:first-child) {
+  border-top: 1px solid var(--common-border-light-color);
 }
 
 .App main {
@@ -47,6 +80,7 @@ body {
 }
 
 
+@import url("./modal.css");
 @import url("./scrollbar.css");
 @import url("./form.css");
 @import url("./advanced-setting.css");
@@ -57,4 +91,5 @@ body {
 @import url("./sidebar.css");
 @import url("./pad.css");
 @import url("./dropdown.css");
+@import url("./theme.css");
 

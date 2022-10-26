@@ -1,16 +1,34 @@
 .dropdown {
-  @apply border shadow-lg bg-white dark:bg-gray-900 z-10;
-  @apply divide-y divide-gray-100 dark:divide-gray-800;
+  @apply border shadow-lg bg-white dark:bg-gray-900 z-10 rounded-md;
+  @apply focus:outline-none z-30;
   background-color: var(--common-dark-bg-color);
-  border-color: var(--common-light-bg-color);
+  border-color: var(--common-border-light-color);
 }
+
+.dropdown.div-y > :not(:first-child) {
+  border-top: 1px solid var(--common-border-light-color);
+}
+
+.dropdown-content {
+  @apply cursor-pointer flex items-center px-4 py-2 text-sm;
+}
+
 .dropdown-content:hover {
   @apply bg-gray-100 dark:bg-gray-700;
+  background-color: var(--common-light-bg-color);
 }
+
+.dropdown-content:hover .dropdown-text {
+  color: var(--common-text-color); 
+}
+
+.dropdown-content:hover .dropdown-icon {
+  color: var(--common-text-color);
+}
+
 .dropdown-icon {
   @apply mr-3 h-5 w-5;
-  @apply text-gray-500;
-  @apply dark:text-gray-400;
+  color: var(--common-dark-text-color);
 }
 
 .dropdown-icon--active {
@@ -19,7 +37,7 @@
 }
 
 .dropdown-text {
-  @apply mr-3 h-5 w-5;
-  @apply text-gray-500;
-  @apply dark:text-white;
+  @apply mr-3;
+  color: var(--common-dark-text-color);
 }
+

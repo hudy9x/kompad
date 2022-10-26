@@ -64,14 +64,14 @@ export default function PadNewModal() {
     <Modal visible={visible} setVisible={setVisible}>
       <form
         onSubmit={formik.handleSubmit}
-        className="text-gray-900 dark:text-gray-300"
+        className="dark:text-gray-300 w-80"
       >
-        <h3 className="text-lg leading-6 font-medium pb-4 border-b dark:border-gray-700">
+        <h3 className="text-lg leading-6 font-medium pb-4 border-bottom dark:border-gray-700">
           Create new pad
         </h3>
 
         <div className="mt-4 text-gray-700 dark:text-gray-300">
-          <div>
+          <div className="">
             <label htmlFor="pad-title" className="block text-sm font-medium ">
               Title
             </label>
@@ -104,14 +104,14 @@ export default function PadNewModal() {
             <div className="flex gap-4 flex-row-reverse">
               <button
                 type="submit"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
+                className="btn btn-primary btn-lg"
               >
                 Create
               </button>
               <button
                 type="button"
                 onClick={() => setVisible(false)}
-                className="inline-flex items-center px-4 py-2 dark:bg-gray-600 dark:border-gray-700 dark:text-gray-100 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:hover:bg-gray-500"
+                className="btn btn-lg"
               >
                 Close
               </button>

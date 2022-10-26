@@ -1,7 +1,40 @@
-.btn {
-  @apply inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+.btn, 
+.btn[type="button"]{
+  @apply inline-flex items-center px-2.5 py-1.5 border shadow-sm text-xs font-medium rounded;
+  border-color: var(--common-border-light-color);
+  background-color: var(--common-btn-bg-color);
+  color: var(--common-semidark-text-color);
+}
+
+.btn:hover{
+  background-color: var(--common-btn-bg-hover-color);
+  border-color: var(--common-btn-bg-hover-color);
+}
+
+.btn.btn-primary {
+  border-color: var(--common-primary-color);
+  background-color: var(--common-primary-color);
+  color: var(--common-primary-text-color);
+}
+
+.btn.btn-primary:hover{
+  background-color: var(--common-primary-hover-color);
+}
+
+.btn.btn-lg {
+  @apply px-4 py-2 
 }
 
 .kbd-btn {
-  @apply inline-flex cursor-pointer items-center px-2 py-0.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600;
+  @apply inline-flex cursor-pointer items-center px-2 py-0.5 border;
+  @apply shadow-sm text-xs font-medium rounded;
+  background-color: var(--common-btn-bg-color);
+  border: 1px solid var(--common-border-color);
+  color: var(--common-semidark-text-color);
 }
+
+.kbd-btn:hover{
+  background-color: var(--common-btn-bg-hover-color);
+  color: var(--common-text-color);
+}
+

@@ -58,7 +58,7 @@ function FolderSelect({ onChange }: IFolderSelectProps) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="z-10 origin-top-right absolute left-0 mt-2 w-44 rounded-md shadow-lg bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="z-10 origin-top-right absolute left-0 mt-2 w-44 dropdown">
             <div className="py-1">
               {folders.map((folder) => {
                 return (
@@ -66,12 +66,10 @@ function FolderSelect({ onChange }: IFolderSelectProps) {
                     {({ active }) => (
                       <div
                         onClick={() => onSelect(folder.id || "")}
-                        className={classNames(
-                          "cursor-pointer text-gray-400 dark:hover:text-gray-400 flex items-center hover:text-gray-700 px-4 py-2 text-sm space-x-3 hover:bg-gray-50 dark:hover:bg-gray-800"
-                        )}
+                        className="dropdown-content"
                       >
-                        <FaRegFolder style={{ color: folder.color }} />
-                        <span>{folder.title}</span>
+                        <FaRegFolder className="dropdown-icon w-3.5" style={{ color: folder.color }} />
+                        <span className="dropdown-text">{folder.title}</span>
                       </div>
                     )}
                   </Menu.Item>

@@ -19,7 +19,7 @@ export default function Settings() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="bg-gray-100 dark:bg-gray-700 rounded-full flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+        <Menu.Button className="rounded-full flex items-center text-gray-400 hover:text-gray-600">
           <span className="sr-only">Open options</span>
           <IoSettingsOutline />
         </Menu.Button>
@@ -34,123 +34,72 @@ export default function Settings() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="-right-16 absolute bottom-8 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+        <Menu.Items className="dropdown -right-16 absolute bottom-8 mt-2 w-56 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
           <div className="py-1">
             <Menu.Item>
-              {({ active }) => (
                 <div
-                  onClick={() => {
-                    showShortcutModal();
-                  }}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
+                  onClick={() => showShortcutModal()}
+                  className="dropdown-content"
                 >
                   <HiOutlineLightningBolt
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    className="dropdown-icon"
                     aria-hidden="true"
                   />
-                  Shortcut keys
+                  <span className="dropdown-text">Shortcut keys</span>
                 </div>
-              )}
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/setting/profile"
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
+                <Link to="/setting/profile"
+                  className="dropdown-content">
                   <HiOutlineUserCircle
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    className="dropdown-icon"
                     aria-hidden="true"
                   />
-                  User profile
+                  <span className="dropdown-text">User profile</span>                
                 </Link>
-              )}
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
                 <div
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center justify-between px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
+                  className="dropdown-content">
                   <DarkMode />
                 </div>
-              )}
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
                 <a
                   rel="noreferrer"
                   target={"_blank"}
                   href={"https://github.com/hudy9x/kompad-homepage/issues"}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
+                  className="dropdown-content"
                 >
                   <BiCommentError
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    className="dropdown-icon"
                     aria-hidden="true"
                   />
-                  <span>Feedback</span>
+                  <span className="dropdown-text">Feedback</span>
                 </a>
-              )}
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
                 <div
                   onClick={() => {
-                    setThemeVisible(true) 
+                    setThemeVisible(true)
                   }}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
+                  className="dropdown-content" >
                   <HiOutlineColorSwatch
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    className="dropdown-icon"
                     aria-hidden="true"
                   />
-                  <span>Theme color</span>
+                  <span className="dropdown-text">Theme color</span>
                 </div>
-              )}
             </Menu.Item>
 
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to={"/signout"}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
+                <Link to={"/signout"} className="dropdown-content">
                   <MdOutlinePowerSettingsNew
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
+                    className="dropdown-icon"
                     aria-hidden="true"
                   />
-                  <span>Sign out</span>
+                  <span className="dropdown-text">Sign out</span>
                 </Link>
-              )}
             </Menu.Item>
           </div>
         </Menu.Items>

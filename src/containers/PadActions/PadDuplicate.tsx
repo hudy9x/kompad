@@ -4,7 +4,7 @@ export const PadDuplicate = () => {
   return (
     <a
       href="#duplicate"
-      className="group dropdown-content flex items-center px-4 py-2 text-sm"
+      className="dropdown-content"
     >
       <HiOutlineDocumentDuplicate
         className="dropdown-icon"
