@@ -77,7 +77,7 @@ export default function ThemeListing() {
           const installAlready = theme.id && theme.id in installed ? true : false
           console.log('loop', theme, installed)
 
-          return <div className="theme-item px-5 py-2 flex items-start gap-5" key={theme.id}>
+          return <div className="theme-item px-5 py-5 flex items-start gap-5" key={theme.id}>
             <img src={theme.icon} alt="" style={{ width: 65, height: 65 }} className="rounded-lg bg-black" />
             <div className="theme-content space-y-0.5 -mt-1 w-full">
               <div className="theme-header flex items-center justify-between">

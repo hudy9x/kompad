@@ -5,13 +5,8 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { HiOutlineColorSwatch, HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
-import DarkMode from "./DarkMode";
 import { showShortcutModal } from "../../store/modal";
 import { useThemeStore } from "../../store/themes";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Settings() {
   const { setVisible: setThemeVisible } = useThemeStore()
@@ -37,69 +32,63 @@ export default function Settings() {
         <Menu.Items className="dropdown -right-16 absolute bottom-8 mt-2 w-56 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
           <div className="py-1">
             <Menu.Item>
-                <div
-                  onClick={() => showShortcutModal()}
-                  className="dropdown-content"
-                >
-                  <HiOutlineLightningBolt
-                    className="dropdown-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="dropdown-text">Shortcut keys</span>
-                </div>
+              <div
+                onClick={() => showShortcutModal()}
+                className="dropdown-content"
+              >
+                <HiOutlineLightningBolt
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Shortcut keys</span>
+              </div>
             </Menu.Item>
             <Menu.Item>
-                <Link to="/setting/profile"
-                  className="dropdown-content">
-                  <HiOutlineUserCircle
-                    className="dropdown-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="dropdown-text">User profile</span>                
-                </Link>
+              <Link to="/setting/profile"
+                className="dropdown-content">
+                <HiOutlineUserCircle
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">User profile</span>
+              </Link>
             </Menu.Item>
             <Menu.Item>
-                <div
-                  className="dropdown-content">
-                  <DarkMode />
-                </div>
+              <a
+                rel="noreferrer"
+                target={"_blank"}
+                href={"https://github.com/hudy9x/kompad-homepage/issues"}
+                className="dropdown-content"
+              >
+                <BiCommentError
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Feedback</span>
+              </a>
             </Menu.Item>
             <Menu.Item>
-                <a
-                  rel="noreferrer"
-                  target={"_blank"}
-                  href={"https://github.com/hudy9x/kompad-homepage/issues"}
-                  className="dropdown-content"
-                >
-                  <BiCommentError
-                    className="dropdown-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="dropdown-text">Feedback</span>
-                </a>
-            </Menu.Item>
-            <Menu.Item>
-                <div
-                  onClick={() => {
-                    setThemeVisible(true)
-                  }}
-                  className="dropdown-content" >
-                  <HiOutlineColorSwatch
-                    className="dropdown-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="dropdown-text">Theme color</span>
-                </div>
+              <div
+                onClick={() => {
+                  setThemeVisible(true)
+                }}
+                className="dropdown-content" >
+                <HiOutlineColorSwatch
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Theme color</span>
+              </div>
             </Menu.Item>
 
             <Menu.Item>
-                <Link to={"/signout"} className="dropdown-content">
-                  <MdOutlinePowerSettingsNew
-                    className="dropdown-icon"
-                    aria-hidden="true"
-                  />
-                  <span className="dropdown-text">Sign out</span>
-                </Link>
+              <Link to={"/signout"} className="dropdown-content">
+                <MdOutlinePowerSettingsNew
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Sign out</span>
+              </Link>
             </Menu.Item>
           </div>
         </Menu.Items>

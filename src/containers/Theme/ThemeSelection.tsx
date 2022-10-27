@@ -61,6 +61,9 @@ export default function ThemeUser() {
   }
 
   const rollbackToDefaultTheme = () => {
+    // make sure that the current theme is not empty
+    if (!currentTheme) return;
+
     if (markAsThemeSelected) {
       markAsThemeSelected = false;
       return;
@@ -78,6 +81,7 @@ export default function ThemeUser() {
   }, [selectedTheme])
 
   useEffect(() => {
+    console.log('called', visible)
     visible && cachingCurrentTheme()
     !visible && rollbackToDefaultTheme()
     setOpen(visible);
