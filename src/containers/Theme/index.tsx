@@ -13,7 +13,7 @@ interface IInstalledTheme {
   [key: string]: number
 }
 
-export default function ThemeColor() {
+export default function ThemeListing() {
   const [themes, setThemes] = useState<ITheme[]>([]);
   const [installed, setInstalled] = useState<IInstalledTheme>({})
   const [searchKey, setSearchKey] = useState('');
@@ -54,19 +54,19 @@ export default function ThemeColor() {
     })
   }, [])
 
-  return <div className="rounded-md border border-gray-200 shadow-sm bg-gray-50"><div className="relative">
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-5">
-        <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
-      </div>
-      <input
-        onChange={(ev) => onSearch(ev.target.value)}
-        type="text"
-        className="rounded-t-md block w-full border-none py-4 pl-14 sm:text-sm shadow-sm"
-        placeholder={'Find you theme'}
-      />
+  return <div className="rounded-md border border-color-base shadow-sm advanced-setting-card no-space p-0 "><div className="relative">
+    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-5">
+      <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
     </div>
+    <input
+      onChange={(ev) => onSearch(ev.target.value)}
+      type="text"
+      className="theme-listing-search rounded-t-md block w-full border-none py-4 pl-14 sm:text-sm shadow-sm"
+      placeholder={'Find you theme'}
+    />
+  </div>
 
-    <div className="pt-2" style={{ minHeight: 100 }}>
+    <div className="" style={{ minHeight: 100 }}>
       <ScrollBar height="500px">
         {themes.map(theme => {
 
@@ -78,7 +78,7 @@ export default function ThemeColor() {
           console.log('loop', theme, installed)
 
           return <div className="theme-item px-5 py-2 flex items-start gap-5" key={theme.id}>
-            <img src={theme.icon} alt="" style={{ width: 65, height: 65 }} className="rounded-lg bg-gray-900" />
+            <img src={theme.icon} alt="" style={{ width: 65, height: 65 }} className="rounded-lg bg-black" />
             <div className="theme-content space-y-0.5 -mt-1 w-full">
               <div className="theme-header flex items-center justify-between">
                 <h2 className="text-base font-semibold">{theme.name}</h2>
@@ -89,8 +89,8 @@ export default function ThemeColor() {
               </div>
               <p className="text-xs text-gray-400 truncate">{theme.desc}</p>
               <div className="flex items-center justify-between gap-1.5">
-                <span className="text-xs text-gray-700">@{theme.author}</span>
-                {installAlready ? 
+                <span className="text-xs text-color-dark">@{theme.author}</span>
+                {installAlready ?
                   <Button secondary onClick={() => theme.id && onUninstall(theme.id)} className="px-1.5 py-0.5 text-xs">Uninstall</Button> :
                   <Button onClick={() => onInstall(theme)} className="px-1.5 py-0.5 text-xs">Install</Button>}
               </div>
@@ -99,5 +99,5 @@ export default function ThemeColor() {
         })}
       </ScrollBar>
     </div>
-    </div>
+  </div>
 }

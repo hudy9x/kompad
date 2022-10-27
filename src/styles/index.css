@@ -5,45 +5,59 @@
 body {
   @apply h-screen overflow-hidden;
 
-  --common-text-color: rgb(209 213 219);
-  --common-semidark-text-color: rgb(160 167 177);
-  --common-dark-text-color: rgb(107 114 128);
-  --common-text-hover-color: rgb(165 170 179);
-  --common-bg-color: rgb(31 41 55);
-  --common-dark-bg-color: rgb(17 24 39);
-  --common-light-bg-color: rgb(55 65 81);
-  --common-border-hl-color: rgb(253 227 124);
-  --common-border-light-color: rgb(55 65 81);
+  /* --common-text-color: rgb(209 213 219); */
+  /* --common-semidark-text-color: rgb(160 167 177); */
+  /* --common-dark-text-color: rgb(107 114 128); */
+  /* --common-text-hover-color: rgb(165 170 179); */
+  /**/
+  /* --common-bg-color: rgb(31 41 55); */
+  /* --common-dark-bg-color: rgb(17 24 39); */
+  /* --common-darker-bg-color: rgb(12 18 30); */
+  /* --common-light-bg-color: rgb(55 65 81); */
+  /**/
+  /* --common-border-hl-color: rgb(253 227 124); */
+  /* --common-border-light-color: rgb(55 65 81); */
+  /**/
+  /* --common-btn-bg-color: rgb(55 65 81); */
+  /* --common-btn-bg-hover-color: rgb(75 85 99); */
+  /* --common-btn-bg-active-color: rgb(17 24 39); */
+  /**/
+  /* --common-primary-color: rgb(234 179 8); */
+  /* --common-primary-hover-color: rgb(253 224 71); */
+  /* --common-primary-text-color: rgb(113 63 18); */
+  /**/
+  /* --common-border-color: rgb(17 24 39); */
+  /* --sidebar-background-color: rgb(17 24 39); */
+  /* --sidebar-text-color: rgb(107 114 128); */
+  /* --sidebar-text-color-hover: rgb(156 163 175); */
+  /* --sidebar-title-color: rgb(156 163 175); */
+  /**/
+  /* --sidebar-user-setting-border-color: rgb(31 41 55); */
+  /* --sidebar2-background-color: rgb(31 41 55); */
+  /**/
+  /* --editor-text-color: rgb(209 213 219); */
+  /* --editor-link-text-color: rgb(251 210 81); */
+  /* --editor-quote-text-color: rgb(249 247 193); */
+  /**/
+  /* --modal-bg-color: rgb(31 41 55); */
+  /* --modal-footer-bg-color: rgb(31 41 55); */
+  /**/
+  /* --setting-bg-color: rgb(31 41 55); */
 
-  --common-btn-bg-color: rgb(55 65 81);
-  --common-btn-bg-hover-color: rgb(75 85 99);
-  --common-btn-bg-active-color: rgb(17 24 39);
-  
-  --common-primary-color: rgb(234 179 8);
-  --common-primary-hover-color: rgb(253 224 71);
-  --common-primary-text-color: rgb(113 63 18);
+  /* color: var(--common-text-color); */
+  background-color: var(--common-bg-color);
+}
 
-  --common-border-color: rgb(17 24 39);
-  --sidebar-background-color: rgb(17 24 39);
-  --sidebar-text-color: rgb(107 114 128);
-  --sidebar-text-color-hover: rgb(156 163 175);
-  --sidebar-title-color: rgb(156 163 175);
-
-  --sidebar-user-setting-border-color: rgb(31 41 55);
-  --sidebar2-background-color: rgb(31 41 55);
-
-  --editor-text-color: rgb(209 213 219);
-  --editor-link-text-color: rgb(251 210 81);
-  --editor-quote-text-color: rgb(249 247 193);
-
-  --modal-bg-color: rgb(31 41 55);
-  --modal-footer-bg-color: rgb(31 41 55);
-
+#theme-setting {
   color: var(--common-text-color);
 }
 
 .bg{
   background-color: var(--common-bg-color);
+}
+
+.bg-dark {
+  background-color: var(--common-dark-bg-color);
 }
 
 .bg-light{
@@ -58,8 +72,20 @@ body {
   color: var(--common-semidark-text-color);
 }
 
+.text-color-dark {
+  color: var(--common-dark-text-color);
+}
+
 .border-bottom {
   border-bottom: 1px solid var(--common-border-light-color);
+}
+
+.border-color-base{
+  border-color: var(--common-border-light-color);
+}
+
+.btn-color-base {
+  background-color: var(--common-btn-bg-color);
 }
 
 .div-y > :not(:first-child) {

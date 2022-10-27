@@ -31,13 +31,13 @@ function AvatarForm({
     <div>
       <img
         onClick={() => setVisible(true)}
-        className="inline-block h-14 w-14 rounded-md shadow-md cursor-pointer border-2 border-transparent hover:border-white"
+        className="inline-block h-14 w-14 rounded-md shadow-md cursor-pointer hover:opacity-90"
         src={selected}
         alt=""
       />
 
       <Modal visible={visible} setVisible={setVisible}>
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-3 flex-wrap w-[260px]">
           {publicAvatars.map((avatar, index) => {
             const selectedStatus = avatar === selected ? "selected-avatar" : "";
             return (
@@ -47,7 +47,7 @@ function AvatarForm({
                 className="h-14 w-14 flex-shrink-0 cursor-pointer group"
               >
                 <img
-                  className={`inline-block w-full h-full rounded-md outline outline-offset-2 outline-2 outline-gray-50 opacity-90 group-hover:opacity-100 ${selectedStatus}`}
+                  className={`inline-block w-full h-full rounded-md outline outline-offset-2 outline-2 outline-transparent opacity-90 group-hover:opacity-100 ${selectedStatus}`}
                   src={avatar}
                   alt=""
                 />

@@ -18,17 +18,14 @@ function Button({
   ...rest
 }: IButtonProp) {
 
-  let color = 'text-yellow-900 bg-yellow-400 hover:bg-yellow-300'
-  if (secondary) {
-    color = 'text-gray-400 bg-white hover:bg-gray-100 border-gray-200'
-  }
+  let color = secondary ? '' : 'btn-primary';
 
   return (
     <button
       {...rest}
       type={submit ? "submit" : "button"}
-      className={`inline-flex ${block ? "w-full" : ""
-        } ${className} justify-center items-center ${size} border border-transparent shadow-sm text-sm font-medium rounded-md ${color}`}
+      className={`btn ${block ? "w-full" : ""
+        } ${className} ${size} ${color}`}
     >
       {children}
     </button>

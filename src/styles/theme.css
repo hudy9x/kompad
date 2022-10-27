@@ -11,7 +11,7 @@
 
 .theme-item {
   @apply px-5 py-2 flex items-center justify-between gap-5 border-b cursor-pointer;
-  @apply hover:bg-gray-100 hover:text-gray-600;
+  @apply hover:bg-gray-100;
   border-bottom-color: var(--common-border-light-color);
   color: var(--common-semidark-text-color);
 }
@@ -32,4 +32,12 @@
 .theme-status-active{
   color: var(--common-primary-color);
 }
+
+/* Theme Listing */
+
+.theme-listing-search {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--common-border-light-color) !important;
+}
+
 

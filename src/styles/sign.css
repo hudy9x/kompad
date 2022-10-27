@@ -23,7 +23,7 @@
 
 .selected-avatar {
   /* @apply outline-indigo-500; */
-  outline-color: #6366f1 !important;
+  outline-color: var(--common-primary-color) !important;
 }
 
 .sign-form input {

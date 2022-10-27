@@ -22,6 +22,8 @@ export interface IUserSettings {
 }
 
 const COLLECTION_NAME = 'user-settings'
+const DEFAULT_THEME = `--common-text-color:  rgb(88 88 88);--common-semidark-text-color:  rgb(160 167 177);--common-dark-text-color:  rgb(107 114 128);--common-text-hover-color:  rgb(165 170 179);--common-bg-color:  rgb(255 255 255);--common-dark-bg-color:  rgb(255 255 255);--common-darker-bg-color:  rgb(227 227 227);--common-light-bg-color:  rgb(239 239 239);--common-border-hl-color:  rgb(253 227 124);--common-border-light-color:  rgb(231 231 231);--common-btn-bg-color:  rgb(255 255 255);--common-btn-bg-hover-color:  rgb(241 241 241);--common-btn-bg-active-color:  rgb(86 86 86);--common-primary-color:  rgb(234 179 8);--common-primary-hover-color:  rgb(253 224 71);--common-primary-text-color:  rgb(113 63 18);--common-border-color:  rgb(221 221 221);--sidebar-background-color:  rgb(249 249 249);--sidebar-text-color:  rgb(107 114 128);--sidebar-text-color-hover:  rgb(156 163 175);--sidebar-title-color:  rgb(74 74 74);--sidebar-user-setting-border-color:  rgb(225 225 225);--sidebar2-background-color:  rgb(255 255 255);--editor-text-color:  rgb(90 90 90);--editor-link-text-color:  rgb(213 184 93);--editor-quote-text-color:  rgb(234 179 8);--modal-bg-color:  rgb(255 255 255);--modal-footer-bg-color:  rgb(255 255 255);--setting-bg-color:  rgb(241 241 241)`;
+
 
 export const installTheme = async (theme: ITheme): Promise<number> => {
   const user = auth.currentUser
@@ -50,6 +52,12 @@ export const installTheme = async (theme: ITheme): Promise<number> => {
   await setDoc(docRef, settings)
   return 1;
 };
+
+
+export const getThemeSettingElem = () => {
+  console.log('09123098120398')
+  return document.querySelector("#css-variable")
+}
 
 export const uninstallTheme = async (themeId: string): Promise<number> => {
   const user = auth.currentUser
@@ -111,22 +119,23 @@ export const getUserSetting = async (): Promise<IUserSettings> => {
   return settingRef.data() as IUserSettings
 }
 
-export const getThemeConfigFromStorage = async () => {
-  try {
+export const getThemeConfigFromStorage = (): string => {
+  return getCache('THEME') || DEFAULT_THEME;
+}
 
-    const theme = getCache('THEME');
-    console.log('theme', theme)
-    if (theme) return JSON.parse(theme)
+export const updateThemeConfigFromUserSetting = async () => {
+  try {
 
     const setting = await getUserSetting()
     console.log(setting)
     if (!setting.themes) return {}
 
+    const themeElem = getThemeSettingElem()
     const activeTheme = setting.themes.find(t => t.active === true)
     const config = activeTheme && activeTheme.config ? activeTheme.config : "{}"
-    setThemeConfigToStorage(config)
 
-    console.log(activeTheme)
+    setThemeConfigToStorage(config)
+    themeElem && (themeElem.textContent = `:root { ${getCache("THEME")} }`);
 
     return JSON.parse(config)
 
@@ -137,7 +146,23 @@ export const getThemeConfigFromStorage = async () => {
 
 }
 
+export const cvtThemeConfigToCssVars = (config: string) => {
+  try {
+    const cssVars = JSON.parse(config)
+    const css = []
+    for (let variable in cssVars) {
+      css.push(`${variable}: ${cssVars[variable]}`)
+    }
+
+    return css.join(';');
+  } catch (error) {
+    console.log('setThemeSetting Error', error)
+    return '';
+  }
+
+}
+
 export const setThemeConfigToStorage = (value: string) => {
-  setCache("THEME", value)
+  setCache("THEME", cvtThemeConfigToCssVars(value))
 }
 

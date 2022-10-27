@@ -4,7 +4,7 @@ import Modal from '../../components/Modal'
 import ScrollBar from '../../components/ScrollBar'
 import { HiCheckCircle, HiOutlineMinusCircle } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
-import { getUserSetting, selectTheme, setThemeConfigToStorage } from '../../services/user-settings'
+import { getThemeSettingElem, getUserSetting, selectTheme, setThemeConfigToStorage } from '../../services/user-settings'
 import { useAuth } from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
 
@@ -15,9 +15,7 @@ export default function ThemeUser() {
   const [open, setOpen] = useState(false)
   const { visible, selectedTheme, list: themes, setVisible, setSelected, setThemeList } = useThemeStore()
   const [searchKey, setSearchKey] = useState('');
-  const [preview, setPreview] = useState(selectedTheme)
-
-  const getThemeSettingElem = () => document.getElementById("theme-setting")
+  const [preview, setPreview] = useState(selectedTheme);
 
   const setThemeSetting = (config: string) => {
     const themeSettingElem = getThemeSettingElem()
@@ -27,10 +25,10 @@ export default function ThemeUser() {
       const cssVars = JSON.parse(config)
       const css = []
       for (let variable in cssVars) {
-        css.push(`--${variable}: ${cssVars[variable]}`)
+        css.push(`${variable}: ${cssVars[variable]}`)
       }
 
-      themeSettingElem.setAttribute('style', css.join(';'))
+      themeSettingElem.textContent = `:root { ${css.join(';')} }`;
     } catch (error) {
       console.log('setThemeSetting Error', error)
     }
@@ -58,7 +56,7 @@ export default function ThemeUser() {
     if (!themeSettingElem) {
       return;
     }
-    currentTheme = themeSettingElem.getAttribute('style') || ''
+    currentTheme = themeSettingElem.textContent || ''
 
   }
 
@@ -72,7 +70,7 @@ export default function ThemeUser() {
     if (!themeSettingElem) {
       return;
     }
-    themeSettingElem.setAttribute('style', currentTheme)
+    themeSettingElem.textContent = currentTheme
   }
 
   useEffect(() => {
@@ -100,6 +98,9 @@ export default function ThemeUser() {
   useEffect(() => {
 
     const onKeyPress = (ev: KeyboardEvent) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
       const key = ev.key
       const len = themes.length;
 
@@ -169,7 +170,7 @@ export default function ThemeUser() {
 
           const isPreview = theme.id === preview ? 'is-preview' : '';
 
-          return <div onClick={() => onSelect(theme.id, theme.config)} 
+          return <div onClick={() => onSelect(theme.id, theme.config)}
             className={`${isPreview} theme-item`} key={index}>
             <h2 className="text-sm">{theme.name}</h2>
             {selectedTheme === theme.id ? <HiCheckCircle className="theme-status-active" /> : <HiOutlineMinusCircle className="theme-status" />}

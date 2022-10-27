@@ -38,11 +38,11 @@ const navigation = [
 
 export default function LayoutSetting() {
   return (
-    <div className="w-full bg-gray-100 dark:bg-gray-800" style={{ height: "calc(100vh - 2px)" }}>
+    <div className="w-full advanced-setting-wrapper" style={{ height: "100vh" }}>
       <Titlebar />
-      <h2 className="px-6 text-xl font-bold text-gray-700 dark:text-gray-400 flex gap-2 items-center">
+      <h2 className="px-6 text-xl font-bold text-color-base flex gap-2 items-center">
         <Link to="/">
-          <HiOutlineChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+          <HiOutlineChevronLeft className="w-5 h-5" />
         </Link>
         <span>Settings</span>
       </h2>
@@ -56,7 +56,7 @@ export default function LayoutSetting() {
                 className={({ isActive }) =>
                   `setting-menu-item group ${isActive
                     ? "active"
-                    : "text-gray-900 hover:text-gray-900 hover:bg-gray-50"
+                    : "inactive"
                   }`
                 }
                 aria-current={item.current ? "page" : undefined}
