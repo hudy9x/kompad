@@ -1,6 +1,6 @@
 .btn, 
 .btn[type="button"]{
-  @apply inline-flex items-center px-2.5 py-1.5 border shadow-sm text-xs font-medium rounded;
+  @apply inline-flex items-center justify-center px-2.5 py-1.5 border shadow-sm text-xs font-medium rounded;
   border-color: var(--common-border-light-color);
   background-color: var(--common-btn-bg-color);
   color: var(--common-semidark-text-color);
@@ -21,8 +21,24 @@
   background-color: var(--common-primary-hover-color);
 }
 
+.btn.btn-xs {
+  @apply px-1.5 py-0.5;
+}
+
+.btn.btn-sm {
+  @apply px-2 py-1; 
+}
+
 .btn.btn-lg {
-  @apply px-4 py-2 
+  @apply px-4 py-2 text-sm;
+}
+
+.btn.btn-xl {
+  @apply text-sm;
+}
+
+.btn.btn-block {
+  @apply w-full;
 }
 
 .kbd-btn {
@@ -31,6 +47,10 @@
   background-color: var(--common-btn-bg-color);
   border: 1px solid var(--common-border-color);
   color: var(--common-semidark-text-color);
+}
+
+.kbd-btn.kbd-sm{
+  font-size: 0.625rem
 }
 
 .kbd-btn:hover{

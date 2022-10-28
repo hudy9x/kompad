@@ -26,7 +26,8 @@
 }
 
 .setting-menu-item.active .icon {
-  @apply text-yellow-500 group-hover:text-yellow-500;
+  /* @apply text-yellow-500 group-hover:text-yellow-500; */
+  color: var(--common-primary-color);
 }
 
 .advanced-setting-card {

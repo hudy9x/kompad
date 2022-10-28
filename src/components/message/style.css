@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0.5rem 0;
+  padding: 2.5rem 0;
   pointer-events: none;
   color: rgb(123, 123, 123);
   font-size: 0.85rem;
@@ -41,6 +41,8 @@
   animation-name: message-show;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
+  font-size: 0.75rem;
+  text-transform: uppercase;
 }
 
 .message p {
@@ -59,18 +61,41 @@
   width: 20px;
   height: 20px;
 }
-.message.success svg {
-  color: rgb(38, 216, 38);
+
+.message.success {
+  background: rgb(137 235 105);
+  color: #264c1a;
 }
-.message.error svg {
-  color: rgb(240, 87, 87);
+
+.message.error {
+  background: rgb(240, 87, 87);
+  color: #ffcece;
 }
-.message.info svg {
-  color: rgb(20, 121, 238);
+
+.message.info {
+  background: rgb(64 152 255);
+  color: #e8f3ff;
 }
-.message.warn svg {
-  color: rgb(255, 204, 37);
+
+.message.warn {
+  background: rgb(255, 204, 37);
+  color: #705b17;
 }
+
+/* .message.success svg { */
+/*   color: rgb(38, 216, 38); */
+/* } */
+
+/* .message.error svg { */
+/*   color: rgb(240, 87, 87); */
+/* } */
+
+/* .message.info svg { */
+/*   color: rgb(20, 121, 238); */
+/* } */
+/* .message.warn svg { */
+/*   color: rgb(255, 204, 37); */
+/* } */
 
 @keyframes message-show {
   from {

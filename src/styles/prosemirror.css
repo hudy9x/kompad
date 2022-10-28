@@ -54,6 +54,7 @@
 
 .ProseMirror hr {
   @apply my-8;
+  border-color: var(--common-dark-text-color);
 }
 
 .ProseMirror code {

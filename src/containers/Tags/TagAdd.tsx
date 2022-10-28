@@ -84,12 +84,12 @@ function TagAdd() {
           <input
             ref={inp}
             type="text"
-            className="py-1 pr-8 shadow-sm w-full block sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-800"
+            className="inp"
           />
           <span
             onClick={onSubmit}
             style={{ fontSize: "10px" }}
-            className="absolute px-1 h-5 leading-4 top-[5px] right-1.5 bg-gray-50 dark:bg-gray-700 border dark:border-gray-700 rounded cursor-pointer"
+            className="absolute top-[5px] right-1.5 kbd-btn"
             title="Choose folder color"
           >
             OK
@@ -109,9 +109,8 @@ function TagAdd() {
             </div>
             <div
               ref={colorContainerRef}
-              className={`${
-                colorSelection ? "" : "hidden"
-              } absolute z-10 top-6 border left-0 p-4 bg-white dark:bg-gray-900 dark:border-transparent shadow-md rounded-md`}
+              className={`${colorSelection ? "" : "hidden"
+                } absolute z-10 top-6 border left-0 p-4 bg border-color-base shadow-md rounded-md`}
             >
               <div className="grid grid-cols-6 gap-3">
                 {COLORS.map((color) => {

@@ -43,6 +43,8 @@ body {
   /* --modal-footer-bg-color: rgb(31 41 55); */
   /**/
   /* --setting-bg-color: rgb(31 41 55); */
+  /* --sign-bg-color: rgb(31 41 55); */
+  /* --sign-form-bg-color: rgb(55 65 81); */
 
   /* color: var(--common-text-color); */
   background-color: var(--common-bg-color);
@@ -62,6 +64,10 @@ body {
 
 .bg-light{
   background-color: var(--common-light-bg-color);
+}
+
+.text-color-primary {
+  color: var(--common-primary-color);
 }
 
 .text-color-base{

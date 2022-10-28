@@ -1,11 +1,13 @@
 .sign-container {
-  @apply bg-gray-100 flex items-center justify-center dark:bg-gray-800;
+  @apply flex items-center justify-center;
   height: calc(100vh - 2px);
+  background-color: var(--sign-bg-color);
 }
 
 .sign {
   @apply p-8 bg-white shadow-xl w-96 dark:bg-gray-700;
   @apply rounded-lg;
+  background-color: var(--sign-form-bg-color);
 }
 
 

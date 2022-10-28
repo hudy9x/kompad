@@ -55,8 +55,6 @@ export const installTheme = async (theme: ITheme): Promise<number> => {
 
 
 export const getThemeSettingElem = () => {
-  console.log('09123098120398')
-  console.trace('1')
   return document.querySelector("#css-variable")
 }
 
@@ -128,7 +126,6 @@ export const updateThemeConfigFromUserSetting = async () => {
   try {
 
     const setting = await getUserSetting()
-    console.log(setting)
     if (!setting.themes) return {}
 
     const themeElem = getThemeSettingElem()
@@ -136,7 +133,6 @@ export const updateThemeConfigFromUserSetting = async () => {
     const config = activeTheme && activeTheme.config ? activeTheme.config : "{}"
 
     setThemeConfigToStorage(config)
-    console.log('updateThemeConfigFromUserSetting')
     themeElem && (themeElem.textContent = `:root { ${getCache("THEME")} }`);
 
     return JSON.parse(config)

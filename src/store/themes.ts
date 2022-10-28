@@ -3,7 +3,7 @@ import { IUserThemeSettings } from "../services/user-settings";
 
 export interface IThemeStore {
   config: string;
-  selectedTheme: string 
+  selectedTheme: string
   list: IUserThemeSettings[]
   visible: boolean
   setSelected: (id: string, config: string) => void
@@ -18,14 +18,14 @@ export const useThemeStore = create<IThemeStore>((set) => ({
   list: [],
   setVisible: (visible: boolean) => set((state) => ({
     ...state,
-    ...{visible}
+    ...{ visible }
   })),
 
   setThemeList: (themes: IUserThemeSettings[]) => set((state) => {
     const active = themes.find(t => t.active === true)
     return {
       ...state,
-      ...{list: themes, config: active?.config || '', selectedTheme: active?.id || ''}
+      ...{ list: themes, config: active?.config || '', selectedTheme: active?.id || '' }
     }
   }),
 
@@ -37,4 +37,5 @@ export const useThemeStore = create<IThemeStore>((set) => ({
 
 }));
 
+export const { setState: setThemeStoreState } = useThemeStore
 

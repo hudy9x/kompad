@@ -20,6 +20,8 @@ function ShortcutModal() {
     { title: "Show / hide side bar", kbds: ["Ctrl", "Shift", "B"] },
     { title: "Create new pad", kbds: ["Ctrl", "N"] },
     { title: "Open search palette", kbds: ["Alt", "P"] },
+    { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },
+    { title: "Close modal window", kbds: ["Esc"] },
   ];
 
   return (

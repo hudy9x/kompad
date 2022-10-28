@@ -34,7 +34,7 @@ function FolderItem({ folder }: IFolderItemProps) {
           <FaRegFolder style={{ color: folder.color }} />
           <span className={`${isActive} whitespace-nowrap w-32 text-ellipsis overflow-hidden`}>{folder.title}</span>
         </div>
-        <div className="absolute top-1.5 right-0 bg-gray-100 dark:bg-gray-900 group-hover:flex hidden gap-1 px-1 mr-5">
+        <div className="absolute top-1.5 right-0 group-hover:flex hidden gap-1 px-1 mr-5">
           <FiEdit3
             onClick={() => setEditMode(true)}
             className="text-gray-400 w-3 hover:text-gray-700 dark:text-gray-600 dark:hover:text-gray-400"

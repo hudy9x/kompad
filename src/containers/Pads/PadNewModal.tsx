@@ -64,14 +64,14 @@ export default function PadNewModal() {
     <Modal visible={visible} setVisible={setVisible}>
       <form
         onSubmit={formik.handleSubmit}
-        className="dark:text-gray-300 w-80"
+        className="w-80 text-color-base"
       >
         <h3 className="text-lg leading-6 font-medium pb-4 border-bottom dark:border-gray-700">
           Create new pad
         </h3>
 
-        <div className="mt-4 text-gray-700 dark:text-gray-300">
-          <div className="">
+        <div className="mt-4">
+          <div className="form-control no-icon">
             <label htmlFor="pad-title" className="block text-sm font-medium ">
               Title
             </label>
@@ -82,11 +82,11 @@ export default function PadNewModal() {
                 id="pad-title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-yellow-400 focus:border-yellow-400 block w-full sm:text-sm border-gray-300 rounded-md"
+                className=""
               />
             </div>
           </div>
-          <div className="mt-4">
+          <div className="form-control no-icon mt-4">
             <label htmlFor="pad-desc" className="block text-sm font-medium ">
               Description
             </label>
@@ -96,7 +96,7 @@ export default function PadNewModal() {
                 id="pad-desc"
                 value={formik.values.desc}
                 onChange={formik.handleChange}
-                className="shadow-sm dark:bg-gray-900 dark:border-gray-800 focus:ring-yellow-400 focus:border-yellow-400 block w-full sm:text-sm border-gray-300 rounded-md"
+                className=""
               />
             </div>
           </div>

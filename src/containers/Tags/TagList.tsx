@@ -13,7 +13,6 @@ function TagList() {
     let unsub: Unsubscribe | null;
     if (user) {
       unsub = watchTags((err, data) => {
-        console.log(err);
         if (err) {
           return;
         }

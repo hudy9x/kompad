@@ -1,3 +1,7 @@
+.form-control {
+  @apply relative;
+}
+
 .form-control label {
   @apply block text-sm;
   color: var(--common-semidark-text-color);
@@ -7,7 +11,11 @@
   @apply absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none
 }
 
-.form-control input {
+.form-control.no-icon :is(input, textarea, select), {
+  @apply pl-4;
+}
+
+.form-control :is(input, textarea) {
   @apply block w-full pl-10 sm:text-sm rounded-md;
   @apply focus:border-[color:var(--common-primary-color)] focus:ring-[color:var(--common-primary-color)];
   background-color: var(--common-dark-bg-color);
@@ -16,5 +24,23 @@
 
 .form-control input:read-only{
   background-color: var(--common-darker-bg-color);
+}
+
+.root-sidebar .inp, 
+.root-sidebar .inp[type="text"] {
+  @apply py-1 pr-8 shadow-sm w-full block sm:text-sm rounded-md;
+  background-color: var(--common-bg-color);
+  border-color: var(--common-border-light-color);
+}
+
+.root-sidebar .form-edit {
+  @apply w-44 ml-4 rounded-md border shadow-sm absolute z-10;
+  background-color: var(--common-bg-color);
+  border: 1px solid var(--common-border-light-color);
+}
+
+.root-sidebar .form-edit input {
+  @apply py-2 block w-full text-xs border-transparent rounded-md;
+  background-color: transparent;
 }
 

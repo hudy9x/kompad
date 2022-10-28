@@ -71,6 +71,19 @@
   @apply text-gray-300;
 }
 
+.pad-cover-upload {
+  @apply transition opacity-0;
+}
+
+.pad-cover-upload label {
+  background-color: var(--common-primary-color);
+  color: var(--common-primary-text-color);
+}
+
+.pad-info-wrapper:hover .pad-cover-upload {
+  @apply opacity-100;
+}
+
 .tag-item{
   @apply flex gap-1 items-center py-0.5 px-2 rounded-md relative;
   @apply bg-opacity-90;

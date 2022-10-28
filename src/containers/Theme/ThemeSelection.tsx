@@ -51,7 +51,6 @@ export default function ThemeUser() {
   }
 
   const cachingCurrentTheme = () => {
-    console.log('opened')
     const themeSettingElem = getThemeSettingElem()
     if (!themeSettingElem) {
       return;
@@ -66,6 +65,7 @@ export default function ThemeUser() {
 
     if (markAsThemeSelected) {
       markAsThemeSelected = false;
+      currentTheme = '';
       return;
     }
 
@@ -74,6 +74,7 @@ export default function ThemeUser() {
       return;
     }
     themeSettingElem.textContent = currentTheme
+    currentTheme = ''
   }
 
   useEffect(() => {
@@ -81,7 +82,6 @@ export default function ThemeUser() {
   }, [selectedTheme])
 
   useEffect(() => {
-    console.log('called', visible)
     visible && cachingCurrentTheme()
     !visible && rollbackToDefaultTheme()
     setOpen(visible);
@@ -105,6 +105,8 @@ export default function ThemeUser() {
       ev.preventDefault();
       ev.stopPropagation();
 
+      if (!visible) return;
+      
       const key = ev.key
       const len = themes.length;
 
@@ -144,13 +146,21 @@ export default function ThemeUser() {
       document.removeEventListener('keyup', onKeyPress)
     }
 
-  }, [themes, preview])
+  }, [themes, preview, visible])
 
-  useEffect(() => {
+  useEffect(() => { 
     return () => {
       open === false && setSearchKey('')
     }
   }, [open])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!visible) return;
+      const input = document.getElementById('theme-finder');
+      input && input.focus();
+    }, 100)
+  }, [visible])
 
   return <Modal padding="p-0" visible={open} setVisible={setOpen}>
     <div className="theme-search" >
@@ -158,6 +168,8 @@ export default function ThemeUser() {
         <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
       </div>
       <input
+        id="theme-finder"
+        className="text-color-base"
         onChange={(ev) => onSearch(ev.target.value)}
         type="text"
         placeholder={'Find you theme'}
