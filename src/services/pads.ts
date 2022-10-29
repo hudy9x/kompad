@@ -315,8 +315,6 @@ export const watchPads = (
     conds.push(orderBy('createdAt', 'desc'))
   }
 
-  console.log(queries)
-
   // if (queries.tag) {
   //   conds.push(where('tags', 'array-contains', queries.tag))
   // }

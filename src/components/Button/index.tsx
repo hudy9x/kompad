@@ -4,24 +4,28 @@ interface IButtonProp {
   block?: boolean;
   className?: string;
   size?: string;
+  secondary?: boolean;
   children: JSX.Element | JSX.Element[] | React.ReactNode;
 }
 
 function Button({
   className,
+  secondary = false,
   children,
   submit = false,
   block = false,
   size = "px-4 py-2",
   ...rest
 }: IButtonProp) {
+
+  let color = secondary ? '' : 'btn-primary';
+
   return (
     <button
       {...rest}
       type={submit ? "submit" : "button"}
-      className={`inline-flex ${
-        block ? "w-full" : ""
-      } ${className} justify-center items-center ${size} border border-transparent shadow-sm text-sm font-medium rounded-md text-yellow-900 bg-yellow-400 hover:bg-yellow-300`}
+      className={`btn ${block ? "w-full" : ""
+        } ${className} ${size} ${color}`}
     >
       {children}
     </button>

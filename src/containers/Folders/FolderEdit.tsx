@@ -42,10 +42,9 @@ function FolderEdit({
 
   return (
     <div
-      className={`${
-        visible ? "" : "hidden"
-      } w-44 ml-4 rounded-md border  bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800`}
-      >
+      className={`${visible ? "" : "hidden"
+        } w-44 ml-4 rounded-md border  bg-white shadow-sm dark:bg-gray-800 dark:border-gray-800`}
+    >
       <input
         className="py-2 block w-full text-xs border-transparent rounded-md dark:bg-gray-800"
         type="text"

@@ -50,7 +50,7 @@ function Password() {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <div className="shadow sm:rounded-md sm:overflow-hidden">
+        <div className="shadow border border-color-base sm:rounded-md sm:overflow-hidden">
           <div className="advanced-setting-card">
             <div>
               <h3 className="title">Password</h3>
@@ -71,7 +71,7 @@ function Password() {
               <div className="form-control col-span-3 sm:col-span-2">
                 <label htmlFor="newPassword">New password</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineLockClosed
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"
@@ -84,7 +84,6 @@ function Password() {
                     id="newPassword"
                     onChange={formik.handleChange}
                     value={formik.values.newPassword}
-                    className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                     placeholder=""
                   />
                 </div>
@@ -94,7 +93,7 @@ function Password() {
                   Re-enter new password
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineLockClosed
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"
@@ -107,7 +106,7 @@ function Password() {
                     id="newPasswordAgain"
                     onChange={formik.handleChange}
                     value={formik.values.newPasswordAgain}
-                    className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                    className=""
                     placeholder=""
                   />
                 </div>

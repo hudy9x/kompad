@@ -3,20 +3,18 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BiCommentError } from "react-icons/bi";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineColorSwatch, HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
-import DarkMode from "./DarkMode";
 import { showShortcutModal } from "../../store/modal";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { useThemeStore } from "../../store/themes";
 
 export default function Settings() {
+  const { setVisible: setThemeVisible } = useThemeStore()
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="bg-gray-100 dark:bg-gray-700 rounded-full flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+        <Menu.Button className="rounded-full flex items-center">
           <span className="sr-only">Open options</span>
           <IoSettingsOutline />
         </Menu.Button>
@@ -31,101 +29,72 @@ export default function Settings() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="-right-16 absolute bottom-8 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+        <Menu.Items className="dropdown -right-16 absolute bottom-8 mt-2 w-64 ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
           <div className="py-1">
             <Menu.Item>
-              {({ active }) => (
-                <div
-                  onClick={() => {
-                    showShortcutModal();
-                  }}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
-                  <HiOutlineLightningBolt
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                    aria-hidden="true"
-                  />
-                  Shortcut keys
+              <div
+                onClick={() => showShortcutModal()}
+                className="dropdown-content"
+              >
+                <HiOutlineLightningBolt
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Shortcut keys</span>
+              </div>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/setting/profile"
+                className="dropdown-content">
+                <HiOutlineUserCircle
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">User profile</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item>
+              <a
+                rel="noreferrer"
+                target={"_blank"}
+                href={"https://github.com/hudy9x/kompad-homepage/issues"}
+                className="dropdown-content"
+              >
+                <BiCommentError
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Feedback</span>
+              </a>
+            </Menu.Item>
+            <Menu.Item>
+              <div
+                onClick={() => {
+                  setThemeVisible(true)
+                }}
+                className="dropdown-content" >
+                <HiOutlineColorSwatch
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <div className="dropdown-text flex-grow flex items-center justify-between">
+                  <span className="dropdown-text whitespace-nowrap">Theme color</span>
+                  <div className="flex items-center gap-1">
+                    <button className="kbd-btn kbd-sm">CTRL</button>
+                    <button className="kbd-btn kbd-sm">T</button>
+                  </div>
                 </div>
-              )}
+              </div>
             </Menu.Item>
+
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/setting/profile"
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
-                  <HiOutlineUserCircle
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                    aria-hidden="true"
-                  />
-                  User profile
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <div
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center justify-between px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
-                  <DarkMode />
-                </div>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  rel="noreferrer"
-                  target={"_blank"}
-                  href={"https://github.com/hudy9x/kompad-homepage/issues"}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
-                  <BiCommentError
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <span>Feedback</span>
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to={"/signout"}
-                  className={classNames(
-                    active
-                      ? "bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-gray-300"
-                      : "text-gray-700 dark:text-gray-300",
-                    "group flex items-center px-4 py-2 text-sm cursor-pointer"
-                  )}
-                >
-                  <MdOutlinePowerSettingsNew
-                    className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <span>Sign out</span>
-                </Link>
-              )}
+              <Link to={"/signout"} className="dropdown-content">
+                <MdOutlinePowerSettingsNew
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Sign out</span>
+              </Link>
             </Menu.Item>
           </div>
         </Menu.Items>

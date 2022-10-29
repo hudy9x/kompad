@@ -3,6 +3,7 @@ import produce from "immer";
 import { setCache } from "../../libs/localCache";
 import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
+import { IThemeStore, setThemeStoreState } from "../../store/themes";
 
 export const shortCutAcion = (
   ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent
@@ -52,5 +53,15 @@ export const shortCutAcion = (
         state.searchModalStatus = false;
       })
     );
+  }
+
+  // Open Theme selection modal
+  if (ctrlKey && key === "t") {
+    setThemeStoreState(
+      produce<IThemeStore>((state) => {
+        state.visible = true
+      })
+    );
+
   }
 };

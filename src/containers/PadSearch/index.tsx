@@ -22,8 +22,8 @@ export default function PadSearch() {
     query === ""
       ? []
       : pads.filter((pad) => {
-          return pad.title.toLowerCase().includes(query.toLowerCase());
-        });
+        return pad.title.toLowerCase().includes(query.toLowerCase());
+      });
 
   useEffect(() => {
     setOpen(searchModalStatus);
@@ -77,7 +77,7 @@ export default function PadSearch() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 dark:divide-gray-900 overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+            <Dialog.Panel className="modal mx-auto max-w-xl div-y">
               <Combobox
                 onChange={(value) => {
                   const pad = value as unknown as IPad;
@@ -92,7 +92,7 @@ export default function PadSearch() {
                     aria-hidden="true"
                   />
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-800 dark:text-gray-300 placeholder-gray-400 focus:ring-0 sm:text-sm"
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 sm:text-sm"
                     placeholder="Search..."
                     onChange={(event) => setQuery(event.target.value)}
                   />
@@ -101,18 +101,17 @@ export default function PadSearch() {
                 {filteredPads.length > 0 && (
                   <Combobox.Options
                     static
-                    className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
+                    className="bg max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
                   >
                     {filteredPads.map((pad) => (
                       <Combobox.Option key={pad.id} value={pad}>
                         {/* {person.name} */}
                         {({ active, selected }) => (
                           <div
-                            className={`${
-                              active
-                                ? "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-white"
-                                : "bg-white text-black dark:bg-gray-800 dark:text-gray-300"
-                            } px-4 py-2`}
+                            className={`${active
+                              ? "bg-light text-color-base"
+                              : "bg text-color-light"
+                              } px-4 py-2 cursor-pointer`}
                           >
                             {selected && <HiOutlineCheck />}
                             {pad.title}

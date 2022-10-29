@@ -59,7 +59,7 @@ function TagSelect({ onChange }: ITagSelectProps) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="z-10 origin-top-right absolute left-0 mt-2 w-44 rounded-md shadow-lg bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="z-10 origin-top-right absolute left-0 mt-2 w-44 dropdown ">
             <div className="py-1">
               {tags.map((tag) => {
                 return (
@@ -67,15 +67,13 @@ function TagSelect({ onChange }: ITagSelectProps) {
                     {({ active }) => (
                       <div
                         onClick={() => onSelect(tag.id || "")}
-                        className={classNames(
-                          "cursor-pointer text-gray-400 hover:text-gray-700 dark:hover:text-gray-400 block px-4 py-2 text-sm space-x-3 hover:bg-gray-50 dark:hover:bg-gray-800"
-                        )}
+                        className="dropdown-content"
                       >
                         <span
                           style={{ backgroundColor: tag.color }}
-                          className={`w-2 h-2 rounded-full inline-block`}
+                          className={`w-2 h-2 rounded-full inline-block dropdown-icon`}
                         ></span>
-                        <span>{tag.title}</span>
+                        <span className="dropdown-text">{tag.title}</span>
                       </div>
                     )}
                   </Menu.Item>

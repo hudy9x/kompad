@@ -121,10 +121,10 @@ And not have spaces`);
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Fullname
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineUser
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -134,7 +134,7 @@ And not have spaces`);
                   id="fullname"
                   onChange={formik.handleChange}
                   value={formik.values.fullname}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className=""
                   placeholder="Fullname"
                 />
               </div>
@@ -144,10 +144,10 @@ And not have spaces`);
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Email
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineMail
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -158,7 +158,6 @@ And not have spaces`);
                   onChange={formik.handleChange}
                   value={formik.values.email}
                   placeholder="Email"
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -167,10 +166,10 @@ And not have spaces`);
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Password
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineLockClosed
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -181,7 +180,6 @@ And not have spaces`);
                   placeholder="Password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -190,10 +188,10 @@ And not have spaces`);
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Date of birth
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineCalendar
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -206,7 +204,6 @@ And not have spaces`);
                     formik.setFieldValue("dateOfBirth", ev.target.value);
                   }}
                   value={formik.values.dateOfBirth}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -215,10 +212,10 @@ And not have spaces`);
               {/* <label htmlFor="email" className="block text-sm text-gray-700">
                 Date of birth
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineGlobe
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -229,7 +226,6 @@ And not have spaces`);
                   placeholder="Address"
                   onChange={formik.handleChange}
                   value={formik.values.address}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -237,18 +233,18 @@ And not have spaces`);
             <div className="input-group">
               <button
                 type="submit"
-                className="inline-flex w-full justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
+                className="btn btn-xl btn-block btn-primary"
               >
                 Sign up
               </button>
             </div>
 
             <div className="input-group">
-              <p className="text-gray-400 text-xs">
-                Already have an account?{" "}
+              <p className="text-xs">
+                <span className="opacity-80">Already have an account?  </span>
                 <Link
                   to={"/signin"}
-                  className="text-yellow-500 hover:underline"
+                  className="text-color-primary hover:underline"
                 >
                   Back to sign in
                 </Link>

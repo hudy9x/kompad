@@ -30,8 +30,10 @@
 }
 
 .character-count {
-  @apply px-2 text-center border-t dark:text-gray-400 border-gray-200 absolute bottom-0 left-0 text-xs bg-gray-50 dark:bg-gray-800 dark:border-gray-900;
-  width: calc(100% - 2px)
+  @apply px-2 text-center border-t absolute bottom-0 left-0 text-xs;
+  width: calc(100% - 2px);
+  background-color: var(--common-bg-color);
+  border-top-color: var(--common-border-color);
 }
 
 .controlbar-container {
@@ -39,12 +41,22 @@
 }
 
 .control-icon {
-  @apply w-8 h-8 p-2 rounded-md text-gray-600 bg-white border hover:bg-gray-50 dark:border-gray-800 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600;
+  @apply w-8 h-8 p-2 rounded-md border transition;
+  @apply text-gray-600 bg-white hover:bg-gray-50;
+  background-color: var(--common-btn-bg-color);
+  border-color: var(--common-border-color);
+  color: var(--common-text-color);
+}
+
+.control-icon:hover{
+  background-color: var(--common-btn-bg-hover-color);
 }
 
 .controlbar-container .is-active .control-icon,
 .controlbar-container .control-icon.is-active {
-  @apply bg-gray-500 border-gray-500 text-white dark:border-gray-900 dark:bg-gray-900 dark:text-gray-200;
+  background-color: var(--common-btn-bg-active-color);
+  border-color: var(--button-border-active-color);
+  color: var(--button-text-active-color);
 }
 
 .react-component {

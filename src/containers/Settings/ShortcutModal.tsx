@@ -20,11 +20,13 @@ function ShortcutModal() {
     { title: "Show / hide side bar", kbds: ["Ctrl", "Shift", "B"] },
     { title: "Create new pad", kbds: ["Ctrl", "N"] },
     { title: "Open search palette", kbds: ["Alt", "P"] },
+    { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },
+    { title: "Close modal window", kbds: ["Esc"] },
   ];
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      <div id="shorcut-wrapper">
+      <div id="shorcut-wrapper" className="w-80">
         <h2 className="text-lg mb-4">Shortcut keys</h2>
         <div className="shorcut-container max-h-64 overflow-auto">
           {shortcutKeys.map((shortcut, index) => {
@@ -37,7 +39,7 @@ function ShortcutModal() {
                 <div className="kbds flex items-center gap-2">
                   {shortcut.kbds.map((kbd) => (
                     <kbd
-                      className="inline-flex cursor-pointer items-center px-2 py-1 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 dark:text-gray-200 dark:bg-gray-600 dark:border-gray-600 "
+                      className="kbd-btn"
                       key={kbd}
                     >
                       {kbd}

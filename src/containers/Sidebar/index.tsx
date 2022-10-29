@@ -15,7 +15,7 @@ export default function Sidebar() {
         <div className="flex">
           <RootSidebar />
           <div className="second-sidebar">
-            <div className="flex items-center gap-2 px-4 py-4 border-b border-gray-200 dark:border-gray-900">
+            <div className="second-sidebar-header">
               <PadSearchIcon />
               <PadNew />
             </div>

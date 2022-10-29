@@ -78,7 +78,7 @@ function Profile() {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <div className="shadow sm:rounded-md sm:overflow-hidden">
+        <div className="border border-color-base shadow-lg sm:rounded-md sm:overflow-hidden">
           <div className="advanced-setting-card">
             <div>
               <h3 className="title">Profile</h3>
@@ -92,7 +92,7 @@ function Profile() {
               <div className="form-control col-span-3 sm:col-span-2">
                 <label htmlFor="fullname">Fullname</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineUser
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"

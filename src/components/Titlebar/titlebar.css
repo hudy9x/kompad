@@ -1,9 +1,18 @@
 .titlebar {
-  @apply hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer flex justify-between;
+  @apply cursor-pointer flex justify-between;
+  background-color: var(--common-bg-color);
+}
+
+.titlebar:hover{
+  background-color: var(--common-bg-color);
 }
 
 .ttb-icon {
-  @apply text-base cursor-pointer px-1.5 py-0.5 hover:text-gray-400;
+  @apply text-base cursor-pointer px-1.5 py-0.5;
+}
+
+.ttb-icon:hover{
+  color: var(--common-text-hover-color);
 }
 
 .ttb-icon.ttb-close {

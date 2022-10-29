@@ -2,8 +2,8 @@ import { IPad } from "../../services/pads"
 import PadCoverButton from "./PadCoverButton"
 
 export default function PadCoverImage({ pad }: { pad: IPad }) {
-  console.log(pad)
-  const imgSrc = pad.cover || 'https://images.pexels.com/photos/771322/pexels-photo-771322.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  // const imgSrc = pad.cover || 'https://images.pexels.com/photos/771322/pexels-photo-771322.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+  const imgSrc = pad.cover || 'https://images.pexels.com/photos/1169107/pexels-photo-1169107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
   return <div className="pad-cover absolute top-0 left-0 w-full h-[220px] bg-gray-700"
     style={{

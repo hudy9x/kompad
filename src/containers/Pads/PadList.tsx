@@ -38,7 +38,7 @@ function PadList() {
 
   return (
     <ScrollBar height="calc(100vh - 71px)">
-      <div className="pad-list divide-y divide-gray-200 dark:divide-gray-900">
+      <div className="pad-list">
         {pads.map((pad) => {
           return (
             <ContextMenu key={pad.id}>

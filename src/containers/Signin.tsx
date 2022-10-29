@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiOutlineMail, HiOutlineLockClosed, HiKey } from "react-icons/hi";
 import { signIn } from "../services/sign";
 import { useFormik } from "formik";
+import { message } from "../components/message";
 
 function Signin() {
   const navigate = useNavigate();
@@ -14,10 +15,37 @@ function Signin() {
     onSubmit: ({ email, password }) => {
       signIn(email, password).then((user) => {
         if (user) {
+          message.success("Signing in successfully ! 😎")
           navigate("/");
         } else {
           alert("username or password invalid");
         }
+      }).catch(err => {
+        console.dir(err)
+        let mess = ''
+        switch (err.code) {
+          case "auth/wrong-password":
+            mess = "Wrong password";
+            break;
+
+          case "auth/user-not-found":
+            mess = "User not found";
+            break;
+
+          case "auth/internal-error":
+            mess = "Internal Error"
+            break;
+
+          case "auth/invalid-email":
+            mess = "Invalid email"
+            break;
+
+          default:
+            mess = "Something went wrong"
+            break;
+        }
+
+        message.error(mess)
       });
     },
   });
@@ -32,7 +60,7 @@ function Signin() {
           </h2>
           <p className="sign-desc">Please enter your email and password</p>
 
-          <form className="sign-form mt-8" onSubmit={formik.handleSubmit}>
+          <form className="sign-form mt-5" onSubmit={formik.handleSubmit}>
             <div className="input-group">
               {/* <label
                 htmlFor="email"
@@ -40,10 +68,10 @@ function Signin() {
               >
                 Email
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineMail
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5"
                     aria-hidden="true"
                   />
                 </div>
@@ -53,7 +81,7 @@ function Signin() {
                   id="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className=""
                   placeholder="Email"
                 />
               </div>
@@ -66,10 +94,10 @@ function Signin() {
               >
                 Password
               </label> */}
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <div className="form-control">
+                <div className="form-icon">
                   <HiOutlineLockClosed
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5"
                     aria-hidden="true"
                   />
                 </div>
@@ -79,7 +107,7 @@ function Signin() {
                   id="password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
-                  className="focus:ring-yellow-400 focus:border-yellow-400 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                  className=""
                   placeholder="Password"
                 />
               </div>
@@ -88,18 +116,18 @@ function Signin() {
             <div className="input-group">
               <button
                 type="submit"
-                className="inline-flex w-full uppercase justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-yellow-900 bg-yellow-400 hover:bg-yellow-300"
+                className="btn btn-primary btn-xl btn-block"
               >
                 Sign in
               </button>
             </div>
 
             <div className="input-group">
-              <p className="text-gray-400 text-xs">
-                Don't have an account yet?{" "}
+              <p className="text-xs">
+                <span className="opacity-80">Don't have an account yet? </span>
                 <Link
                   to={"/signup"}
-                  className="text-yellow-600 hover:underline"
+                  className="text-color-primary hover:underline"
                 >
                   Create Account
                 </Link>
@@ -109,16 +137,6 @@ function Signin() {
         </div>
       </div>
 
-      {/* <button
-        onClick={() => {
-          signIn("huudai09@gmail.com", "test123").then((useCredential) => {
-            navigate("/pad/1");
-          });
-        }}
-        className="btn"
-      >
-        Sign in with Email
-      </button> */}
     </div>
   );
 }

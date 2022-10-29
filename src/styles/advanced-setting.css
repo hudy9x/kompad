@@ -1,37 +1,60 @@
+.advanced-setting-wrapper {
+  background-color: var(--setting-bg-color);
+}
+
 .setting-menu-item {
-  @apply rounded-md px-3 py-2 flex items-center text-sm font-medium dark:text-gray-400;
+  @apply rounded-md px-3 py-2 flex items-center text-sm font-medium;
   @apply dark:hover:bg-gray-600 dark:hover:text-gray-400;
+  color: var(--common-text-color);
+} 
+
+.setting-menu-item.inactive{
+  color: var(--common-text-color);
+}
+
+.setting-menu-item.inactive:hover{
+  background-color: var(--common-dark-bg-color)
 }
 
 .setting-menu-item.active {
-  @apply bg-gray-50 text-yellow-500 hover:text-yellow-600 hover:bg-white;
-  @apply dark:bg-gray-700;
+  color: var(--common-primary-color);
+  background-color: var(--common-dark-bg-color);
 }
 
 .setting-menu-item .icon {
   @apply flex-shrink-0 -ml-1 mr-3 h-6 w-6;
   @apply text-gray-400 group-hover:text-gray-500;
+  color: var(--common-text-color);
 }
 
 .setting-menu-item.active .icon {
-  @apply text-yellow-500 group-hover:text-yellow-500;
+  /* @apply text-yellow-500 group-hover:text-yellow-500; */
+  color: var(--common-primary-color);
 }
 
 .advanced-setting-card {
-  @apply bg-white py-6 px-4 space-y-6 sm:p-6;
-  @apply dark:bg-gray-700;
+  @apply py-6 px-4 space-y-6 sm:p-6;
+  background-color: var(--common-dark-bg-color);
+  color: var(--common-text-color);
+}
+
+.advanced-setting-card.no-space{
+  @apply space-y-0;
 }
 
 .card-bottom {
-  @apply px-4 py-3 bg-gray-50 text-right sm:px-6 border-t border-gray-200;
-  @apply dark:bg-gray-700 dark:border-t-gray-800;
+  @apply px-4 py-3 text-right sm:px-6 border-t;
+  background-color: var(--common-dark-bg-color);
+  border-color: var(--common-border-light-color);
 }
 
 .title {
-  @apply text-lg leading-6 font-medium text-gray-900 dark:text-gray-300;
+  @apply text-lg leading-6 font-medium;
+  color: var(--common-text-color);
 }
 
 .paragraph {
-  @apply mt-1 text-sm text-gray-500 dark:text-gray-400;
+  @apply mt-1 text-sm;
+  color: var(--common-text-color);
 }
 

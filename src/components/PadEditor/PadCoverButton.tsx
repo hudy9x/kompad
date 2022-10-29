@@ -23,7 +23,7 @@ export default function PadCoverButton({ id }: Props) {
 
   return <div className="pad-cover-upload absolute z-20 right-3 top-2 cursor-pointer shadow-md">
     <label htmlFor="pad-inp-update-cover" style={{ fontSize: '0.625rem' }}
-      className="transition uppercase text-yellow-300 bg-yellow-400 bg-opacity-50 hover:bg-opacity-100 hover:text-yellow-700 cursor-pointer px-2 py-1 border-gray-800 rounded-full">
+      className="transition uppercase opacity-50 hover:opacity-100 cursor-pointer px-2 py-1 rounded-full">
       Change cover</label>
     <input onChange={onChange} id="pad-inp-update-cover" type="file" className="hidden" />
   </div>
