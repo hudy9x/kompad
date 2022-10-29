@@ -67,7 +67,7 @@ export default function ThemeListing() {
   </div>
 
     <div className="" style={{ minHeight: 100 }}>
-      <ScrollBar height="500px">
+      <ScrollBar height="600px">
         {themes.map(theme => {
 
           if (searchKey && !theme.name.toLowerCase().includes(searchKey.toLowerCase().trim())) {
@@ -78,7 +78,7 @@ export default function ThemeListing() {
           console.log('loop', theme, installed)
 
           return <div className="theme-item px-5 py-5 flex items-start gap-5" key={theme.id}>
-            <img src={theme.icon} alt="" style={{ width: 65, height: 65 }} className="rounded-lg bg-black" />
+            <img src={theme.icon} alt="" style={{ width: 150 }} className="rounded-lg shadow-sm bg-black" />
             <div className="theme-content space-y-0.5 -mt-1 w-full">
               <div className="theme-header flex items-center justify-between">
                 <h2 className="text-base font-semibold">{theme.name}</h2>

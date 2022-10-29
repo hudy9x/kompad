@@ -92,12 +92,13 @@
 
 .ProseMirror ul[data-type="taskList"] p {
   margin: 0;
-  @apply text-gray-600 dark:text-gray-300;
 }
 
 .ProseMirror ul[data-type="taskList"] li {
   display: flex;
-  @apply px-3 py-2 bg-white shadow-sm rounded-md border border-gray-200 dark:bg-gray-700 dark:border-gray-800;
+  @apply px-3 py-2 shadow-sm rounded-md border ;
+  border-color: var(--common-border-light-color);
+  background-color: var(--common-darker-bg-color);
 }
 
 .ProseMirror ul[data-type="taskList"] li > label {
