@@ -42,7 +42,7 @@ function PadTag({
               style={{ backgroundColor: tag.color }}
               className="tag-icon w-2 h-2 rounded-full"
             ></span>
-            <span className="tag-title text-xs text-gray-400 ">{tag.title}</span>
+            <span className="tag-title text-xs">{tag.title}</span>
             {allowUpdateIfEmpty ? (
               <TagDelete
                 className="tag-del absolute top-1 right-1 hidden group-hover:block"

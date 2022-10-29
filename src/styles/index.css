@@ -34,6 +34,8 @@ body {
   /**/
   /* --sidebar-user-setting-border-color: rgb(31 41 55); */
   /* --sidebar2-background-color: rgb(31 41 55); */
+  /* --sidebar2-item-active-color: rgb(78 73 59); */
+  /* --sidebar2-item-hover-color: rgb(209 201 164); */
   /**/
   /* --editor-text-color: rgb(209 213 219); */
   /* --editor-link-text-color: rgb(251 210 81); */
@@ -41,10 +43,18 @@ body {
   /**/
   /* --modal-bg-color: rgb(31 41 55); */
   /* --modal-footer-bg-color: rgb(31 41 55); */
-  /**/
+  /* --modal-border-color: white; */
   /* --setting-bg-color: rgb(31 41 55); */
   /* --sign-bg-color: rgb(31 41 55); */
   /* --sign-form-bg-color: rgb(55 65 81); */
+
+  /* --dropdown-bg-color: rgb(251 241 199); */
+  /* --dropdown-bg-hover-color: rgb(243 231 183); */
+  /* --tag-bg-color: rgb(237 224 167); */
+  /* --tag-text-color: rgb(136 130 112); */
+  /**/
+  /* --button-border-active-color: rgb(61 64 91); */
+  /* --button-text-active-color: rgb(255 255 255); */
 
   /* color: var(--common-text-color); */
   background-color: var(--common-bg-color);

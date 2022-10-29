@@ -50,11 +50,13 @@
 }
 
 .pad-list .pad-item.active:before {
-  @apply bg-gray-600 dark:bg-gray-400;
+  /* @apply bg-gray-600 dark:bg-gray-400; */
+  background-color: var(--sidebar2-item-active-color);
 }
 
 .pad-list .pad-item:hover:before {
-  @apply bg-gray-400 dark:bg-gray-600;
+  /* @apply bg-gray-400 dark:bg-gray-600; */
+  background-color: var(--sidebar2-item-hover-color);
 }
 
 .pad-list .pad-item.context-menu-opened {
@@ -63,12 +65,20 @@
 
 .pad-details .tag-item, 
 .pad-details .tag-select-btn{
-  @apply bg-opacity-40;
+  @apply bg-black bg-opacity-40;
 } 
 
 .pad-details .tag-title,
 .pad-details .tag-select-btn{
   @apply text-gray-300;
+}
+
+.pad-details .tag-del {
+  @apply bg-black text-red-400 hover:text-red-300 bg-opacity-40; 
+}
+
+.pad-details .folder-del {
+  @apply bg-black text-red-400 hover:text-red-300;
 }
 
 .pad-cover-upload {
@@ -87,6 +97,7 @@
 .tag-item{
   @apply flex gap-1 items-center py-0.5 px-2 rounded-md relative;
   @apply bg-opacity-90;
-  background-color: var(--common-dark-bg-color);
+  background-color: var(--tag-bg-color);
+  color: var(--tag-text-color);
 }
 

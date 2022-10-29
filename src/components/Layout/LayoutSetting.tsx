@@ -40,11 +40,11 @@ export default function LayoutSetting() {
   return (
     <div className="w-full advanced-setting-wrapper" style={{ height: "100vh" }}>
       <Titlebar />
-      <h2 className="px-6 text-xl font-bold text-color-base flex gap-2 items-center">
-        <Link to="/">
+      <h2 className="px-6 pt-6 text-xl font-bold text-color-base ">
+        <Link to="/" className="flex gap-2 items-center">
           <HiOutlineChevronLeft className="w-5 h-5" />
+          <span>Settings</span>
         </Link>
-        <span>Settings</span>
       </h2>
       <div className="grid grid-cols-4 mt-4">
         <aside className="py-6 px-2 mx-4 sm:px-6 lg:py-0 lg:px-0 lg:col-span-1">

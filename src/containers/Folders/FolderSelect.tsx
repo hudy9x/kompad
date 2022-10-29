@@ -5,7 +5,6 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 import { useAuth } from "../../hooks/useAuth";
-import { classNames } from "../../libs/utils";
 import { useFolderStore } from "../../store/folder";
 import { watchFolders } from "../../services/folders";
 import { FaRegFolder } from "react-icons/fa";
@@ -43,7 +42,7 @@ function FolderSelect({ onChange }: IFolderSelectProps) {
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="bg-gray-100 dark:bg-gray-900 rounded-full flex items-center text-gray-400 hover:text-gray-600 ">
+          <Menu.Button className="bg-black rounded-full flex items-center text-gray-400 hover:text-gray-600 ">
             <span className="sr-only">Open options</span>
             <FaRegFolder className="h-5 w-5 p-1" aria-hidden="true" />
           </Menu.Button>

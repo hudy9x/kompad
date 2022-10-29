@@ -124,7 +124,7 @@ And not have spaces`);
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineUser
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -147,7 +147,7 @@ And not have spaces`);
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineMail
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -169,7 +169,7 @@ And not have spaces`);
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineLockClosed
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -191,7 +191,7 @@ And not have spaces`);
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineCalendar
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -215,7 +215,7 @@ And not have spaces`);
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineGlobe
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5 "
                     aria-hidden="true"
                   />
                 </div>
@@ -240,8 +240,8 @@ And not have spaces`);
             </div>
 
             <div className="input-group">
-              <p className="text-gray-400 text-xs">
-                Already have an account?{" "}
+              <p className="text-xs">
+                <span className="opacity-80">Already have an account?  </span>
                 <Link
                   to={"/signin"}
                   className="text-color-primary hover:underline"

@@ -54,9 +54,9 @@
 
 .controlbar-container .is-active .control-icon,
 .controlbar-container .control-icon.is-active {
-  @apply bg-gray-500 border-gray-500 text-white;
   background-color: var(--common-btn-bg-active-color);
-  border-color: var(--common-border-color);
+  border-color: var(--button-border-active-color);
+  color: var(--button-text-active-color);
 }
 
 .react-component {

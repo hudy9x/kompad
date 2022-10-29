@@ -45,7 +45,7 @@ function Signin() {
             break;
         }
 
-        message.success(mess)
+        message.error(mess)
       });
     },
   });
@@ -71,7 +71,7 @@ function Signin() {
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineMail
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5"
                     aria-hidden="true"
                   />
                 </div>
@@ -97,7 +97,7 @@ function Signin() {
               <div className="form-control">
                 <div className="form-icon">
                   <HiOutlineLockClosed
-                    className="h-5 w-5 text-gray-400"
+                    className="h-5 w-5"
                     aria-hidden="true"
                   />
                 </div>
@@ -123,8 +123,8 @@ function Signin() {
             </div>
 
             <div className="input-group">
-              <p className="text-gray-400 text-xs">
-                Don't have an account yet?{" "}
+              <p className="text-xs">
+                <span className="opacity-80">Don't have an account yet? </span>
                 <Link
                   to={"/signup"}
                   className="text-color-primary hover:underline"

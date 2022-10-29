@@ -3,8 +3,9 @@
 }
 
 .setting-menu-item {
-  @apply rounded-md px-3 py-2 flex items-center text-sm font-medium dark:text-gray-400;
+  @apply rounded-md px-3 py-2 flex items-center text-sm font-medium;
   @apply dark:hover:bg-gray-600 dark:hover:text-gray-400;
+  color: var(--common-text-color);
 } 
 
 .setting-menu-item.inactive{
@@ -23,6 +24,7 @@
 .setting-menu-item .icon {
   @apply flex-shrink-0 -ml-1 mr-3 h-6 w-6;
   @apply text-gray-400 group-hover:text-gray-500;
+  color: var(--common-text-color);
 }
 
 .setting-menu-item.active .icon {
@@ -52,6 +54,7 @@
 }
 
 .paragraph {
-  @apply mt-1 text-sm text-gray-500 dark:text-gray-400;
+  @apply mt-1 text-sm;
+  color: var(--common-text-color);
 }
 

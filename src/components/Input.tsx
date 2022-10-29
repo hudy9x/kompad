@@ -1,14 +1,14 @@
 import { BiSearch } from "react-icons/bi";
 
 interface Props {
-    name?: string;
-    placeholder?: string;
+  name?: string;
+  placeholder?: string;
 }
 
-export default function Input({name, placeholder}: Props) {
+export default function Input({ name, placeholder }: Props) {
   return <div className="relative rounded-md shadow-sm">
     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-      <BiSearch className="h-5 w-5 text-gray-400" aria-hidden="true" />
+      <BiSearch className="h-5 w-5" aria-hidden="true" />
     </div>
     <input
       type="text"

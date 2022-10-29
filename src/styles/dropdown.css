@@ -1,7 +1,7 @@
 .dropdown {
   @apply border shadow-lg bg-white dark:bg-gray-900 z-10 rounded-md;
   @apply focus:outline-none z-30;
-  background-color: var(--common-dark-bg-color);
+  background-color: var(--dropdown-bg-color);
   border-color: var(--common-border-light-color);
 }
 
@@ -14,8 +14,7 @@
 }
 
 .dropdown-content:hover {
-  @apply bg-gray-100 dark:bg-gray-700;
-  background-color: var(--common-light-bg-color);
+  background-color: var(--dropdown-bg-hover-color);
 }
 
 .dropdown-content:hover .dropdown-text {

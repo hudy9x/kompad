@@ -16,7 +16,7 @@
 }
 
 .sign-desc {
-  @apply text-gray-400 text-sm mt-3;
+  @apply opacity-80 text-sm mt-3;
 }
 
 .input-group {

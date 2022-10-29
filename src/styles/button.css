@@ -8,7 +8,7 @@
 
 .btn:hover{
   background-color: var(--common-btn-bg-hover-color);
-  border-color: var(--common-btn-bg-hover-color);
+  /* border-color: var(--common-btn-bg-hover-color); */
 }
 
 .btn.btn-primary {

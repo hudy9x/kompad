@@ -44,11 +44,11 @@ function TagItem({ tag }: ITagItemProps) {
         <div className="absolute top-1.5 right-0 group-hover:flex hidden gap-1 px-1 mr-5">
           <FiEdit3
             onClick={() => setEditMode(true)}
-            className="text-gray-400 w-3 hover:text-gray-700 dark:text-gray-600 dark:hover:text-gray-400"
+            className="w-3 text-color-base"
           />
           <HiX
             onClick={() => onDelete(tag.id || "")}
-            className="text-gray-400 hover:text-gray-700 dark:text-gray-600 dark:hover:text-gray-400"
+            className="text-color-base"
           />
         </div>
       </div>

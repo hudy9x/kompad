@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, Timestamp } from "firebase/firestore"
+import { collection, getDocs, Timestamp } from "firebase/firestore"
 import { db } from "../libs/firebase"
 
 interface IThemeConfig {

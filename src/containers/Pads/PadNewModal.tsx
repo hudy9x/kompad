@@ -66,7 +66,7 @@ export default function PadNewModal() {
         onSubmit={formik.handleSubmit}
         className="w-80 text-color-base"
       >
-        <h3 className="text-lg leading-6 font-medium pb-4 border-bottom dark:border-gray-700">
+        <h3 className="text-lg leading-6 pb-4 border-bottom dark:border-gray-700">
           Create new pad
         </h3>
 
