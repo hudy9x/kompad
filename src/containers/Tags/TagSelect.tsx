@@ -7,7 +7,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { useAuth } from "../../hooks/useAuth";
 import { watchTags } from "../../services/tags";
 import { useTagStore } from "../../store/tags";
-import { classNames } from "../../libs/utils";
 import { IoPricetagsOutline } from "react-icons/io5";
 
 interface ITagSelectProps {

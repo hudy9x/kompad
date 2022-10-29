@@ -1,5 +1,3 @@
-import React from "react";
-import { BiPlus } from "react-icons/bi";
 import { HiHashtag } from "react-icons/hi";
 import TagAdd from "./TagAdd";
 import TagList from "./TagList";
