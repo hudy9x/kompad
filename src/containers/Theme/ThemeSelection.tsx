@@ -92,6 +92,7 @@ export default function ThemeUser() {
   useEffect(() => {
     // 5. Also set visible status in store to false when modal closes 
     setVisible(open)
+    // eslint-disable-next-line
   }, [open])
 
   useEffect(() => {
@@ -101,6 +102,7 @@ export default function ThemeUser() {
       setThemeList(setting.themes)
     })
 
+    // eslint-disable-next-line
   }, [user?.uid])
 
   useEffect(() => {
@@ -152,6 +154,7 @@ export default function ThemeUser() {
       document.removeEventListener('keyup', onKeyPress)
     }
 
+    // eslint-disable-next-line
   }, [themes, preview, visible])
 
   useEffect(() => {

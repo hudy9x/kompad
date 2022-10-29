@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useThemeStore } from '../../store/themes'
-import Modal from '../../components/Modal'
 import { getThemes, ITheme } from '../../services/themes'
 import ScrollBar from '../../components/ScrollBar'
 import { HiOutlineCloudDownload } from 'react-icons/hi'
 // import { IoMdStar } from 'react-icons/io'
 import Button from '../../components/Button'
 import { BiSearch } from 'react-icons/bi'
-import { getUserSetting, installTheme, IUserThemeSettings, uninstallTheme } from '../../services/user-settings'
+import { getUserSetting, installTheme, uninstallTheme } from '../../services/user-settings'
 
 interface IInstalledTheme {
   [key: string]: number
