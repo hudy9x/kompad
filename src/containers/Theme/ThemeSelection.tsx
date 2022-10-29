@@ -41,7 +41,6 @@ export default function ThemeUser() {
     setThemeConfigToStorage(config)
     setThemeSetting(config)
     selectTheme(id).then(() => {
-      // setUpdateCounter(updateCounter + 1)
       setSelected(id, config)
     })
   }
@@ -59,6 +58,7 @@ export default function ThemeUser() {
 
   }
 
+  // if user not select new theme, rollback to default theme
   const rollbackToDefaultTheme = () => {
     // make sure that the current theme is not empty
     if (!currentTheme) return;
@@ -78,20 +78,24 @@ export default function ThemeUser() {
   }
 
   useEffect(() => {
+    // 3. Active selected theme at the first time
     setPreview(selectedTheme)
   }, [selectedTheme])
 
   useEffect(() => {
+    // 1. Theme modal opened, cache the current theme setting first
     visible && cachingCurrentTheme()
     !visible && rollbackToDefaultTheme()
     setOpen(visible);
   }, [visible])
 
   useEffect(() => {
+    // 5. Also set visible status in store to false when modal closes 
     setVisible(open)
   }, [open])
 
   useEffect(() => {
+    // 2. Get user's setting that contains all installed themes and save it to store
     getUserSetting().then(setting => {
       if (!setting || !setting.themes) return;
       setThemeList(setting.themes)
@@ -101,12 +105,14 @@ export default function ThemeUser() {
 
   useEffect(() => {
 
+    // 4. Register events that enable user to press 
+    // Up/Down key to preview theme and Enter key to select
     const onKeyPress = (ev: KeyboardEvent) => {
       ev.preventDefault();
       ev.stopPropagation();
 
       if (!visible) return;
-      
+
       const key = ev.key
       const len = themes.length;
 
@@ -148,8 +154,9 @@ export default function ThemeUser() {
 
   }, [themes, preview, visible])
 
-  useEffect(() => { 
+  useEffect(() => {
     return () => {
+      // clear search term when modal close
       open === false && setSearchKey('')
     }
   }, [open])

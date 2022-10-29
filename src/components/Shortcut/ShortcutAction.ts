@@ -55,6 +55,7 @@ export const shortCutAcion = (
     );
   }
 
+  // Open Theme selection modal
   if (ctrlKey && key === "t") {
     setThemeStoreState(
       produce<IThemeStore>((state) => {
