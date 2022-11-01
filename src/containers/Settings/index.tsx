@@ -3,7 +3,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BiCommentError } from "react-icons/bi";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import { HiOutlineColorSwatch, HiOutlineLightningBolt, HiOutlineUserCircle } from "react-icons/hi";
+import { HiOutlineColorSwatch, HiOutlineLightningBolt, HiOutlineCog } from "react-icons/hi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
 import { showShortcutModal } from "../../store/modal";
 import { useThemeStore } from "../../store/themes";
@@ -44,16 +44,6 @@ export default function Settings() {
               </div>
             </Menu.Item>
             <Menu.Item>
-              <Link to="/setting/profile"
-                className="dropdown-content">
-                <HiOutlineUserCircle
-                  className="dropdown-icon"
-                  aria-hidden="true"
-                />
-                <span className="dropdown-text">User profile</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item>
               <a
                 rel="noreferrer"
                 target={"_blank"}
@@ -85,6 +75,16 @@ export default function Settings() {
                   </div>
                 </div>
               </div>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to="/setting/profile"
+                className="dropdown-content">
+                <HiOutlineCog
+                  className="dropdown-icon"
+                  aria-hidden="true"
+                />
+                <span className="dropdown-text">Settings</span>
+              </Link>
             </Menu.Item>
 
             <Menu.Item>
