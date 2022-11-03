@@ -14,3 +14,4 @@ Next, create a Firebase app and replace to `src/libs/firebase.js`
 $ yarn install
 $ yarn tauri dev
 ``` 
+![unknown](https://user-images.githubusercontent.com/95471659/199690844-b77d80d9-bd73-41b5-8fe4-611f1c62174e.png)
