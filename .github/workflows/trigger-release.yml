@@ -2,7 +2,7 @@ name: "trigger-release"
 on:
   push:
     branches:
-      - main
+      - release
 jobs:
   trigger-release:
     runs-on: ubuntu-latest
