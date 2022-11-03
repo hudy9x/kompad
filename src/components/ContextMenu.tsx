@@ -28,7 +28,7 @@ export default function ContextMenu({ children }: IContextMenu) {
     ev.preventDefault();
 
     setPosition({
-      top: clientY - 24,
+      top: clientY,
       left: clientX
     })
 
@@ -74,15 +74,48 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
     }
   })
 
-  if (!visible) return null
+  const displayContextMenu = (top: number, left: number) => {
+      if (!ctxRef.current) return;
 
+      const ctxElem = ctxRef.current;
+      const dropDownElem = ctxElem.querySelector('.dropdown') as HTMLDivElement;
+      const windowH = document.body.offsetHeight;
+
+      if (!dropDownElem) {
+        return; 
+      }
+
+      const dropDownH = dropDownElem.offsetHeight;
+
+      console.log(dropDownH, windowH, top)
+      
+      if (top + dropDownH > windowH) {
+        top -= (top + dropDownH + 41 - windowH)
+      }
+
+      left += 10;
+
+      ctxElem.style.top = `${top}px`;
+      ctxElem.style.left = `${left}px`;
+      ctxElem.style.opacity = '1';
+
+  }
+
+  useEffect(() => {
+    visible && displayContextMenu(top, left);
+  }, [top, left, visible])
+
+  
+  if (!visible) return null
+  
   return <div
     ref={ctxRef}
     onClick={() => {
-        setVisible(false)
-      }}
+      setVisible(false);
+    }}
     className={`ctx-dropdown fixed z-10`}
-    style={{ top, left }}>
+    style={{opacity: 0}}
+    >
     {children}
   </div>
 }

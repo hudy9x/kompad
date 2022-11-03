@@ -27,6 +27,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   color: var(--common-text-color);
+  max-width: calc(100% - 15px);
 }
 
 .pad-unimportant-icon { 
