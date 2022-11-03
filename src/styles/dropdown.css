@@ -1,8 +1,9 @@
 .dropdown {
   @apply border shadow-lg bg-white dark:bg-gray-900 z-10 rounded-md;
-  @apply focus:outline-none z-30;
+  @apply focus:outline-none z-30 overflow-y-auto;
   background-color: var(--dropdown-bg-color);
   border-color: var(--common-border-light-color);
+  max-height: 400px;
 }
 
 .dropdown.div-y > :not(:first-child) {
