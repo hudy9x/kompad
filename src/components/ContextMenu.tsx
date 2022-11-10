@@ -75,29 +75,32 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
   })
 
   const displayContextMenu = (top: number, left: number) => {
-      if (!ctxRef.current) return;
+    if (!ctxRef.current) return;
 
-      const ctxElem = ctxRef.current;
-      const dropDownElem = ctxElem.querySelector('.dropdown') as HTMLDivElement;
-      const windowH = document.body.offsetHeight;
+    const ctxElem = ctxRef.current;
+    const dropDownElem = ctxElem.querySelector('.dropdown') as HTMLDivElement;
+    const windowH = document.body.offsetHeight;
 
-      if (!dropDownElem) {
-        return; 
-      }
+    if (!dropDownElem) {
+      return;
+    }
 
-      const dropDownH = dropDownElem.offsetHeight;
+    const dropDownH = dropDownElem.offsetHeight;
 
-      console.log(dropDownH, windowH, top)
-      
-      if (top + dropDownH > windowH) {
-        top -= (top + dropDownH + 41 - windowH)
-      }
+    console.log(dropDownH, windowH, top)
 
-      left += 10;
+    if (top + dropDownH > windowH) {
+      top -= (top + dropDownH + 41 - windowH)
+      console.log('18273987')
+    } else {
+      top -= 20
+    }
 
-      ctxElem.style.top = `${top}px`;
-      ctxElem.style.left = `${left}px`;
-      ctxElem.style.opacity = '1';
+    left += 10;
+
+    ctxElem.style.top = `${top}px`;
+    ctxElem.style.left = `${left}px`;
+    ctxElem.style.opacity = '1';
 
   }
 
@@ -105,17 +108,17 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
     visible && displayContextMenu(top, left);
   }, [top, left, visible])
 
-  
+
   if (!visible) return null
-  
+
   return <div
     ref={ctxRef}
     onClick={() => {
       setVisible(false);
     }}
     className={`ctx-dropdown fixed z-10`}
-    style={{opacity: 0}}
-    >
+    style={{ opacity: 0 }}
+  >
     {children}
   </div>
 }
