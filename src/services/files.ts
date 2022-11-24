@@ -2,7 +2,7 @@ import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebas
 import { auth, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
 
-type TUploadFileFunc = (filePath: string, file: File) => Promise<string>
+type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
 
 const _uploadFile: TUploadFileFunc = (filePath, file) => {
   return new Promise((resolve, reject) => {
@@ -49,8 +49,7 @@ export const getAllPublicAvatars = () => {
   });
 };
 
-
-export const uploadFileToPad = (filePath: string, file: File): ReturnType<TUploadFileFunc> => {
+export const uploadFileToPad = (filePath: string, file: File | Blob): ReturnType<TUploadFileFunc> => {
   const user = auth.currentUser
   if (!user || !user.uid) return Promise.resolve('ERROR');
 

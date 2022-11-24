@@ -22,6 +22,7 @@ import PadInfo from "./PadInfo";
 // import Diagram from "../"
 import DiagramExtension from "../../extensions/Diagram";
 import ScrollBar from "../ScrollBar";
+import PadDropZone from "./PadDropZone";
 
 interface IPadEditorProp {
   id: string;
@@ -126,6 +127,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     <ErrorCapture>
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
+        { editor ? <PadDropZone id={id} editor={editor} /> : null }
         <div className="tiptap-box">
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
