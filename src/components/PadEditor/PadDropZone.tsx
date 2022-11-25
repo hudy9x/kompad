@@ -3,10 +3,10 @@ import { listen } from '@tauri-apps/api/event'
 import { convertFileSrc } from "@tauri-apps/api/tauri";
 import { getFileUrl, uploadFileToPad } from "../../services/files";
 import { useEffect } from "react"
+import { message } from "../message";
 
 
 function loadXHR(url: string) {
-
   return new Promise<Blob>(function(resolve, reject) {
     try {
       var xhr = new XMLHttpRequest();
@@ -32,16 +32,52 @@ interface Props {
 
 export default function PadDropZone({ id, editor }: Props) {
 
+  const toggleDragOverEffect = () => {
+    const box = document.querySelector('.tiptap-box')
+    if (!box) return;
+
+    box.classList.toggle('is-dragging-over')
+  }
+
+  useEffect(() => {
+    const unlisten = listen('tauri://file-drop-hover', () => {
+      toggleDragOverEffect()
+    })
+
+
+    const unlisten2 = listen('tauri://file-drop-cancelled', () => {
+      toggleDragOverEffect()
+    })
+
+    return () => { 
+      unlisten.then(f => f());
+      unlisten2.then(f => f());
+    }
+  }, [])
+
   useEffect(() => {
     const unlisten = listen('tauri://file-drop', (event: any) => {
       const src = convertFileSrc(event.payload[0])
-      loadXHR(src).then(blob => {
-        const url = new URL(src)
-        const splittedPath = decodeURI(url.pathname).split('\\');
-        const name = splittedPath[splittedPath.length - 1]
+      const url = new URL(src)
+      const splittedPath = decodeURI(url.pathname).split('\\');
+      const name = splittedPath[splittedPath.length - 1];
 
-        uploadFileToPad(`pad-${id}/${name}`, blob).then((res) => {
-          console.log(res)
+      if (["jpg", "jpeg", "png", "gif"].indexOf(name.toLowerCase()) === -1) {
+        message.error("Only accept images")
+        return;
+      }
+
+      loadXHR(src).then(blob => {
+        const size = blob.size / 1024 / 1024; // MB
+
+        if (size >= 3) {
+          message.error("The image size exceeds 3mb. Please attach a smaller image")
+          return;
+        }
+
+        const randomID = new Date().getTime()
+
+        uploadFileToPad(`${randomID}-${name}`, blob).then((res) => {
           getFileUrl(res).then(src => {
             editor.chain()
               .focus()
