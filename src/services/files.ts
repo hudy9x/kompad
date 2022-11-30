@@ -1,8 +1,21 @@
+import { addDoc, collection } from "firebase/firestore";
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
-import { auth, storage } from "../libs/firebase";
+import { auth, db, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
 
 type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
+
+interface IFile {
+  id?: string
+  name: string
+  size: number
+  type: string
+  createdBy: string
+  createdAt: string
+  padId?: string
+}
+
+const COLLECTION_NAME = 'files';
 
 const _uploadFile: TUploadFileFunc = (filePath, file) => {
   return new Promise((resolve, reject) => {
@@ -19,6 +32,17 @@ const _uploadFile: TUploadFileFunc = (filePath, file) => {
 
 // Create a reference under which you want to list
 const listRef = ref(storage, "avatars/public");
+
+export const addFile = async (file: IFile) => {
+  const user = auth.currentUser;
+
+  if (!user) {
+    return;
+  }
+
+  await addDoc(collection(db, COLLECTION_NAME), file);
+
+}
 
 export const getAllPublicAvatars = () => {
   const key = "PUBLIC_AVATAR";

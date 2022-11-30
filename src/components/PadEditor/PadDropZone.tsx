@@ -62,7 +62,11 @@ export default function PadDropZone({ id, editor }: Props) {
       const splittedPath = decodeURI(url.pathname).split('\\');
       const name = splittedPath[splittedPath.length - 1];
 
-      if (["jpg", "jpeg", "png", "gif"].indexOf(name.toLowerCase()) === -1) {
+      console.log(name)
+      console.log(["jpg", "jpeg", "png", "gif"].some(s => name.lastIndexOf(`.${s}`) === -1))
+
+      if (!["jpg", "jpeg", "png", "gif"].some(s => name.lastIndexOf(`.${s}`) !== -1)) {
+        console.log('aasdfasdf')
         message.error("Only accept images")
         return;
       }
