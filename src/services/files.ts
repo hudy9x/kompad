@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, Timestamp, where } from "firebase/firestore";
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { auth, db, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
@@ -8,11 +8,14 @@ type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
 interface IFile {
   id?: string
   name: string
+  path: string // path to file in firebase storage
+  url: string
   size: number
   type: string
   createdBy: string
-  createdAt: string
-  padId?: string
+  createdAt: Timestamp
+  padId: string
+  source: string
 }
 
 const COLLECTION_NAME = 'files';
@@ -33,15 +36,16 @@ const _uploadFile: TUploadFileFunc = (filePath, file) => {
 // Create a reference under which you want to list
 const listRef = ref(storage, "avatars/public");
 
-export const addFile = async (file: IFile) => {
-  const user = auth.currentUser;
-
-  if (!user) {
-    return;
+export const addFileInfo = async (file: IFile) => {
+  try {
+    await addDoc(collection(db, COLLECTION_NAME), file);
+  } catch (error) {
+    console.log(error)
   }
+}
 
-  await addDoc(collection(db, COLLECTION_NAME), file);
-
+export const deleteFileInfo = async (id: string) => {
+  await deleteDoc(doc(db, COLLECTION_NAME, id))
 }
 
 export const getAllPublicAvatars = () => {
@@ -81,6 +85,55 @@ export const uploadFileToPad = (filePath: string, file: File | Blob): ReturnType
   const path = `pads/${uid}/${filePath}`;
 
   return _uploadFile(path, file)
+}
+
+export const deleteCoverImageFile = async (file: Partial<IFile>) => {
+  const q = query(collection(db, COLLECTION_NAME), 
+        where("createdBy", "==", file.createdBy), 
+        where("padId", "==", file.padId), 
+        where("source", "==", "COVER-IMAGE"))
+  const snapshots = await getDocs(q)
+
+  if (snapshots.empty) {
+    return 0;
+  }
+
+  snapshots.forEach(doc => {
+    deleteDoc(doc.ref)
+  })
+
+  return 1;
+}
+
+export const deleteAllImageInOnePad = async ( padId: string) => {
+  const user = auth.currentUser
+  if (!user || !user.uid) return 0;
+
+  console.log('called deleteAllImageInOnePad', padId)
+  const q = query(collection(db, COLLECTION_NAME), 
+        where("createdBy", "==", user.uid), 
+        where("padId", "==", padId))
+  const snapshots = await getDocs(q)
+
+  if (snapshots.empty) {
+    console.log('empty')
+    return 0;
+  }
+
+  console.log(snapshots.docs)
+
+  snapshots.forEach(doc => {
+    const data = doc.data() as IFile
+    
+    deleteFile(data.path).then(() => {
+      console.log(`deleted file ${data.name} of pad ${data.padId}`)
+      deleteDoc(doc.ref).then(() => {
+        console.log('deleted file from storage')
+      })
+    });
+  })
+
+  return 1;
 }
 
 export const getFileUrl = (filePath: string): Promise<string> => {

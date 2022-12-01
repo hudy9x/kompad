@@ -1,9 +1,11 @@
 import { Editor } from "@tiptap/react";
 import { listen } from '@tauri-apps/api/event'
 import { convertFileSrc } from "@tauri-apps/api/tauri";
-import { getFileUrl, uploadFileToPad } from "../../services/files";
+import { addFileInfo, getFileUrl, uploadFileToPad } from "../../services/files";
 import { useEffect } from "react"
 import { message } from "../message";
+import { Timestamp } from "firebase/firestore";
+import { useAuth } from "../../hooks/useAuth";
 
 
 function loadXHR(url: string) {
@@ -32,21 +34,25 @@ interface Props {
 
 export default function PadDropZone({ id, editor }: Props) {
 
-  const toggleDragOverEffect = () => {
+  const { user } = useAuth()
+
+  const toggleDragOverEffect = (bool: boolean) => {
     const box = document.querySelector('.tiptap-box')
     if (!box) return;
+    const classList = box.classList
+    const className = 'is-dragging-over'
 
-    box.classList.toggle('is-dragging-over')
+    bool ? classList.add(className) : classList.remove(className)
   }
 
   useEffect(() => {
     const unlisten = listen('tauri://file-drop-hover', () => {
-      toggleDragOverEffect()
+      toggleDragOverEffect(true)
     })
 
 
     const unlisten2 = listen('tauri://file-drop-cancelled', () => {
-      toggleDragOverEffect()
+      toggleDragOverEffect(false)
     })
 
     return () => { 
@@ -56,7 +62,10 @@ export default function PadDropZone({ id, editor }: Props) {
   }, [])
 
   useEffect(() => {
+
     const unlisten = listen('tauri://file-drop', (event: any) => {
+      if (!user) return;
+
       const src = convertFileSrc(event.payload[0])
       const url = new URL(src)
       const splittedPath = decodeURI(url.pathname).split('\\');
@@ -80,22 +89,40 @@ export default function PadDropZone({ id, editor }: Props) {
         }
 
         const randomID = new Date().getTime()
+        const randName = `${randomID}-${name}`;
 
-        uploadFileToPad(`${randomID}-${name}`, blob).then((res) => {
+        uploadFileToPad(randName, blob).then((res) => {
+
+          toggleDragOverEffect(false);
           getFileUrl(res).then(src => {
+
+            const path = `pads/${user.uid}/${randName}`;
+            addFileInfo({
+              name: name, 
+              size: size, 
+              type: blob.type, 
+              url: src,
+              path: path,
+              padId: id,
+              createdAt: Timestamp.now(),
+              createdBy: user.uid,
+              source: 'CONTENT-IMAGE'
+            })
+
             editor.chain()
               .focus()
               .setImage({ src })
               .run()
           })
         }).catch(() => {
+          toggleDragOverEffect(false);
         })
       });
     })
 
     return () => { unlisten.then(f => f()) }
 
-  }, [id, editor])
+  }, [id, editor, user])
 
   return <></>
 
