@@ -88,10 +88,10 @@ export const uploadFileToPad = (filePath: string, file: File | Blob): ReturnType
 }
 
 export const deleteCoverImageFile = async (file: Partial<IFile>) => {
-  const q = query(collection(db, COLLECTION_NAME), 
-        where("createdBy", "==", file.createdBy), 
-        where("padId", "==", file.padId), 
-        where("source", "==", "COVER-IMAGE"))
+  const q = query(collection(db, COLLECTION_NAME),
+    where("createdBy", "==", file.createdBy),
+    where("padId", "==", file.padId),
+    where("source", "==", "COVER-IMAGE"))
   const snapshots = await getDocs(q)
 
   if (snapshots.empty) {
@@ -105,14 +105,30 @@ export const deleteCoverImageFile = async (file: Partial<IFile>) => {
   return 1;
 }
 
-export const deleteAllImageInOnePad = async ( padId: string) => {
+export const getAllFileByUser = async () => {
+  const user = auth.currentUser
+  if (!user || !user.uid) return 0;
+  const q = query(
+    collection(db, COLLECTION_NAME),
+    where("createdBy", "==", user.uid)
+  );
+
+  const snapshot = await getDocs(q)
+  if (snapshot.empty) {
+    return []
+  }
+
+  console.log(snapshot.docs)
+}
+
+export const deleteAllImageInOnePad = async (padId: string) => {
   const user = auth.currentUser
   if (!user || !user.uid) return 0;
 
   console.log('called deleteAllImageInOnePad', padId)
-  const q = query(collection(db, COLLECTION_NAME), 
-        where("createdBy", "==", user.uid), 
-        where("padId", "==", padId))
+  const q = query(collection(db, COLLECTION_NAME),
+    where("createdBy", "==", user.uid),
+    where("padId", "==", padId))
   const snapshots = await getDocs(q)
 
   if (snapshots.empty) {
@@ -124,7 +140,7 @@ export const deleteAllImageInOnePad = async ( padId: string) => {
 
   snapshots.forEach(doc => {
     const data = doc.data() as IFile
-    
+
     deleteFile(data.path).then(() => {
       console.log(`deleted file ${data.name} of pad ${data.padId}`)
       deleteDoc(doc.ref).then(() => {
