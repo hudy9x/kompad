@@ -1,11 +1,10 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, query, Timestamp, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, startAfter, Timestamp, where } from "firebase/firestore";
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { auth, db, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
 
 type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
-
-interface IFile {
+export interface IFile {
   id?: string
   name: string
   path: string // path to file in firebase storage
@@ -105,20 +104,58 @@ export const deleteCoverImageFile = async (file: Partial<IFile>) => {
   return 1;
 }
 
-export const getAllFileByUser = async () => {
+interface IFileResults {
+  lastDoc: QueryDocumentSnapshot<DocumentData> | null,
+  data: IFile[]
+}
+
+type GetAllFileFunc = (
+  fromDoc?: QueryDocumentSnapshot<DocumentData>
+) => Promise<IFileResults>
+
+export const getAllFileByUser: GetAllFileFunc = async (fromDoc) => {
   const user = auth.currentUser
-  if (!user || !user.uid) return 0;
-  const q = query(
-    collection(db, COLLECTION_NAME),
-    where("createdBy", "==", user.uid)
-  );
+  if (!user || !user.uid) return {lastDoc: null, data: []};
+
+  let q;
+  const dbConn = collection(db, COLLECTION_NAME)
+  const cond = where("createdBy", "==", user.uid)
+  const maxRecord = limit(20)
+
+  if (!fromDoc) {
+    q = query(dbConn, cond, maxRecord
+    );
+  } else {
+    q = query(dbConn, cond, startAfter(fromDoc), maxRecord)
+  } 
 
   const snapshot = await getDocs(q)
   if (snapshot.empty) {
-    return []
+    return { lastDoc: null, data: [] }
   }
 
-  console.log(snapshot.docs)
+  const files: IFile[] = []
+  const lastDoc = snapshot.docs[snapshot.docs.length - 1]
+  snapshot.forEach(doc => {
+    const data = doc.data() as IFile
+    files.push({
+      id: doc.id,
+      name: data.name,
+      path: data.path,
+      url: data.url,
+      size: data.size,
+      type: data.type,
+      createdBy: data.createdBy,
+      createdAt: data.createdAt,
+      padId: data.padId,
+      source: data.source
+    })
+  })
+
+  return {
+    lastDoc,
+    data: files
+  };
 }
 
 export const deleteAllImageInOnePad = async (padId: string) => {
