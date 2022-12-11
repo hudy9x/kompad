@@ -100,9 +100,8 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${
-            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-          }`}
+          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+            }`}
         >
           <span>h2</span>
         </button>
@@ -110,9 +109,8 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${
-            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
-          }`}
+          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+            }`}
         >
           <span>h3</span>
         </button>
@@ -120,9 +118,8 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${
-            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
-          }`}
+          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+            }`}
         >
           <span>h4</span>
         </button>
@@ -203,7 +200,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => editor.chain().focus().insertContent(`<diagram-component graph=""></diagram-component>`).run()}
-          // className={editor.isActive("codeBlock") ? "is-active" : ""}
+        // className={editor.isActive("codeBlock") ? "is-active" : ""}
         >
           <AiOutlinePartition className="control-icon" />
         </button>

@@ -7,7 +7,11 @@ module.exports = {
   darkMode: "class",
   mode: "jit",
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        "2xs": "0.65rem",
+      }
+    },
   },
   plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

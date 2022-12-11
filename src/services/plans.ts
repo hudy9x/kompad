@@ -6,8 +6,12 @@ export interface IPlan {
   uid: string;
   maxRecord: number;
   currentRecord: number;
+  maxStorageSize: number;
+  currentStorageSize: number;
   expiredTime: Timestamp;
 }
+
+export const MAX_STORAGE_SIZE = 1000; // GB
 
 export const getPlanByUid = async (): Promise<IPlan | null> => {
   const uid = auth.currentUser?.uid;
@@ -27,6 +31,8 @@ export const getPlanByUid = async (): Promise<IPlan | null> => {
         maxRecord: data.maxRecord,
         currentRecord: data.currentRecord,
         expiredTime: data.expiredTime,
+        maxStorageSize: data.maxStorageSize,
+        currentStorageSize: data.currentStorageSize
       };
     }
 
@@ -45,7 +51,8 @@ export const decreasePlanRecord = async () => {
       return;
     }
 
-    await updatePlanByUid({ currentRecord: planData.currentRecord - 1 });
+    const currentRecord = planData.currentRecord - 1;
+    await updatePlanByUid({ currentRecord: currentRecord >= 0 ? currentRecord : 0 });
   } catch (error) {
     console.log("decreasePlanRecord ERROR", error);
   }
@@ -59,11 +66,17 @@ export const createFreePlan = async () => {
   }
 
   try {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 1)
+    const expiredTime = Timestamp.fromDate(date)
+
     await setDoc(doc(db, `/plans`, uid), {
       uid,
       maxRecord: 20,
       currentRecord: 0,
-      // expiredTime: dayjs
+      maxStorageSize: MAX_STORAGE_SIZE,
+      currentStorageSize: 0,
+      expiredTime: expiredTime
     });
     return 1;
   } catch (error) {
@@ -71,6 +84,11 @@ export const createFreePlan = async () => {
     return null;
   }
 };
+
+export const getCurrentStorageSize = async () => {
+  const planData = await getPlanByUid()
+  return planData?.currentStorageSize || 0;
+}
 
 export const updatePlanByUid = async (planData: Partial<IPlan>) => {
   const uid = auth.currentUser?.uid;
@@ -82,7 +100,8 @@ export const updatePlanByUid = async (planData: Partial<IPlan>) => {
   try {
     const currentRecord = planData.currentRecord || 0;
     await updateDoc(doc(db, "/plans", uid), {
-      currentRecord: currentRecord,
+      currentRecord: currentRecord >= 0 ? currentRecord : 0,
+      currentStorageSize: planData.currentStorageSize || 0
     });
 
     return 1;

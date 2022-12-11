@@ -1,6 +1,7 @@
 import {
   HiOutlineChevronLeft,
   HiOutlineColorSwatch,
+  HiOutlineDocumentText,
   HiOutlineKey,
   HiOutlineUserCircle,
 } from "react-icons/hi";
@@ -24,6 +25,12 @@ const navigation = [
     name: "Themes",
     href: "/setting/theme",
     icon: HiOutlineColorSwatch,
+    current: false,
+  },
+  {
+    name: "File Manager",
+    href: "/setting/file-manager",
+    icon: HiOutlineDocumentText,
     current: false,
   },
 

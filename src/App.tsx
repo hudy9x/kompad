@@ -4,6 +4,7 @@ import Layout from "./components/Layout";
 import LayoutClear from "./components/Layout/LayoutClear";
 // import LayoutSetting from "./components/Layout/LayoutSetting";
 import PrivateRoute from "./components/PrivateRoute";
+import FileManager from "./containers/AdvancedSettings/FileManager";
 // import Profile from "./containers/AdvancedSettings/Profile";
 import Checking from "./containers/Checking";
 import EmailVerification from "./containers/EmailVerification";
@@ -70,6 +71,7 @@ function App() {
               <Route path="password" element={<Password />}></Route>
               <Route path="plan" element={<Plan />}></Route>
               <Route path="theme" element={<ThemeColor />}></Route>
+              <Route path="file-manager" element={<FileManager />}></Route>
               <Route path="*" element={<NotFound />}></Route>
             </Route>
             <Route path="*" element={<NotFound />}></Route>

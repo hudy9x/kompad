@@ -18,7 +18,6 @@ function AvatarForm({
 
   useEffect(() => {
     getAllPublicAvatars().then((publicAvatars) => {
-      console.log(publicAvatars)
       setPublicAvatars(publicAvatars);
     });
   }, []);
