@@ -2,6 +2,7 @@ import { addDoc, collection, deleteDoc, doc, DocumentData, getDocs, limit, query
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { auth, db, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
+import { getPlanByUid, updatePlanByUid } from "./plans";
 
 type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
 export interface IFile {
@@ -19,10 +20,26 @@ export interface IFile {
 
 const COLLECTION_NAME = 'files';
 
+// size: shourld be converted to mb at first
+const _calculateStorageSize = async (size: number) => {
+  const planData = await getPlanByUid()
+  if (!planData) {
+    console.log('planData is empty')
+    return
+  }
+
+  const currentStorageSize = (planData.currentStorageSize || 0) + size
+  await updatePlanByUid({
+    currentStorageSize: currentStorageSize >= 0 ? currentStorageSize : 0 
+  })
+  console.log('updated current storage size')
+}
+
 const _uploadFile: TUploadFileFunc = (filePath, file) => {
   return new Promise((resolve, reject) => {
     const fileRef = ref(storage, filePath);
     uploadBytes(fileRef, file).then(() => {
+      _calculateStorageSize(file.size / 1024 / 1024)
       resolve(filePath)
     }).catch((error) => {
       console.log('_uploadFile', error)
@@ -99,6 +116,7 @@ export const deleteCoverImageFile = async (file: Partial<IFile>) => {
 
   snapshots.forEach(doc => {
     deleteDoc(doc.ref)
+    _calculateStorageSize(-(file.size || 0))
   })
 
   return 1;
@@ -173,11 +191,10 @@ export const deleteAllImageInOnePad = async (padId: string) => {
     return 0;
   }
 
-  console.log(snapshots.docs)
-
+  let totalSize = 0;
   snapshots.forEach(doc => {
     const data = doc.data() as IFile
-
+    totalSize += data.size
     deleteFile(data.path).then(() => {
       console.log(`deleted file ${data.name} of pad ${data.padId}`)
       deleteDoc(doc.ref).then(() => {
@@ -185,6 +202,8 @@ export const deleteAllImageInOnePad = async (padId: string) => {
       })
     });
   })
+
+  _calculateStorageSize(-totalSize)
 
   return 1;
 }
