@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { message } from "../message";
 import { Timestamp } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth";
+import { hasReachedSizeLimit } from "../../services/plans";
 
 
 function loadXHR(url: string) {
@@ -63,8 +64,15 @@ export default function PadDropZone({ id, editor }: Props) {
 
   useEffect(() => {
 
-    const unlisten = listen('tauri://file-drop', (event: any) => {
+    const unlisten = listen('tauri://file-drop', async (event: any) => {
       if (!user) return;
+
+      const hasReachedLimit = await hasReachedSizeLimit()
+
+      if (hasReachedLimit) {
+        message.warning("Your storage size reached to the limit")
+        return;
+      }
 
       const src = convertFileSrc(event.payload[0])
       const url = new URL(src)

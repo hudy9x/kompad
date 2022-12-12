@@ -110,12 +110,42 @@ export const updatePlanByUid = async (planData: Partial<IPlan>) => {
     return 0;
   }
 };
+
+export const hasReachedSizeLimit = async (): Promise<boolean | string> => {
+
+  try {
+    const planData = await getPlanByUid();
+
+    if (!planData) {
+      return true;
+    }
+
+    const currentSize = planData.currentStorageSize;
+    const maxSize = planData.maxStorageSize || MAX_STORAGE_SIZE
+
+    if (currentSize > maxSize) {
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    return true
+  }
+}
+
 export const isPlanExceed = async (): Promise<IPlan | string> => {
   try {
     const planData = await getPlanByUid();
 
     if (!planData) {
       return Promise.reject("PLAN_DOES_NOT_EXIST");
+    }
+
+    const currentSize = planData.currentStorageSize;
+    const maxSize = planData.maxStorageSize || MAX_STORAGE_SIZE
+
+    if (currentSize > maxSize) {
+      return Promise.reject("EXCEED_STORAGE_PLAN");
     }
 
     if (planData.currentRecord >= planData.maxRecord) {

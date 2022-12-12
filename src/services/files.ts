@@ -1,8 +1,9 @@
 import { addDoc, collection, deleteDoc, doc, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, startAfter, Timestamp, where } from "firebase/firestore";
 import { ref, listAll, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { message } from "../components/message";
 import { auth, db, storage } from "../libs/firebase";
 import { getCacheArray, setCacheJSON } from "../libs/localCache";
-import { getPlanByUid, updatePlanByUid } from "./plans";
+import { getPlanByUid, MAX_STORAGE_SIZE, updatePlanByUid } from "./plans";
 
 type TUploadFileFunc = (filePath: string, file: File | Blob) => Promise<string>
 export interface IFile {
@@ -29,10 +30,20 @@ const _calculateStorageSize = async (size: number) => {
   }
 
   const currentStorageSize = (planData.currentStorageSize || 0) + size
+  const roundedSize = currentStorageSize >= 0 ? currentStorageSize : 0
+
   await updatePlanByUid({
-    currentStorageSize: currentStorageSize >= 0 ? currentStorageSize : 0 
+    currentStorageSize: roundedSize
   })
+
+  _maximumStorageWarning(roundedSize)
   console.log('updated current storage size')
+}
+
+const _maximumStorageWarning = (size: number) => {
+  if (size > MAX_STORAGE_SIZE) {
+    message.warning("Your storage size reached to the limit")
+  }
 }
 
 const _uploadFile: TUploadFileFunc = (filePath, file) => {
@@ -133,7 +144,7 @@ type GetAllFileFunc = (
 
 export const getAllFileByUser: GetAllFileFunc = async (fromDoc) => {
   const user = auth.currentUser
-  if (!user || !user.uid) return {lastDoc: null, data: []};
+  if (!user || !user.uid) return { lastDoc: null, data: [] };
 
   let q;
   const dbConn = collection(db, COLLECTION_NAME)
@@ -145,7 +156,7 @@ export const getAllFileByUser: GetAllFileFunc = async (fromDoc) => {
     );
   } else {
     q = query(dbConn, cond, startAfter(fromDoc), maxRecord)
-  } 
+  }
 
   const snapshot = await getDocs(q)
   if (snapshot.empty) {
