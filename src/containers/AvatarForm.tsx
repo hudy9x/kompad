@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAllPublicAvatars } from "../services/files";
 import Modal from "../components/Modal";
+import { OutsideClickHandler } from "../components/OutsideClickHandler";
+
 // import { getAllPublicAvatars } from "../../services/files";
 
 interface IAvatarFormProps {
@@ -26,6 +28,10 @@ function AvatarForm({
     setSelected(defaultValue);
   }, [defaultValue]);
 
+  const onOutsideClick = () => {
+    setSelected(defaultValue);
+  }
+
   return (
     <div>
       <img
@@ -36,6 +42,7 @@ function AvatarForm({
       />
 
       <Modal visible={visible} setVisible={setVisible}>
+        <OutsideClickHandler onOutsideClick={onOutsideClick}>
         <div className="flex gap-3 flex-wrap w-[260px]">
           {publicAvatars.map((avatar, index) => {
             const selectedStatus = avatar === selected ? "selected-avatar" : "";
@@ -62,10 +69,11 @@ function AvatarForm({
               setVisible(false);
             }}
             className="btn btn-lg btn-block"
-          >
+            >
             Select it
           </button>
         </div>
+        </OutsideClickHandler>
       </Modal>
     </div>
   );
