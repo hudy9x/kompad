@@ -19,6 +19,7 @@ import { auth, db } from "../libs/firebase";
 import { setCache } from "../libs/localCache";
 import { IPadQuery } from "../store/pad";
 import { message } from '../components/message'
+import { subtractUndefined } from "../utils";
 
 export interface IPad {
   id?: string;
@@ -366,6 +367,23 @@ export const setImportant = async (id: string) => {
     }
     await updateDoc(selectedIDRef, {
       important: !padData.important,
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}
+
+export const setDuplicate = async (data: IPad) => {
+  try {
+    const user = auth.currentUser;
+    const pad = subtractUndefined(data);
+    message.success('Duplicated successfully')
+    await addDoc(collection(db, COLLECTION_NAME), {
+      ...pad,
+      uid: user?.uid,
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
     })
   } catch (err) {
     console.log(err)
