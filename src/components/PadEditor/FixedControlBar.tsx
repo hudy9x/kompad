@@ -9,14 +9,18 @@ import {
   AiOutlineOrderedList,
   AiOutlinePartition,
   AiOutlineStrikethrough,
+  AiOutlineTable,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
+import { usePadStore } from "../../store";
+import { ModalInsertTable } from "./ModalInsertTable";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
+  const openPrompt = usePadStore((state) => state.setInsertTableStatus);
   const setLink = useCallback(() => {
     if (editor) {
       const previousUrl = editor.getAttributes("link").href;
@@ -55,6 +59,10 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
       editor.chain().focus().setImage({ src: url }).run();
     }
   };
+
+  const onClickInsertTable = () => {
+    openPrompt(true);
+  }
 
   return (
     <div className="fixed-controlbar">
@@ -204,6 +212,13 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <AiOutlinePartition className="control-icon" />
         </button>
+
+        <button
+          onClick={onClickInsertTable}
+        >
+          <AiOutlineTable className="control-icon" />
+        </button>
+        <ModalInsertTable/>
       </div>
     </div>
   );

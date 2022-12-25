@@ -9,6 +9,9 @@ export interface IPadStore {
   
   needToUpdate: number; // just notify to pad list that a new pad was created
   setNeedToUpdate: () => void;
+
+  insertTableStatus: boolean;
+  setInsertTableStatus: (status: boolean) => void;
 }
 
 export const usePadStore = create<IPadStore>((set) => ({
@@ -18,7 +21,14 @@ export const usePadStore = create<IPadStore>((set) => ({
       ...state,
       ...{ searchModalStatus: status },
     })),
-
+  
+  insertTableStatus: false,
+  setInsertTableStatus: (status: boolean) =>
+    set((state) => ({
+      ...state,
+      ...{ insertTableStatus: status },
+    })),
+    
   newPadModalStatus: false,
   setNewPadModalStatus: (status: boolean) =>
     set((state) => ({

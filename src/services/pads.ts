@@ -175,6 +175,7 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   }
 };
 
+
 export const delPad = async (id: string) => {
   try {
     await deleteDoc(doc(db, "pads", id));
