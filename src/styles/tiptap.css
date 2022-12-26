@@ -84,4 +84,13 @@
 	 padding: 1rem;
 }
 
+.column {
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgb(237, 230, 230);
+}
+
+.column--selected {
+  background-color: rgb(135, 124, 124);
+}
 

@@ -1,26 +1,15 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-
+import { Dialog, Transition } from "@headlessui/react";
 
 interface IModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   children: JSX.Element | JSX.Element[];
   padding?: string;
-  type?: string;
 }
 
-export default function Modal({ visible, children, setVisible, padding, type }: IModalProps) {
-
-  const bgrColor = () => {
-    return type === "EDITOR" ? '' : 'bg-gray-500';
-  }
-
-  const alignItem = () => {
-    return type === "EDITOR" ? 'sm:items-baseline' : 'sm:items-center';
-  }
-
+export default function Modal({ visible, children, setVisible, padding }: IModalProps) {
   return (
     <Transition.Root show={visible} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setVisible}>
@@ -33,11 +22,11 @@ export default function Modal({ visible, children, setVisible, padding, type }: 
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className={`${bgrColor()} fixed inset-0 bg-opacity-25 transition-opacity`} />
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className={`${alignItem()} flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0`}>
+          <div className={`flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0`}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

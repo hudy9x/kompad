@@ -1,3 +1,4 @@
+import { Popover } from "@headlessui/react";
 import { Editor } from "@tiptap/react";
 import { useCallback } from "react";
 import {
@@ -16,11 +17,9 @@ import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
-import { usePadStore } from "../../store";
-import { ModalInsertTable } from "./ModalInsertTable";
+import { InsertTable } from "./InsertTable";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
-  const openPrompt = usePadStore((state) => state.setInsertTableStatus);
   const setLink = useCallback(() => {
     if (editor) {
       const previousUrl = editor.getAttributes("link").href;
@@ -59,10 +58,6 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
       editor.chain().focus().setImage({ src: url }).run();
     }
   };
-
-  const onClickInsertTable = () => {
-    openPrompt(true);
-  }
 
   return (
     <div className="fixed-controlbar">
@@ -212,13 +207,14 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <AiOutlinePartition className="control-icon" />
         </button>
-
-        <button
-          onClick={onClickInsertTable}
-        >
-          <AiOutlineTable className="control-icon" />
-        </button>
-        <ModalInsertTable/>
+        <div>
+          <Popover as="div" className="relative flex">
+            <Popover.Button >
+              <AiOutlineTable className="control-icon" />
+            </Popover.Button>
+            <InsertTable />
+          </Popover>
+        </div>
       </div>
     </div>
   );
