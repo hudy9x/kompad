@@ -4,13 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCrXAmPHyTibS6xMLUBpJJL3C2Sdl2TQg4",
-  authDomain: "kompad-84f61.firebaseapp.com",
-  projectId: "kompad-84f61",
-  storageBucket: "kompad-84f61.appspot.com",
-  messagingSenderId: "160972435770",
-  appId: "1:160972435770:web:02264d7e00867699e02003",
-  measurementId: "G-PW0C9TZ3M2"
+  apiKey: process.env.REACT_APP_API_KEY_2,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN_2,
+  projectId: process.env.REACT_APP_PROJECT_ID_2,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET_2,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID_2,
+  appId: process.env.REACT_APP_APP_ID_2,
 };
 
 // Initialize Firebase

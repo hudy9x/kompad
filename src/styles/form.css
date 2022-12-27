@@ -45,3 +45,10 @@
   background-color: transparent;
 }
 
+.table-input .form-control :is(input, textarea) {
+  @apply block w-11 sm:text-sm rounded-md;
+  @apply focus:border-[color:var(--common-primary-color)] focus:ring-[color:var(--common-primary-color)];
+  padding-left: 13px;
+  background-color: var(--common-dark-bg-color);
+  border-color: var(--common-border-light-color);
+}
