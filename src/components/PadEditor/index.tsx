@@ -117,7 +117,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
 
   useEffect(() => {
     if (editor) {
-      console.log(editor, 'editor');
       editor.commands.clearContent();
       editor.commands.setContent(content);
     }

@@ -89,8 +89,6 @@
   height: 15px;
   border: 1px solid rgb(237, 230, 230);
 }
-
-.column--selected {
-  background-color: rgb(135, 124, 124);
+.mouse-moving {
+  background-color:rgb(147 197 253)!important;
 }
-
