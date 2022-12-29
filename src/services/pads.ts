@@ -372,3 +372,21 @@ export const setImportant = async (id: string) => {
     return 0
   }
 }
+
+export const duplicatePad = async (id: string) => {
+  try {
+    const pad = await getDoc(doc(db, 'pads', id))
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad
+    await addDoc(collection(db, COLLECTION_NAME), {
+      ...padData,
+      title: `${padData.title}-Copy`,
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}

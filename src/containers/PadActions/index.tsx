@@ -24,7 +24,7 @@ export default function PadActions({ data }: { data: IPad }) {
               <PadEdit />
             </Menu.Item>
             <Menu.Item as="div">
-              <PadDuplicate />
+              <PadDuplicate data={data} />
             </Menu.Item>
           </div>
           <div className="py-1">
