@@ -1,4 +1,5 @@
 import { Popover } from "@headlessui/react";
+import { Editor } from "@tiptap/react";
 import { useRef, useState } from "react";
 import { useTableStore } from "../../store/table";
 import { CustomPopover } from "../CustomPopover";
@@ -6,7 +7,7 @@ import { CustomPopover } from "../CustomPopover";
 const columns = [1, 2, 3, 4, 5, 6];
 const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const InsertTable = () => {
+export const InsertTable = ({ editor }: { editor: Editor | null }) => {
   const { selectedColumn, selectedRow, setSelectedColumn, setSelectedRow, selectedColumnInput, setSelectedRowInput, selectedRowInput, setSelectedColumnInput } = useTableStore();
   const [movingRow, setMovingRow] = useState<number>(0);
   const [movingColumn, setMovingColumn] = useState<number>(0);
@@ -31,6 +32,8 @@ export const InsertTable = () => {
 
     setSelectedRow(movingRow);
     setSelectedColumn(movingColumn);
+
+    editor?.chain().focus().insertTable({ rows: movingRow, cols: movingColumn, withHeaderRow: true }).run()
 
     close();
   }

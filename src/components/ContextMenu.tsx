@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react";
 
 interface IContextMenu {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[],
+  type? : string
 }
 
 interface IMenuStore {
@@ -18,21 +19,26 @@ const MenuContext = createContext<IMenuStore>({
   setVisible: (bool) => { console.log(bool) }
 })
 
-export default function ContextMenu({ children }: IContextMenu) {
+export default function ContextMenu({ children, type }: IContextMenu) {
   const [visible, setVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const { top, left } = position;
 
   const onContextMenu = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { clientX, clientY } = ev
-    ev.preventDefault();
-
-    setPosition({
-      top: clientY,
-      left: clientX
-    })
-
-    setVisible(true);
+    try {
+      if(type === 'PAD' || (ev.target as HTMLElement).closest('table')) {
+        ev.preventDefault();
+        setPosition({
+          top: clientY,
+          left: clientX
+        })
+        
+        setVisible(true);
+      }
+    } catch(er) {
+      setVisible(false);
+    }
   };
 
   return <MenuContext.Provider value={{ top, left, visible, setVisible }}>
