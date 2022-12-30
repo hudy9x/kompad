@@ -6,20 +6,18 @@ import { ISettingStore, setSettingState } from "../../store/settings";
 import { IThemeStore, setThemeStoreState } from "../../store/themes";
 
 export const shortCutAcion = (
-  ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent
-) => {
-  const ctrlKey = ev.ctrlKey;
-  const key = ev.key.toLowerCase();
-  const alt = ev.altKey;
-  const shift = ev.shiftKey;
-  const esc = key === "escape";
-
+  ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent,
+  map?: Record<string, boolean>
+  ) => {
+  if(map === undefined) {
+    return;
+  }
   ev.stopPropagation();
   ev.preventDefault();
 
   // Open/Close sidebar
-  if (shift && ctrlKey && key === "b") {
-    setSettingState(
+  if(map['shift'] && map['control'] && map['u']) {
+     setSettingState(
       produce<ISettingStore>((state) => {
         setCache("SETTING_VIEW_SIDEBAR", !state.view.sidebar ? "1" : "0");
         // appWindow.setSize(new LogicalSize(1200, 500))
@@ -28,17 +26,18 @@ export const shortCutAcion = (
     );
   }
 
-  // Open new pad modal
-  if (ctrlKey && key === "n") {
+  //Open new pad modal
+  if (map['control'] && map['n']) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.newPadModalStatus = true;
       })
     );
+    map = {}
   }
 
   // Open search pallete
-  if (alt && key === "p") {
+  if (map['alt'] && map['p']) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.searchModalStatus = true;
@@ -47,7 +46,7 @@ export const shortCutAcion = (
   }
 
   // Close search pallete if it visible
-  if (esc && document.getElementById("pad-search")) {
+  if (map['escape'] && document.getElementById("pad-search")) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.searchModalStatus = false;
@@ -55,13 +54,11 @@ export const shortCutAcion = (
     );
   }
 
-  // Open Theme selection modal
-  if (ctrlKey && key === "t") {
+  if (map['control'] && map['t']) {
     setThemeStoreState(
       produce<IThemeStore>((state) => {
         state.visible = true
       })
     );
-
   }
 };

@@ -5,14 +5,23 @@ export default function Shortcut() {
   const ref = useRef(null);
 
   useEffect(() => {
-    const handler = (ev: KeyboardEvent) => {
-      shortCutAcion(ev);
+    let map: Record<string, boolean> = {}
+
+    const handleDown = (ev: KeyboardEvent) => {
+      const key = ev.key.toLowerCase();
+      map[key] = ev.type === 'keydown';
+      shortCutAcion(ev, map);
     };
+    
+    const handleUp = () => {
+      map = {}
+    }
 
-    document.addEventListener("keyup", handler);
-
+    document.addEventListener("keydown", handleDown);
+    document.addEventListener("keyup", handleUp);
     return () => {
-      document.removeEventListener("keyup", handler);
+      document.removeEventListener("keydown", handleDown);
+      document.removeEventListener("keyup", handleUp);
     };
   }, []);
 
