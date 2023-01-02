@@ -212,7 +212,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
             <Popover.Button >
               <AiOutlineTable className="control-icon" />
             </Popover.Button>
-            <InsertTable />
+            <InsertTable editor={editor} />
           </Popover>
         </div>
       </div>

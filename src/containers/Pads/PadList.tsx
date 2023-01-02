@@ -41,7 +41,7 @@ function PadList() {
       <div className="pad-list">
         {pads.map((pad) => {
           return (
-            <ContextMenu key={pad.id}>
+            <ContextMenu key={pad.id} type='PAD'>
               <PadItem active={id === pad.id} pad={pad} />
             </ContextMenu>
           );

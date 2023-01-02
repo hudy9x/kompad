@@ -1,5 +1,6 @@
 import create from "zustand";
 import produce from "immer";
+
 interface ITableStore {
   selectedRow: number;
   selectedColumn: number;
@@ -23,7 +24,7 @@ export const useTableStore = create<ITableStore>((set) => ({
         state.selectedRow = selectedRow;
       })
     ),
-
+    
   setSelectedColumn: (selectedColumn: number) =>
     set(
       produce<ITableStore>((state) => {
