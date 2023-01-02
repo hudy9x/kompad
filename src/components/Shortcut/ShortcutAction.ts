@@ -5,18 +5,32 @@ import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
 import { IThemeStore, setThemeStoreState } from "../../store/themes";
 
+export interface KeyBoardProps {
+  shift: boolean,
+  control: boolean,
+  escape: boolean,
+  alt: boolean,
+  t: boolean,
+  b: boolean,
+  p: boolean,
+}
+
 export const shortCutAcion = (
   ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent,
-  map?: Record<string, boolean>
+  pressed?: KeyBoardProps
   ) => {
-  if(map === undefined) {
+  if(pressed === undefined) {
     return;
   }
+  
   ev.stopPropagation();
   ev.preventDefault();
 
+  const key = ev.key.toLowerCase();
+  pressed[key as keyof typeof pressed] = ev.type === 'keydown';
+  
   // Open/Close sidebar
-  if(map['shift'] && map['control'] && map['u']) {
+  if(pressed.shift && pressed.control && pressed.b) {
      setSettingState(
       produce<ISettingStore>((state) => {
         setCache("SETTING_VIEW_SIDEBAR", !state.view.sidebar ? "1" : "0");
@@ -27,17 +41,16 @@ export const shortCutAcion = (
   }
 
   //Open new pad modal
-  if (map['control'] && map['n']) {
+  if (pressed.control && pressed.p) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.newPadModalStatus = true;
       })
     );
-    map = {}
   }
 
   // Open search pallete
-  if (map['alt'] && map['p']) {
+  if (pressed.alt && pressed.p) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.searchModalStatus = true;
@@ -46,7 +59,7 @@ export const shortCutAcion = (
   }
 
   // Close search pallete if it visible
-  if (map['escape'] && document.getElementById("pad-search")) {
+  if (pressed.escape && document.getElementById("pad-search")) {
     setPadStoreState(
       produce<IPadStore>((state) => {
         state.searchModalStatus = false;
@@ -54,7 +67,7 @@ export const shortCutAcion = (
     );
   }
 
-  if (map['control'] && map['t']) {
+  if (pressed.control && pressed.t) {
     setThemeStoreState(
       produce<IThemeStore>((state) => {
         state.visible = true
