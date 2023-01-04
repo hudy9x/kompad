@@ -1,18 +1,19 @@
 import { useEffect, useRef } from "react";
-import { KeyBoardProps, shortCutAcion } from "./ShortcutAction";
+import { KeyBoardProps, shortCutAction } from "./ShortcutAction";
+
+export let pressed: KeyBoardProps = { shift: false, control: false, b: false, p: false, alt: false, escape: false, t: false, i: false, v: false, d: false, c: false, r: false }
 
 export default function Shortcut() {
   const ref = useRef(null);
 
   useEffect(() => {
-    let pressed: KeyBoardProps = {shift: false, control: false, b: false, p: false, alt: false, escape: false, t: false}
-  
+
     const handleDown = (ev: KeyboardEvent) => {
-      shortCutAcion(ev, pressed);
+      shortCutAction(ev, pressed);
     };
-    
+
     const handleUp = () => {
-      pressed = {shift: false, control: false, b: false, p: false, alt: false, escape: false, t: false}
+      pressed = { shift: false, control: false, b: false, p: false, alt: false, escape: false, t: false, i: false, v: false,d: false, c: false, r: false }
     }
 
     document.addEventListener("keydown", handleDown);

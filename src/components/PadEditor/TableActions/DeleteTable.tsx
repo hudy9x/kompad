@@ -1,12 +1,14 @@
 import { Editor } from "@tiptap/react"
+import { TbTableOff } from "react-icons/tb"
 
 export const DeleteTable = ({ editor }: { editor: Editor }) => {
   return (
     <a href="#deletetable"
-      className="group dropdown-content flex items-center px-4 py-2 text-sm" >
-      <button onClick={() => editor.chain().focus().deleteTable().run()}>
+      className="group dropdown-content flex justify-between px-4 py-2 text-sm" >
+      <TbTableOff className="dropdown-icon"/>
+      <span className="dropdown-text" onClick={() => editor.chain().focus().deleteTable().run()}>
         Delete Table
-      </button>
-    </a  >
+      </span>
+    </a>
   )
 }

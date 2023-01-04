@@ -16,7 +16,7 @@ export const CustomPopover = ({ children }: IPopoverProps) => {
       leaveFrom="opacity-100 translate-y-0"
       leaveTo="opacity-0 translate-y-1"
     >
-      <Popover.Panel className="absolute w-44 z-10 mt-3 px-4 sm:px-0 dropdown translate-y-9 left-0">
+      <Popover.Panel className="absolute w-44 z-10 mt-3 px-4 sm:px-0 dropdown translate-y-9 right-0">
         {children}
       </Popover.Panel>
     </Transition>

@@ -2,6 +2,7 @@ import { Popover } from "@headlessui/react";
 import { Editor } from "@tiptap/react";
 import { useRef, useState } from "react";
 import { CustomPopover } from "../CustomPopover";
+import { HiX } from "react-icons/hi"
 
 const columns = [1, 2, 3, 4, 5, 6];
 const rows = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -36,10 +37,10 @@ export const InsertTable = ({ editor }: { editor: Editor | null }) => {
     startMouseMove.current = true;
 
     setRow(prev => {
-      return {...prev, selectedRowInput: row, movingRow: row}
+      return { ...prev, selectedRowInput: row, movingRow: row }
     })
     setColumn(prev => {
-      return {...prev, selectedColumnInput: column, movingColumn: column}
+      return { ...prev, selectedColumnInput: column, movingColumn: column }
     })
   }
 
@@ -47,10 +48,10 @@ export const InsertTable = ({ editor }: { editor: Editor | null }) => {
     startMouseMove.current = false;
 
     setRow(prev => {
-      return {...prev, selectedRowInput:row.movingRow, selectedRow: row.movingRow}
+      return { ...prev, selectedRowInput: row.movingRow, selectedRow: row.movingRow }
     })
     setColumn(prev => {
-      return {...prev, selectedColumnInput:column.movingColumn,selectedColumn:column.movingColumn}
+      return { ...prev, selectedColumnInput: column.movingColumn, selectedColumn: column.movingColumn }
     })
 
     editor?.chain().focus().insertTable({ rows: row.movingRow, cols: column.movingColumn, withHeaderRow: true }).run()
@@ -60,11 +61,11 @@ export const InsertTable = ({ editor }: { editor: Editor | null }) => {
 
   const onMouseLeave = () => {
     setRow(prev => {
-      return {...prev, selectedRowInput: row.selectedRow, movingRow: row.movingRow}
+      return { ...prev, selectedRowInput: row.selectedRow, movingRow: row.movingRow }
     })
 
     setColumn(prev => {
-      return {...prev, selectedColumnInput: column.selectedColumn, movingColumn: column.movingColumn}
+      return { ...prev, selectedColumnInput: column.selectedColumn, movingColumn: column.movingColumn }
     })
   }
 
@@ -75,21 +76,21 @@ export const InsertTable = ({ editor }: { editor: Editor | null }) => {
     }
     if (name === 'column') {
       setColumn(prev => {
-        return {...prev, selectedColumnInput: parseFloat(value)}
+        return { ...prev, selectedColumnInput: parseFloat(value) }
       })
     } else {
       setRow(prev => {
-        return {...prev, selectedRowInput: parseFloat(value)}
+        return { ...prev, selectedRowInput: parseFloat(value) }
       })
     }
   }
 
   const onClick = (close: (focusableElement?: HTMLElement | React.MutableRefObject<HTMLElement | null> | undefined) => void) => {
     setColumn(prev => {
-      return {...prev, selectedColumn: column.selectedColumnInput}
+      return { ...prev, selectedColumn: column.selectedColumnInput }
     })
     setRow(prev => {
-      return {...prev, selectedRow: row.selectedRowInput}
+      return { ...prev, selectedRow: row.selectedRowInput }
     })
 
     close();
@@ -121,14 +122,16 @@ export const InsertTable = ({ editor }: { editor: Editor | null }) => {
             value={column.selectedColumnInput.toString()}
             onChange={(e) => handleInputChange(e)}
             onClick={() => setOpen(true)}
-            className="input-table h-full" />
-          <p className="flex items-center mx-1">X</p>
+            className="h-full" />
+          <div className="flex items-center px-1">
+            <HiX />
+          </div>
           <input type="text"
             name="row"
             value={row.selectedRowInput.toString()}
             onChange={(e) => handleInputChange(e)}
             onClick={() => setOpen(true)}
-            className="input-table mr-3 h-full" />
+            className="mr-3 h-full" />
           {open && <Popover.Panel>
             {({ close }) => (
               <button onClick={() => onClick(close)} className="btn w-9 h-full undefined px-1.5 py-1.5 btn-primary">OK</button>

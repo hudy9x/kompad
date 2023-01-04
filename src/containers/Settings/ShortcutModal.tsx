@@ -17,6 +17,13 @@ function ShortcutModal() {
   }, [visible]);
 
   const shortcutKeys = [
+    { title: "Add Column After", kbds: ["Alt", "I", "C"] },
+    { title: "Add Column Before", kbds: ["Alt", "I", "V"] },
+    { title: "Add Row After", kbds: ["Alt", "I", "R"] },
+    { title: "Add Row Before", kbds: ["Alt", "I", "T"] },
+    { title: "Delete Column", kbds: ["Alt", "D", "C"] },
+    { title: "Delete Row", kbds: ["Alt", "D", "R"] },
+    { title: "Delete Table", kbds: ["Alt", "I", "T"] },
     { title: "Show / hide side bar", kbds: ["Ctrl", "Shift", "B"] },
     { title: "Create new pad", kbds: ["Ctrl", "N"] },
     { title: "Open search palette", kbds: ["Alt", "P"] },

@@ -1,12 +1,14 @@
 import { Editor } from "@tiptap/react"
+import { TbColumnInsertLeft } from "react-icons/tb"
 
 export const AddColumnBefore = ({ editor }: { editor: Editor }) => {
   return (
     <a href="#addColumnBefore"
-      className="group dropdown-content flex items-center px-4 py-2 text-sm"> 
-      <button onClick={() => editor.chain().focus().addColumnBefore().run()} >
+      className="group dropdown-content flex justify-between px-4 py-2 text-sm">
+      <TbColumnInsertLeft className="dropdown-icon" />
+      <span className="dropdown-text" onClick={() => editor.chain().focus().addColumnBefore().run()}>
         Add Column Before
-      </button>
-    </a > 
+      </span>
+    </a >
   )
 }

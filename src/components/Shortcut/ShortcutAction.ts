@@ -1,4 +1,5 @@
 // import { appWindow, LogicalSize } from "@tauri-apps/api/window";
+import { Editor } from "@tiptap/react";
 import produce from "immer";
 import { setCache } from "../../libs/localCache";
 import { IPadStore, setPadStoreState } from "../../store";
@@ -13,21 +14,58 @@ export interface KeyBoardProps {
   t: boolean,
   b: boolean,
   p: boolean,
+  i: boolean,
+  v: boolean,
+  c: boolean,
+  r: boolean,
+  d: boolean
 }
 
-export const shortCutAcion = (
-  ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent,
-  pressed?: KeyBoardProps
-  ) => {
-  if(pressed === undefined) {
+export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent, pressed?: KeyBoardProps, editor?: Editor) => {
+  if(pressed === undefined || editor === undefined)  {
     return;
   }
-  
+
   ev.stopPropagation();
   ev.preventDefault();
 
   const key = ev.key.toLowerCase();
   pressed[key as keyof typeof pressed] = ev.type === 'keydown';
+
+  // Add Column Before
+  if(pressed.alt && pressed.i && pressed.v) {
+    editor.chain().focus().addColumnBefore().run()
+  }
+
+  // Add Column After
+  if(pressed.alt && pressed.i && pressed.c) {
+    editor.chain().focus().addColumnAfter().run()
+  }
+
+  // Add Row After
+  if(pressed.alt && pressed.i && pressed.r) {
+    editor.chain().focus().addRowAfter().run()
+  }
+
+  // Add Row Before
+  if(pressed.alt && pressed.i && pressed.t) {
+    editor.chain().focus().addRowBefore().run()
+  }
+
+  // Delete Column
+  if(pressed.alt && pressed.d && pressed.c) {
+    editor.chain().focus().deleteColumn().run()
+  }
+
+  // Delete Row
+  if(pressed.alt && pressed.d && pressed.r) {
+    editor.chain().focus().deleteRow().run()
+  }
+
+  // Delete Table
+  if(pressed.alt && pressed.i && pressed.t) {
+    editor.chain().focus().deleteTable().run()
+  }
   
   // Open/Close sidebar
   if(pressed.shift && pressed.control && pressed.b) {

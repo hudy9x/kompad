@@ -19,7 +19,7 @@ import * as lowlight from "lowlight";
 import ControlBar from "./ControlBar";
 import { IPad, updatePad } from "../../services/pads";
 import { useEffect, useState } from "react";
-import { shortCutAcion } from "../Shortcut/ShortcutAction";
+import { shortCutAction } from "../Shortcut/ShortcutAction";
 import FixedControlBar from "./FixedControlBar";
 import ErrorCapture from "../ErrorCapture";
 import PadInfo from "./PadInfo";
@@ -29,6 +29,7 @@ import ScrollBar from "../ScrollBar";
 import PadDropZone from "./PadDropZone";
 import ContextMenu from "../ContextMenu";
 import { TableActions } from "./TableActions";
+import { pressed } from "../Shortcut/Shortcut";
 interface IPadEditorProp {
   id: string;
   content: string;
@@ -168,8 +169,11 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                 editor={editor}
                 className="tiptap-main-content"
                 spellCheck={false}
-                onKeyUp={(ev: React.KeyboardEvent<HTMLDivElement>) => {
-                  shortCutAcion(ev);
+                onKeyDown={(ev: React.KeyboardEvent<HTMLDivElement>) => {
+                  if(!editor) {
+                    return;
+                  }
+                  shortCutAction(ev, pressed, editor);
                 }}
               />
               <TableActions editor={editor} />

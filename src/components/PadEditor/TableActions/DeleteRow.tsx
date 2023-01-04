@@ -1,12 +1,14 @@
 import { Editor } from "@tiptap/react"
+import { RiDeleteRow } from "react-icons/ri"
 
 export const DeleteRow = ({ editor }: { editor: Editor }) => {
   return (
     <a href="#deleteRow"
-      className="group dropdown-content flex items-center px-4 py-2 text-sm">
-      <button onClick={() => editor.chain().focus().deleteRow().run()} >
+      className="group dropdown-content flex justify-between px-4 py-2 text-sm">
+      <RiDeleteRow className="dropdown-icon" />
+      <span className="dropdown-text" onClick={() => editor.chain().focus().deleteRow().run()} >
         Delete Row
-      </button>
+      </span>
     </a >
   )
 }
