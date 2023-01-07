@@ -170,7 +170,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                 className="tiptap-main-content"
                 spellCheck={false}
                 onKeyDown={(ev: React.KeyboardEvent<HTMLDivElement>) => {
-                  if(!editor) {
+                  if (!editor) {
                     return;
                   }
                   shortCutAction(ev, pressed, editor);
