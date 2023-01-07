@@ -71,6 +71,9 @@ export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | Keyboar
       editor.chain().focus().deleteTable().run()
     }
 
+  }
+
+  if (pressed) {
     // Open/Close sidebar
     if (pressed.shift && pressed.control && pressed.b) {
       setSettingState(
