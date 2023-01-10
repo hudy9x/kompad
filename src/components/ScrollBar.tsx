@@ -7,5 +7,5 @@ interface Props {
 }
 
 export default function ScrollBar({ height, className, children }: Props) {
-  return <Scrollbars className={className || ''} style={{ height }}>{children}</Scrollbars>
+  return <Scrollbars className={className || ''} autoHide style={{ height }}>{children}</Scrollbars>
 }

@@ -170,7 +170,10 @@
 	 background-color: #adf;
 	 pointer-events: none;
 }
- .tableWrapper {
+
+.tableWrapper {
+   margin-top: 0;
+   margin-bottom: 2rem;
 	 overflow-x: auto;
 }
  .resize-cursor {
@@ -228,7 +231,7 @@
 }
  .ProseMirror table td, .ProseMirror table th {
 	 min-width: 1em;
-	 border: 2px solid #ced4da;
+	 border: 1px solid #ced4da;
 	 padding: 3px 5px;
 	 vertical-align: top;
 	 box-sizing: border-box;
@@ -262,10 +265,7 @@
 	 background-color: #adf;
 	 pointer-events: none;
 }
- .tableWrapper {
-	 overflow-x: auto;
-}
- .resize-cursor {
+.resize-cursor {
 	 cursor: ew-resize;
 	 cursor: col-resize;
 }

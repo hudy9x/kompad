@@ -39,6 +39,8 @@ export const TableActions = ({ editor }: { editor: Editor | null }) => {
               <Menu.Item as="div">
                 <AddRowBefore editor={editor} />
               </Menu.Item>
+            </div>
+            <div className="py-1">
               <Menu.Item as="div">
                 <DeleteColumn editor={editor} />
               </Menu.Item>
