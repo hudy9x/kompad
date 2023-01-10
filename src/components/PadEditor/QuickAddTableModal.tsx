@@ -19,7 +19,7 @@ interface ColumnProps {
   movingColumn: number
 }
 
-export const InsertTable = ({ editor }: { editor: Editor | null }) => {
+export const QuickAddTableModal = ({ editor }: { editor: Editor | null }) => {
   const [row, setRow] = useState<RowProps>({
     selectedRow: 0,
     selectedRowInput: 0,

@@ -164,7 +164,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="tiptap-box">
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
-            <ContextMenu>
+            <ContextMenu condition = {(ev) => (ev.target as HTMLElement ).closest('table') ? true : false} >
               <EditorContent
                 editor={editor}
                 className="tiptap-main-content"

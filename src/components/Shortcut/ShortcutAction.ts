@@ -19,6 +19,7 @@ export interface KeyBoardProps {
   v: boolean,
   c: boolean,
   r: boolean,
+  n: boolean,
   d: boolean
 }
 
@@ -92,7 +93,7 @@ export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | Keyboar
     }
 
     //Open new pad modal
-    if (pressed.control && pressed.p) {
+    if (pressed.control && pressed.n) {
       preventEvent(ev);
       setPadStoreState(
         produce<IPadStore>((state) => {

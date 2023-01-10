@@ -17,7 +17,7 @@ import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
-import { InsertTable } from "./InsertTable";
+import { QuickAddTableModal } from "./QuickAddTableModal";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
   const setLink = useCallback(() => {
@@ -212,7 +212,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
             <Popover.Button >
               <AiOutlineTable className="control-icon" />
             </Popover.Button>
-            <InsertTable editor={editor} />
+            <QuickAddTableModal editor={editor} />
           </Popover>
         </div>
       </div>
