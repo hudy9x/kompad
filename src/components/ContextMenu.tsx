@@ -27,8 +27,8 @@ export default function ContextMenu({ children, condition }: IContextMenu) {
   const onContextMenu = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { clientX, clientY } = ev
     try {
-      
-      if(condition && !condition(ev)) {
+
+      if (condition && !condition(ev)) {
         return;
       }
 
@@ -100,7 +100,6 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
 
     if (top + dropDownH > windowH) {
       top -= (top + dropDownH + 41 - windowH)
-      console.log('18273987')
     } else {
       top -= 20
     }
