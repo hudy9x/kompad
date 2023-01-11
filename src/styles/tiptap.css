@@ -144,7 +144,7 @@
 }
  .ProseMirror table td, .ProseMirror table th {
 	 min-width: 1em;
-	 border: 1px solid #ced4da;
+	 border: 1px solid var(--common-border-light-color);
 	 padding: 3px 5px;
 	 vertical-align: top;
 	 box-sizing: border-box;
@@ -156,7 +156,8 @@
  .ProseMirror table th {
 	 font-weight: bold;
 	 text-align: left;
-	 background-color: #f1f3f5;
+	 background-color: var(--common-border-color);
+   opacity:0.4;
 }
  .ProseMirror table .selectedCell:after {
 	 z-index: 2;
@@ -175,7 +176,7 @@
 	 top: 0;
 	 bottom: -2px;
 	 width: 4px;
-	 background-color: #adf;
+	 background-color: var(--common-light-bg-color);
 	 pointer-events: none;
 }
 .resize-cursor {
