@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react";
 
 interface IContextMenu {
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[],
+  condition?: (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => boolean
 }
 
 interface IMenuStore {
@@ -18,21 +19,29 @@ const MenuContext = createContext<IMenuStore>({
   setVisible: (bool) => { console.log(bool) }
 })
 
-export default function ContextMenu({ children }: IContextMenu) {
+export default function ContextMenu({ children, condition }: IContextMenu) {
   const [visible, setVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const { top, left } = position;
 
   const onContextMenu = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { clientX, clientY } = ev
-    ev.preventDefault();
+    try {
 
-    setPosition({
-      top: clientY,
-      left: clientX
-    })
+      if (condition && !condition(ev)) {
+        return;
+      }
 
-    setVisible(true);
+      ev.preventDefault();
+      setPosition({
+        top: clientY,
+        left: clientX
+      })
+
+      setVisible(true);
+    } catch (er) {
+      setVisible(false);
+    }
   };
 
   return <MenuContext.Provider value={{ top, left, visible, setVisible }}>
@@ -91,7 +100,6 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
 
     if (top + dropDownH > windowH) {
       top -= (top + dropDownH + 41 - windowH)
-      console.log('18273987')
     } else {
       top -= 20
     }

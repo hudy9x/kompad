@@ -2461,6 +2461,26 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-2.0.0-beta.29.tgz#7004d0c5d126b0517fa78efc5a333a4b8e3334bf"
   integrity sha512-zqFuY7GfNmZ/KClt6kxQ+msGo3syqucP/Xnlihxi+/h/G+oTvEwyOIXCtDOltvxcsWH/TUsdr5vzLp0j+Mdc6Q==
 
+"@tiptap/extension-table-cell@^2.0.0-beta.209":
+  version "2.0.0-beta.209"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-cell/-/extension-table-cell-2.0.0-beta.209.tgz#34d44ca7ee319e2c2a6ca4273f0793411a4c544b"
+  integrity sha512-wKCD4IY2VJa9775h6c7KBZPcTnqtM6T/YpHCm4WHSXyNG+zcMMIb8aT3U8NbpOGKdK9wvQTWq6QDa/YOdkrCfA==
+
+"@tiptap/extension-table-header@^2.0.0-beta.209":
+  version "2.0.0-beta.209"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-header/-/extension-table-header-2.0.0-beta.209.tgz#eeb74ca9c106d5c9d8a447f6558f5721a75d5953"
+  integrity sha512-EIVO41tgS9C0i1auXuHeX1zV6Oipfoz0HzwuIDzLR8Fww2/VTiXyMno+8yglSUOXLCIjc/888EVpho7OOnN5oA==
+
+"@tiptap/extension-table-row@^2.0.0-beta.209":
+  version "2.0.0-beta.209"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-row/-/extension-table-row-2.0.0-beta.209.tgz#6715f817a8af0a11b548d5a8e30c150408dda0b9"
+  integrity sha512-Ofsmscr8PiReLBIgpIvqTaeSrbqrgFWeFmzoPBNsnztDJdy/HtahYin+a7dNppwVqP975fezWM2uDfjGQJJ7bQ==
+
+"@tiptap/extension-table@^2.0.0-beta.209":
+  version "2.0.0-beta.209"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table/-/extension-table-2.0.0-beta.209.tgz#20568debe8ee2540914bf45f12dfaf3332f578d5"
+  integrity sha512-vyaVrH4rY+2S+qHGLn7CeDYDM/dyKx52jfmnNCN7wn9GMDsRrxqdFrQjtw0eDkGZyymIM7pEHf2h8kSNBxH2+Q==
+
 "@tiptap/extension-task-item@^2.0.0-beta.32":
   version "2.0.0-beta.37"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-task-item/-/extension-task-item-2.0.0-beta.37.tgz#fcf719c4f6d09a69a6525f116bb96560bddfdf51"
@@ -2480,6 +2500,11 @@
   version "2.0.0-beta.22"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-typography/-/extension-typography-2.0.0-beta.22.tgz#bed4b8970aadb9e729b0d2d266cffc2fb1250af6"
   integrity sha512-sTh1bxRTy2Q0tIGH4pjaadyo7dwoF+5545HiWbG5QsUp27I+FmPfgDYvc7aoPQG/6f5owULL9DD0I7ROYumYTw==
+
+"@tiptap/prosemirror-tables@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@tiptap/prosemirror-tables/-/prosemirror-tables-1.1.4.tgz#e123978f13c9b5f980066ba660ec5df857755916"
+  integrity sha512-O2XnDhZV7xTHSFxMMl8Ei3UVeCxuMlbGYZ+J2QG8CzkK8mxDpBa66kFr5DdyAhvdi1ptpcH9u7/GMwItQpN4sA==
 
 "@tiptap/react@^2.0.0-beta.109":
   version "2.0.0-beta.114"

@@ -121,7 +121,6 @@ body {
   @apply bg-indigo-500 text-white;
 }
 
-
 @import url("./modal.css");
 @import url("./scrollbar.css");
 @import url("./form.css");

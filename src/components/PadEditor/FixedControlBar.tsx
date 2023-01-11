@@ -1,3 +1,4 @@
+import { Popover } from "@headlessui/react";
 import { Editor } from "@tiptap/react";
 import { useCallback } from "react";
 import {
@@ -9,12 +10,14 @@ import {
   AiOutlineOrderedList,
   AiOutlinePartition,
   AiOutlineStrikethrough,
+  AiOutlineTable,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
+import { QuickAddTableModal } from "./QuickAddTableModal";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
   const setLink = useCallback(() => {
@@ -204,6 +207,14 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <AiOutlinePartition className="control-icon" />
         </button>
+        <div>
+          <Popover as="div" className="relative flex">
+            <Popover.Button >
+              <AiOutlineTable className="control-icon" />
+            </Popover.Button>
+            <QuickAddTableModal editor={editor} />
+          </Popover>
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import ScrollBar from "../../components/ScrollBar";
 import Category from "../Category";
 import Folders from "../Folders";
 import ShortcutModal from "../Settings/ShortcutModal";
@@ -14,11 +15,11 @@ function RootSidebar() {
         <h2 className="brand-name">Kompad</h2>
       </div>
 
-      <div className="side-section">
+      <ScrollBar height="calc(100vh - 61px - 44px)">
         <Category />
         <Folders />
         <Tags />
-      </div>
+      </ScrollBar>
 
       <UserSection />
       <ShortcutModal />

@@ -84,4 +84,110 @@
 	 padding: 1rem;
 }
 
+/* Table-specific styling */
+ .ProseMirror table {
+	 border-collapse: collapse;
+	 table-layout: fixed;
+	 width: 100%;
+	 margin: 0;
+	 overflow: hidden;
+}
+ .ProseMirror table td, .ProseMirror table th {
+	 min-width: 1em;
+	 border: 2px solid #ced4da;
+	 padding: 3px 5px;
+	 vertical-align: top;
+	 box-sizing: border-box;
+	 position: relative;
+}
+ .ProseMirror table td > *, .ProseMirror table th > * {
+	 margin-bottom: 0;
+}
+ .ProseMirror table th {
+	 font-weight: bold;
+	 text-align: left;
+	 background-color: #f1f3f5;
+}
+ .ProseMirror table .selectedCell:after {
+	 z-index: 2;
+	 position: absolute;
+	 content: "";
+	 left: 0;
+	 right: 0;
+	 top: 0;
+	 bottom: 0;
+	 background: rgba(200, 200, 255, 0.4);
+	 pointer-events: none;
+}
+ .ProseMirror table .column-resize-handle {
+	 position: absolute;
+	 right: -2px;
+	 top: 0;
+	 bottom: -2px;
+	 width: 4px;
+	 background-color: #adf;
+	 pointer-events: none;
+}
 
+.tableWrapper {
+  margin-top: 0;
+  margin-bottom: 2rem;
+	 overflow-x: auto;
+}
+/* Table-specific styling */
+ .ProseMirror table {
+	 border-collapse: collapse;
+	 table-layout: fixed;
+	 width: 100%;
+	 margin: 0;
+	 overflow: hidden;
+}
+ .ProseMirror table td, .ProseMirror table th {
+	 min-width: 1em;
+	 border: 1px solid #ced4da;
+	 padding: 3px 5px;
+	 vertical-align: top;
+	 box-sizing: border-box;
+	 position: relative;
+}
+ .ProseMirror table td > *, .ProseMirror table th > * {
+	 margin-bottom: 0;
+}
+ .ProseMirror table th {
+	 font-weight: bold;
+	 text-align: left;
+	 background-color: #f1f3f5;
+}
+ .ProseMirror table .selectedCell:after {
+	 z-index: 2;
+	 position: absolute;
+	 content: "";
+	 left: 0;
+	 right: 0;
+	 top: 0;
+	 bottom: 0;
+	 background: rgba(200, 200, 255, 0.4);
+	 pointer-events: none;
+}
+ .ProseMirror table .column-resize-handle {
+	 position: absolute;
+	 right: -2px;
+	 top: 0;
+	 bottom: -2px;
+	 width: 4px;
+	 background-color: #adf;
+	 pointer-events: none;
+}
+.resize-cursor {
+	 cursor: ew-resize;
+	 cursor: col-resize;
+}
+
+.column {
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgb(237, 230, 230);
+}
+.mouse-moving {
+  background-color:rgb(147 197 253)!important;
+}

@@ -1,67 +1,135 @@
 // import { appWindow, LogicalSize } from "@tauri-apps/api/window";
+import { Editor } from "@tiptap/react";
 import produce from "immer";
 import { setCache } from "../../libs/localCache";
 import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
 import { IThemeStore, setThemeStoreState } from "../../store/themes";
 
-export const shortCutAcion = (
-  ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent
-) => {
-  const ctrlKey = ev.ctrlKey;
+export interface KeyBoardProps {
+  shift: boolean,
+  control: boolean,
+  escape: boolean,
+  alt: boolean,
+  enter: boolean,
+  t: boolean,
+  b: boolean,
+  p: boolean,
+  i: boolean,
+  v: boolean,
+  c: boolean,
+  r: boolean,
+  n: boolean,
+  d: boolean
+}
+
+const preventEvent = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent) => {
+    ev.stopPropagation()
+    ev.preventDefault()
+}
+
+export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent, pressed?: KeyBoardProps, editor?: Editor) => {
+
   const key = ev.key.toLowerCase();
-  const alt = ev.altKey;
-  const shift = ev.shiftKey;
-  const esc = key === "escape";
+  if (pressed && editor) {
+    pressed[key as keyof typeof pressed] = ev.type === 'keydown';
 
-  ev.stopPropagation();
-  ev.preventDefault();
+    // Add Column Before
+    if (pressed.alt && pressed.i && pressed.v) {
+      preventEvent(ev);
+      editor.chain().focus().addColumnBefore().run()
+    }
 
-  // Open/Close sidebar
-  if (shift && ctrlKey && key === "b") {
-    setSettingState(
-      produce<ISettingStore>((state) => {
-        setCache("SETTING_VIEW_SIDEBAR", !state.view.sidebar ? "1" : "0");
-        // appWindow.setSize(new LogicalSize(1200, 500))
-        state.view.sidebar = !state.view.sidebar;
-      })
-    );
-  }
+    // Add Column After
+    if (pressed.alt && pressed.i && pressed.c) {
+      preventEvent(ev);
+      editor.chain().focus().addColumnAfter().run()
+    }
 
-  // Open new pad modal
-  if (ctrlKey && key === "n") {
-    setPadStoreState(
-      produce<IPadStore>((state) => {
-        state.newPadModalStatus = true;
-      })
-    );
-  }
+    // Add Row After
+    if (pressed.alt && pressed.i && pressed.r) {
+      preventEvent(ev);
+      editor.chain().focus().addRowAfter().run()
+    }
 
-  // Open search pallete
-  if (alt && key === "p") {
-    setPadStoreState(
-      produce<IPadStore>((state) => {
-        state.searchModalStatus = true;
-      })
-    );
-  }
+    // Add Row Before
+    if (pressed.alt && pressed.i && pressed.t) {
+      preventEvent(ev);
+      editor.chain().focus().addRowBefore().run()
+    }
 
-  // Close search pallete if it visible
-  if (esc && document.getElementById("pad-search")) {
-    setPadStoreState(
-      produce<IPadStore>((state) => {
-        state.searchModalStatus = false;
-      })
-    );
-  }
+    // Delete Column
+    if (pressed.alt && pressed.d && pressed.c) {
+      preventEvent(ev);
+      editor.chain().focus().deleteColumn().run()
+    }
 
-  // Open Theme selection modal
-  if (ctrlKey && key === "t") {
-    setThemeStoreState(
-      produce<IThemeStore>((state) => {
-        state.visible = true
-      })
-    );
+    // Delete Row
+    if (pressed.alt && pressed.d && pressed.r) {
+      preventEvent(ev);
+      editor.chain().focus().deleteRow().run()
+    }
+
+    // Delete Table
+    if (pressed.alt && pressed.i && pressed.t) {
+      preventEvent(ev);
+      editor.chain().focus().deleteTable().run()
+    }
 
   }
+
+  if (pressed) {
+    pressed[key as keyof typeof pressed] = ev.type === 'keydown';
+    // Open/Close sidebar
+    if (pressed.shift && pressed.control && pressed.b) {
+      preventEvent(ev);
+      setSettingState(
+        produce<ISettingStore>((state) => {
+          setCache("SETTING_VIEW_SIDEBAR", !state.view.sidebar ? "1" : "0");
+          // appWindow.setSize(new LogicalSize(1200, 500))
+          state.view.sidebar = !state.view.sidebar;
+        })
+      );
+    }
+
+    //Open new pad modal
+    if (pressed.control && pressed.n) {
+      preventEvent(ev);
+      setPadStoreState(
+        produce<IPadStore>((state) => {
+          state.newPadModalStatus = true;
+        })
+      );
+    }
+
+    // Open search pallete
+    if (pressed.alt && pressed.p) {
+      preventEvent(ev);
+      setPadStoreState(
+        produce<IPadStore>((state) => {
+          state.searchModalStatus = true;
+        })
+      );
+    }
+
+    // Close search pallete if it visible
+    if (pressed.escape && document.getElementById("pad-search")) {
+      preventEvent(ev);
+      setPadStoreState(
+        produce<IPadStore>((state) => {
+          state.searchModalStatus = false;
+        })
+      );
+    }
+
+    if (pressed.control && pressed.t) {
+      preventEvent(ev);
+      setThemeStoreState(
+        produce<IThemeStore>((state) => {
+          state.visible = true
+        })
+      );
+    }
+  }
+
 };
