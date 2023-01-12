@@ -48,7 +48,7 @@
 }
 
 .modal-box {
-  @apply shadow-lg rounded-lg relative text-left overflow-hidden shadow-xl transform transition-all;
+  @apply rounded-lg relative text-left overflow-hidden shadow-xl transform transition-all;
   background-color: var(--modal-bg-color);
   border: 1px solid var(--modal-border-color);
   color: var(--common-text-color);

@@ -3,7 +3,6 @@ export interface ConfirmFCProps {
   desc: string;
   yes: () => void;
   no?: () => void;
-  isHiddenClose?: boolean
 }
 
 export type RenderFunc = {
@@ -12,5 +11,9 @@ export type RenderFunc = {
   desc: string,
   yes: () => void,
   no?: () => void,
-  isHiddenClose?: boolean
+}
+
+export enum EConfirmBoxType {
+  DANGER,
+  INFO
 }

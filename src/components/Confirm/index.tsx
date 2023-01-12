@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { render } from "react-dom";
-import { ConfirmFCProps, RenderFunc } from "./type";
+import { ConfirmFCProps, EConfirmBoxType, RenderFunc } from "./type";
+import { HiOutlineExclamation, HiOutlineExclamationCircle } from "react-icons/hi"
 import "./style.css";
 
 const container = document.createElement("div");
 const backdrop = document.createElement("div");
 let wrapper = document.querySelector<HTMLElement>("modal-wrapper");
+let confirmBoxType: EConfirmBoxType = EConfirmBoxType.DANGER;
 
 const _createElement = () => {
   if (!wrapper) {
@@ -25,7 +27,7 @@ const _createElement = () => {
 }
 
 const Confirm: FC<ConfirmFCProps> = (props) => {
-  const { title, desc, yes, no, isHiddenClose } = props;
+  const { title, desc, yes, no } = props;
 
   const onYes = () => {
     if (!wrapper) {
@@ -36,31 +38,36 @@ const Confirm: FC<ConfirmFCProps> = (props) => {
   }
 
   const onNo = () => {
+    console.log(wrapper)
     if (!wrapper) {
       return;
     }
-    if (no) {
-      no();
-    }
+    no && no();
     wrapper.classList.add('modal-none');
   }
 
-  const onClose = () => {
-    if (!wrapper) {
-      return;
+  const renderIcon = () => {
+    if (confirmBoxType === EConfirmBoxType.DANGER) {
+      return <HiOutlineExclamation className="w-10 h-10 rounded-full text-red-400 bg-red-300 bg-opacity-30 p-2 mt-3 m-auto mb-2" />
     }
-    wrapper.classList.add('modal-none');
+
+    if (confirmBoxType === EConfirmBoxType.INFO) {
+      return <HiOutlineExclamationCircle className="w-10 h-10 rounded-full text-blue-500 bg-blue-300 bg-opacity-30 p-2 mt-3 m-auto mb-2" />
+    }
+
+    return null;
+
   }
 
   return (
     <div className="modal-box w-auto p-5 relative" >
-      {!isHiddenClose && <button className="close" onClick={onClose} ></button> }
-      <h3 className="text-lg leading-6 pb-4 border-bottom dark:border-gray-700">
+      <h3 className="text-lg font-medium leading-6 pb-2 text-center">
+        {renderIcon()}
         {title}
       </h3>
-      <p className="block text-sm font-medium pt-2">{desc}</p>
-      <div className="mt-4">
-        <div className="flex gap-4 flex-row-reverse">
+      <p className="block text-sm pt-2 text-center w-72">{desc}</p>
+      <div className="pt-5">
+        <div className="grid grid-cols-2 gap-4">
           <button
             onClick={onYes}
             type="submit"
@@ -89,14 +96,29 @@ const handleClickOutSide = (e: MouseEvent) => {
   wrapper.classList.add('modal-none');
 }
 
-const _render = ({ title, container, desc, yes, no, isHiddenClose }: RenderFunc) => {
-  render(<Confirm title={title} desc={desc} yes={yes} no={no} isHiddenClose={isHiddenClose} />, container);
+const closeByPressingEsc = (e: KeyboardEvent) => {
+  if (e.key !== 'Escape' || !wrapper) {
+    return;
+  }
 
-  window.addEventListener('click', (e) => handleClickOutSide(e));
+  wrapper.classList.add('modal-none');
+  console.log('iqouweoiu')
+}
+
+const _render = (props: RenderFunc) => {
+  const {container, ...restProps} = props
+  render(<Confirm {...restProps}/>, container);
+
+
+  document.removeEventListener('click', handleClickOutSide)
+  document.addEventListener('click', handleClickOutSide);
+
+  document.removeEventListener('keyup', closeByPressingEsc);
+  document.addEventListener('keyup', closeByPressingEsc);
 
 }
 
-const _create = ({ title, desc, yes, no, isHiddenClose }: ConfirmFCProps) => {
+const _create = ({ title, desc, yes, no }: ConfirmFCProps) => {
   const container = _createElement();
 
   _render({
@@ -105,17 +127,16 @@ const _create = ({ title, desc, yes, no, isHiddenClose }: ConfirmFCProps) => {
     desc,
     yes,
     no,
-    isHiddenClose
   });
 }
 
-export const confirm = ({ title, desc, yes, no, isHiddenClose }: ConfirmFCProps) => {
-  _create({
-    title,
-    desc,
-    yes,
-    no,
-    isHiddenClose
-  })
+export const confirmDanger = (props: ConfirmFCProps) => {
+ confirmBoxType = EConfirmBoxType.DANGER; 
+  _create(props)
+}
+
+export const confirmInfo = (props: ConfirmFCProps) => {
+  confirmBoxType = EConfirmBoxType.INFO
+  _create(props)
 }
 
