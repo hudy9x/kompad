@@ -6,13 +6,14 @@ import { message } from "../../components/message";
 import { decreasePlanRecord } from "../../services/plans";
 import { useNavigate } from "react-router-dom";
 import { deleteAllImageInOnePad } from "../../services/files";
+import { confirmDanger } from "../../components/Confirm";
 
 export const PadDelete = ({ idx }: { idx: string }) => {
   const [deleting, setDeleting] = useState(false);
   const navigate = useNavigate();
   const setNeedToUpdate = usePadStore((state) => state.setNeedToUpdate);
 
-  const handleDeleteItem = async () => {
+  const yes = async () => {
     if (deleting) {
       message.warning("The pad is in deleting process");
       return;
@@ -20,7 +21,6 @@ export const PadDelete = ({ idx }: { idx: string }) => {
 
     setDeleting(true);
 
-    console.log('owiejroiwjeroij')
     await Promise.all([delPad(idx), deleteAllImageInOnePad(idx)]);
     // await Promise.all([deleteAllImageInOnePad(idx)]);
     await decreasePlanRecord();
@@ -30,6 +30,15 @@ export const PadDelete = ({ idx }: { idx: string }) => {
     navigate("/app/pad/");
     message.success("Deleted pad successfully");
   }
+
+  const handleDeleteItem = () => {
+    confirmDanger({
+      title: 'Delete this note',
+      desc: 'Are you sure to delete this note ? All of your content will be delete permanently removed from our servers. This action cannot be undone.',
+      yes: yes,
+    });
+  }
+
   return (
     <a
       href="#delete"
