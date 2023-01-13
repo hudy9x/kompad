@@ -7,10 +7,12 @@ import { PadArchive } from "./PadArchive";
 import { PadDuplicate } from "./PadDuplicate";
 import { PadEdit } from "./PadEdit";
 import PadDelete from "./PadDelete";
+import { PadExport } from "./PadExport";
+import { PadImport } from "./PadImport";
 
 export default function PadActions({ data }: { data: IPad }) {
   return (
-    <Menu as="div" className="relative inline-block text-left z-10">
+    <Menu as="div" className="inline-block text-left z-10">
       <Transition show={true}
         enter="transition duration-100 ease-out"
         enterFrom="transform scale-95 opacity-0"
@@ -41,6 +43,14 @@ export default function PadActions({ data }: { data: IPad }) {
             </Menu.Item>
             <Menu.Item>
               <PadImportant data={data} />
+            </Menu.Item>
+          </div>
+          <div className="py-1 relative">
+            <Menu.Item as="div">
+              <PadExport idx={data.id!} />
+            </Menu.Item>
+             <Menu.Item as="div">
+              <PadImport />
             </Menu.Item>
           </div>
           <div className="py-1">
