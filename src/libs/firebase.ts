@@ -4,12 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5sIk3WGEdJtNGcJ5DnBXgXYlPzAmsr0k",
-  authDomain: "kompad-a9b60.firebaseapp.com",
-  projectId: "kompad-a9b60",
-  storageBucket: "kompad-a9b60.appspot.com",
-  messagingSenderId: "431772304435",
-  appId: "1:431772304435:web:aafe5ce57f7954e4d88f46",
+  apiKey: "AIzaSyCrXAmPHyTibS6xMLUBpJJL3C2Sdl2TQg4",
+  authDomain: "kompad-84f61.firebaseapp.com",
+  projectId: "kompad-84f61",
+  storageBucket: "kompad-84f61.appspot.com",
+  messagingSenderId: "160972435770",
+  appId: "1:160972435770:web:02264d7e00867699e02003",
+  measurementId: "G-PW0C9TZ3M2"
 };
 
 // Initialize Firebase

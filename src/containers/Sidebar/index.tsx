@@ -1,4 +1,5 @@
 import { useSettingStore } from "../../store/settings";
+import { OutlineList } from "../Outline";
 import PadList from "../Pads/PadList";
 import PadNew from "../Pads/PadNew";
 import PadSearch from "../PadSearch";
@@ -19,9 +20,9 @@ export default function Sidebar() {
               <PadSearchIcon />
               <PadNew />
             </div>
-
-            <PadList />
-            <PadSearch />
+            {/* <PadList />
+            <PadSearch /> */}
+            <OutlineList/>
           </div>
         </div>
       </aside>
