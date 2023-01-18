@@ -30,8 +30,9 @@ import ScrollBar from "../ScrollBar";
 import PadDropZone from "./PadDropZone";
 import ContextMenu from "../ContextMenu";
 import { TableActions } from "./TableActions";
-import { Outline, useOutlineStore } from "../../store/outlines";
+import { ContentOutline, useOutlineStore } from "../../store/outlines";
 import { pressed } from "../Shortcut/Shortcut";
+import { v4 as uuidv4 } from 'uuid';
 
 interface IPadEditorProp {
   id: string;
@@ -97,10 +98,9 @@ const Heading = Extension.create({
         // … with those attributes
         attributes: {
           id: {
-            renderHTML: document => ({
-              id: document.id
+            renderHTML: () => ({
+              id: uuidv4()
             }),
-            parseHTML: document => document.innerText,
           }
         },
       },
@@ -137,7 +137,7 @@ const extensions = [
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-  const { setOutlines, outlineList } = useOutlineStore();
+  const { setIsOpen, setOutlines, contentOutline } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -151,24 +151,22 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: ({ editor }) => {
-      //console.log(editor.isActive("heading", { level: 2 }) , 'editor');
       if (editor.isActive("heading", { level: 2 }) || editor.isActive("heading", { level: 3 }) || editor.isActive("heading", { level: 4 })) {
         const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
-        const outlines: Outline[] = [];
+        const outlines: ContentOutline[] = [];
 
         if (!els) {
           return;
         }
-        outlines.forEach((value) => {
-          
-        })
 
         els.forEach((el) => {
           return outlines.push({
+            id: el.id,
             title: el.innerText,
-            level: el.localName
+            level: Number(el.localName.match(/(?<=h)[0-9]/g)),
+            isCheck: true
           })
-        })  
+        })
         setOutlines(outlines);
       }
       setUpdate((prevUpdate) => prevUpdate + 1);
@@ -176,8 +174,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
   });
 
   const handleOutline = () => {
-    const els = document.querySelector('.tiptap-main-content')?.querySelectorAll("h2, h3, h4");
-    const outlines: Outline[] = [];
+    const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
+    const outlines: ContentOutline[] = [];
 
     if (!els) {
       return;
@@ -185,11 +183,14 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
 
     els.forEach((el) => {
       return outlines.push({
-        title: el.id,
-        level: el.localName
+        id: el.id,
+        title: el.innerText,
+        level: Number(el.localName.match(/(?<=h)[0-9]/g)),
+        isCheck: true
       })
     })
 
+    setIsOpen();
     setOutlines(outlines);
   }
 
@@ -204,7 +205,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         updatePad({ id, content: html });
       }, 600) as unknown as number;
     }
-    console.log(outlineList, 'outlines');
+
     // eslint-disable-next-line
   }, [update]);
 
@@ -224,7 +225,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="tiptap-box">
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
-            <ContextMenu condition={(ev) => (ev.target as HTMLElement).closest('table') ? true : false} >
+            <ContextMenu condition = {(ev) => (ev.target as HTMLElement ).closest('table') ? true : false} >
               <EditorContent
                 editor={editor}
                 className="tiptap-main-content"
