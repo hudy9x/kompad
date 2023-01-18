@@ -64,6 +64,15 @@
   @apply ml-5;
 }
 
+.outline-title {
+  @apply py-3 text-sm font-bold;
+  color: var(--sidebar-title-color);
+}
+
+.outline-icon {
+  color: var(--sidebar-title-color);
+}
+
 .user-settings {
   @apply px-4 py-3 border-t;
   @apply flex items-center justify-between;
@@ -83,4 +92,13 @@
 .brand-name {
   @apply py-3 text-sm font-bold;
   color: var(--sidebar-title-color);
+}
+
+.outline-content {
+  @apply pl-5 block text-sm;
+  padding: 10px 0;
+}
+
+.outline-content:hover {
+  background-color: var(--dropdown-bg-hover-color);
 }

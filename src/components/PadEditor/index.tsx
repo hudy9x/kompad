@@ -1,4 +1,4 @@
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "@tiptap/extension-highlight";
 import Typography from "@tiptap/extension-typography";
@@ -30,8 +30,10 @@ import ScrollBar from "../ScrollBar";
 import PadDropZone from "./PadDropZone";
 import ContextMenu from "../ContextMenu";
 import { TableActions } from "./TableActions";
-import { Outline, useOutlineStore } from "../../store/outlines";
+import { useOutlineStore } from "../../store/outlines";
 import { pressed } from "../Shortcut/Shortcut";
+import { guidGenerator } from "../../libs/utils";
+import { OutlineButton } from "../../containers/Outline/OutlineButton";
 
 interface IPadEditorProp {
   id: string;
@@ -97,10 +99,9 @@ const Heading = Extension.create({
         // … with those attributes
         attributes: {
           id: {
-            renderHTML: document => ({
-              id: document.id
+            renderHTML: () => ({
+              id: guidGenerator()
             }),
-            parseHTML: document => document.innerText,
           }
         },
       },
@@ -137,7 +138,7 @@ const extensions = [
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-  const { setOutlines, outlineList } = useOutlineStore();
+  const { updateOutline } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -151,47 +152,10 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: ({ editor }) => {
-      //console.log(editor.isActive("heading", { level: 2 }) , 'editor');
-      if (editor.isActive("heading", { level: 2 }) || editor.isActive("heading", { level: 3 }) || editor.isActive("heading", { level: 4 })) {
-        const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
-        const outlines: Outline[] = [];
-
-        if (!els) {
-          return;
-        }
-        outlines.forEach((value) => {
-          
-        })
-
-        els.forEach((el) => {
-          return outlines.push({
-            title: el.innerText,
-            level: el.localName
-          })
-        })  
-        setOutlines(outlines);
-      }
+      updateOutline(editor as Editor);
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });
-
-  const handleOutline = () => {
-    const els = document.querySelector('.tiptap-main-content')?.querySelectorAll("h2, h3, h4");
-    const outlines: Outline[] = [];
-
-    if (!els) {
-      return;
-    }
-
-    els.forEach((el) => {
-      return outlines.push({
-        title: el.id,
-        level: el.localName
-      })
-    })
-
-    setOutlines(outlines);
-  }
 
   useEffect(() => {
     if (editor) {
@@ -204,7 +168,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         updatePad({ id, content: html });
       }, 600) as unknown as number;
     }
-    console.log(outlineList, 'outlines');
+
     // eslint-disable-next-line
   }, [update]);
 
@@ -224,7 +188,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="tiptap-box">
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
-            <ContextMenu condition={(ev) => (ev.target as HTMLElement).closest('table') ? true : false} >
+            <ContextMenu condition = {(ev) => (ev.target as HTMLElement ).closest('table') ? true : false} >
               <EditorContent
                 editor={editor}
                 className="tiptap-main-content"
@@ -242,7 +206,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         </div>
         <ControlBar editor={editor} />
         <div className="character-count">
-          <button className="absolute left-10" onClick={handleOutline}>Outline</button>
+          <OutlineButton/>
           {editor && editor.storage.characterCount.words()} words
         </div>
       </div>
