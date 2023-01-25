@@ -10,6 +10,7 @@ import Table from '@tiptap/extension-table'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
+import { Extension } from '@tiptap/core'
 import CharacterCount from "@tiptap/extension-character-count";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -29,7 +30,10 @@ import ScrollBar from "../ScrollBar";
 import PadDropZone from "./PadDropZone";
 import ContextMenu from "../ContextMenu";
 import { TableActions } from "./TableActions";
+import { ContentOutline, useOutlineStore } from "../../store/outlines";
 import { pressed } from "../Shortcut/Shortcut";
+import { v4 as uuidv4 } from 'uuid';
+
 interface IPadEditorProp {
   id: string;
   content: string;
@@ -83,6 +87,27 @@ const CustomTableCell = TableCell.extend({
   },
 })
 
+const Heading = Extension.create({
+  addGlobalAttributes() {
+    return [
+      {
+        // Extend the following extensions
+        types: [
+          'heading',
+        ],
+        // … with those attributes
+        attributes: {
+          id: {
+            renderHTML: () => ({
+              id: uuidv4()
+            }),
+          }
+        },
+      },
+    ]
+  },
+})
+
 const extensions = [
   StarterKit,
   Table.configure({
@@ -90,6 +115,7 @@ const extensions = [
   }),
   TableRow,
   TableHeader,
+  Heading,
   CustomTableCell,
   HighlightConfigure,
   Typography,
@@ -111,14 +137,9 @@ const extensions = [
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-
+  const { setIsOpen, setOutlines, contentOutline } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
-    editorProps: {
-      attributes: {
-        class: "",
-      },
-    },
     content: content,
     //     content: `<diagram-component graph="stateDiagram-v2
     //     [*] --> Still
@@ -130,9 +151,48 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: ({ editor }) => {
+      if (editor.isActive("heading", { level: 2 }) || editor.isActive("heading", { level: 3 }) || editor.isActive("heading", { level: 4 })) {
+        const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
+        const outlines: ContentOutline[] = [];
+
+        if (!els) {
+          return;
+        }
+
+        els.forEach((el) => {
+          return outlines.push({
+            id: el.id,
+            title: el.innerText,
+            level: Number(el.localName.match(/(?<=h)[0-9]/g)),
+            isCheck: true
+          })
+        })
+        setOutlines(outlines);
+      }
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });
+
+  const handleOutline = () => {
+    const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
+    const outlines: ContentOutline[] = [];
+
+    if (!els) {
+      return;
+    }
+
+    els.forEach((el) => {
+      return outlines.push({
+        id: el.id,
+        title: el.innerText,
+        level: Number(el.localName.match(/(?<=h)[0-9]/g)),
+        isCheck: true
+      })
+    })
+
+    setIsOpen();
+    setOutlines(outlines);
+  }
 
   useEffect(() => {
     if (editor) {
@@ -156,6 +216,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     }
     // eslint-disable-next-line
   }, [content]);
+
   return (
     <ErrorCapture>
       <div className="tiptap-container">
@@ -182,6 +243,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         </div>
         <ControlBar editor={editor} />
         <div className="character-count">
+          <button className="absolute left-10" onClick={handleOutline}>Outline</button>
           {editor && editor.storage.characterCount.words()} words
         </div>
       </div>
