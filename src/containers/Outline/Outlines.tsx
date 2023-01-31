@@ -29,33 +29,36 @@ export const Outlines = ({ contentOutline, index }: {
     }
   }
 
+  const levelStyle = (level: number) => {
+    switch (level) {
+      case value:
+        
+        break;
+      case value:
+        
+        break;
+      case value:
+        
+        break;
+      
+      
+      default:
+        break;
+    }
+  }
+
   const renderOutline = () => {
     const handleOutLineDropdown = (id: string, level: number) => {
       setToggleThisElement((prev) => !prev);
       setDropDownContent(id, level, toggleThisElement);
     }
 
-    switch (contentOutline.level) {
-      case 2:
-        return (
-          <div className="flex outline-content" onClick={() => handleOutLineDropdown(contentOutline.id, contentOutline.level)}>
-            {displayIcon()}
-            <a className={contentOutline.isIcon ? 'pl-1' : 'pl-5'} href={`#${contentOutline.id}`} >{contentOutline.title}</a>
-          </div>
-        )
-      case 3:
-        return (
-          !hiddenOutline.hiddens.includes(index) && (<div className="flex outline-content pl-3" onClick={() => handleOutLineDropdown(contentOutline.id, contentOutline.level)}>
-            {displayIcon()}
-            {<a className={contentOutline.isIcon ? 'pl-1' : 'pl-5'} href={`#${contentOutline.id}`} >{contentOutline.title}</a>}
-          </div>)
-
-        )
-      case 4:
-        return (
-          !hiddenOutline.hiddens.includes(index) && <a className='outline-content pl-14' href={`#${contentOutline.id}`} >{contentOutline.title}</a>
-        )
-    }
+    return (
+      !hiddenOutline.hiddens.includes(index) && (<div className={`flex outline-content ${levelStyle(contentOutline.level)}`} onClick={() => handleOutLineDropdown(contentOutline.id, contentOutline.level)}>
+        {displayIcon()}
+        {<a className={contentOutline.isIcon ? 'pl-1' : 'pl-5'} href={`#${contentOutline.id}`} >{contentOutline.title}</a>}
+      </div>)
+    )
   }
 
   return (

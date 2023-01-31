@@ -18,14 +18,17 @@ export default function Sidebar() {
         <div className="flex">
           <RootSidebar />
           <div className="second-sidebar">
-            {isOpen ? <div>
+            <div className={`${isOpen ? "" : "hidden"}`}>
               <div className="second-sidebar-header">
                 <PadSearchIcon />
                 <PadNew />
               </div>
               <PadList />
               <PadSearch />
-            </div> : <Outline />}
+            </div>
+            <div className={`${isOpen ? "hidden" : ""}`} >
+              <Outline/>
+            </div>
           </div>
         </div>
       </aside>
