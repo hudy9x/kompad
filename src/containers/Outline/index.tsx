@@ -2,9 +2,16 @@ import { useOutlineStore } from "../../store/outlines"
 import { MdKeyboardArrowLeft } from "react-icons/md"
 import { BsMenuButtonWideFill } from "react-icons/bs"
 import { Outlines } from "./Outlines";
+import { useEffect } from "react";
 
 export const Outline = () => {
-  const { contentOutline, setIsOpen } = useOutlineStore();
+  const { contentOutline, setIsOpen, setOutlines, isOpen } = useOutlineStore();
+
+  useEffect(() => {
+    if (!isOpen) {
+      setOutlines();
+    }
+  }, [isOpen, setOutlines])
 
   return (
     <>
@@ -17,11 +24,12 @@ export const Outline = () => {
           <MdKeyboardArrowLeft className="outline-icon" />
         </div>
       </div>
-      <div className="mt-4" >
+      <div>
         {contentOutline.map((value, idx) => {
-          return <Outlines contentOutline={value} index={idx}/>
+          return <Outlines contentOutline={value} index={idx} />
         })}
       </div>
     </>
   )
 }
+

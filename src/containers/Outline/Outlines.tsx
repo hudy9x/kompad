@@ -8,9 +8,12 @@ export const Outlines = ({ contentOutline, index }: {
 }) => {
   const [toggleThisElement, setToggleThisElement] = useState(false);
   const { hiddenOutline, setDropDownContent } = useOutlineStore();
+  const { level, title, id, isIcon } = contentOutline
+  const { hiddens } = hiddenOutline
+
 
   const displayIcon = () => {
-    if (!contentOutline.isIcon) {
+    if (!isIcon) {
       return <div></div>
     }
 
@@ -29,33 +32,29 @@ export const Outlines = ({ contentOutline, index }: {
     }
   }
 
+  const levelStyle = (level: number) => {
+    switch (level) {
+      case 2:
+        return 'pl-1'
+      case 3:
+        return 'pl-3'
+      case 4:
+        return 'pl-8'
+    }
+  }
+
   const renderOutline = () => {
     const handleOutLineDropdown = (id: string, level: number) => {
       setToggleThisElement((prev) => !prev);
       setDropDownContent(id, level, toggleThisElement);
     }
 
-    switch (contentOutline.level) {
-      case 2:
-        return (
-          <div className="flex outline-content" onClick={() => handleOutLineDropdown(contentOutline.id, contentOutline.level)}>
-            {displayIcon()}
-            <a className={contentOutline.isIcon ? 'pl-1' : 'pl-5'} href={`#${contentOutline.id}`} >{contentOutline.title}</a>
-          </div>
-        )
-      case 3:
-        return (
-          !hiddenOutline.hiddens.includes(index) && (<div className="flex outline-content pl-3" onClick={() => handleOutLineDropdown(contentOutline.id, contentOutline.level)}>
-            {displayIcon()}
-            {<a className={contentOutline.isIcon ? 'pl-1' : 'pl-5'} href={`#${contentOutline.id}`} >{contentOutline.title}</a>}
-          </div>)
-
-        )
-      case 4:
-        return (
-          !hiddenOutline.hiddens.includes(index) && <a className='outline-content pl-14' href={`#${contentOutline.id}`} >{contentOutline.title}</a>
-        )
-    }
+    return (
+      !hiddens.includes(index) && (<div className={`flex outline-content ${levelStyle(level)}`} onClick={() => handleOutLineDropdown(id, level)}>
+        {displayIcon()}
+        {<a className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words pr-5`} href={`#${id}`} >{title}</a>}
+      </div>)
+    )
   }
 
   return (
@@ -64,3 +63,4 @@ export const Outlines = ({ contentOutline, index }: {
     </div>
   )
 }
+

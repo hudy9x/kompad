@@ -138,7 +138,7 @@ const extensions = [
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-  const { updateOutline } = useOutlineStore();
+  const { setOutlines } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -152,7 +152,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: () => {
-      updateOutline();
+      setOutlines();
       setUpdate((prevUpdate) => prevUpdate + 1);
     },
   });
