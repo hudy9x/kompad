@@ -79,6 +79,12 @@
   border-top-color: var(--sidebar-user-setting-border-color);
 }
 
+.outline-container {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--common-border-color);
+}
+
 .usetting-fullname {
   @apply text-sm font-medium;
   color: var(--sidebar-title-color);

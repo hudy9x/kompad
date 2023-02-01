@@ -15,9 +15,8 @@ interface IOutline {
   hiddenOutline: HiddenOutline
   isOpen: boolean,
   setIsOpen: () => void,
-  setOutlines: (outlines: ContentOutline[]) => void,
+  setOutlines: () => void,
   setDropDownContent: (id: string, level: number, statusParent: boolean) => void,
-  updateOutline: () => void
 }
 
 export const getAllOutline = (): ContentOutline[] => {
@@ -56,7 +55,7 @@ const addIconContentOutline = (outlines: ContentOutline[]): ContentOutline[] => 
 const dataChildByParent = (outlines: ContentOutline[], idx: string, level: number): number[] => {
   let indexChild = [];
   for (let index = 0; index <= outlines.length - 1; index++) {
-    if (outlines[index]?.id === idx) {
+    if (outlines[index].id === idx) {
       for (let idex = index + 1; idex <= outlines.length - 1; idex++) {
         if (outlines[idex].level <= level) {
           return indexChild;
@@ -97,12 +96,6 @@ export const useOutlineStore = create<IOutline>((set) => ({
     childrenByParent: {},
     hiddens: []
   },
-  setOutlines: (outlines: ContentOutline[]) =>
-    set(
-      produce<IOutline>((state) => {
-        state.contentOutline = addIconContentOutline(outlines);
-      })
-    ),
   setIsOpen: () => {
     set(
       produce<IOutline>((state) => {
@@ -145,7 +138,7 @@ export const useOutlineStore = create<IOutline>((set) => ({
       })
     )
   },
-  updateOutline: () => {
+  setOutlines: () => {
     set(
       produce<IOutline>((state) => {
         // If outline open is update heading 
