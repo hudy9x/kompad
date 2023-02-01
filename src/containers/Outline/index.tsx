@@ -24,7 +24,7 @@ export const Outline = () => {
           <MdKeyboardArrowLeft className="outline-icon" />
         </div>
       </div>
-      <div>
+      <div className="overflow-y-auto outline-scroll">
         {contentOutline.map((value, idx) => {
           return <Outlines contentOutline={value} index={idx} />
         })}

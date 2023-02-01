@@ -43,8 +43,19 @@ export const Outlines = ({ contentOutline, index }: {
     }
   }
 
+  const smoothScroll = () => {
+    const el = document.getElementById(`${id}`);
+    if(!el) {
+      return;
+    }
+    el.scrollIntoView({
+      "behavior": "smooth"
+    });
+  }  
+
   const renderOutline = () => {
     const handleOutLineDropdown = (id: string, level: number) => {
+      smoothScroll()
       setToggleThisElement((prev) => !prev);
       setDropDownContent(id, level, toggleThisElement);
     }
@@ -52,7 +63,7 @@ export const Outlines = ({ contentOutline, index }: {
     return (
       !hiddens.includes(index) && (<div className={`flex outline-content ${levelStyle(level)}`} onClick={() => handleOutLineDropdown(id, level)}>
         {displayIcon()}
-        {<a className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words pr-5`} href={`#${id}`} >{title}</a>}
+        {<a className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words pr-5 cursor-pointer`} >{title}</a>}
       </div>)
     )
   }
