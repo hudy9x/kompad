@@ -3,6 +3,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md"
 import { BsMenuButtonWideFill } from "react-icons/bs"
 import { Outlines } from "./Outlines";
 import { useEffect } from "react";
+import ScrollBar from "../../components/ScrollBar";
 
 export const Outline = () => {
   const { contentOutline, setIsOpen, setOutlines, isOpen } = useOutlineStore();
@@ -24,11 +25,11 @@ export const Outline = () => {
           <MdKeyboardArrowLeft className="outline-icon" />
         </div>
       </div>
-      <div className="overflow-y-auto outline-scroll">
+      <ScrollBar height="calc(100vh - 71px)">
         {contentOutline.map((value, idx) => {
           return <Outlines contentOutline={value} index={idx} />
         })}
-      </div>
+      </ScrollBar>
     </>
   )
 }

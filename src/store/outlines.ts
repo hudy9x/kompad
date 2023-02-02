@@ -8,7 +8,7 @@ export interface ContentOutline {
 }
 interface HiddenOutline {
   childrenByParent: Record<string, Array<number>>,
-  hiddens: Array<number>
+  hiddenArr: Array<number>
 }
 interface IOutline {
   contentOutline: ContentOutline[],
@@ -19,36 +19,27 @@ interface IOutline {
   setDropDownContent: (id: string, level: number, statusParent: boolean) => void,
 }
 
-export const getAllOutline = (): ContentOutline[] => {
-  const els = document.querySelector('.tiptap-main-content')?.querySelectorAll<HTMLElement>("h2, h3, h4");
-  const outlines: ContentOutline[] = [];
+export const getAllOutline = () => {
+  const headingEls = document.querySelectorAll<HTMLElement>(".tiptap-main-content h1, .tiptap-main-content h2, .tiptap-main-content h3, .tiptap-main-content h4, .tiptap-main-content h5, .tiptap-main-content h6");
 
-  if (!els) {
-    return outlines;
-  }
+  return [...headingEls].map((el) => ({
+    id: el.id,
+    title: el.innerText,
+    level: Number(el.tagName.replace('H', '')),
+  }));
 
-  els.forEach((el) => {
-    return outlines.push({
-      id: el.id,
-      title: el.innerText,
-      level: Number(el.tagName.replace('H', '')),
-    })
-  })
-
-  return outlines;
 }
 
 const addIconContentOutline = (outlines: ContentOutline[]): ContentOutline[] => {
-  return outlines.map((outline, id) => {
-    const levelNext = outlines[id + 1]?.level;
-    if ((outline.level === 2 && outline.level < levelNext) || (outline.level === 3 && outline.level < levelNext)) {
+  return outlines.map((outline, idx) => {
+    const nextLevel = outlines[idx + 1]?.level;
+    if (outline.level < nextLevel) {
       return {
         ...outline,
         isIcon: true
       }
-    } else {
-      return outline;
     }
+    return outline
   });
 }
 
@@ -72,21 +63,11 @@ const filterHidden = (idxChild: number[], hiddens: number[]): number[] => {
   return hiddens.filter((val) => !idxChild.includes(val));
 }
 
-const getDataChildByParent = (outlines: ContentOutline[], idx: string, level: number, childrenByParent: Record<string, Array<number>>, key: string): number[] | undefined => {
+const getDataChildByParent = (outlines: ContentOutline[], idx: string, level: number, childrenByParent: Record<string, Array<number>>, key: string): number[] => {
 
-  if (!Object.keys(childrenByParent).length) {
-    const data = dataChildByParent(outlines, idx, level);
-    return data;
-  }
-
-  for (const property in childrenByParent) {
-    if (key === property) {
-      return childrenByParent[property];
-    } else {
-      const data = dataChildByParent(outlines, idx, level);
-      return data;
-    }
-  }
+  return Object.keys(childrenByParent).length ?
+    childrenByParent[key] || dataChildByParent(outlines, idx, level) :
+    dataChildByParent(outlines, idx, level);
 }
 
 export const useOutlineStore = create<IOutline>((set) => ({
@@ -94,7 +75,7 @@ export const useOutlineStore = create<IOutline>((set) => ({
   isOpen: true,
   hiddenOutline: {
     childrenByParent: {},
-    hiddens: []
+    hiddenArr: []
   },
   setIsOpen: () => {
     set(
@@ -106,35 +87,20 @@ export const useOutlineStore = create<IOutline>((set) => ({
   setDropDownContent: (idx: string, level: number, statusParent: boolean) => {
     set(
       produce<IOutline>((state) => {
-        const outlines = [...state.contentOutline];
-        const childrenByParent = state.hiddenOutline.childrenByParent;
+        const { contentOutline, hiddenOutline } = state;
+        const { childrenByParent, hiddenArr } = hiddenOutline;
         const key = `h${level}-${idx}`;
-        const childIndexByParent = getDataChildByParent(outlines, idx, level, childrenByParent, key)
+        const childIndexByParent = getDataChildByParent(contentOutline, idx, level, childrenByParent, key);
 
-        if (!childIndexByParent) {
-          return;
-        }
+        const hidden = statusParent ? filterHidden(childIndexByParent, hiddenArr) : [...hiddenArr, ...childIndexByParent];
 
-        if (statusParent) { // hien outline
-          const hiddensChild = filterHidden(childIndexByParent, state.hiddenOutline.hiddens);
-          state.hiddenOutline = {
-            childrenByParent: {
-              ...state.hiddenOutline.childrenByParent,
-              [key]: childIndexByParent
-            },
-            hiddens: hiddensChild
-          }
-        } else { // an outline        
-          state.hiddenOutline = {
-            childrenByParent: {
-              ...state.hiddenOutline.childrenByParent,
-              [key]: childIndexByParent
-            },
-            hiddens: [
-              ...state.hiddenOutline.hiddens, ...childIndexByParent
-            ]
-          }
-        }
+        state.hiddenOutline = {
+          childrenByParent: {
+            ...childrenByParent,
+            [key]: childIndexByParent
+          },
+          hiddenArr: hidden
+        };
       })
     )
   },

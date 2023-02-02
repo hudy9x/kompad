@@ -110,5 +110,6 @@
 }
 
 .outline-scroll {
-  height: 630px
+  height: calc(100vh - 61px - 44px);
+  @apply overflow-y-auto;
 }

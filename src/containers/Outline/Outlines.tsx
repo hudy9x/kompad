@@ -9,7 +9,7 @@ export const Outlines = ({ contentOutline, index }: {
   const [toggleThisElement, setToggleThisElement] = useState(false);
   const { hiddenOutline, setDropDownContent } = useOutlineStore();
   const { level, title, id, isIcon } = contentOutline
-  const { hiddens } = hiddenOutline
+  const { hiddenArr } = hiddenOutline
 
 
   const displayIcon = () => {
@@ -34,12 +34,18 @@ export const Outlines = ({ contentOutline, index }: {
 
   const levelStyle = (level: number) => {
     switch (level) {
+      case 1: 
+        return 'pl-2'
       case 2:
-        return 'pl-1'
+        return 'pl-4'
       case 3:
-        return 'pl-3'
+        return 'pl-6'
       case 4:
         return 'pl-8'
+      case 5:
+        return 'pl-10'
+      case 6:
+        return 'pl-12'
     }
   }
 
@@ -61,9 +67,9 @@ export const Outlines = ({ contentOutline, index }: {
     }
 
     return (
-      !hiddens.includes(index) && (<div className={`flex outline-content ${levelStyle(level)}`} onClick={() => handleOutLineDropdown(id, level)}>
+      !hiddenArr.includes(index) && (<div className={`flex outline-content ${levelStyle(level)} pr-9 `} onClick={() => handleOutLineDropdown(id, level)}>
         {displayIcon()}
-        {<a className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words pr-5 cursor-pointer`} >{title}</a>}
+        <div className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words cursor-pointer`} >{title}</div>
       </div>)
     )
   }
