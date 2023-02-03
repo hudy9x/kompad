@@ -59,8 +59,8 @@ const dataChildByParent = (outlines: ContentOutline[], idx: string, level: numbe
   return indexChild;
 }
 
-const filterHidden = (idxChild: number[], hiddens: number[]): number[] => {
-  return hiddens.filter((val) => !idxChild.includes(val));
+const filterHidden = (idxChild: number[], hiddenArr: number[]): number[] => {
+  return hiddenArr.filter((val) => !idxChild.includes(val));
 }
 
 const getDataChildByParent = (outlines: ContentOutline[], idx: string, level: number, childrenByParent: Record<string, Array<number>>, key: string): number[] => {

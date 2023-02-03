@@ -113,3 +113,7 @@
   height: calc(100vh - 61px - 44px);
   @apply overflow-y-auto;
 }
+
+.active-outline {
+  background-color: var(--dropdown-bg-hover-color);
+}

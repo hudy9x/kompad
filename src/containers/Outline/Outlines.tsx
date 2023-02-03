@@ -59,6 +59,7 @@ export const Outlines = ({ contentOutline, index }: {
     });
   }  
 
+
   const renderOutline = () => {
     const handleOutLineDropdown = (id: string, level: number) => {
       smoothScroll()
@@ -69,7 +70,7 @@ export const Outlines = ({ contentOutline, index }: {
     return (
       !hiddenArr.includes(index) && (<div className={`flex outline-content ${levelStyle(level)} pr-9 `} onClick={() => handleOutLineDropdown(id, level)}>
         {displayIcon()}
-        <div className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words cursor-pointer`} >{title}</div>
+        <p className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words cursor-pointer`} >{title}</p>
       </div>)
     )
   }
