@@ -157,30 +157,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     },
   });
 
-  const handleActiveOutline = (scrollTop: number) => {
-    if (isOpen) {
-      return;
-    }
-
-    const headingEls = document.querySelectorAll<HTMLElement>(".tiptap-main-content h1, .tiptap-main-content h2, .tiptap-main-content h3, .tiptap-main-content h4, .tiptap-main-content h5, .tiptap-main-content h6");
-    console.log(headingEls, "headingEls");
-    const outlineEls = document.querySelectorAll<HTMLElement>(".outline-content")
-
-    headingEls.forEach((headingEl, idx) => {
-
-      const top = headingEl.getBoundingClientRect().top - 64; // Vi tri tu el den top da tru 60px cua thanh navbar
-      const height = headingEl.offsetHeight;
-
-      outlineEls.forEach((outlineEl, id) => {
-        if (top + height > 0 && top + height < height) {
-          idx === id ? outlineEl.classList.add('active-outline') : outlineEl.classList.remove('active-outline')
-        } else {
-          idx === id && outlineEl.classList.remove('active-outline')
-        }
-      })
-    })
-  }
-
   useEffect(() => {
     if (editor) {
       if (timer) {
@@ -210,7 +186,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <FixedControlBar editor={editor} />
         {editor ? <PadDropZone id={id} editor={editor} /> : null}
         <div className="tiptap-box">
-          <ScrollBar height="calc(100vh - 64px - 20px)" className="scroll-bar" onUpdate={({ scrollTop }) => handleActiveOutline(scrollTop)}>
+          <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
             <ContextMenu condition={(ev) => (ev.target as HTMLElement).closest('table') ? true : false} >
               <EditorContent
