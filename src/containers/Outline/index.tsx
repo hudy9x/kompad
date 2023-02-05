@@ -16,7 +16,7 @@ export const Outline = () => {
 
   return (
     <>
-      <div className="outline-container flex justify-around">
+      <div className="outline-container">
         <div className="flex items-center">
           <BsMenuButtonWideFill className="outline-icon" />
         </div>

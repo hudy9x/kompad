@@ -80,9 +80,19 @@
 }
 
 .outline-container {
+  @apply flex px-4 justify-between;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--common-border-color);
+}
+
+.outline-item-dropdown-icon {
+  @apply w-6 h-5 flex -mr-1 opacity-40 items-center justify-center cursor-pointer rounded;
+}
+
+.outline-item-dropdown-icon:hover{
+  opacity: 1;
+  background-color: var(--sidebar-background-color);
 }
 
 .usetting-fullname {

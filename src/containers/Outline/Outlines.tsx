@@ -12,71 +12,68 @@ export const Outlines = ({ contentOutline, index }: {
   const { hiddenArr } = hiddenOutline
 
 
+  const handleOutLineDropdown = (id: string, level: number) => {
+    setToggleThisElement((prev) => !prev);
+    setDropDownContent(id, level, toggleThisElement);
+  }
+
   const displayIcon = () => {
     if (!isIcon) {
       return <div></div>
     }
 
-    if (toggleThisElement) {
-      return (
-        <div className="flex items-center">
-          <MdKeyboardArrowUp />
-        </div>
-      )
-    } else {
-      return (
-        <div className="flex items-center">
-          <MdKeyboardArrowDown />
-        </div>
-      )
-    }
+    return (
+      <div className="outline-item-dropdown-icon" 
+        onClick={() => handleOutLineDropdown(id, level)} >
+        {toggleThisElement ? <MdKeyboardArrowUp/> : <MdKeyboardArrowDown /> }
+      </div>
+    )
   }
 
   const levelStyle = (level: number) => {
     switch (level) {
-      case 1: 
-        return 'pl-2'
-      case 2:
+      case 1:
         return 'pl-4'
-      case 3:
+      case 2:
         return 'pl-6'
-      case 4:
+      case 3:
         return 'pl-8'
-      case 5:
+      case 4:
         return 'pl-10'
-      case 6:
+      case 5:
         return 'pl-12'
+      case 6:
+        return 'pl-14'
     }
   }
 
   const smoothScroll = () => {
     const el = document.getElementById(`${id}`);
-    if(!el) {
+    if (!el) {
       return;
     }
     el.scrollIntoView({
       "behavior": "smooth"
     });
-  }  
+  }
 
 
   const renderOutline = () => {
-    const handleOutLineDropdown = (id: string, level: number) => {
+    const goToHeading = () => {
       smoothScroll()
-      setToggleThisElement((prev) => !prev);
-      setDropDownContent(id, level, toggleThisElement);
     }
 
     return (
-      !hiddenArr.includes(index) && (<div className={`flex outline-content ${levelStyle(level)} pr-9 `} onClick={() => handleOutLineDropdown(id, level)}>
+      !hiddenArr.includes(index) && (<div className={`flex outline-content ${levelStyle(level)} pr-4 `} 
+      onClick={goToHeading} >
+        <p className={`${isIcon ? '' : ''} w-full break-words cursor-pointer`} >{title}</p>
         {displayIcon()}
-        <p className={`${isIcon ? 'pl-1' : 'pl-5'} w-full break-words cursor-pointer`} >{title}</p>
       </div>)
     )
   }
 
   return (
-    <div>
+    <div className="cursor-pointer">
       {renderOutline()}
     </div>
   )
