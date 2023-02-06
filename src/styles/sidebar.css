@@ -127,3 +127,7 @@
 .active-outline {
   background-color: var(--dropdown-bg-hover-color);
 }
+
+.close-outline {
+  color: var(--sidebar-text-color);
+}

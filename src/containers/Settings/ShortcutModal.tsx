@@ -25,6 +25,7 @@ function ShortcutModal() {
     { title: "Delete Row", kbds: ["Alt", "D", "R"] },
     { title: "Delete Table", kbds: ["Alt", "I", "T"] },
     { title: "Show / hide side bar", kbds: ["Ctrl", "Shift", "B"] },
+    { title: "Show / hide outline", kbds: ["Alt", "O"] },
     { title: "Create new pad", kbds: ["Ctrl", "N"] },
     { title: "Open search palette", kbds: ["Alt", "P"] },
     { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },

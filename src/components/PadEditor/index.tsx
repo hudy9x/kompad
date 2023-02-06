@@ -138,7 +138,7 @@ const extensions = [
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-  const { setOutlines, isOpen } = useOutlineStore();
+  const { setOutlines } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -176,6 +176,9 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     if (editor) {
       editor.commands.clearContent();
       editor.commands.setContent(content);
+      setTimeout(() => {
+        setOutlines();
+      }, 200)
     }
     // eslint-disable-next-line
   }, [content]);

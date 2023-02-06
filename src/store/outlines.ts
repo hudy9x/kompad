@@ -10,7 +10,7 @@ interface HiddenOutline {
   childrenByParent: Record<string, Array<number>>,
   hiddenArr: Array<number>
 }
-interface IOutline {
+export interface IOutline {
   contentOutline: ContentOutline[],
   hiddenOutline: HiddenOutline
   isOpen: boolean,
@@ -116,3 +116,5 @@ export const useOutlineStore = create<IOutline>((set) => ({
     )
   }
 }))
+
+export const { setState: setIsOpen } = useOutlineStore
