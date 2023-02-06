@@ -17,7 +17,7 @@ function PadTag({
 }: IPadTagsProps) {
   const { id } = useParams();
   const { tags } = useTagStore();
-  const s = [...selected];
+  const s = selected ? [...selected] : [];
   const filteredTags = tags.filter((t) => t.id && s.includes(t.id));
 
   const onTagSelect = (tagId: string) => {
