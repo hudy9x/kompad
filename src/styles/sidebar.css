@@ -64,10 +64,35 @@
   @apply ml-5;
 }
 
+.outline-title {
+  @apply py-3 text-sm font-bold;
+  color: var(--sidebar-title-color);
+}
+
+.outline-icon {
+  color: var(--sidebar-title-color);
+}
+
 .user-settings {
   @apply px-4 py-3 border-t;
   @apply flex items-center justify-between;
   border-top-color: var(--sidebar-user-setting-border-color);
+}
+
+.outline-container {
+  @apply flex px-4 justify-between;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--common-border-color);
+}
+
+.outline-item-dropdown-icon {
+  @apply w-6 h-5 flex -mr-1 opacity-40 items-center justify-center cursor-pointer rounded;
+}
+
+.outline-item-dropdown-icon:hover{
+  opacity: 1;
+  background-color: var(--sidebar-background-color);
 }
 
 .usetting-fullname {
@@ -83,4 +108,26 @@
 .brand-name {
   @apply py-3 text-sm font-bold;
   color: var(--sidebar-title-color);
+}
+
+.outline-content {
+  @apply pl-5 block text-sm;
+  padding: 10px 0;
+}
+
+.outline-content:hover {
+  background-color: var(--dropdown-bg-hover-color);
+}
+
+.outline-scroll {
+  height: calc(100vh - 61px - 44px);
+  @apply overflow-y-auto;
+}
+
+.active-outline {
+  background-color: var(--dropdown-bg-hover-color);
+}
+
+.close-outline {
+  color: var(--sidebar-text-color);
 }

@@ -1,4 +1,6 @@
+import { useOutlineStore } from "../../store/outlines";
 import { useSettingStore } from "../../store/settings";
+import { Outline } from "../Outline";
 import PadList from "../Pads/PadList";
 import PadNew from "../Pads/PadNew";
 import PadSearch from "../PadSearch";
@@ -8,6 +10,7 @@ import RootSidebar from "./RootSidebar";
 
 export default function Sidebar() {
   const sidebar = useSettingStore((state) => state.view.sidebar);
+  const isOpen = useOutlineStore((state) => state.isOpen);
 
   return (
     <>
@@ -15,13 +18,17 @@ export default function Sidebar() {
         <div className="flex">
           <RootSidebar />
           <div className="second-sidebar">
-            <div className="second-sidebar-header">
-              <PadSearchIcon />
-              <PadNew />
+            <div className={`${isOpen ? "" : "hidden"}`}>
+              <div className="second-sidebar-header">
+                <PadSearchIcon />
+                <PadNew />
+              </div>
+              <PadList />
+              <PadSearch />
             </div>
-
-            <PadList />
-            <PadSearch />
+            <div className={`${isOpen ? "hidden" : ""}`} >
+              <Outline/>
+            </div>
           </div>
         </div>
       </aside>
