@@ -111,6 +111,16 @@ function Signin() {
                   placeholder="Password"
                 />
               </div>
+              <p className="text-xs mt-3">
+                <span className="opacity-80">Forgot password? </span>
+                <Link
+                  to={"/forgot-password"}
+                  className="text-color-primary hover:underline"
+                >
+                  Get it back
+                </Link>
+              </p>
+
             </div>
 
             <div className="input-group">
@@ -122,18 +132,18 @@ function Signin() {
               </button>
             </div>
 
-            <div className="input-group">
-              <p className="text-xs">
-                <span className="opacity-80">Don't have an account yet? </span>
-                <Link
-                  to={"/signup"}
-                  className="text-color-primary hover:underline"
-                >
-                  Create Account
-                </Link>
-              </p>
-            </div>
           </form>
+        </div>
+        <div className="input-group mt-6">
+          <p className="text-xs">
+            <span className="opacity-80">Don't have an account yet? </span>
+            <Link
+              to={"/signup"}
+              className="text-color-primary hover:underline"
+            >
+              Register one
+            </Link>
+          </p>
         </div>
       </div>
 
