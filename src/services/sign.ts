@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../libs/firebase";
@@ -16,3 +17,7 @@ export const signUp = (email: string, password: string) => {
 export const verifyEmail = async () => {
   auth.currentUser && (await sendEmailVerification(auth.currentUser));
 };
+
+export const sendResetPassword = (email: string) => {
+  return sendPasswordResetEmail(auth, email)
+}

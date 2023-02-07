@@ -1,5 +1,5 @@
 .sign-container {
-  @apply flex items-center justify-center;
+  @apply flex flex-col items-center justify-center;
   height: calc(100vh - 2px);
   background-color: var(--sign-bg-color);
 }

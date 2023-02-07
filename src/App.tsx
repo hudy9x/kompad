@@ -8,6 +8,7 @@ import FileManager from "./containers/AdvancedSettings/FileManager";
 // import Profile from "./containers/AdvancedSettings/Profile";
 import Checking from "./containers/Checking";
 import EmailVerification from "./containers/EmailVerification";
+import ForgotPassword from "./containers/ForgotPassword";
 // import NotFound from "./containers/NotFound";
 import Pad from "./containers/Pad";
 import PadContent from "./containers/Pads/PadContent";
@@ -41,6 +42,7 @@ function App() {
               <Route path="signin" element={<Signin />} />
               <Route path="signout" element={<Signout />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="email-verification" element={<EmailVerification />} />
             </Route>
             <Route path="/app" element={<Layout />}>
