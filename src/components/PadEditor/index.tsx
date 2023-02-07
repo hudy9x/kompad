@@ -136,9 +136,10 @@ const extensions = [
 ];
 
 
+
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const [update, setUpdate] = useState(0);
-  const { setOutlines, isOpen } = useOutlineStore();
+  const { setOutlines } = useOutlineStore();
   const editor = useEditor({
     extensions: extensions,
     content: content,

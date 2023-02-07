@@ -13,7 +13,6 @@ export const Outline = () => {
       setOutlines();
     }
   }, [isOpen, setOutlines])
-
   return (
     <>
       <div className="outline-container">
@@ -26,9 +25,7 @@ export const Outline = () => {
         </div>
       </div>
       <ScrollBar height="calc(100vh - 71px)">
-        {contentOutline.map((value, idx) => {
-          return <Outlines contentOutline={value} index={idx} />
-        })}
+        <Outlines outlineTree={contentOutline} />
       </ScrollBar>
     </>
   )
