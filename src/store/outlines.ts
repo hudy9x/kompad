@@ -37,22 +37,22 @@ export const getAllOutline = () => {
 const addParentId = (outline: OutlineItem[]) => {
   const newOutline = [...outline];
   /* It's going through the array backwards. */
-  for (let index = newOutline.length - 1; index >= 0; index--) {
+  for (let currentHeading = newOutline.length - 1; currentHeading >= 0; currentHeading--) {
     /* It's going through the array backwards. */
-    for (let idx = index - 1; idx >= 0; idx--) {
+    for (let prevHeading = currentHeading - 1; prevHeading >= 0; prevHeading--) {
       /* It's checking if the current item has a parent. */
-      if (newOutline[idx].level < newOutline[index].level && !newOutline[index].hasOwnProperty("parent")) {
-        newOutline[index] = {
-          ...newOutline[index],
-          parent: newOutline[idx].id
+      if (newOutline[prevHeading].level < newOutline[currentHeading].level && !newOutline[currentHeading].hasOwnProperty("parent")) {
+        newOutline[currentHeading] = {
+          ...newOutline[currentHeading],
+          parent: newOutline[prevHeading].id
         };
         break;
       }
     }
     /*Items without a parent should be assigned to "0"*/
-    if (!newOutline[index].hasOwnProperty("parent")) {
-      newOutline[index] = {
-        ...newOutline[index],
+    if (!newOutline[currentHeading].hasOwnProperty("parent")) {
+      newOutline[currentHeading] = {
+        ...newOutline[currentHeading],
         parent: "0"
       };
     }
