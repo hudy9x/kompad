@@ -1,4 +1,4 @@
-## Kompad123
+## Kompad
 
 ### Installation
 
