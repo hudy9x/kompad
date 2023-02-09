@@ -1,4 +1,4 @@
-## Kompad
+## Kompad 11
 
 ### Installation
 
