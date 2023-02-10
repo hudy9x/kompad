@@ -30,7 +30,7 @@
 }
 
 .character-count {
-  @apply px-2 text-center border-t absolute bottom-0 left-0 text-xs;
+  @apply px-2 text-center border-t absolute bottom-0 h-0 left-0 text-xs;
   width: calc(100% - 2px);
   background-color: var(--common-bg-color);
   border-top-color: var(--common-border-color);

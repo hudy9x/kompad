@@ -1,0 +1,17 @@
+.word-count-title {
+ @apply border-b;
+ border-color: var(--common-border-light-color);
+}
+
+.word-count-item:hover {
+ background-color: var(--dropdown-bg-hover-color);
+}
+
+.word-count-item:hover .word-count-text {
+color: var(--common-text-color); 
+}
+
+.word-count-text {
+ color: var(--common-dark-text-color);
+}
+
