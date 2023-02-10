@@ -34,6 +34,7 @@ import { useOutlineStore } from "../../store/outlines";
 import { pressed } from "../Shortcut/Shortcut";
 import { guidGenerator } from "../../libs/utils";
 import { OutlineButton } from "../../containers/Outline/OutlineButton";
+import { WordCount } from "../../containers/WordCount";
 
 interface IPadEditorProp {
   id: string;
@@ -210,7 +211,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <ControlBar editor={editor} />
         <div className="character-count">
           <OutlineButton />
-          {editor && editor.storage.characterCount.words()} words
+          {editor && <WordCount editor={editor} />}
         </div>
       </div>
     </ErrorCapture>
