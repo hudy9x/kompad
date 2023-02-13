@@ -1,22 +1,29 @@
 import create from "zustand";
 import produce from "immer";
-export interface ContentOutline {
-  id: string,
-  title: string,
-  level: number,
-  isIcon?: boolean
-}
-interface HiddenOutline {
-  childrenByParent: Record<string, Array<number>>,
-  hiddenArr: Array<number>
-}
+
 export interface IOutline {
-  contentOutline: ContentOutline[],
-  hiddenOutline: HiddenOutline
+  contentOutlines: OutlineItemTree[],
   isOpen: boolean,
+  toggle: Record<string, boolean>,
+  setToggle: (index: string) => void,
   setIsOpen: () => void,
   setOutlines: () => void,
-  setDropDownContent: (id: string, level: number, statusParent: boolean) => void,
+}
+export interface OutlineItemTree {
+  id: string;
+  title: string;
+  level: number;
+  children: OutlineItemTree[];
+}
+export interface OutlineItem {
+  id: string;
+  title: string;
+  level: number;
+}
+
+export interface Queue {
+  level: number;
+  item: OutlineItemTree
 }
 
 export const getAllOutline = () => {
@@ -27,56 +34,65 @@ export const getAllOutline = () => {
     title: el.innerText,
     level: Number(el.tagName.replace('H', '')),
   }));
-
 }
 
-const addIconContentOutline = (outlines: ContentOutline[]): ContentOutline[] => {
-  return outlines.map((outline, idx) => {
-    const nextLevel = outlines[idx + 1]?.level;
-    if (outline.level < nextLevel) {
-      return {
-        ...outline,
-        isIcon: true
+const arrayToTree = (headings: OutlineItem[]) => {
+  const tree: OutlineItemTree[] = [];
+  let queue: Queue[] = [];
+
+  for (let i = 0; i < headings.length; i++) {
+    const head = headings[i];
+
+    const level = head.level;
+
+    if (!queue.length) {
+      const newItem = { ...head, ...{ children: [] } };
+
+      tree.push(newItem);
+      queue.push({ level, item: newItem });
+
+      continue;
+    }
+
+    let reset = false;
+
+    for (let i = queue.length - 1; i >= 0; i--) {
+      const parent = queue[i];
+      if (!parent) continue; // run next item if null
+      if (level > parent.level) {
+        const child = { ...head, ...{ children: [] } };
+        queue.push({ level, item: child });
+
+        parent.item.children.push(child);
+        break;
+      }
+
+      if (level <= parent.level) {
+        if (level === 1 || (i === 0 && level <= parent.level)) {
+          reset = true;
+          break;
+        }
       }
     }
-    return outline
-  });
-}
 
-const dataChildByParent = (outlines: ContentOutline[], idx: string, level: number): number[] => {
-  let indexChild = [];
-  for (let index = 0; index <= outlines.length - 1; index++) {
-    if (outlines[index].id === idx) {
-      for (let idex = index + 1; idex <= outlines.length - 1; idex++) {
-        if (outlines[idex].level <= level) {
-          return indexChild;
-        }
-        indexChild.push(idex);
-      }
+    if (reset) {
+      const newItem = { ...head, ...{ children: [] } };
+
+      tree.push(newItem);
+      queue = [{ level, item: newItem }];
+
+      continue;
     }
   }
 
-  return indexChild;
+  return tree;
 }
 
-const filterHidden = (idxChild: number[], hiddenArr: number[]): number[] => {
-  return hiddenArr.filter((val) => !idxChild.includes(val));
-}
-
-const getDataChildByParent = (outlines: ContentOutline[], idx: string, level: number, childrenByParent: Record<string, Array<number>>, key: string): number[] => {
-
-  return Object.keys(childrenByParent).length ?
-    childrenByParent[key] || dataChildByParent(outlines, idx, level) :
-    dataChildByParent(outlines, idx, level);
-}
 
 export const useOutlineStore = create<IOutline>((set) => ({
-  contentOutline: [],
+  contentOutlines: [],
   isOpen: true,
-  hiddenOutline: {
-    childrenByParent: {},
-    hiddenArr: []
-  },
+  toggle: {},
   setIsOpen: () => {
     set(
       produce<IOutline>((state) => {
@@ -84,33 +100,21 @@ export const useOutlineStore = create<IOutline>((set) => ({
       })
     )
   },
-  setDropDownContent: (idx: string, level: number, statusParent: boolean) => {
+  setToggle: (index) => {
     set(
       produce<IOutline>((state) => {
-        const { contentOutline, hiddenOutline } = state;
-        const { childrenByParent, hiddenArr } = hiddenOutline;
-        const key = `h${level}-${idx}`;
-        const childIndexByParent = getDataChildByParent(contentOutline, idx, level, childrenByParent, key);
-
-        const hidden = statusParent ? filterHidden(childIndexByParent, hiddenArr) : [...hiddenArr, ...childIndexByParent];
-
-        state.hiddenOutline = {
-          childrenByParent: {
-            ...childrenByParent,
-            [key]: childIndexByParent
-          },
-          hiddenArr: hidden
-        };
+        const updateToggle = { ...state.toggle };
+        updateToggle[index] = !updateToggle[index];
+        state.toggle = updateToggle;
       })
     )
   },
   setOutlines: () => {
     set(
       produce<IOutline>((state) => {
-        // If outline open is update heading 
         if (!state.isOpen) {
           const outlines = getAllOutline();
-          state.contentOutline = addIconContentOutline(outlines);
+          state.contentOutlines = arrayToTree(outlines);
         }
       })
     )
