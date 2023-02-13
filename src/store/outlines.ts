@@ -13,14 +13,17 @@ export interface OutlineItemTree {
   id: string;
   title: string;
   level: number;
-  parent?: string
-  children: OutlineItemTree[] | [];
+  children: OutlineItemTree[];
 }
 export interface OutlineItem {
   id: string;
   title: string;
   level: number;
-  parent?: string
+}
+
+export interface Queue {
+  level: number;
+  item: OutlineItemTree
 }
 
 export const getAllOutline = () => {
@@ -33,38 +36,58 @@ export const getAllOutline = () => {
   }));
 }
 
-/* It's adding a parentId to each item in the array. */
-const addParentId = (outline: OutlineItem[]) => {
-  const newOutline = [...outline];
-  /* It's going through the array backwards. */
-  for (let currentHeading = newOutline.length - 1; currentHeading >= 0; currentHeading--) {
-    /* It's going through the array backwards. */
-    for (let prevHeading = currentHeading - 1; prevHeading >= 0; prevHeading--) {
-      /* It's checking if the current item has a parent. */
-      if (newOutline[prevHeading].level < newOutline[currentHeading].level && !newOutline[currentHeading].hasOwnProperty("parent")) {
-        newOutline[currentHeading] = {
-          ...newOutline[currentHeading],
-          parent: newOutline[prevHeading].id
-        };
+const arrayToTree = (headings: OutlineItem[]) => {
+  const tree: OutlineItemTree[] = [];
+  let queue: Queue[] = [];
+
+  for (let i = 0; i < headings.length; i++) {
+    const head = headings[i];
+
+    const level = head.level;
+
+    if (!queue.length) {
+      const newItem = { ...head, ...{ children: [] } };
+
+      tree.push(newItem);
+      queue.push({ level, item: newItem });
+
+      continue;
+    }
+
+    let reset = false;
+
+    for (let i = queue.length - 1; i >= 0; i--) {
+      const parent = queue[i];
+      if (!parent) continue; // run next item if null
+      if (level > parent.level) {
+        const child = { ...head, ...{ children: [] } };
+        queue.push({ level, item: child });
+
+        parent.item.children.push(child);
         break;
       }
+
+      if (level <= parent.level) {
+        if (level === 1 || (i === 0 && level <= parent.level)) {
+          reset = true;
+          break;
+        }
+      }
     }
-    /*Items without a parent should be assigned to "0"*/
-    if (!newOutline[currentHeading].hasOwnProperty("parent")) {
-      newOutline[currentHeading] = {
-        ...newOutline[currentHeading],
-        parent: "0"
-      };
+
+    if (reset) {
+      const newItem = { ...head, ...{ children: [] } };
+
+      tree.push(newItem);
+      queue = [{ level, item: newItem }];
+
+      continue;
     }
   }
-  return newOutline;
-};
 
-/* It's converting an array of objects into a tree structure. */
-const arrayToTree = (arr: OutlineItem[], parent = "0"): OutlineItemTree[] => {
-  return arr.filter((item) => item?.parent === parent) /* It's filtering the array by the parent. */
-    .map((child) => ({ ...child, children: arrayToTree(arr, child.id) })); /* It's adding a children property to each item in the array. */
+  return tree;
 }
+
 
 export const useOutlineStore = create<IOutline>((set) => ({
   contentOutlines: [],
@@ -91,8 +114,7 @@ export const useOutlineStore = create<IOutline>((set) => ({
       produce<IOutline>((state) => {
         if (!state.isOpen) {
           const outlines = getAllOutline();
-          const newOutlines = addParentId(outlines);
-          state.contentOutlines = arrayToTree(newOutlines);
+          state.contentOutlines = arrayToTree(outlines);
         }
       })
     )

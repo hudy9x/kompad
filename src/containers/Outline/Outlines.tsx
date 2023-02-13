@@ -33,7 +33,6 @@ export const Outlines = ({ outlineTree }: {
   }
 
   const handleOutlineSmoothView = (id: string) => {
-    console.log(id, "string");
     const el = document.getElementById(`${id}`);
     if (!el) {
       return;
