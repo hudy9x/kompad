@@ -44,6 +44,7 @@ interface IUpdatedPad {
 }
 
 const COLLECTION_NAME = "pads";
+const RECENT_LIMIT = 20;
 
 /**
  * Save current editting pad
@@ -310,7 +311,7 @@ export const watchPads = (
 
   if (queries.recently) {
     conds.push(orderBy('updatedAt', 'desc'))
-    conds.push(limit(5))
+    conds.push(limit(RECENT_LIMIT))
   } else {
     conds.push(orderBy('createdAt', 'desc'))
   }
