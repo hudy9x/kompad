@@ -1,6 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Editor } from "@tiptap/react";
-import { Fragment, useEffect, useState, } from "react";
+import { useState, } from "react";
 import { OutsideClickHandler } from "../../components/OutsideClickHandler";
 import { Provider } from "./context";
 import { IWordCounter, WordCounterText } from "./types";
@@ -8,43 +8,42 @@ import { calChar, calLines, calMins, calWords } from "./utils";
 import { WordCounterModal } from "./WordCounterModal";
 
 const initialState = {
-  count: "0",
+  count: "",
   text: "Words",
 }
 
 export const WordCounter = ({ editor }: {
   editor: Editor
 }) => {
-  const [selectedWordCount, setSelectedWordCount] = useState<IWordCounter>(initialState);
-  const [isOpenWordCount, setIsOpenWordCount] = useState<boolean>(false);
+  const [counter, setCounter] = useState<IWordCounter>(initialState);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const handleIsOpenModal = () => {
-    setIsOpenWordCount(!isOpenWordCount);
+    setVisible(!visible);
   }
 
   const displayWordCount = () => {
-    if (selectedWordCount.text === WordCounterText.Words) {
-      return calWords(editor)
-    } else if (selectedWordCount.text === WordCounterText.Lines) {
-      return calLines(editor)
-    } else if (selectedWordCount.text === WordCounterText.Characters) {
-      return calChar(editor)
-    } else if (selectedWordCount.text === WordCounterText.Minutes) {
-      return calMins(editor)
+    if (counter.text === WordCounterText.Words) {
+      return `${calWords(editor)} Words`
+    } else if (counter.text === WordCounterText.Lines) {
+      return `${calLines(editor)} Lines`
+    } else if (counter.text === WordCounterText.Characters) {
+      return `${calChar(editor)} Characters`
+    } else if (counter.text === WordCounterText.Minutes) {
+      return `${calMins(editor)} Minutes`
     }
   }
 
   return (
-    <OutsideClickHandler onOutsideClick={() => setIsOpenWordCount(false)}>
+    <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
       <Menu as="div" className="relative inline-block text-left float-right">
         <div>
           <Menu.Button className="rounded-full flex items-center" onClick={() => handleIsOpenModal()}>
-            {isOpenWordCount ? <span>{selectedWordCount.count}{" "}{selectedWordCount.text}</span> : displayWordCount()}
+            {visible && counter.count ? <span>{counter.count}{" "}{counter.text}</span> : displayWordCount()}
           </Menu.Button>
         </div>
 
         <Transition
-          as={Fragment}
           enter="transition ease-out duration-100"
           enterFrom="transform opacity-0 scale-95"
           enterTo="transform opacity-100 scale-100"
@@ -55,13 +54,15 @@ export const WordCounter = ({ editor }: {
           <Provider
             props={{
               editor,
-              isOpenWordCount,
-              selectedWordCount,
-              setIsOpenWordCount,
-              setSelectedWordCount,
+              visible,
+              counter,
+              setVisible,
+              setCounter,
             }}
           >
-            <WordCounterModal />
+            <div>
+              <WordCounterModal />
+            </div>
           </Provider>
         </Transition>
       </Menu>

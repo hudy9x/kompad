@@ -10,10 +10,10 @@ export enum WordCounterText {
 
 export interface ProviderProps {
  editor: Editor;
- isOpenWordCount: boolean;
- selectedWordCount: IWordCounter;
- setIsOpenWordCount: Dispatch<SetStateAction<boolean>>;
- setSelectedWordCount: Dispatch<SetStateAction<IWordCounter>>;
+ visible: boolean;
+ setVisible: Dispatch<SetStateAction<boolean>>;
+ counter: IWordCounter;
+ setCounter: Dispatch<SetStateAction<IWordCounter>>;
 }
 
 export interface IWordCounter {

@@ -16,6 +16,6 @@ export const calLines = (editor: Editor): string => {
 
 export const calMins = (editor: Editor) => {
  const minutes = editor.getText().split("\n").length / WORDS_PER_MINUTE;
- const mins = editor.getText() === "" ? 0 : minutes <= 1 ? 1 : Math.round(minutes);
- return editor.getText().split("\n").length.toLocaleString("vi-VN", { maximumFractionDigits: 0 });
+ const roundedMinutes = editor.getText() === "" ? 0 : minutes <= 1 ? 1 : Math.round(minutes);
+ return Math.round(roundedMinutes);
 }

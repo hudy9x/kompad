@@ -8,10 +8,25 @@
 }
 
 .word-count-item:hover .word-count-text {
-color: var(--common-text-color); 
+ color: var(--common-text-color); 
 }
 
 .word-count-text {
  color: var(--common-dark-text-color);
 }
 
+.minutes {
+  background-color: var(--common-primary-color);
+}
+
+.lines {
+  background-color: var(--common-text-color);
+}
+
+.words {
+  background-color: var(--common-dark-text-color);
+}
+
+.characters {
+  background-color: var(--common-dark-text-color);
+}
