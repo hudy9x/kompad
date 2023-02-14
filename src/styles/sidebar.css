@@ -119,6 +119,10 @@
   background-color: var(--dropdown-bg-hover-color);
 }
 
+.outline-btn:hover {
+  color: var(--sidebar-text-color-hover);
+}
+
 .outline-scroll {
   height: calc(100vh - 61px - 44px);
   @apply overflow-y-auto;
@@ -128,6 +132,7 @@
   background-color: var(--dropdown-bg-hover-color);
 }
 
+
 .close-outline {
-  color: var(--sidebar-text-color);
+  color: var(--sidebar-text-color-hover);
 }

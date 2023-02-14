@@ -1,12 +1,12 @@
 import { useOutlineStore } from "../../store/outlines"
 import { MdKeyboardArrowLeft } from "react-icons/md"
 import { BsMenuButtonWideFill } from "react-icons/bs"
-import { Outlines } from "./Outlines";
 import { useEffect } from "react";
 import ScrollBar from "../../components/ScrollBar";
+import { Outlines } from "./Outlines";
 
 export const Outline = () => {
-  const { contentOutline, setIsOpen, setOutlines, isOpen } = useOutlineStore();
+  const { contentOutlines, setIsOpen, setOutlines, isOpen } = useOutlineStore();
 
   useEffect(() => {
     if (!isOpen) {
@@ -26,11 +26,8 @@ export const Outline = () => {
         </div>
       </div>
       <ScrollBar height="calc(100vh - 71px)">
-        {contentOutline.map((value, idx) => {
-          return <Outlines contentOutline={value} index={idx} />
-        })}
+        <Outlines outlineTree={contentOutlines} />
       </ScrollBar>
     </>
   )
 }
-

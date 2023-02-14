@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { message } from "../../components/message";
 import Modal from "../../components/Modal";
@@ -12,6 +12,7 @@ export default function PadNewModal() {
   const [visible, setVisible] = useState(false);
   const status = usePadStore((state) => state.newPadModalStatus);
   const setModalStatus = usePadStore((state) => state.setNewPadModalStatus);
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -25,19 +26,23 @@ export default function PadNewModal() {
     onSubmit: async (values) => {
       if (!user || !user.uid) return;
 
+      setModalStatus(false);
       try {
-        const planData = (await isPlanExceed()) as IPlan;
 
+        const planData = (await isPlanExceed()) as IPlan;
         const id = await addPad({
           uid: user.uid,
-          title: values.title,
+          title: values.title || "Untitled",
           shortDesc: values.desc,
         });
 
         updatePlanByUid({ currentRecord: planData.currentRecord + 1 });
         navigate(`/app/pad/${id}`);
         increaseNewPaddAdded();
-        setModalStatus(false);
+        formik.setValues({
+          title: '',
+          desc: ''
+        })
       } catch (error) {
         console.log(error);
         if (error === "EXCEED_PLAN") {
@@ -53,6 +58,16 @@ export default function PadNewModal() {
   useEffect(() => {
     setVisible(status);
   }, [status]);
+
+  useEffect(() => {
+    setTimeout(() => {
+
+      if (!inputRef.current) return;
+      inputRef.current.select()
+
+    }, 200);
+
+  }, [status])
 
   // update modal status in store when user closes modal via setVisible function
   useEffect(() => {
@@ -77,9 +92,11 @@ export default function PadNewModal() {
             </label>
             <div className="mt-1">
               <input
+                ref={inputRef}
                 type="text"
                 name="title"
                 id="pad-title"
+                placeholder="Untitled"
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 className=""

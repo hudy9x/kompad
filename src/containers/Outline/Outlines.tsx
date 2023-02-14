@@ -1,34 +1,10 @@
-import { useState } from "react";
-import { ContentOutline, useOutlineStore } from "../../store/outlines";
+import { OutlineItemTree, useOutlineStore } from "../../store/outlines";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md"
 
-export const Outlines = ({ contentOutline, index }: {
-  contentOutline: ContentOutline,
-  index: number
+export const Outlines = ({ outlineTree }: {
+  outlineTree: OutlineItemTree[]
 }) => {
-  const [toggleThisElement, setToggleThisElement] = useState(false);
-  const { hiddenOutline, setDropDownContent } = useOutlineStore();
-  const { level, title, id, isIcon } = contentOutline
-  const { hiddenArr } = hiddenOutline
-
-
-  const handleOutLineDropdown = (id: string, level: number) => {
-    setToggleThisElement((prev) => !prev);
-    setDropDownContent(id, level, toggleThisElement);
-  }
-
-  const displayIcon = () => {
-    if (!isIcon) {
-      return <div></div>
-    }
-
-    return (
-      <div className="outline-item-dropdown-icon" 
-        onClick={() => handleOutLineDropdown(id, level)} >
-        {toggleThisElement ? <MdKeyboardArrowUp/> : <MdKeyboardArrowDown /> }
-      </div>
-    )
-  }
+  const { toggle, setToggle } = useOutlineStore();
 
   const levelStyle = (level: number) => {
     switch (level) {
@@ -47,35 +23,38 @@ export const Outlines = ({ contentOutline, index }: {
     }
   }
 
-  const smoothScroll = () => {
+  const displayIcon = (index: string) => {
+    return (
+      <div className="outline-item-dropdown-icon"
+        onClick={() => setToggle(index)} >
+        {!toggle[index] ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />}
+      </div>
+    )
+  }
+
+  const handleOutlineSmoothView = (id: string) => {
     const el = document.getElementById(`${id}`);
     if (!el) {
       return;
     }
     el.scrollIntoView({
       "behavior": "smooth"
-    });
-  }
-
-
-  const renderOutline = () => {
-    const goToHeading = () => {
-      smoothScroll()
-    }
-
-    return (
-      !hiddenArr.includes(index) && (<div className={`flex outline-content ${levelStyle(level)} pr-4 `} 
-      onClick={goToHeading} >
-        <p className={`${isIcon ? '' : ''} w-full break-words cursor-pointer`} >{title}</p>
-        {displayIcon()}
-      </div>)
-    )
+    });;
   }
 
   return (
-    <div className="cursor-pointer">
-      {renderOutline()}
-    </div>
+    <ul>
+      {outlineTree.map((outline, index) => (
+        <li key={index} >
+          <div className={`${levelStyle(outline.level)} flex outline-content pr-4`} >
+            <p className=" w-full break-words cursor-pointer" onClick={() => handleOutlineSmoothView(outline.id)}>{outline.title}</p>
+            {outline.children.length > 0 && displayIcon(outline.id)}
+          </div>
+          {!toggle[outline.id] && outline.children.length > 0 && (
+            <Outlines outlineTree={outline.children} />
+          )}
+        </li>
+      ))}
+    </ul>
   )
 }
-
