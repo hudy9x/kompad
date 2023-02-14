@@ -1,32 +1,38 @@
-.word-count-title {
- @apply border-b;
- border-color: var(--common-border-light-color);
-}
 
 .word-count-item:hover {
  background-color: var(--dropdown-bg-hover-color);
 }
-
-.word-count-item:hover .word-count-text {
- color: var(--common-text-color); 
+.word-row {
+  @apply flex items-center justify-between px-4 py-1.5 cursor-pointer text-base;
 }
 
-.word-count-text {
- color: var(--common-dark-text-color);
+.word-row:hover{
+  background-color: var(--dropdown-bg-hover-color);
+}
+
+.word-value {
+  @apply rounded-xl px-2 text-[10px];
+}
+.word-title {
+  @apply opacity-80
+}
+
+.word-row:hover .word-title {
+  @apply opacity-100
 }
 
 .minutes {
-  background-color: var(--common-primary-color);
+  @apply bg-green-100/80 text-green-800;
 }
 
 .lines {
-  background-color: var(--common-text-color);
+  @apply bg-yellow-100/80 text-yellow-700;
 }
 
 .words {
-  background-color: var(--common-dark-text-color);
+  @apply bg-pink-100/80 text-pink-600;
 }
 
 .characters {
-  background-color: var(--common-dark-text-color);
+  @apply bg-indigo-100/80 text-indigo-600;
 }
