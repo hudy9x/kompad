@@ -13,6 +13,8 @@ interface IPadInfoContentProps {
   info: IPad;
 }
 
+export const EMPTY_TITLE = 'Untitled';
+
 function PadInfoContent({ info }: IPadInfoContentProps) {
   const inpRef = useRef<HTMLInputElement>(null);
   const { id } = useParams();
@@ -21,20 +23,17 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
     if (timeout) {
       clearTimeout(timeout);
     }
-
     timeout = setTimeout(() => {
-      // updatePad
       if (!inpRef.current || !id) {
         return;
       }
-
-      updatePadMetadata({ id, title: inpRef.current.value });
+      updatePadMetadata({ id, title: inpRef.current.value ? inpRef.current.value : EMPTY_TITLE });
     }, 500) as unknown as number;
   };
 
   useEffect(() => {
-    if (inpRef.current && info && info.title) {
-      inpRef.current.value = info.title;
+    if (inpRef.current && info) {
+      inpRef.current.value = info.title === EMPTY_TITLE ? '' : info.title;
     }
   }, [info]);
 
@@ -46,10 +45,9 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
       <div className="pad-infos relative" style={{ paddingTop: 70 }}>
         <input
           ref={inpRef}
-          // value={info.title}
           onChange={updateTitle}
           className="mb-5 h-12 sm:w-full md:w-[700px] xl:w-[800px] m-auto text-4xl font-extrabold outline-none bg-transparent text-gray-100"
-          placeholder="Untitled"
+          placeholder={EMPTY_TITLE}
         />
         <div className="pad-details space-y-2 text-gray-600 grid grid-cols-2">
           <div className="flex items-center text-sm">
