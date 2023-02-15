@@ -1,3 +1,3 @@
 ## Kompad
 
-release 0.19.4
+release 0.19.5
