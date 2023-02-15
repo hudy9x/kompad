@@ -1,0 +1,38 @@
+
+.word-count-item:hover {
+ background-color: var(--dropdown-bg-hover-color);
+}
+.word-row {
+  @apply flex items-center justify-between px-4 py-1.5 cursor-pointer text-base;
+}
+
+.word-row:hover{
+  background-color: var(--dropdown-bg-hover-color);
+}
+
+.word-value {
+  @apply rounded-xl px-2 text-[10px];
+}
+.word-title {
+  @apply opacity-80
+}
+
+.word-row:hover .word-title {
+  @apply opacity-100
+}
+
+.minutes {
+  @apply bg-green-100/80 text-green-800;
+}
+
+.lines {
+  @apply bg-yellow-100/80 text-yellow-700;
+}
+
+.words {
+  @apply bg-pink-100/80 text-pink-600;
+}
+
+.characters {
+  @apply bg-indigo-100/80 text-indigo-600;
+}
