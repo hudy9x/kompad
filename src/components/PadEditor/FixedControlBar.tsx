@@ -12,6 +12,7 @@ import {
   AiOutlineStrikethrough,
   AiOutlineTable,
   AiOutlineUnorderedList,
+  AiOutlineYoutube,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
@@ -199,6 +200,13 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           className={editor.isActive("codeBlock") ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
+        </button>
+
+        <button
+          onClick={() => editor.chain().focus().setCodeBlock().run()}
+          className={editor.isActive("codeBlock") ? "is-active" : ""}
+        >
+          <AiOutlineYoutube className="control-icon" />
         </button>
 
         <button

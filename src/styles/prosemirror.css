@@ -226,3 +226,16 @@
   outline: 0px solid transparent;    
   margin: auto;
 }
+
+.ProseMirror [data-youtube-video] {
+  @apply mb-8;
+}
+
+.ProseMirror .tableWrapper iframe {
+  max-width: 100%;
+}
+
+.ProseMirror .tableWrapper [data-youtube-video] {
+  @apply mb-0;
+}
+
