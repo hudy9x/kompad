@@ -15,6 +15,7 @@ import CharacterCount from "@tiptap/extension-character-count";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Youtube from "@tiptap/extension-youtube"
 import * as lowlight from "lowlight";
 
 import ControlBar from "./ControlBar";
@@ -134,6 +135,7 @@ const extensions = [
   }),
   CodeBlockLowlightConfigure,
   DiagramExtension,
+  Youtube.configure({})
 ];
 
 

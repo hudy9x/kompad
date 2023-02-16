@@ -2501,6 +2501,11 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-typography/-/extension-typography-2.0.0-beta.22.tgz#bed4b8970aadb9e729b0d2d266cffc2fb1250af6"
   integrity sha512-sTh1bxRTy2Q0tIGH4pjaadyo7dwoF+5545HiWbG5QsUp27I+FmPfgDYvc7aoPQG/6f5owULL9DD0I7ROYumYTw==
 
+"@tiptap/extension-youtube@^2.0.0-beta.217":
+  version "2.0.0-beta.217"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-youtube/-/extension-youtube-2.0.0-beta.217.tgz#4e2f8e10f8a7a9c6c8a1b0a69e7cf3dd94b979d9"
+  integrity sha512-PBSmf80Fqf/lK2A3krtc04YgvLfY5tf/GMWr9Pc47pGTPWKnS9p7zT2Cql58pElKZXMh/rf8vmF+9gt8X/OFZQ==
+
 "@tiptap/prosemirror-tables@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@tiptap/prosemirror-tables/-/prosemirror-tables-1.1.4.tgz#e123978f13c9b5f980066ba660ec5df857755916"
