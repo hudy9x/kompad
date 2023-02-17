@@ -12,7 +12,6 @@ import {
   AiOutlineStrikethrough,
   AiOutlineTable,
   AiOutlineUnorderedList,
-  AiOutlineYoutube,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";

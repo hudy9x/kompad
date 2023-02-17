@@ -6,14 +6,14 @@ import useInputAutoFocus from "../../hooks/useInputAutoFocus";
 import { message } from "../message";
 import Modal from "../Modal";
 
-export default function PadVideoModal({editor}: {editor: Editor}){
+export default function PadVideoModal({ editor }: { editor: Editor }) {
   const inpRef = useInputAutoFocus()
   const [visible, setvisible] = useState(false)
   const formik = useFormik({
     initialValues: {
       link: ""
     },
-    onSubmit: ({link}) => {
+    onSubmit: ({ link }) => {
       if (!link) {
         message.error("Please input video link!")
         return
@@ -29,6 +29,7 @@ export default function PadVideoModal({editor}: {editor: Editor}){
 
   useEffect(() => {
     !visible && formik.setFieldValue('link', '')
+    // eslint-disable-next-line
   }, [visible])
 
   return <>
