@@ -12,11 +12,13 @@ import {
   AiOutlineStrikethrough,
   AiOutlineTable,
   AiOutlineUnorderedList,
+  AiOutlineYoutube,
 } from "react-icons/ai";
 import { BsCardImage, BsCodeSlash } from "react-icons/bs";
 import { IoLinkOutline } from "react-icons/io5";
 // import { MdRedo, MdUndo } from "react-icons/md";
 import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
+import PadVideoModal from "./PadVideoModal";
 import { QuickAddTableModal } from "./QuickAddTableModal";
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
@@ -200,6 +202,8 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         >
           <BsCodeSlash className="control-icon" />
         </button>
+
+        <PadVideoModal editor={editor} />
 
         <button
           onClick={() => editor.chain().focus().insertContent(`<diagram-component graph=""></diagram-component>`).run()}
