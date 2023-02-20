@@ -10,6 +10,13 @@ jobs:
       RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
 
     steps:
+      - name: get the lastest commit 
+        id: get-last-commit
+        uses: actions/checkout@v3
+        with:
+          ref: main
+        run: echo -e "commit= build -> $(git log --oneline -1 --no-decorate)" >> "$GITHUB_OUTPUT"
+
       - name: checkout public release repo
         uses: actions/checkout@v3
         with:
@@ -22,7 +29,7 @@ jobs:
           git config user.name github-actions &&
           git config user.email github-actions@github.com &&
           git add . &&
-          git commit -m "new release" &&
+          git commit -m "${{steps.get-last-commit.outputs.commit}}" &&
           git push
 
       
