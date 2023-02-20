@@ -1,6 +1,5 @@
 ## Kompad
 
-release 0.19.8
+release 0.19.9
 
-embedding youtube video
-fix warning
+upgrade tauri
