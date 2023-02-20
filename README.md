@@ -1,6 +1,6 @@
 ## Kompad
 
-release 0.19.7
+release 0.19.8
 
 embedding youtube video
 fix warning
