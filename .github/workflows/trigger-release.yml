@@ -10,11 +10,13 @@ jobs:
       RELEASE_UPLOAD_ID: ${{ steps.create_release.outputs.id }}
 
     steps:
-      - name: get the lastest commit 
-        id: get-last-commit
+      - name: switch to main branch
         uses: actions/checkout@v3
         with:
           ref: main
+
+      - name: get the lastest commit
+        id: get-last-commit
         run: echo -e "commit= build -> $(git log --oneline -1 --no-decorate)" >> "$GITHUB_OUTPUT"
 
       - name: checkout public release repo
