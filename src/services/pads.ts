@@ -18,7 +18,7 @@ import {
 import { auth, db } from "../libs/firebase";
 import { setCache } from "../libs/localCache";
 import { IPadQuery } from "../store/pad";
-import { message } from '../components/message'
+import { message } from "../components/message";
 
 export interface IPad {
   id?: string;
@@ -275,7 +275,7 @@ export const updatePadMetadata = async ({
   }
 
   if (cover) {
-    data.cover = cover
+    data.cover = cover;
   }
 
   updateDoc(doc(db, "pads", id), data);
@@ -306,14 +306,14 @@ export const watchPads = (
   }
 
   if (queries.important) {
-    conds.push(where('important', '==', true))
+    conds.push(where("important", "==", true));
   }
 
   if (queries.recently) {
-    conds.push(orderBy('updatedAt', 'desc'))
-    conds.push(limit(RECENT_LIMIT))
+    conds.push(orderBy("updatedAt", "desc"));
+    conds.push(limit(RECENT_LIMIT));
   } else {
-    conds.push(orderBy('createdAt', 'desc'))
+    conds.push(orderBy("createdAt", "desc"));
   }
 
   // if (queries.tag) {
@@ -354,40 +354,40 @@ export const watchPads = (
 
 export const setImportant = async (id: string) => {
   try {
-    const selectedIDRef = doc(db, 'pads', id)
+    const selectedIDRef = doc(db, "pads", id);
 
-    const pad = await getDoc(doc(db, 'pads', id))
-    if (!pad.exists()) return 0
+    const pad = await getDoc(doc(db, "pads", id));
+    if (!pad.exists()) return 0;
 
-    const padData = pad.data() as IPad
+    const padData = pad.data() as IPad;
     if (padData.important) {
-      message.success('Remove important')
+      message.success("Remove important");
     } else {
-      message.success('Important pad successfully')
+      message.success("Important pad successfully");
     }
     await updateDoc(selectedIDRef, {
       important: !padData.important,
-    })
+    });
   } catch (err) {
-    console.log(err)
-    return 0
+    console.log(err);
+    return 0;
   }
-}
+};
 
 export const duplicatePad = async (id: string) => {
   try {
-    const pad = await getDoc(doc(db, 'pads', id))
+    const pad = await getDoc(doc(db, "pads", id));
     if (!pad.exists()) return 0;
 
-    const padData = pad.data() as IPad
+    const padData = pad.data() as IPad;
     await addDoc(collection(db, COLLECTION_NAME), {
       ...padData,
       title: `${padData.title}-Copy`,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
-    })
+    });
   } catch (err) {
-    console.log(err)
-    return 0
+    console.log(err);
+    return 0;
   }
-}
+};

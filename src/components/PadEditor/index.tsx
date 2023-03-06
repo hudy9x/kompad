@@ -36,6 +36,7 @@ import { pressed } from "../Shortcut/Shortcut";
 import { guidGenerator } from "../../libs/utils";
 import { OutlineButton } from "../../containers/Outline/OutlineButton";
 import { WordCounter } from "../../containers/WordCounter";
+import { decryptMessage, encryptMessage, generateKey } from "../../libs/secure";
 
 interface IPadEditorProp {
   id: string;
@@ -168,6 +169,16 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
 
       timer = setTimeout(() => {
         const html = editor.getHTML();
+
+        generateKey().then(({key, iv}) => {
+          encryptMessage(html, key, iv).then((cypherMessage) => {
+            decryptMessage(cypherMessage, key, iv).then(res => {
+              console.log(res)
+            })
+          })
+
+        })
+
         updatePad({ id, content: html });
       }, 600) as unknown as number;
     }
