@@ -218,7 +218,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <ControlBar editor={editor} />
         <div className="character-count">
           <div className="bottom-bar">
-            <OutlineButton />
+            <OutlineButton />content
             {editor && <WordCounter editor={editor} />}
           </div>
         </div>
