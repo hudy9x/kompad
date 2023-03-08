@@ -17,6 +17,7 @@ function PadContent() {
           ...prevPad,
           ...{
             content: res.content,
+            cipherContent: res.cipherContent,
             createdAt: res.createdAt,
             tags: res.tags,
             title: res.title,

@@ -29,6 +29,7 @@ export interface IPad {
   folder?: string;
   cover?: string;
   content: string;
+  cipherContent: string;
   createdAt: Timestamp;
   updatedAt: Timestamp;
   important: boolean;
@@ -80,6 +81,7 @@ export const getPadsByUidQuery = (
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
@@ -112,6 +114,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
@@ -340,6 +343,7 @@ export const watchPads = (
         tags: padData.tags,
         folder: padData.folder,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: padData.important,
