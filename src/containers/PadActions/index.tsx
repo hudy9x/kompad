@@ -7,6 +7,7 @@ import { PadArchive } from "./PadArchive";
 import { PadDuplicate } from "./PadDuplicate";
 import { PadEdit } from "./PadEdit";
 import PadDelete from "./PadDelete";
+import { PadLock } from "./PadLock";
 
 export default function PadActions({ data }: { data: IPad }) {
   return (
@@ -44,6 +45,9 @@ export default function PadActions({ data }: { data: IPad }) {
             </Menu.Item>
           </div>
           <div className="py-1">
+            <Menu.Item as="div">
+              <PadLock data={data} />
+            </Menu.Item>
             <Menu.Item as="div">
               <PadDelete idx={data.id!} />
             </Menu.Item>

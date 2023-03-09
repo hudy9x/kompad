@@ -32,6 +32,7 @@ export interface IPad {
   createdAt: Timestamp;
   updatedAt: Timestamp;
   important: boolean;
+  lock: boolean;
 }
 
 interface IUpdatedPad {
@@ -83,6 +84,7 @@ export const getPadsByUidQuery = (
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
+        lock: false
       });
     });
 
@@ -115,6 +117,7 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
+        lock: false
       });
     });
 
@@ -343,6 +346,7 @@ export const watchPads = (
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: padData.important,
+        lock: padData.lock
       });
     });
 
@@ -385,6 +389,28 @@ export const duplicatePad = async (id: string) => {
       title: `${padData.title}-Copy`,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}
+
+export const setLock = async (id: string) => {
+  try {
+    const selectedIDRef = doc(db, 'pads', id)
+
+    const pad = await getDoc(doc(db, 'pads', id))
+    if (!pad.exists()) return 0;
+
+    const padData = pad.data() as IPad
+    if (padData.lock) {
+      message.success('Remove lock')
+    } else {
+      message.success('Lock pad successfully')
+    }
+    await updateDoc(selectedIDRef, {
+      lock: !padData.lock,
     })
   } catch (err) {
     console.log(err)

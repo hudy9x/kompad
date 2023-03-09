@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PadEditor from "../../components/PadEditor";
 import { getPadById, IPad, saveCurrentPad } from "../../services/pads";
+import { useModalStore } from "../../store/modal";
 
 function PadContent() {
   const { id } = useParams();
   const [pad, setPad] = useState<IPad>();
+  const navigate = useNavigate();
+  const lockStatus = useModalStore((state) => state.modals.lock);
 
   useEffect(() => {
     if (id) {
@@ -26,12 +29,19 @@ function PadContent() {
             cover: res.cover || '',
             id: res.id,
             shortDesc: res.shortDesc,
-            important: res.important
+            important: res.important,
+            lock: res.lock
           },
         }));
       });
     }
   }, [id]);
+
+  useEffect(() => {
+    if(pad?.lock && !lockStatus) {
+      navigate(`/app/pad/lock/${id}`)
+    }
+  }, [pad])
 
   return (
     <>

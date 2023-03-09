@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import LayoutClear from "./components/Layout/LayoutClear";
+import { PadLockModal } from "./components/PadEditor/PadLockModal";
 // import LayoutSetting from "./components/Layout/LayoutSetting";
 import PrivateRoute from "./components/PrivateRoute";
 import FileManager from "./containers/AdvancedSettings/FileManager";
@@ -55,6 +56,7 @@ function App() {
                 }
               >
                 <Route index element={<PadEmpty />}></Route>
+                <Route path="lock/:id" element={<PadLockModal />}></Route>
                 <Route path=":id" element={<PadContent />}></Route>
               </Route>
             </Route>

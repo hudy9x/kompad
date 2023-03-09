@@ -30,6 +30,7 @@ function ShortcutModal() {
     { title: "Open search palette", kbds: ["Alt", "P"] },
     { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },
     { title: "Close modal window", kbds: ["Esc"] },
+    { title: "Lock pad", kbds: ["Ctrl", "L"] },
   ];
 
   return (

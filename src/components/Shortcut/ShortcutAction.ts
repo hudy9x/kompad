@@ -6,6 +6,7 @@ import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
 import { IThemeStore, setThemeStoreState } from "../../store/themes";
 import { IOutline, setIsOpen } from "../../store/outlines";
+import { setLock } from "../../services/pads";
 
 export interface KeyBoardProps {
   shift: boolean,
@@ -23,6 +24,7 @@ export interface KeyBoardProps {
   n: boolean,
   d: boolean,
   o: boolean,
+  l: boolean,
 }
 
 const preventEvent = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent) => {
@@ -30,7 +32,7 @@ const preventEvent = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent) =
     ev.preventDefault()
 }
 
-export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent, pressed?: KeyBoardProps, editor?: Editor) => {
+export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent, pressed?: KeyBoardProps, editor?: Editor, id?: string) => {
 
   const key = ev.key.toLowerCase();
   if (pressed && editor) {
@@ -141,6 +143,15 @@ export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | Keyboar
           state.isOpen = !state.isOpen
         })
       )
+    }
+
+    // Ope/close lock pad
+    if (pressed.control && pressed.l) {
+      preventEvent(ev);
+      if(!id) {
+        return;
+      }
+      setLock(id);
     }
   }
 
