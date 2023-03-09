@@ -14,37 +14,38 @@ import {
   Unsubscribe,
   updateDoc,
   where,
-} from "firebase/firestore";
-import { auth, db } from "../libs/firebase";
-import { setCache } from "../libs/localCache";
-import { IPadQuery } from "../store/pad";
-import { message } from '../components/message'
+} from "firebase/firestore"
+import { auth, db } from "../libs/firebase"
+import { setCache } from "../libs/localCache"
+import { IPadQuery } from "../store/pad"
+import { message } from "../components/message"
 
 export interface IPad {
-  id?: string;
-  uid: string;
-  title: string;
-  shortDesc?: string;
-  tags: string[];
-  folder?: string;
-  cover?: string;
-  content: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  important: boolean;
+  id?: string
+  uid: string
+  title: string
+  shortDesc?: string
+  tags: string[]
+  folder?: string
+  cover?: string
+  content: string
+  cipherContent: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  important: boolean
 }
 
 interface IUpdatedPad {
-  id: string;
-  title?: string;
-  tags?: string[];
-  folder?: string;
-  cover?: string;
-  updatedAt?: Timestamp;
+  id: string
+  title?: string
+  tags?: string[]
+  folder?: string
+  cover?: string
+  updatedAt?: Timestamp
 }
 
-const COLLECTION_NAME = "pads";
-const RECENT_LIMIT = 20;
+const COLLECTION_NAME = "pads"
+const RECENT_LIMIT = 20
 
 /**
  * Save current editting pad
@@ -53,8 +54,8 @@ const RECENT_LIMIT = 20;
  * @param id
  */
 export const saveCurrentPad = (id: string) => {
-  setCache("currentPad", id);
-};
+  setCache("currentPad", id)
+}
 
 export const getPadsByUidQuery = (
   uid: string,
@@ -64,31 +65,32 @@ export const getPadsByUidQuery = (
     collection(db, "pads"),
     where("uid", "==", uid),
     orderBy("updatedAt", "desc")
-  );
+  )
 
   onSnapshot(q, (pads) => {
     if (pads.empty) {
-      return [];
+      return []
     }
 
-    const padList: IPad[] = [];
+    const padList: IPad[] = []
     pads.forEach((pad) => {
-      const padData = pad.data() as IPad;
+      const padData = pad.data() as IPad
       padList.push({
         id: pad.id,
         uid: padData.uid,
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
-      });
-    });
+      })
+    })
 
-    callback(padList);
-  });
-};
+    callback(padList)
+  })
+}
 
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
   try {
@@ -96,48 +98,49 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
       collection(db, COLLECTION_NAME),
       where("uid", "==", uid),
       orderBy("updatedAt", "desc")
-    );
-    const pads = await getDocs(q);
+    )
+    const pads = await getDocs(q)
 
     if (pads.empty) {
-      return [];
+      return []
     }
 
-    const padList: IPad[] = [];
+    const padList: IPad[] = []
     pads.forEach((pad) => {
-      const padData = pad.data() as IPad;
+      const padData = pad.data() as IPad
       padList.push({
         id: pad.id,
         uid: padData.uid,
         title: padData.title,
         tags: padData.tags,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
-      });
-    });
+      })
+    })
 
-    return padList;
+    return padList
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const getPadById = async (id: string): Promise<IPad | null> => {
   try {
-    const pad = await getDoc(doc(db, COLLECTION_NAME, id));
+    const pad = await getDoc(doc(db, COLLECTION_NAME, id))
     if (pad.exists()) {
-      return pad.data() as IPad;
+      return pad.data() as IPad
     }
 
-    return null;
+    return null
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const watchPadById = (
   id: string,
@@ -145,18 +148,18 @@ export const watchPadById = (
 ): Unsubscribe => {
   const unsub = onSnapshot(doc(db, COLLECTION_NAME, id), (pad) => {
     if (!pad.exists()) {
-      cb(true);
-      return;
+      cb(true)
+      return
     }
 
-    const padData = pad.data() as IPad;
-    padData.id = pad.id;
+    const padData = pad.data() as IPad
+    padData.id = pad.id
 
-    cb(false, padData);
-  });
+    cb(false, padData)
+  })
 
-  return unsub;
-};
+  return unsub
+}
 
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
@@ -166,57 +169,58 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
       shortDesc,
       tags: [],
       content: "Write something 💪🏻",
+      cipherContent: "",
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
-    });
+    })
 
-    return docRef.id;
+    return docRef.id
   } catch (error) {
-    return null;
+    return null
   }
-};
+}
 
 export const delPad = async (id: string) => {
   try {
-    await deleteDoc(doc(db, "pads", id));
+    await deleteDoc(doc(db, "pads", id))
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const delTagByPadId = async (pid: string, tid: string) => {
   try {
-    if (!pid || !tid) return 0;
+    if (!pid || !tid) return 0
 
-    const pad = await getDoc(doc(db, "pads", pid));
-    if (!pad.exists()) return 0;
+    const pad = await getDoc(doc(db, "pads", pid))
+    if (!pad.exists()) return 0
 
-    const padData = pad.data() as IPad;
+    const padData = pad.data() as IPad
 
     await updateDoc(doc(db, "pads", pid), {
       tags: padData.tags.filter((t) => t !== tid),
-    });
+    })
 
-    return 1;
+    return 1
   } catch (error) {
-    console.log(error);
-    return 0;
+    console.log(error)
+    return 0
   }
-};
+}
 export const delFolderByPadId = async (pid: string) => {
   try {
-    if (!pid) return 0;
+    if (!pid) return 0
 
     await updateDoc(doc(db, "pads", pid), {
       folder: "",
-    });
+    })
 
-    return 1;
+    return 1
   } catch (error) {
-    console.log(error);
-    return 0;
+    console.log(error)
+    return 0
   }
-};
+}
 
 export const quickAddPad = async (uid: string) => {
   try {
@@ -227,29 +231,33 @@ export const quickAddPad = async (uid: string) => {
       content: "Write something 💪🏻",
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
-    });
+    })
 
-    return docRef.id;
+    return docRef.id
   } catch (error) {
-    return null;
+    return null
   }
-};
+}
 
 export const updatePad = async ({
   id,
   // title,
   content,
+  cipherContent,
 }: {
-  id: string;
+  id: string
   // title: string;
-  content: string;
+  content: string
+  cipherContent: string
 }) => {
+  console.log(content)
   updateDoc(doc(db, "pads", id), {
-    content,
+    // content,
+    cipherContent,
     // title,
     updatedAt: Timestamp.now(),
-  });
-};
+  })
+}
 
 export const updatePadMetadata = async ({
   id,
@@ -260,60 +268,60 @@ export const updatePadMetadata = async ({
 }: IUpdatedPad) => {
   const data: Partial<IUpdatedPad> = {
     updatedAt: Timestamp.now(),
-  };
+  }
 
   if (title) {
-    data.title = title;
+    data.title = title
   }
 
   if (tags && tags.length) {
-    data.tags = tags;
+    data.tags = tags
   }
 
   if (folder) {
-    data.folder = folder;
+    data.folder = folder
   }
 
   if (cover) {
     data.cover = cover
   }
 
-  updateDoc(doc(db, "pads", id), data);
-};
+  updateDoc(doc(db, "pads", id), data)
+}
 
 export const watchPads = (
   queries: IPadQuery,
   cb: (err: boolean, data: IPad[]) => void
 ): Unsubscribe | null => {
-  const user = auth.currentUser;
+  const user = auth.currentUser
 
   if (!user) {
-    cb(true, []);
-    return null;
+    cb(true, [])
+    return null
   }
 
   const conds: QueryConstraint[] = [
     where("uid", "==", user.uid),
     //    orderBy("updatedAt", "desc"),
-  ];
+  ]
 
   if (queries.tag) {
-    conds.push(where("tags", "array-contains", queries.tag));
+    conds.push(where("tags", "array-contains", queries.tag))
   }
 
   if (queries.folder) {
-    conds.push(where("folder", "==", queries.folder));
+    conds.push(where("folder", "==", queries.folder))
   }
 
   if (queries.important) {
-    conds.push(where('important', '==', true))
+    conds.push(where("important", "==", true))
   }
 
   if (queries.recently) {
-    conds.push(orderBy('updatedAt', 'desc'))
+    conds.push(orderBy("updatedAt", "desc"))
     conds.push(limit(RECENT_LIMIT))
   } else {
-    conds.push(orderBy('createdAt', 'desc'))
+    conds.push(orderBy("createdAt", "desc"))
   }
 
   // if (queries.tag) {
@@ -326,13 +334,13 @@ export const watchPads = (
   //   orderBy("updatedAt", "desc")
   // );
 
-  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds]);
+  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
 
   const unsub = onSnapshot(q, (qSnapshot) => {
-    const pads: IPad[] = [];
+    const pads: IPad[] = []
 
     qSnapshot.docs.forEach((doc) => {
-      const padData = doc.data() as IPad;
+      const padData = doc.data() as IPad
       pads.push({
         id: doc.id,
         uid: padData.uid,
@@ -340,30 +348,31 @@ export const watchPads = (
         tags: padData.tags,
         folder: padData.folder,
         content: padData.content,
+        cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: padData.important,
-      });
-    });
+      })
+    })
 
-    cb(false, pads);
-  });
+    cb(false, pads)
+  })
 
-  return unsub;
-};
+  return unsub
+}
 
 export const setImportant = async (id: string) => {
   try {
-    const selectedIDRef = doc(db, 'pads', id)
+    const selectedIDRef = doc(db, "pads", id)
 
-    const pad = await getDoc(doc(db, 'pads', id))
+    const pad = await getDoc(doc(db, "pads", id))
     if (!pad.exists()) return 0
 
     const padData = pad.data() as IPad
     if (padData.important) {
-      message.success('Remove important')
+      message.success("Remove important")
     } else {
-      message.success('Important pad successfully')
+      message.success("Important pad successfully")
     }
     await updateDoc(selectedIDRef, {
       important: !padData.important,
@@ -376,8 +385,8 @@ export const setImportant = async (id: string) => {
 
 export const duplicatePad = async (id: string) => {
   try {
-    const pad = await getDoc(doc(db, 'pads', id))
-    if (!pad.exists()) return 0;
+    const pad = await getDoc(doc(db, "pads", id))
+    if (!pad.exists()) return 0
 
     const padData = pad.data() as IPad
     await addDoc(collection(db, COLLECTION_NAME), {
