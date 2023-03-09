@@ -24,7 +24,7 @@ export const encryptText = (text: string) => {
 export const decryptText = (cipherText: string) => {
   const key = getSecretKeyFromCache()
   try {
-const bytes = AES.decrypt(cipherText, key)
+    const bytes = AES.decrypt(cipherText, key)
     return bytes.toString(enc.Utf8)
   } catch (error) {
     console.log(error)
@@ -61,14 +61,21 @@ export const setSecretKey = async (uid: string, key: string) => {
   })
 }
 
-const secretKeySchema = new PasswordValidator();
+export const secretKeySchema = new PasswordValidator()
 secretKeySchema
- .is().min(4)
- .is().max(10)
- .has().uppercase()
- .has().lowercase()
- .has().digits(1)
- .has().not().spaces();
+  .is()
+  .min(4)
+  .is()
+  .max(10)
+  .has()
+  .uppercase()
+  .has()
+  .lowercase()
+  .has()
+  .digits(1)
+  .has()
+  .not()
+  .spaces()
 
 export const getNSaveSecretKey = async (uid: string) => {
   try {
@@ -90,7 +97,7 @@ export const getNSaveSecretKey = async (uid: string) => {
           setSecretKey(uid, newKey)
           localStorage.setItem("SECRET_KEY", newKey || "")
           message.success("Your secret key is set successfully 🎈 !")
-        }
+        },
       })
     } else {
       localStorage.setItem("SECRET_KEY", key || "")
