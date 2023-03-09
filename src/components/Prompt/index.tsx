@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { HiOutlineExclamation } from "react-icons/hi";
 import "./style.css";
 
@@ -44,7 +44,7 @@ function Prompt({ title, desc, onOk, onCancel, closePrompt, onValidate, trailing
 
   const onSubmitHandler = () => {
     let validate = true;
-    
+
     if (onValidate) {
       validate = onValidate(val)
     }
@@ -62,7 +62,9 @@ function Prompt({ title, desc, onOk, onCancel, closePrompt, onValidate, trailing
   }
 
   useEffect(() => {
-    inpRef.current && inpRef.current.focus()
+    setTimeout(() => {
+      inpRef.current && inpRef.current.focus()
+    }, 500);
   }, [inpRef])
 
   return (
@@ -90,15 +92,7 @@ function Prompt({ title, desc, onOk, onCancel, closePrompt, onValidate, trailing
         />
       </div>
 
-      <p className="pt-4 w-72 text-sm whitespace-pre-line">
-        Make sure your secret match these conditions:
-        <p>- Minimize 4 characters</p>
-        <p>- Maximize 10 characters</p>
-        <p>- Has an uppercase</p>
-        <p>- Has a lowercase</p>
-        <p>- At least a digit 0-9</p>
-        <p>- Do not contains space</p>
-      </p>
+      {trailingDesc}
 
       <div className="pt-5">
         <div className="grid grid-cols-2 gap-4">
@@ -122,14 +116,15 @@ function Prompt({ title, desc, onOk, onCancel, closePrompt, onValidate, trailing
 
 export default function promptBox(props: Omit<Props, 'closePrompt'>) {
   const container = _createContainer();
+  const root = createRoot(container)
 
   const closePrompt = () => {
-    unmountComponentAtNode(container)
+    root.unmount()
     setTimeout(() => {
       document.querySelector('.prompt-container')?.remove()
     }, 100);
   }
-  const mergedProps = {...props, ...{closePrompt: closePrompt}}
+  const mergedProps = { ...props, ...{ closePrompt: closePrompt } }
 
-  render(<Prompt {...mergedProps} />, container);
+  root.render(<Prompt {...mergedProps} />);
 }

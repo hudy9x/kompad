@@ -180,11 +180,20 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       editor.commands.clearContent()
       editor.commands.setContent(content)
       setTimeout(() => {
+        editor.commands.focus()
         setOutlines()
       }, 200)
     }
     // eslint-disable-next-line
   }, [content])
+
+  useEffect(() => {
+    if (editor) {
+      setTimeout(() => {
+        editor.commands.focus()
+      }, 250);
+    }
+  }, [editor])
 
   return (
     <ErrorCapture>
