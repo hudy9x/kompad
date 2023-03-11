@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "kompad",
-    "version": "0.19.9"
+    "version": "0.21.0"
   },
   "tauri": {
     "allowlist": {

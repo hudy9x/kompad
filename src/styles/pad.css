@@ -44,11 +44,11 @@
   max-width: calc(100% - 15px);
 }
 
-.pad-unimportant-icon { 
+.pad-un-icon { 
   color: var(--common-dark-text-color);
 }
 
-.pad-important-icon { 
+.pad-icon { 
   color: var(--common-text-color);
 }
 

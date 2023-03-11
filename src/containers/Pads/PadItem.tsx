@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import { HiOutlineStar, HiStar } from 'react-icons/hi'
 import PadTag from "../../components/PadEditor/PadTag";
@@ -14,7 +13,7 @@ interface IPadItemProps {
   pad: IPad
   active: boolean
 }
-// dong vao la false // mo ra la true
+
 export default function PadItem({ active, pad }: IPadItemProps) {
   const { visible: isContextMenuDisplayed } = useContextMenu()
   const d = dayjs(pad.updatedAt.toDate());
@@ -29,7 +28,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
       : ""
       } ${isContextMenuDisplayed ? 'context-menu-opened' : ''} pad-item group`}
   >
-    <Link onClick={onClick} to={!pad.lock ? `/app/pad/${pad.id}`: `/app/pad/lock/${pad.id}`}>
+    <Link onClick={onClick} to={!pad.lock ? `/app/pad/${pad.id}` : `/app/pad/lock/${pad.id}`}>
       <div className="flex flex-col justify-between">
         <div className="min-w-0 flex-1">
           <div className="block focus:outline-none">
@@ -40,7 +39,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
                 <i>{d.fromNow()}</i>
               </time>
               <div>
-              {!pad.lock ? <AiOutlineUnlock/>: <AiOutlineLock/> } 
+                {!pad.lock ? <AiOutlineUnlock className="pad-icon" /> : <AiOutlineLock className="pad-un-icon" />}
               </div>
             </div>
 
@@ -55,12 +54,11 @@ export default function PadItem({ active, pad }: IPadItemProps) {
       </div>
       <PadTag className="mt-1" selected={pad.tags} />
       <div className="pad-as-important absolute bottom-5 right-4">
-        {pad.important ? <HiStar className="pad-important-icon" /> : <HiOutlineStar className="pad-unimportant-icon" />}
+        {pad.important ? <HiStar className="pad-icon" /> : <HiOutlineStar className="pad-un-icon" />}
       </div>
     </Link>
     <ContextMenu.Items>
       <PadActions data={pad} />
     </ContextMenu.Items>
   </div>
-
 }
