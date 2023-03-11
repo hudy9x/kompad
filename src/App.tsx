@@ -37,17 +37,17 @@ function App() {
   return (
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
-        <AppMiddleware>
-          <ThemeSetting>
-            <Routes>
-              <Route path="/" element={<LayoutClear />}>
-                <Route index element={<Checking />} />
-                <Route path="signin" element={<Signin />} />
-                <Route path="signout" element={<Signout />} />
-                <Route path="signup" element={<Signup />} />
-                <Route path="forgot-password" element={<ForgotPassword />} />
-                <Route path="email-verification" element={<EmailVerification />} />
-              </Route>
+        <ThemeSetting>
+          <Routes>
+            <Route path="/" element={<LayoutClear />}>
+              <Route index element={<Checking />} />
+              <Route path="signin" element={<Signin />} />
+              <Route path="signout" element={<Signout />} />
+              <Route path="signup" element={<Signup />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="email-verification" element={<EmailVerification />} />
+            </Route>
+            <AppMiddleware>
               <Route path="/app" element={<Layout />}>
                 <Route
                   path="pad"
@@ -62,28 +62,28 @@ function App() {
                   <Route path=":id" element={<PadContent />}></Route>
                 </Route>
               </Route>
-              <Route
-                path="setting"
-                element={
-                  <PrivateRoute>
-                    <React.Suspense fallback={<>...</>}>
-                      <LayoutSetting />
-                    </React.Suspense>
-                  </PrivateRoute>
-                }
-              >
-                {/* <Route index element={<PadEmpty />}></Route> */}
-                <Route path="profile" element={<Profile />}></Route>
-                <Route path="password" element={<Password />}></Route>
-                <Route path="plan" element={<Plan />}></Route>
-                <Route path="theme" element={<ThemeColor />}></Route>
-                <Route path="file-manager" element={<FileManager />}></Route>
-                <Route path="*" element={<NotFound />}></Route>
-              </Route>
+            </AppMiddleware>
+            <Route
+              path="setting"
+              element={
+                <PrivateRoute>
+                  <React.Suspense fallback={<>...</>}>
+                    <LayoutSetting />
+                  </React.Suspense>
+                </PrivateRoute>
+              }
+            >
+              {/* <Route index element={<PadEmpty />}></Route> */}
+              <Route path="profile" element={<Profile />}></Route>
+              <Route path="password" element={<Password />}></Route>
+              <Route path="plan" element={<Plan />}></Route>
+              <Route path="theme" element={<ThemeColor />}></Route>
+              <Route path="file-manager" element={<FileManager />}></Route>
               <Route path="*" element={<NotFound />}></Route>
-            </Routes>
-          </ThemeSetting>
-        </AppMiddleware>
+            </Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        </ThemeSetting>
       </AuthenProvider>
     </div>
   );

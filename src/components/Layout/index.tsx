@@ -4,17 +4,20 @@ import Sidebar from "../../containers/Sidebar";
 import Shortcut from "../Shortcut/Shortcut";
 import { isDesktopApp } from "../../libs/utils";
 import ThemeSelection from "../../containers/Theme/ThemeSelection";
+import AppMiddleware from "../../providers/AppMiddleware";
 
 export default function Layout() {
   return (
-    <>
-      <Sidebar />
-      <main>
-        <Outlet />
-      </main>
-      <Shortcut />
-      <ThemeSelection />
-      {isDesktopApp() ? <Autoupdate /> : null}
-    </>
+    <AppMiddleware>
+      <>
+        <Sidebar />
+        <main>
+          <Outlet />
+        </main>
+        <Shortcut />
+        <ThemeSelection />
+        {isDesktopApp() ? <Autoupdate /> : null}
+      </>
+    </AppMiddleware>
   );
 }
