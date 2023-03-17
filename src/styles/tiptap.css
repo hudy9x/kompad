@@ -25,6 +25,14 @@
   @apply sm:relative sm:py-4 sm:w-[700px] xl:w-[800px] sm:m-auto sm:overflow-x-hidden;
 }
 
+.open-document-btn {
+  @apply hidden;
+}
+
+.is-web-app .open-document-btn {
+  @apply block m-auto mt-3 sm:hidden
+}
+
 .tiptab-format-actions {
   @apply flex flex-nowrap py-2 overflow-x-auto justify-center;
   @apply bg-gray-900 rounded-md;

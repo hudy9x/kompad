@@ -1,6 +1,12 @@
 import FolderPng from "../../assets/folders.png";
+import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator";
 
 export default function PadEmpty() {
+  const { setSecondSidebarVisible } = useMobileNavigator()
+  const open = () => {
+    setSecondSidebarVisible()
+  }
+
   return (
     <main
       className="flex items-center justify-center"
@@ -15,6 +21,7 @@ export default function PadEmpty() {
         <p className="mt-1 text-base text-gray-500">
           Click the "New Pad" button to create one
         </p>
+        <button className="btn btn-primary open-document-btn" onClick={open} >Open document</button>
       </div>
     </main>
   );

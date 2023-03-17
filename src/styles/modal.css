@@ -11,3 +11,7 @@
   border-top-color: var(--common-border-light-color);
 }
 
+.is-web-app .main-modal {
+  @apply z-50;
+}
+
