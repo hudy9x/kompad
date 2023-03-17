@@ -1,51 +1,53 @@
-import { Fragment, useEffect, useState } from "react";
-import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi";
-import { Combobox, Dialog, Transition } from "@headlessui/react";
-import { useAuth } from "../../hooks/useAuth";
-import { IPad, getPadsByUid } from "../../services/pads";
-import { useNavigate } from "react-router-dom";
-import { usePadStore } from "../../store";
+import { Fragment, useEffect, useState } from "react"
+import { HiOutlineCheck, HiOutlineSearch } from "react-icons/hi"
+import { Combobox, Dialog, Transition } from "@headlessui/react"
+import { useAuth } from "../../hooks/useAuth"
+import { IPad, getPadsByUid } from "../../services/pads"
+import { useNavigate } from "react-router-dom"
+import { usePadStore } from "../../store"
+import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator"
 
 export default function PadSearch() {
-  const { user } = useAuth();
-  const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(false);
-  const [pads, setPads] = useState<IPad[]>([]);
+  const { user } = useAuth()
+  const [query, setQuery] = useState("")
+  const [open, setOpen] = useState(false)
+  const [pads, setPads] = useState<IPad[]>([])
 
-  const navigate = useNavigate();
-  const searchModalStatus = usePadStore((state) => state.searchModalStatus);
+  const navigate = useNavigate()
+  const { setSecondSidebarVisible } = useMobileNavigator()
+  const searchModalStatus = usePadStore((state) => state.searchModalStatus)
   const setSearchModalStatus = usePadStore(
     (state) => state.setSearchModalStatus
-  );
+  )
 
   const filteredPads =
     query === ""
       ? []
       : pads.filter((pad) => {
-        return pad.title.toLowerCase().includes(query.toLowerCase());
-      });
+          return pad.title.toLowerCase().includes(query.toLowerCase())
+        })
 
   useEffect(() => {
-    setOpen(searchModalStatus);
-  }, [searchModalStatus]);
+    setOpen(searchModalStatus)
+  }, [searchModalStatus])
 
   useEffect(() => {
-    setSearchModalStatus(open);
+    setSearchModalStatus(open)
 
     // eslint-disable-next-line
-  }, [open]);
+  }, [open])
 
   useEffect(() => {
     if (user?.uid) {
       getPadsByUid(user.uid).then((pads) => {
         if (!pads) {
-          return;
+          return
         }
 
-        setPads(pads);
-      });
+        setPads(pads)
+      })
     }
-  }, [user?.uid]);
+  }, [user?.uid])
 
   return (
     <Transition.Root
@@ -54,7 +56,7 @@ export default function PadSearch() {
       afterLeave={() => setQuery("")}
       appear
     >
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog as="div" className="relative z-40" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -80,9 +82,10 @@ export default function PadSearch() {
             <Dialog.Panel className="modal mx-auto max-w-xl div-y">
               <Combobox
                 onChange={(value) => {
-                  const pad = value as unknown as IPad;
-                  setOpen(false);
-                  navigate(`/app/pad/${pad.id}`);
+                  const pad = value as unknown as IPad
+                  setOpen(false)
+                  navigate(`/app/pad/${pad.id}`)
+                  setSecondSidebarVisible()
                 }}
                 value={``}
               >
@@ -108,10 +111,11 @@ export default function PadSearch() {
                         {/* {person.name} */}
                         {({ active, selected }) => (
                           <div
-                            className={`${active
-                              ? "bg-light text-color-base"
-                              : "bg text-color-light"
-                              } px-4 py-2 cursor-pointer`}
+                            className={`${
+                              active
+                                ? "bg-light text-color-base"
+                                : "bg text-color-light"
+                            } px-4 py-2 cursor-pointer`}
                           >
                             {selected && <HiOutlineCheck />}
                             {pad.title}
@@ -131,5 +135,5 @@ export default function PadSearch() {
         </div>
       </Dialog>
     </Transition.Root>
-  );
+  )
 }

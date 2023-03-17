@@ -1,17 +1,17 @@
-import { HiOutlineSearch } from "react-icons/hi";
-import { usePadStore } from "../../store";
+import { HiOutlineSearch } from "react-icons/hi"
+import { usePadStore } from "../../store"
 
 function PadSearchIcon() {
   const setSearchModalStatus = usePadStore(
     (state) => state.setSearchModalStatus
-  );
+  )
 
   const displaySearchModal = () => {
-    setSearchModalStatus(true);
-  };
+    setSearchModalStatus(true)
+  }
 
   return (
-    <div className="relative " onClick={displaySearchModal}>
+    <div className="relative pad-search-wrapper" onClick={displaySearchModal}>
       <input
         type="text"
         readOnly
@@ -23,7 +23,7 @@ function PadSearchIcon() {
         aria-hidden="true"
       />
     </div>
-  );
+  )
 }
 
-export default PadSearchIcon;
+export default PadSearchIcon

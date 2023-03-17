@@ -1,46 +1,51 @@
-import dayjs from "dayjs";
-import { Unsubscribe } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { IPad, updatePadMetadata, watchPadById } from "../../services/pads";
-import PadCoverImage from "./PadCoverImage";
-import PadFolder from "./PadFolder";
-import PadTag from "./PadTag";
+import dayjs from "dayjs"
+import { Unsubscribe } from "firebase/firestore"
+import { useEffect, useRef, useState } from "react"
+import { useParams } from "react-router-dom"
+import { IPad, updatePadMetadata, watchPadById } from "../../services/pads"
+import { MobileDocListNavButton } from "../MobileNavigator"
+import PadCoverImage from "./PadCoverImage"
+import PadFolder from "./PadFolder"
+import PadTag from "./PadTag"
 
-let timeout: number;
+let timeout: number
 
 interface IPadInfoContentProps {
-  info: IPad;
+  info: IPad
 }
 
-export const EMPTY_TITLE = 'Untitled';
+export const EMPTY_TITLE = "Untitled"
 
 function PadInfoContent({ info }: IPadInfoContentProps) {
-  const inpRef = useRef<HTMLInputElement>(null);
-  const { id } = useParams();
+  const inpRef = useRef<HTMLInputElement>(null)
+  const { id } = useParams()
 
   const updateTitle = () => {
     if (timeout) {
-      clearTimeout(timeout);
+      clearTimeout(timeout)
     }
     timeout = setTimeout(() => {
       if (!inpRef.current || !id) {
-        return;
+        return
       }
-      updatePadMetadata({ id, title: inpRef.current.value ? inpRef.current.value : EMPTY_TITLE });
-    }, 500) as unknown as number;
-  };
+      updatePadMetadata({
+        id,
+        title: inpRef.current.value ? inpRef.current.value : EMPTY_TITLE,
+      })
+    }, 500) as unknown as number
+  }
 
   useEffect(() => {
     if (inpRef.current && info) {
-      inpRef.current.value = info.title === EMPTY_TITLE ? '' : info.title;
+      inpRef.current.value = info.title === EMPTY_TITLE ? "" : info.title
     }
-  }, [info]);
+  }, [info])
 
-  const created = dayjs(info.createdAt.toDate()).format("YYYY/MM/DD");
+  const created = dayjs(info.createdAt.toDate()).format("YYYY/MM/DD")
 
   return (
     <div className="pad-info-wrapper relative">
+      <MobileDocListNavButton />
       <PadCoverImage pad={info} />
       <div className="pad-infos relative" style={{ paddingTop: 70 }}>
         <input
@@ -61,36 +66,38 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
           <div className="flex items-center text-sm">
             <span className="text-gray-400 pr-3">Folder:</span>
             <div className="flex gap-2">
-              <PadFolder allowUpdateIfEmpty={true} selected={info.folder || ""} />
+              <PadFolder
+                allowUpdateIfEmpty={true}
+                selected={info.folder || ""}
+              />
             </div>
           </div>
-
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function PadInfo() {
-  const { id } = useParams();
-  const [info, setInfo] = useState<IPad>();
+  const { id } = useParams()
+  const [info, setInfo] = useState<IPad>()
 
   useEffect(() => {
-    let unsub: Unsubscribe;
+    let unsub: Unsubscribe
     if (id) {
       unsub = watchPadById(id, (err, data) => {
-        if (err) return;
+        if (err) return
 
-        setInfo(data);
-      });
+        setInfo(data)
+      })
     }
 
     return () => {
-      unsub && unsub();
-    };
-  }, [id]);
+      unsub && unsub()
+    }
+  }, [id])
 
-  return info ? <PadInfoContent info={info} /> : null;
+  return info ? <PadInfoContent info={info} /> : null
 }
 
-export default PadInfo;
+export default PadInfo
