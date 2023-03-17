@@ -3,20 +3,32 @@
   border-right-color: var(--common-border-color);
 }
 
+.root-sidebar {
+  @apply hidden sm:block;
+}
+
 .root-sidebar .side-section {
   height: calc(100vh - 61px - 44px);
   @apply overflow-y-auto;
 }
 
 .second-sidebar {
-  @apply w-64;
+  @apply w-64 hidden sm:block;
   background-color: var(--sidebar2-background-color);
+}
+
+.is-web-app .second-sidebar.visible {
+  @apply block fixed top-0 left-0 w-full h-full z-30;
 }
 
 .second-sidebar-header{
   @apply flex items-center gap-2 px-4 py-4 border-b;
   @apply border-gray-200 dark:border-gray-900;
   border-color: var(--common-border-color);
+}
+
+.is-web-app .second-sidebar-header .pad-search-wrapper {
+  @apply w-full;
 }
 
 .pad-search-btn[type="text"] {

@@ -113,6 +113,10 @@ body {
   background-color: var(--common-bg-color);
 }
 
+.main-content {
+  @apply w-full;
+}
+
 .layout-clear .titlebar {
   @apply fixed w-full hover:bg-transparent;
 }

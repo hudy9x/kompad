@@ -11,7 +11,7 @@ export default function Layout() {
     <AppMiddleware>
       <>
         <Sidebar />
-        <main>
+        <main className="main-content">
           <Outlet />
         </main>
         <Shortcut />

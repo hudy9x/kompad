@@ -11,13 +11,18 @@
 }
 
 .tiptap-main-content {
-  @apply px-8 pt-2 pb-8 w-[700px] xl:w-[800px] m-auto;
+  @apply px-8 pt-2 pb-8 w-full sm:w-[700px] xl:w-[800px] m-auto;
   /* height: calc(100vh - 25px - 64px - 225px); */
   font-size: 16px; /* base font size */
 }
 
 .fixed-controlbar {
   @apply px-6 py-4 w-[700px] xl:w-[800px] m-auto;
+}
+
+.is-web-app .fixed-controlbar {
+  @apply fixed bottom-0 left-0 w-full overflow-x-auto overflow-y-hidden pb-1; 
+  @apply sm:relative sm:py-4 sm:w-[700px] xl:w-[800px] sm:m-auto sm:overflow-x-hidden;
 }
 
 .tiptab-format-actions {
