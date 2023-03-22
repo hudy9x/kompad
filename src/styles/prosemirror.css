@@ -197,6 +197,15 @@
 .ProseMirror pre .hljs-bullet {
   color: #b9f18d;
 }
+
+.ProseMirror pre .hljs-block {
+  color: #9650c8;
+}
+
+.ProseMirror pre .hljs-string {
+  color: #aa8500;
+}
+
 .ProseMirror pre .hljs-title,
 .ProseMirror pre .hljs-section {
   color: #faf594;

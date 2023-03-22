@@ -16,7 +16,7 @@ import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Youtube from "@tiptap/extension-youtube"
-import * as lowlight from "lowlight"
+import { lowlight } from 'lowlight'
 
 import ControlBar from "./ControlBar"
 import { IPad, updatePad } from "../../services/pads"
@@ -37,6 +37,8 @@ import { guidGenerator } from "../../libs/utils"
 import { OutlineButton } from "../../containers/Outline/OutlineButton"
 import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
+// language
+import { mermaid } from "../../language/mermaid"
 
 interface IPadEditorProp {
   id: string
@@ -65,10 +67,6 @@ const CharacterCountConfigure = CharacterCount.configure({
   limit,
 })
 
-const CodeBlockLowlightConfigure = CodeBlockLowlight.configure({
-  // @ts-ignore
-  lowlight: lowlight.lowlight,
-})
 
 const CustomTableCell = TableCell.extend({
   addAttributes() {
@@ -110,6 +108,8 @@ const Heading = Extension.create({
   },
 })
 
+lowlight.registerLanguage('mermaid', mermaid)
+
 const extensions = [
   StarterKit,
   Table.configure({
@@ -132,7 +132,10 @@ const extensions = [
   Link.configure({
     openOnClick: false,
   }),
-  CodeBlockLowlightConfigure,
+  CodeBlockLowlight.configure({
+    // @ts-ignore
+    lowlight,
+  }),
   DiagramExtension,
   Youtube.configure({}),
 ]
