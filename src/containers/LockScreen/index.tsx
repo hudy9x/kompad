@@ -1,6 +1,10 @@
-import { current } from "immer"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { getCache, LOCKING_SCREEN_STATUS, LOCK_SCREEN_TIME, setCache } from "../../libs/localCache"
+import { useEffect, useRef, useState } from "react"
+import {
+  getCache,
+  LOCKING_SCREEN_STATUS,
+  setCache,
+} from "../../libs/localCache"
+
 import { useSettingStore } from "../../store/settings"
 import LockScreenTimer from "./LockScreenTimer"
 import UnlockScreenForm from "./UnlockScreenForm"
@@ -24,12 +28,13 @@ export default function LockScreen() {
 
     t = setTimeout(() => {
       lockScreen(true)
-      setCache(LOCKING_SCREEN_STATUS, "1");
+      setCache(LOCKING_SCREEN_STATUS, "1")
     }, screenLockTime) as unknown as number
   }
 
   const unlock = () => {
     setLocked(false)
+    setCache(LOCKING_SCREEN_STATUS, "0")
   }
 
   useEffect(() => {
