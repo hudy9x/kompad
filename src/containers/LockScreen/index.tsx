@@ -37,7 +37,6 @@ export default function LockScreen() {
 
   const unlock = () => {
     setLocked(false)
-    console.log('call unlock')
     setCache(LOCKING_SCREEN_STATUS, "")
   }
 
@@ -60,7 +59,6 @@ export default function LockScreen() {
   // when the lock screen timer has updated
   // reset the timer
   useEffect(() => {
-    console.log("hi", screenLockTime)
     resetTimer()
     // eslint-disable-next-line
   }, [screenLockTime])
@@ -103,7 +101,6 @@ export default function LockScreen() {
       }
       const key = ev.key
       if (key.toLowerCase() === "l" && ev.ctrlKey) {
-        console.log('lock screen by shorcut key')
         lockScreen(true)
         setCache(LOCKING_SCREEN_STATUS, "1")
         resetTimer()
