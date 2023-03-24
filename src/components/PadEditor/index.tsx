@@ -37,6 +37,7 @@ import { guidGenerator } from "../../libs/utils"
 import { OutlineButton } from "../../containers/Outline/OutlineButton"
 import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
+import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 
 interface IPadEditorProp {
   id: string
@@ -138,6 +139,7 @@ const extensions = [
 ]
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
+  const isLockingScreen = getCache(LOCKING_SCREEN_STATUS) || ""
   const [update, setUpdate] = useState(0)
   const { setOutlines } = useOutlineStore()
   const editor = useEditor({
@@ -190,9 +192,13 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
   useEffect(() => {
     if (editor) {
       setTimeout(() => {
-        editor.commands.focus()
-      }, 250);
+        // make sure that editor is not focus automatically
+        // when screen is locking
+        // if it does, we can not active the unlocking form by keyboard event
+        !isLockingScreen && editor.commands.focus()
+      }, 250)
     }
+    // eslint-disable-next-line
   }, [editor])
 
   return (

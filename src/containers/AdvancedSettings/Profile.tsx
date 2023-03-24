@@ -3,19 +3,19 @@ import {
   HiOutlineCalendar,
   HiOutlineUser,
   HiOutlineGlobe,
-} from "react-icons/hi";
-import { useFormik } from "formik";
-import { getUser, updateUserById } from "../../services/users";
-import { toTimestame } from "../../libs/date";
-import { message } from "../../components/message";
-import { useEffect, useState } from "react";
-import AvatarForm from "../AvatarForm";
-import Button from "../../components/Button";
-import { useAuth } from "../../hooks/useAuth";
-import dayjs from "dayjs";
+} from "react-icons/hi"
+import { useFormik } from "formik"
+import { getUser, updateUserById } from "../../services/users"
+import { toTimestame } from "../../libs/date"
+import { message } from "../../components/message"
+import { useEffect, useState } from "react"
+import AvatarForm from "../AvatarForm"
+import Button from "../../components/Button"
+import { useAuth } from "../../hooks/useAuth"
+import dayjs from "dayjs"
 function Profile() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { user } = useAuth()
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -26,11 +26,11 @@ function Profile() {
       dateOfBirth: "",
     },
     onSubmit: (values) => {
-      const { address, dateOfBirth, fullname, photoURL } = values;
+      const { address, dateOfBirth, fullname, photoURL } = values
 
-      if (loading || !user?.uid) return;
+      if (loading || !user?.uid) return
 
-      setLoading(true);
+      setLoading(true)
 
       updateUserById(user?.uid, {
         fullname,
@@ -39,27 +39,27 @@ function Profile() {
         address,
       })
         .then(() => {
-          message.success("Update profile succesfully");
+          message.success("Update profile succesfully")
         })
         .catch((err) => {
-          console.log(err);
-          message.error("Update profile error");
+          console.log(err)
+          message.error("Update profile error")
         })
         .finally(() => {
-          setLoading(false);
-        });
+          setLoading(false)
+        })
     },
-  });
+  })
 
   useEffect(() => {
     if (user?.uid) {
       getUser(user.uid).then((userCre) => {
         if (!userCre) {
-          return;
+          return
         }
 
-        const { address, dateOfBirth, email, fullname, photoURL } = userCre;
-        const dob = dayjs(dateOfBirth.toDate());
+        const { address, dateOfBirth, email, fullname, photoURL } = userCre
+        const dob = dayjs(dateOfBirth.toDate())
 
         formik.setValues({
           address: address,
@@ -68,12 +68,12 @@ function Profile() {
           email: email,
           fullname: fullname,
           photoURL: photoURL,
-        });
-      });
+        })
+      })
     }
 
     // eslint-disable-next-line
-  }, [user?.uid]);
+  }, [user?.uid])
 
   return (
     <>
@@ -113,7 +113,7 @@ function Profile() {
               <div className="form-control col-span-3">
                 <label htmlFor="email">Email</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineMail
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"
@@ -140,7 +140,7 @@ function Profile() {
                   <AvatarForm
                     defaultValue={formik.values.photoURL}
                     onSelect={(selected) => {
-                      formik.setFieldValue("photoURL", selected);
+                      formik.setFieldValue("photoURL", selected)
                     }}
                   />
                 </div>
@@ -149,7 +149,7 @@ function Profile() {
               <div className="form-control col-span-3">
                 <label htmlFor="date">Date of birth</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineCalendar
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"
@@ -161,7 +161,7 @@ function Profile() {
                     id="date"
                     placeholder="Date of birth"
                     onChange={(ev) => {
-                      formik.setFieldValue("dateOfBirth", ev.target.value);
+                      formik.setFieldValue("dateOfBirth", ev.target.value)
                     }}
                     value={formik.values.dateOfBirth}
                   />
@@ -171,7 +171,7 @@ function Profile() {
               <div className="form-control col-span-3">
                 <label htmlFor="address">Address</label>
                 <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <div className="form-icon">
                     <HiOutlineGlobe
                       className="h-5 w-5 text-gray-400"
                       aria-hidden="true"
@@ -194,7 +194,7 @@ function Profile() {
         </div>
       </form>
     </>
-  );
+  )
 }
 
-export default Profile;
+export default Profile
