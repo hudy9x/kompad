@@ -9,6 +9,7 @@ import FileManager from "./containers/AdvancedSettings/FileManager";
 import Checking from "./containers/Checking";
 import EmailVerification from "./containers/EmailVerification";
 import ForgotPassword from "./containers/ForgotPassword";
+import LockScreen from "./containers/LockScreen";
 // import NotFound from "./containers/NotFound";
 import Pad from "./containers/Pad";
 import PadContent from "./containers/Pads/PadContent";
@@ -35,6 +36,7 @@ function App() {
   return (
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
+        <LockScreen/>
         <ThemeSetting>
           <Routes>
             <Route path="/" element={<LayoutClear />}>
