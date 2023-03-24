@@ -21,46 +21,66 @@ export default function LockScreen() {
   }
 
   const resetTimer = () => {
-    console.log("resetTimer", screenLockTime)
+    // console.log("resetTimer", screenLockTime)
     t && clearTimeout(t)
 
     if (locked || !screenLockTime) return
 
     t = setTimeout(() => {
       lockScreen(true)
+      // in case user closes the app or reload by F5 or Ctrl + R
+      // so we need to save lock screen status 
+      // when user opens app again, lock screen must be displayed
       setCache(LOCKING_SCREEN_STATUS, "1")
     }, screenLockTime) as unknown as number
   }
 
   const unlock = () => {
     setLocked(false)
-    setCache(LOCKING_SCREEN_STATUS, "0")
+    console.log('call unlock')
+    setCache(LOCKING_SCREEN_STATUS, "")
+  }
+
+  const focusOnLockScreenAfter = (second: number) => {
+    setTimeout(() => {
+      ref.current && ref.current.focus()
+    }, second)
   }
 
   useEffect(() => {
+    // show lock screen when status is not empty
     const isAppStillLocking = getCache(LOCKING_SCREEN_STATUS) || ""
+    console.log('isAppStillLocking', isAppStillLocking)
     if (isAppStillLocking) {
       lockScreen(true)
     }
   }, [])
 
+
+  // when the lock screen timer has updated
+  // reset the timer
   useEffect(() => {
     console.log("hi", screenLockTime)
     resetTimer()
+    // eslint-disable-next-line
   }, [screenLockTime])
 
+  // reset timer after unlocking
+  // and try to close the unlock form after 800ms
+  // why 800ms? cuz i don't want the form appears right after unlocking process success
   useEffect(() => {
     if (locked === false) {
       resetTimer()
-      setVisibleUnlockForm(false)
+      setTimeout(() => {
+        setVisibleUnlockForm(false)
+      }, 800)
     }
+    // eslint-disable-next-line
   }, [locked])
 
   useEffect(() => {
     if (locked) {
-      setTimeout(() => {
-        ref.current && ref.current.focus()
-      }, 500)
+      focusOnLockScreenAfter(500)
       // setVisibleUnlockForm(false)
     }
   }, [locked])
@@ -77,17 +97,15 @@ export default function LockScreen() {
       "load",
     ]
 
-    const unlock = (ev: KeyboardEvent) => {
+    const lockByShortcutKey = (ev: KeyboardEvent) => {
       if (locked) {
         return
       }
       const key = ev.key
       if (key.toLowerCase() === "l" && ev.ctrlKey) {
+        console.log('lock screen by shorcut key')
         lockScreen(true)
-
-        // setTimeout(() => {
-        //   setVisibleUnlockForm(false)
-        // }, 800);
+        setCache(LOCKING_SCREEN_STATUS, "1")
         resetTimer()
       }
     }
@@ -98,14 +116,16 @@ export default function LockScreen() {
       window.addEventListener(ev, resetTimer)
     })
 
-    window.addEventListener("keydown", unlock)
+    window.addEventListener("keydown", lockByShortcutKey)
 
     return () => {
       events.forEach((ev) => {
         window.removeEventListener(ev, resetTimer)
       })
-      window.removeEventListener("keydown", unlock)
+      window.removeEventListener("keydown", lockByShortcutKey)
     }
+
+    // eslint-disable-next-line
   }, [screenLockTime])
 
   return (

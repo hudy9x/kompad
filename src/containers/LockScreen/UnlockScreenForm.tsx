@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react"
-import { HiOutlineLockOpen } from "react-icons/hi"
 import { message } from "../../components/message"
 import { useCurrentUser } from "../../hooks/useCurrentUser"
 import { signIn } from "../../services/sign"
@@ -16,12 +15,11 @@ export default function UnlockScreenForm({
   const [loading, setloading] = useState(false)
 
   const unlockScreen = (pwd: string) => {
-    if (!info) return;
+    if (!info) return
     setloading(true)
     signIn(info.email, pwd)
       .then((res) => {
-        console.log(res)
-        ref.current && (ref.current.value = '')
+        ref.current && (ref.current.value = "")
         unlock()
       })
       .catch((err) => {
@@ -30,9 +28,10 @@ export default function UnlockScreenForm({
         setTimeout(() => {
           const input = ref.current
           input && input.select()
-        }, 250);
+        }, 250)
         console.log(err)
-      }).finally(() => {
+      })
+      .finally(() => {
         setloading(false)
       })
   }
@@ -46,16 +45,15 @@ export default function UnlockScreenForm({
     }
 
     unlockScreen(value)
-
   }
 
-  const unlockByPressing = () => {
-    if (!ref.current) {
-      return
-    }
-
-    unlockScreen(ref.current.value)
-  }
+  // const unlockByPressing = () => {
+  //   if (!ref.current) {
+  //     return
+  //   }
+  //
+  //   unlockScreen(ref.current.value)
+  // }
 
   useEffect(() => {
     visible && ref.current && ref.current.focus()
@@ -68,12 +66,15 @@ export default function UnlockScreenForm({
       }`}
     >
       <img
+        alt="user avatar"
         src={info?.photoURL}
         className="h-16 w-16 rounded-full inline-block"
       />
       <h2 className="text-2xl font-medium text-color-base">{info?.email}</h2>
       <svg
-        className={`animate-spin -ml-1 inline-flex mx-auto h-5 w-5 text-white ${loading ? "" : "hidden"}`}
+        className={`animate-spin -ml-1 inline-flex mx-auto h-5 w-5 text-white ${
+          loading ? "" : "hidden"
+        }`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -107,7 +108,6 @@ export default function UnlockScreenForm({
           <HiOutlineLockOpen />
         </button>
 */}
-
       </div>
     </div>
   )

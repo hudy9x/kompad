@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { HiOutlineLockOpen } from "react-icons/hi"
-import { message } from "../../components/message"
 import { timeNumberToStr } from "../../libs/utils"
 import { useSettingStore } from "../../store/settings"
 
