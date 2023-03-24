@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import Modal from "../../components/Modal";
-import { useModalStore } from "../../store/modal";
+import { useEffect, useState } from "react"
+import Modal from "../../components/Modal"
+import { useModalStore } from "../../store/modal"
 
 function ShortcutModal() {
-  const shortcutStatus = useModalStore((state) => state.modals.shorcut);
-  const setShortcurVisible = useModalStore((state) => state.setVisible);
-  const [visible, setVisible] = useState(false);
+  const shortcutStatus = useModalStore((state) => state.modals.shorcut)
+  const setShortcurVisible = useModalStore((state) => state.setVisible)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    setVisible(shortcutStatus);
-  }, [shortcutStatus]);
+    setVisible(shortcutStatus)
+  }, [shortcutStatus])
 
   useEffect(() => {
-    setShortcurVisible("shorcut", visible);
+    setShortcurVisible("shorcut", visible)
     // eslint-disable-next-line
-  }, [visible]);
+  }, [visible])
 
   const shortcutKeys = [
     { title: "Add Column After", kbds: ["Alt", "I", "C"] },
@@ -30,7 +30,8 @@ function ShortcutModal() {
     { title: "Open search palette", kbds: ["Alt", "P"] },
     { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },
     { title: "Close modal window", kbds: ["Esc"] },
-  ];
+    { title: "Lock screen", kbds: ["Ctrl", "L"] },
+  ]
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
@@ -46,21 +47,18 @@ function ShortcutModal() {
                 <h4>{shortcut.title}</h4>
                 <div className="kbds flex items-center gap-2">
                   {shortcut.kbds.map((kbd) => (
-                    <kbd
-                      className="kbd-btn"
-                      key={kbd}
-                    >
+                    <kbd className="kbd-btn" key={kbd}>
                       {kbd}
                     </kbd>
                   ))}
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </Modal>
-  );
+  )
 }
 
-export default ShortcutModal;
+export default ShortcutModal
