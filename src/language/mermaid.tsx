@@ -22,8 +22,8 @@ const keyword = () => {
 
 export const mermaid = (hljs: any) => {
   return {
-    name: "Mermaid",
-    aliases: ["mermaid", "sequence-diagram"],
+    name: "diagram",
+    aliases: ["mermaid", "diagram"],
     contains: [
       {
         className: "type",

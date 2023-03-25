@@ -1,4 +1,4 @@
-import { useEditor, EditorContent } from "@tiptap/react"
+import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Highlight from "@tiptap/extension-highlight"
 import Typography from "@tiptap/extension-typography"
@@ -25,8 +25,7 @@ import { shortCutAction } from "../Shortcut/ShortcutAction"
 import FixedControlBar from "./FixedControlBar"
 import ErrorCapture from "../ErrorCapture"
 import PadInfo from "./PadInfo"
-// import Diagram from "../"
-import DiagramExtension from "../../extensions/Diagram"
+
 import ScrollBar from "../ScrollBar"
 import PadDropZone from "./PadDropZone"
 import ContextMenu from "../ContextMenu"
@@ -39,6 +38,7 @@ import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
 // language
 import { mermaid } from "../../language/mermaid"
+import { CodeBlock } from "./CodeBlock"
 
 interface IPadEditorProp {
   id: string
@@ -89,6 +89,12 @@ const CustomTableCell = TableCell.extend({
   },
 })
 
+const CustomCodeBlock = CodeBlockLowlight.extend({
+  addNodeView() {
+    return ReactNodeViewRenderer(CodeBlock)
+  },
+})
+
 const Heading = Extension.create({
   addGlobalAttributes() {
     return [
@@ -132,11 +138,10 @@ const extensions = [
   Link.configure({
     openOnClick: false,
   }),
-  CodeBlockLowlight.configure({
+  CustomCodeBlock.configure({
     // @ts-ignore
     lowlight,
   }),
-  DiagramExtension,
   Youtube.configure({}),
 ]
 

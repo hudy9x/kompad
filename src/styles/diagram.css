@@ -1,0 +1,18 @@
+.diagram-component {
+ margin: 1rem 0;
+ position: relative;
+ padding: 1.5rem;
+}
+
+.diagram-showcase {
+ background: #faf594;
+ border: 3px solid #0d0d0d;
+ border-radius: 0.5rem;
+ display: flex;
+ justify-content: center;
+ width: 100%;
+ font-size: 16px;
+ font-weight: 400;
+ color: #000;
+ padding: 10px
+}
