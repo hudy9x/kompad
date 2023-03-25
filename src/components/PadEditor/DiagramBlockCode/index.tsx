@@ -42,7 +42,7 @@ export const DiagramBlockCode = ({ content }: {
         <NodeViewContent as="code" />
       </pre>
       <div
-        className={`diagram-showcase ${preview && content ? "" : "hidden"}`}
+        className={`diagram-showcase ${preview ? "" : "hidden"}`}
         dangerouslySetInnerHTML={{ __html: html }}
       ></div>
     </NodeViewWrapper>

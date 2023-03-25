@@ -3,10 +3,11 @@ import {
   HiOutlineColorSwatch,
   HiOutlineDocumentText,
   HiOutlineKey,
+  HiOutlineShieldCheck,
   HiOutlineUserCircle,
-} from "react-icons/hi";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import Titlebar from "../Titlebar";
+} from "react-icons/hi"
+import { Link, NavLink, Outlet } from "react-router-dom"
+import Titlebar from "../Titlebar"
 
 const navigation = [
   {
@@ -33,6 +34,12 @@ const navigation = [
     icon: HiOutlineDocumentText,
     current: false,
   },
+  {
+    name: "Privacy",
+    href: "/setting/privacy",
+    icon: HiOutlineShieldCheck,
+    current: false,
+  },
 
   // {
   //   name: "Plan & Billing",
@@ -40,12 +47,14 @@ const navigation = [
   //   icon: HiOutlineCreditCard,
   //   current: false,
   // },
-];
-
+]
 
 export default function LayoutSetting() {
   return (
-    <div className="w-full advanced-setting-wrapper" style={{ height: "100vh" }}>
+    <div
+      className="w-full advanced-setting-wrapper"
+      style={{ height: "100vh" }}
+    >
       <Titlebar />
       <div className="advanced-setting-container w-[1024px] m-auto">
         <h2 className="px-6 py-6 text-xl font-bold text-color-base hover:opacity-90 ">
@@ -62,17 +71,13 @@ export default function LayoutSetting() {
                   key={item.name}
                   to={item.href}
                   className={({ isActive }) =>
-                    `setting-menu-item group ${isActive
-                      ? "active"
-                      : "inactive"
+                    `setting-menu-item group ${
+                      isActive ? "active" : "inactive"
                     }`
                   }
                   aria-current={item.current ? "page" : undefined}
                 >
-                  <item.icon
-                    className={'icon'}
-                    aria-hidden="true"
-                  />
+                  <item.icon className={"icon"} aria-hidden="true" />
                   <span className="truncate">{item.name}</span>
                 </NavLink>
               ))}
@@ -83,8 +88,7 @@ export default function LayoutSetting() {
             <Outlet />
           </div>
         </div>
-
       </div>
     </div>
-  );
+  )
 }
