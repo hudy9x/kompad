@@ -3,19 +3,16 @@ import { useState, useEffect } from "react";
 import mermaid from "mermaid";
 import { HiOutlineEye } from "react-icons/hi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { useDiagramStore } from "../../../store/diagram";
-
 
 const mermaidAPI = mermaid.mermaidAPI;
 mermaid.initialize({
   darkMode: true
 });
 
-
 export const DiagramBlockCode = ({ content }: {
   content: string
 }) => {
-  const { setIsPreview, isPreview } = useDiagramStore();
+  const [preview, setPreview] = useState(false)
   const [html, setHTML] = useState("")
 
   useEffect(() => {
@@ -36,10 +33,10 @@ export const DiagramBlockCode = ({ content }: {
           <NodeViewContent as="code" className="container-block-code">
           </NodeViewContent>
           <button
-            className={`cursor-pointer flex ${isPreview ? 'is-active' : ''}`}
-            onClick={() => setIsPreview()}
+            className={`cursor-pointer flex ${preview ? 'is-active' : ''}`}
+            onClick={() => setPreview(!preview)}
           >
-            {isPreview ? (
+            {preview ? (
               <HiOutlineEye className="block-code-icon" />
             ) : (
               <AiOutlineEyeInvisible className="block-code-icon" />
@@ -48,7 +45,7 @@ export const DiagramBlockCode = ({ content }: {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: html }}
-          className={`diagram-showcase ${isPreview ? "" : "hidden"}`}
+          className={`diagram-showcase ${preview ? "" : "hidden"}`}
         ></div>
       </pre>
     </NodeViewWrapper>
