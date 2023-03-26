@@ -1,7 +1,10 @@
 import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import { useState, useEffect } from "react";
 import mermaid from "mermaid";
-import { HiOutlineEye, HiOutlinePencil } from "react-icons/hi";
+import { HiOutlineEye } from "react-icons/hi";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDiagramStore } from "../../../store/diagram";
+
 
 const mermaidAPI = mermaid.mermaidAPI;
 mermaid.initialize({
@@ -12,7 +15,7 @@ mermaid.initialize({
 export const DiagramBlockCode = ({ content }: {
   content: string
 }) => {
-  const [preview, setPreview] = useState(false)
+  const { setIsPreview, isPreview } = useDiagramStore();
   const [html, setHTML] = useState("")
 
   useEffect(() => {
@@ -27,24 +30,27 @@ export const DiagramBlockCode = ({ content }: {
   }, [content])
 
   return (
-    <NodeViewWrapper className="diagram-component">
-      <pre className="relative">
-        <span
-          className="cursor-pointer absolute right-0 pr-3 top-2 text-gray-100 flex items-center gap-2"
-          onClick={() => setPreview(!preview)}
-        >
-          {preview ? (
-            <HiOutlinePencil className="w-3 h-3" />
-          ) : (
-            <HiOutlineEye className="w-3 h-3" />
-          )}
-        </span>
-        <NodeViewContent as="code" />
+    <NodeViewWrapper>
+      <pre className="code-mermaid">
+        <div className="block-code-mermaid">
+          <NodeViewContent as="code" className="container-block-code">
+          </NodeViewContent>
+          <button
+            className={`cursor-pointer flex ${isPreview ? 'is-active' : ''}`}
+            onClick={() => setIsPreview()}
+          >
+            {isPreview ? (
+              <HiOutlineEye className="block-code-icon" />
+            ) : (
+              <AiOutlineEyeInvisible className="block-code-icon" />
+            )}
+          </button>
+        </div>
+        <div
+          dangerouslySetInnerHTML={{ __html: html }}
+          className={`diagram-showcase ${isPreview ? "" : "hidden"}`}
+        ></div>
       </pre>
-      <div
-        className={`diagram-showcase ${preview ? "" : "hidden"}`}
-        dangerouslySetInnerHTML={{ __html: html }}
-      ></div>
     </NodeViewWrapper>
   )
 }

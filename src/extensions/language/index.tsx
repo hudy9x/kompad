@@ -1,4 +1,4 @@
-import { KEYWORD_SEQUENCE, KEYWORD_CLASS } from "../language/keywords"
+import { KEYWORD_SEQUENCE, KEYWORD_CLASS } from "./keyword-mermaid"
 
 const type = () => {
   const typeSequence =  KEYWORD_SEQUENCE.type;
@@ -6,6 +6,7 @@ const type = () => {
   
   return `\\b(${typeSequence}|${typeClass})\\b`
 }
+
 const block = () => {
   const blockSequence = KEYWORD_SEQUENCE.block.join("|");
   const blockClass = KEYWORD_CLASS.block;
@@ -22,8 +23,8 @@ const keyword = () => {
 
 export const mermaid = (hljs: any) => {
   return {
-    name: "diagram",
-    aliases: ["mermaid", "diagram"],
+    name: "mermaid",
+    aliases: ["mermaid", "mermaid"],
     contains: [
       {
         className: "type",

@@ -37,7 +37,7 @@ import { OutlineButton } from "../../containers/Outline/OutlineButton"
 import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
 // language
-import { mermaid } from "../../language/mermaid"
+import { mermaid } from "../../extensions/language/index"
 import { CodeBlock } from "./CodeBlock"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 

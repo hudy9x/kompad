@@ -6,6 +6,7 @@ import { IPadStore, setPadStoreState } from "../../store";
 import { ISettingStore, setSettingState } from "../../store/settings";
 import { IThemeStore, setThemeStoreState } from "../../store/themes";
 import { IOutline, setIsOpen } from "../../store/outlines";
+import { IDiagram, setIsPreview } from "../../store/diagram";
 
 export interface KeyBoardProps {
   shift: boolean,
@@ -133,12 +134,22 @@ export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | Keyboar
       );
     }
 
-    // Ope/close outline
+    // Open/close outline
     if (pressed.alt && pressed.o) {
       preventEvent(ev);
       setIsOpen(
         produce<IOutline>((state) => {
           state.isOpen = !state.isOpen
+        })
+      )
+    }
+
+    // Open/close preview diagram
+    if (pressed.control && pressed.p) {
+      preventEvent(ev);
+      setIsPreview(
+        produce<IDiagram>((state) => {
+          state.isPreview = !state.isPreview
         })
       )
     }
