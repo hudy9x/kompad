@@ -1,30 +1,42 @@
-import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
+import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { useState, useEffect } from "react";
 import mermaid from "mermaid";
 import { HiOutlineEye } from "react-icons/hi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 const mermaidAPI = mermaid.mermaidAPI;
-mermaid.initialize({
-  darkMode: true
-});
+mermaid.initialize({ startOnLoad: true });
 
-export const DiagramBlockCode = ({ content }: {
-  content: string
+export const DiagramBlockCode = ({ nodeViewProps }: {
+  nodeViewProps: NodeViewProps
 }) => {
-  const [preview, setPreview] = useState(false)
-  const [html, setHTML] = useState("")
+  const [html, setHTML] = useState<string>("")
+
+  const handlePreview = () => {
+    console.log("DONE");
+    nodeViewProps.updateAttributes({
+      isPreview: !nodeViewProps.node.attrs.isPreview,
+    })
+  }
 
   useEffect(() => {
     try {
-      mermaidAPI.render("string", content, (svg) => {
-        setHTML(svg)
-      })
+      const element = document.querySelector('#graphDiv');
+      mermaidAPI.render("graphDiv", nodeViewProps.node.textContent).then((item) => {
+        setHTML(item.svg)
+        if(!element) {
+          return;
+        }
+        if (item.bindFunctions) {
+          item.bindFunctions(element);
+        }
+      });
+
     } catch (error: any) {
       setHTML(error.str)
       console.log(error)
     }
-  }, [content])
+  }, [nodeViewProps.node.attrs.isPreview, nodeViewProps.node.textContent])
 
   return (
     <NodeViewWrapper>
@@ -32,11 +44,13 @@ export const DiagramBlockCode = ({ content }: {
         <div className="block-code-mermaid">
           <NodeViewContent as="code" className="container-block-code">
           </NodeViewContent>
+          <div className="content">
+          </div>
           <button
-            className={`cursor-pointer flex ${preview ? 'is-active' : ''}`}
-            onClick={() => setPreview(!preview)}
+            className={`cursor-pointer flex`}
+            onClick={handlePreview}
           >
-            {preview ? (
+            {nodeViewProps.node.attrs.isPreview ? (
               <HiOutlineEye className="block-code-icon" />
             ) : (
               <AiOutlineEyeInvisible className="block-code-icon" />
@@ -45,7 +59,7 @@ export const DiagramBlockCode = ({ content }: {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: html }}
-          className={`diagram-showcase ${preview ? "" : "hidden"}`}
+          className={`diagram-showcase ${nodeViewProps.node.attrs.isPreview ? "" : "hidden"}`}
         ></div>
       </pre>
     </NodeViewWrapper>
