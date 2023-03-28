@@ -1,41 +1,33 @@
 import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import mermaid from "mermaid";
 import { HiOutlineEye } from "react-icons/hi";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import { guidGenerator } from "../../../libs/utils";
 
 const mermaidAPI = mermaid.mermaidAPI;
-mermaid.initialize({ startOnLoad: true });
+mermaid.initialize({
+  darkMode: true
+});
 
 export const DiagramBlockCode = ({ nodeViewProps }: {
   nodeViewProps: NodeViewProps
 }) => {
-  const [html, setHTML] = useState<string>("")
-
+  const [html, setHTML] = useState<string>('');
   const handlePreview = () => {
-    console.log("DONE");
     nodeViewProps.updateAttributes({
       isPreview: !nodeViewProps.node.attrs.isPreview,
     })
   }
 
   useEffect(() => {
-    try {
-      const element = document.querySelector('#graphDiv');
-      mermaidAPI.render("graphDiv", nodeViewProps.node.textContent).then((item) => {
-        setHTML(item.svg)
-        if(!element) {
-          return;
-        }
-        if (item.bindFunctions) {
-          item.bindFunctions(element);
-        }
+      const id = guidGenerator();
+      mermaidAPI.render(`graphDiv${id}`, nodeViewProps.node.textContent).then((item) => {
+        setHTML(item.svg);
+      }).catch((err) => {
+        setHTML("Diagram not found");
       });
-
-    } catch (error: any) {
-      setHTML(error.str)
-      console.log(error)
-    }
+     // eslint-disable-next-line
   }, [nodeViewProps.node.attrs.isPreview, nodeViewProps.node.textContent])
 
   return (
@@ -58,7 +50,7 @@ export const DiagramBlockCode = ({ nodeViewProps }: {
           </button>
         </div>
         <div
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: html}}
           className={`diagram-showcase ${nodeViewProps.node.attrs.isPreview ? "" : "hidden"}`}
         ></div>
       </pre>

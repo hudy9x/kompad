@@ -10,7 +10,7 @@ import Table from "@tiptap/extension-table"
 import TableHeader from "@tiptap/extension-table-header"
 import TableRow from "@tiptap/extension-table-row"
 import TableCell from "@tiptap/extension-table-cell"
-import { Extension, mergeAttributes } from "@tiptap/core"
+import { Extension } from "@tiptap/core"
 import CharacterCount from "@tiptap/extension-character-count"
 import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
@@ -93,20 +93,13 @@ const CustomTableCell = TableCell.extend({
 const CustomCodeBlock = CodeBlockLowlight.extend({
   addAttributes() {
     return {
+      language:  {
+        default: "",
+      },
       isPreview: {
         default: false,
       },
     }
-  },
-  parseHTML() {
-    return [
-      {
-        tag: 'react-component',
-      },
-    ]
-  },
-  renderHTML({ HTMLAttributes }) {
-    return ['react-component', mergeAttributes(HTMLAttributes)]
   },
   addNodeView() {
     return ReactNodeViewRenderer(CodeBlock)

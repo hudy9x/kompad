@@ -196,8 +196,10 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         </button>
 
         <button
-          onClick={() => editor.chain().focus().setCodeBlock().run()}
-          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language !== 'mermaid' ? "is-active" : ""}
+          onClick={() => editor.chain().focus().setCodeBlock({
+            language: "programming"
+          }).run()}
+          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language === 'programming' ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
         </button>
