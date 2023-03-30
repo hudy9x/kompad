@@ -195,14 +195,12 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           <IoLinkOutline className="control-icon" />
         </button>
 
-        <button
-          onClick={() => editor.chain().focus().setCodeBlock({
-            language: "programming"
-          }).run()}
-          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language === 'programming' ? "is-active" : ""}
+        {/* <button
+          onClick={() => editor.chain().focus().setCodeBlock().run()}
+          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language !== 'mermaid' ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
-        </button>
+        </button> */}
 
         <PadVideoModal editor={editor} />
 

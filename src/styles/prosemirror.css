@@ -58,7 +58,9 @@
 }
 
 .ProseMirror code {
-  @apply bg-gray-100 px-1 rounded-sm text-gray-600 dark:bg-gray-700;
+  @apply px-1 rounded-sm;
+  background-color: var(--tag-bg-color);
+  color: var(--tag-text-color);
 }
 
 .ProseMirror ul,

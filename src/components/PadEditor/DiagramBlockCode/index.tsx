@@ -24,9 +24,17 @@ export const DiagramBlockCode = ({ nodeViewProps }: {
       const id = guidGenerator();
       mermaidAPI.render(`graphDiv${id}`, nodeViewProps.node.textContent).then((item) => {
         setHTML(item.svg);
-      }).catch((err) => {
-        setHTML("Diagram not found");
+      }).catch(() => {
+        setHTML("Mermaid not found");
       });
+
+      return(() => {
+        const element = document.getElementById(`dgraphDiv${id}`);
+        if(!element) {
+          return;
+        }
+        element.remove();
+      })
      // eslint-disable-next-line
   }, [nodeViewProps.node.attrs.isPreview, nodeViewProps.node.textContent])
 
@@ -36,8 +44,6 @@ export const DiagramBlockCode = ({ nodeViewProps }: {
         <div className="block-code-mermaid">
           <NodeViewContent as="code" className="container-block-code">
           </NodeViewContent>
-          <div className="content">
-          </div>
           <button
             className={`cursor-pointer flex`}
             onClick={handlePreview}
@@ -51,7 +57,7 @@ export const DiagramBlockCode = ({ nodeViewProps }: {
         </div>
         <div
           dangerouslySetInnerHTML={{ __html: html}}
-          className={`diagram-showcase ${nodeViewProps.node.attrs.isPreview ? "" : "hidden"}`}
+          className={`mermaid-showcase ${nodeViewProps.node.attrs.isPreview ? "" : "hidden"}`}
         ></div>
       </pre>
     </NodeViewWrapper>

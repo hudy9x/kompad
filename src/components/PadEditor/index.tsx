@@ -93,9 +93,6 @@ const CustomTableCell = TableCell.extend({
 const CustomCodeBlock = CodeBlockLowlight.extend({
   addAttributes() {
     return {
-      language:  {
-        default: "",
-      },
       isPreview: {
         default: false,
       },
