@@ -47,18 +47,20 @@ export default function CommandPalletes() {
 
   return (
     <div
-      className={`fixed bottom-0 w-full px-2 py-0.5 z-[200] bg-black/80 transition-all ${
+      className={`fixed w-full h-screen flex bg-gray-500/30 items-center justify-center px-2 py-2 z-[200] transition-all ${
         visible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       }`}
     >
-      <input
-        ref={ref}
-        type="text"
-        onKeyDown={onPressEnter}
-        className="w-full bg-transparent border-transparent text-sm h-6 text-white focus:border-none focus:ring-0"
-      />
+      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base">
+        <input
+          ref={ref}
+          type="text"
+          onKeyDown={onPressEnter}
+          className="w-full bg-transparent border-transparent text-sm h-10 text-white focus:border-none focus:ring-0"
+        />
+      </div>
     </div>
   )
 }
