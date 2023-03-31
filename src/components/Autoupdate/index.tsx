@@ -28,7 +28,7 @@ function Autoupdate() {
     let e = ""
     listen<{ error: string | null; status: string }>(
       "tauri://update-status",
-      function(res) {
+      function (res) {
         const { error, status } = res.payload
         if (error) {
           if (e === error) {
@@ -48,11 +48,11 @@ function Autoupdate() {
         }
 
         if (status === "DOWNLOADED") {
-          message.info("Downloaded")
+          // message.info("Downloaded")
         }
 
         if (status === "DONE") {
-          message.success("Done")
+          // message.success("Done")
           relaunch()
         }
 
@@ -66,7 +66,7 @@ function Autoupdate() {
     setVisible(false)
     setTimeout(() => {
       emit("tauri://update-install")
-    }, 2000)
+    }, 800)
   }
 
   return (
@@ -106,7 +106,7 @@ function Autoupdate() {
             type="button"
             className="btn btn-lg ml-4"
             onClick={() => setVisible(false)}
-          // ref={cancelButtonRef}
+            // ref={cancelButtonRef}
           >
             Cancel
           </button>
