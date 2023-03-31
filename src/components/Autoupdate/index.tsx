@@ -1,71 +1,79 @@
-import { useEffect, useState } from "react";
-import { relaunch } from "@tauri-apps/api/process";
-import { emit, listen } from "@tauri-apps/api/event";
-import Modal from "../Modal";
-import { IoInformationOutline } from "react-icons/io5";
-import { useModalStore } from "../../store/modal";
-import { message } from "../message";
+import { useEffect, useState } from "react"
+import { relaunch } from "@tauri-apps/api/process"
+import { emit, listen } from "@tauri-apps/api/event"
+import Modal from "../Modal"
+import { IoInformationOutline } from "react-icons/io5"
+import { useModalStore } from "../../store/modal"
+import { message } from "../message"
+import DownloadProgress from "./DownloadProgress"
 
 function Autoupdate() {
-  const updateStatus = useModalStore((state) => state.modals.update);
-  const setUpdateStatus = useModalStore((state) => state.setVisible);
+  const updateStatus = useModalStore((state) => state.modals.update)
+  const setUpdateStatus = useModalStore((state) => state.setVisible)
 
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(updateStatus);
-  }, [updateStatus]);
+  const [visible, setVisible] = useState(false)
+  const [dlvisible, setDlVisible] = useState(false)
 
   useEffect(() => {
-    setUpdateStatus("update", visible);
+    setVisible(updateStatus)
+  }, [updateStatus])
+
+  useEffect(() => {
+    setUpdateStatus("update", visible)
 
     // eslint-disable-next-line
-  }, [visible]);
+  }, [visible])
 
   useEffect(() => {
-    let e = "";
+    let e = ""
     listen<{ error: string | null; status: string }>(
       "tauri://update-status",
-      function(res) {
-        const { error, status } = res.payload;
+      function (res) {
+        const { error, status } = res.payload
         if (error) {
           if (e === error) {
-            return;
+            return
           }
 
-          console.log(error);
-          message.error(error);
-          e = error;
+          console.log(error)
+          message.error(error)
+          e = error
 
-          return;
+          return
         }
 
         if (status === "UPTODATE") {
           // message.info("App version is latest !");
-          return;
+          return
         }
 
         if (status === "DOWNLOADED") {
-          message.info("Downloaded");
+          // message.info("Downloaded")
         }
 
         if (status === "DONE") {
-          message.success("Done");
-          relaunch();
+          // message.success("Done")
+          relaunch()
         }
 
-        console.log(status);
+        console.log(status)
       }
-    );
-  });
+    )
+  })
 
   const doUpdate = () => {
-    emit("tauri://update-install");
-    setVisible(false);
-  };
+    setDlVisible(true)
+    setVisible(false)
+    setTimeout(() => {
+      emit("tauri://update-install")
+    }, 800)
+  }
 
   return (
     <>
+      <Modal visible={dlvisible} setVisible={setDlVisible}>
+        <DownloadProgress />
+      </Modal>
       <Modal visible={visible} setVisible={setVisible}>
         <div className="sm:flex sm:items-start w-80">
           <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -98,14 +106,14 @@ function Autoupdate() {
             type="button"
             className="btn btn-lg ml-4"
             onClick={() => setVisible(false)}
-          // ref={cancelButtonRef}
+            // ref={cancelButtonRef}
           >
             Cancel
           </button>
         </div>
       </Modal>
     </>
-  );
+  )
 }
 
-export default Autoupdate;
+export default Autoupdate
