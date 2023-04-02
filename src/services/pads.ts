@@ -250,7 +250,6 @@ export const updatePad = async ({
   content: string
   cipherContent: string
 }) => {
-  console.log(content)
   updateDoc(doc(db, "pads", id), {
     // content,
     cipherContent,

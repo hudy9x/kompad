@@ -42,10 +42,9 @@
 .ProseMirror h4,
 .ProseMirror h3,
 .ProseMirror h2,
-.ProseMirror h1{
+.ProseMirror h1 {
   @apply font-bold;
 }
-
 
 .ProseMirror ul p,
 .ProseMirror ol p {
@@ -98,7 +97,7 @@
 
 .ProseMirror ul[data-type="taskList"] li {
   display: flex;
-  @apply px-3 py-2 shadow-sm rounded-md border ;
+  @apply px-3 py-2 shadow-sm rounded-md border;
   border-color: var(--common-border-light-color);
   background-color: var(--common-darker-bg-color);
 }
@@ -199,6 +198,15 @@
 .ProseMirror pre .hljs-bullet {
   color: #b9f18d;
 }
+
+.ProseMirror pre .hljs-block {
+  color: #9650c8;
+}
+
+.ProseMirror pre .hljs-string {
+  color: #aa8500;
+}
+
 .ProseMirror pre .hljs-title,
 .ProseMirror pre .hljs-section {
   color: #faf594;
@@ -225,7 +233,7 @@
   min-width: 200px;
   min-height: 200px;
   display: block;
-  outline: 0px solid transparent;    
+  outline: 0px solid transparent;
   margin: auto;
 }
 
@@ -241,3 +249,10 @@
   @apply mb-0;
 }
 
+.ProseMirror .code-language-title {
+  @apply text-xs absolute top-1.5 right-3 text-gray-500 transition-all;
+}
+
+.ProseMirror .code-mermaid .btn-preview {
+  @apply cursor-pointer inline-flex items-center justify-center border border-gray-700 rounded-md p-0.5 text-sm text-gray-300 bg-gray-900 shadow absolute top-2.5 right-3 opacity-0 transition-all;
+}
