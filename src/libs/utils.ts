@@ -55,3 +55,8 @@ export const timeNumberToStr = (time: number) => {
 
   return `${h}h`
 }
+
+export const toMb = (byte: number, toPrecision?: number) => {
+  toPrecision = toPrecision || 4
+  return (byte / 1024 / 1024).toPrecision(toPrecision)
+}
