@@ -39,6 +39,7 @@ import { encryptText } from "../../services/encryption"
 import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
+import { useSettingStore } from "../../store/settings"
 
 interface IPadEditorProp {
   id: string
@@ -139,6 +140,7 @@ const extensions = [
 ]
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
+  const { documentZoom } = useSettingStore()
   const isLockingScreen = getCache(LOCKING_SCREEN_STATUS) || ""
   const [update, setUpdate] = useState(0)
   const { setOutlines } = useOutlineStore()
@@ -206,7 +208,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
         {editor ? <PadDropZone id={id} editor={editor} /> : null}
-        <div className="tiptap-box">
+        <div className="tiptap-box" style={{ zoom: documentZoom }}>
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
             <ContextMenu
@@ -233,7 +235,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="character-count">
           <div className="bottom-bar">
             <OutlineButton />
-            content
+
             {editor && <WordCounter editor={editor} />}
           </div>
         </div>
