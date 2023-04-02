@@ -1,4 +1,4 @@
-import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react"
+import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import Highlight from "@tiptap/extension-highlight"
 import Typography from "@tiptap/extension-typography"
@@ -14,9 +14,8 @@ import { Extension } from "@tiptap/core"
 import CharacterCount from "@tiptap/extension-character-count"
 import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Youtube from "@tiptap/extension-youtube"
-import { lowlight } from 'lowlight'
+import { lowlight } from "lowlight"
 
 import ControlBar from "./ControlBar"
 import { IPad, updatePad } from "../../services/pads"
@@ -37,9 +36,9 @@ import { OutlineButton } from "../../containers/Outline/OutlineButton"
 import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
 // language
-import { mermaid } from "../../extensions/language/index"
-import { CodeBlock } from "./CodeBlock"
+import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
+import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 
 interface IPadEditorProp {
   id: string
@@ -68,7 +67,6 @@ const CharacterCountConfigure = CharacterCount.configure({
   limit,
 })
 
-
 const CustomTableCell = TableCell.extend({
   addAttributes() {
     return {
@@ -87,19 +85,6 @@ const CustomTableCell = TableCell.extend({
         },
       },
     }
-  },
-})
-
-const CustomCodeBlock = CodeBlockLowlight.extend({
-  addAttributes() {
-    return {
-      isPreview: {
-        default: false,
-      },
-    }
-  },
-  addNodeView() {
-    return ReactNodeViewRenderer(CodeBlock)
   },
 })
 
@@ -122,7 +107,7 @@ const Heading = Extension.create({
   },
 })
 
-lowlight.registerLanguage('mermaid', mermaid)
+lowlight.registerLanguage("mermaid", mermaid)
 
 const extensions = [
   StarterKit,
