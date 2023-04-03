@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 export default function CommandPalletes() {
   const [visible, setvisible] = useState(false)
+  const [inputs, setInputs] = useState([])
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -80,6 +81,9 @@ export default function CommandPalletes() {
     >
       <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base flex items-center ">
         <span className="pl-3">$</span>
+        {inputs.map((inp) => {
+          return <span></span>
+        })}
         <input
           ref={ref}
           type="text"
