@@ -1,8 +1,18 @@
 import React, { useEffect, useRef, useState } from "react"
 
+enum ECommandType {
+  COMMAND = "COMMAND",
+  OPTION = "OPTION",
+  CONTENT = "CONTENT",
+}
+interface ICommand {
+  type: ECommandType
+  text: string
+}
+
 export default function CommandPalletes() {
   const [visible, setvisible] = useState(false)
-  const [inputs, setInputs] = useState([])
+  const [inputs, setInputs] = useState<ICommand[]>([])
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -37,10 +47,39 @@ export default function CommandPalletes() {
     }
   }, [visible])
 
-  const onPressEnter = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPressed = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     const key = ev.key.toLowerCase()
     const target = ev.target as HTMLInputElement
     const value = target.value
+
+    if (key === "backspace" && !value) {
+      setInputs((inps) => inps.slice(0, -1))
+      return
+    }
+
+    if (key.match(/^\s+$/)) {
+      let type = ECommandType.CONTENT
+      const isCommand = !inputs.length ? "command" : ""
+      const isOption = value.match(/^-+/) ? "option" : ""
+
+      if (isCommand) {
+        type = ECommandType.COMMAND
+      }
+
+      if (isOption) {
+        type = ECommandType.OPTION
+      }
+
+      setInputs((inp) => [
+        ...inp,
+        {
+          type,
+          text: value.trim(),
+        },
+      ])
+      target.value = ""
+      return
+    }
 
     if (key !== "enter") {
       return
@@ -81,13 +120,17 @@ export default function CommandPalletes() {
     >
       <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base flex items-center ">
         <span className="pl-3">$</span>
-        {inputs.map((inp) => {
-          return <span></span>
-        })}
+        {inputs.length ? (
+          <div className="flex items-center gap-3">
+            {inputs.map((inp) => {
+              return <span>{inp.text}</span>
+            })}{" "}
+          </div>
+        ) : null}
         <input
           ref={ref}
           type="text"
-          onKeyDown={onPressEnter}
+          onKeyDown={onKeyPressed}
           className="w-full pl-1.5 bg-transparent border-transparent text-sm h-10 text-white focus:border-none focus:ring-0"
         />
       </div>
