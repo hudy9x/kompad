@@ -14,9 +14,8 @@ import { Extension } from "@tiptap/core"
 import CharacterCount from "@tiptap/extension-character-count"
 import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Youtube from "@tiptap/extension-youtube"
-import * as lowlight from "lowlight"
+import { lowlight } from "lowlight"
 
 import ControlBar from "./ControlBar"
 import { IPad, updatePad } from "../../services/pads"
@@ -25,8 +24,7 @@ import { shortCutAction } from "../Shortcut/ShortcutAction"
 import FixedControlBar from "./FixedControlBar"
 import ErrorCapture from "../ErrorCapture"
 import PadInfo from "./PadInfo"
-// import Diagram from "../"
-import DiagramExtension from "../../extensions/Diagram"
+
 import ScrollBar from "../ScrollBar"
 import PadDropZone from "./PadDropZone"
 import ContextMenu from "../ContextMenu"
@@ -37,7 +35,10 @@ import { guidGenerator } from "../../libs/utils"
 import { OutlineButton } from "../../containers/Outline/OutlineButton"
 import { WordCounter } from "../../containers/WordCounter"
 import { encryptText } from "../../services/encryption"
+// language
+import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
+import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 
 interface IPadEditorProp {
   id: string
@@ -64,11 +65,6 @@ const TaskListConfigure = TaskList.configure({
 const limit = 20000
 const CharacterCountConfigure = CharacterCount.configure({
   limit,
-})
-
-const CodeBlockLowlightConfigure = CodeBlockLowlight.configure({
-  // @ts-ignore
-  lowlight: lowlight.lowlight,
 })
 
 const CustomTableCell = TableCell.extend({
@@ -111,6 +107,8 @@ const Heading = Extension.create({
   },
 })
 
+lowlight.registerLanguage("mermaid", mermaid)
+
 const extensions = [
   StarterKit,
   Table.configure({
@@ -133,8 +131,10 @@ const extensions = [
   Link.configure({
     openOnClick: false,
   }),
-  CodeBlockLowlightConfigure,
-  DiagramExtension,
+  CustomCodeBlock.configure({
+    // @ts-ignore
+    lowlight,
+  }),
   Youtube.configure({}),
 ]
 
@@ -233,7 +233,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="character-count">
           <div className="bottom-bar">
             <OutlineButton />
-            content
+
             {editor && <WordCounter editor={editor} />}
           </div>
         </div>

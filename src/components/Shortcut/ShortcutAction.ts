@@ -133,7 +133,7 @@ export const shortCutAction = (ev: React.KeyboardEvent<HTMLDivElement> | Keyboar
       );
     }
 
-    // Ope/close outline
+    // Open/close outline
     if (pressed.alt && pressed.o) {
       preventEvent(ev);
       setIsOpen(

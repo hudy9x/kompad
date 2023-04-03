@@ -38,7 +38,7 @@ export default function UnlockScreenForm({
 
   const unlockWithPassword = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     const key = ev.key
-    const value = ev.target.value
+    const value = (ev.target as HTMLInputElement).value
 
     if (key.toLowerCase() !== "enter" || !value || !info) {
       return

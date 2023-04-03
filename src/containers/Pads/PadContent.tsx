@@ -37,7 +37,6 @@ function PadContent() {
 
   const getContent = (pad: IPad) => {
     if (pad.cipherContent) {
-      console.log(pad);
       return decryptText(pad.cipherContent);
     }
     return pad.content;

@@ -35,7 +35,6 @@ export default function PadVideoModal({ editor }: { editor: Editor }) {
   return <>
     <button
       onClick={() => setvisible(true)}
-      className={editor.isActive("codeBlock") ? "is-active" : ""}
     >
       <AiOutlineYoutube className="control-icon" />
     </button>

@@ -197,7 +197,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => editor.chain().focus().setCodeBlock().run()}
-          className={editor.isActive("codeBlock") ? "is-active" : ""}
+          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language !== 'mermaid' ? "is-active" : ""}
         >
           <BsCodeSlash className="control-icon" />
         </button>
@@ -205,8 +205,10 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         <PadVideoModal editor={editor} />
 
         <button
-          onClick={() => editor.chain().focus().insertContent(`<diagram-component graph=""></diagram-component>`).run()}
-        // className={editor.isActive("codeBlock") ? "is-active" : ""}
+          onClick={() => editor.chain().focus().setCodeBlock({
+            language: "mermaid"
+          }).run()}
+          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language === 'mermaid' ? "is-active" : ""}
         >
           <AiOutlinePartition className="control-icon" />
         </button>
