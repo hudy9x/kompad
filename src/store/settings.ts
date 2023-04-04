@@ -1,6 +1,11 @@
-import create from "zustand"
+import { create } from "zustand"
 import produce from "immer"
-import { getCache, LOCK_SCREEN_TIME, setCache } from "../libs/localCache"
+import {
+  DOCUMENT_ZOOM,
+  getCache,
+  LOCK_SCREEN_TIME,
+  setCache,
+} from "../libs/localCache"
 import { isDesktopApp } from "../libs/utils"
 
 export interface ISettingStore {
@@ -12,6 +17,8 @@ export interface ISettingStore {
     sidebar: boolean
   }
   toggleSideBar: () => void
+  documentZoom: number
+  // updateDocumentZoom: (zoom: number) => void
 }
 
 // default values
@@ -53,6 +60,16 @@ export const useSettingStore = create<ISettingStore>((set) => ({
         state.screenLockTime = timer
       })
     ),
+  documentZoom: parseInt(getCache(DOCUMENT_ZOOM) || "1", 10),
+  // updateDocumentZoom: (zoom: number) => {
+  //   set(
+  //     produce<ISettingStore>((state) => {
+  //       const oldDocZoom = state.documentZoom
+  //       const newDocZoom = oldDocZoom + zoom
+  //       state.documentZoom = newDocZoom <= 0 ? 0.5 : newDocZoom
+  //     })
+  //   )
+  // },
 }))
 
 export const { getState: getSettingState, setState: setSettingState } =
