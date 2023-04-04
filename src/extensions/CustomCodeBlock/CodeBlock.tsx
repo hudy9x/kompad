@@ -8,10 +8,10 @@ export const CodeBlock = (props: NodeViewProps) => {
     } else {
       return (
         <NodeViewWrapper>
-          <pre className="code-programming relative">
-            <span className="code-language-title">
-              {props.node.attrs.language}
-            </span>
+          <pre
+            className="code-programming relative code-lang-title"
+            title={props.node.attrs.language}
+          >
             <NodeViewContent as="code"></NodeViewContent>
           </pre>
         </NodeViewWrapper>

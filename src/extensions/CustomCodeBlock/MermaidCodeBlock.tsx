@@ -46,14 +46,14 @@ export const MermaidCodeBlock = ({
   return (
     <NodeViewWrapper>
       <pre className="code-mermaid group">
-        <div className="block-code-mermaid relative">
+        <div
+          className="block-code-mermaid relative code-lang-title"
+          title={"mermaid"}
+        >
           <NodeViewContent
             as="code"
             className="container-block-code"
           ></NodeViewContent>
-          <span className="code-language-title group-hover:opacity-0">
-            mermaid
-          </span>
           <button
             className={`btn-preview group-hover:opacity-100`}
             onClick={handlePreview}
