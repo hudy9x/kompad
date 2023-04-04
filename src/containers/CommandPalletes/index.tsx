@@ -118,7 +118,7 @@ export default function CommandPalletes() {
     const commands = [
       ...inputs,
       {
-        type: ECommandType.CONTENT,
+        type: value.match(/^-+/) ? ECommandType.OPTION : ECommandType.CONTENT,
         text: value.trim(),
       },
     ]

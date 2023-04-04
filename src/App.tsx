@@ -8,7 +8,6 @@ import FileManager from "./containers/AdvancedSettings/FileManager"
 import Privacy from "./containers/AdvancedSettings/Privacy"
 // import Profile from "./containers/AdvancedSettings/Profile";
 import Checking from "./containers/Checking"
-import CommandPalletes from "./containers/CommandPalletes"
 import EmailVerification from "./containers/EmailVerification"
 import ForgotPassword from "./containers/ForgotPassword"
 import LockScreen from "./containers/LockScreen"
@@ -39,7 +38,7 @@ function App() {
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
         <LockScreen />
-        <CommandPalletes />
+
         <ThemeSetting>
           <Routes>
             <Route path="/" element={<LayoutClear />}>

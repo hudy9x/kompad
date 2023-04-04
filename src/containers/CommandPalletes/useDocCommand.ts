@@ -1,38 +1,100 @@
-import { useNavigate } from "react-router-dom"
+import { useCallback } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../../hooks/useAuth"
-import { addPad } from "../../services/pads"
+import { addPad, updatePadMetadata } from "../../services/pads"
 import { IPlan, isPlanExceed, updatePlanByUid } from "../../services/plans"
 import { usePadStore } from "../../store"
-import { CommandFunc, ICommand } from "../../types"
-
-
+import { CommandFunc, ECommandType, ICommand } from "../../types"
 
 export const useDocCommand: CommandFunc = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
   const increaseNewPaddAdded = usePadStore((state) => state.setNeedToUpdate)
+  const { id: currentPadId } = useParams()
+
+  const isOption = (type: ECommandType) => type === ECommandType.OPTION
+  const isMatchedPresetOptions = (text: string, presetOptions: string[]) =>
+    presetOptions.some((option) => option === text)
+
+  const extractOptions = (commands: ICommand[]) => {
+    const options = {
+      edit: false,
+      title: "Untitled",
+      desc: "",
+    }
+
+    const len = commands.length
+
+    if (len === 1 && commands[0].type === ECommandType.CONTENT) {
+      options.title = commands[0].text
+    }
+
+    // commands.forEach((cmd) => {})
+    let i = 0
+    while (i < len) {
+      const item = commands[i]
+
+      if (
+        isOption(item.type) &&
+        isMatchedPresetOptions(item.text, ["--title", "-t"])
+      ) {
+        const nextItem = commands[++i]
+        options.title = nextItem.text
+        // ignore the next item and jump to next option
+        continue
+      }
+
+      if (
+        isOption(item.type) &&
+        isMatchedPresetOptions(item.text, ["--edit", "-e"])
+      ) {
+        options.edit = true
+      }
+
+      ++i
+    }
+
+    return options
+  }
+
+  const updatePad = (title: string) => {
+    if (!currentPadId) {
+      console.log("padId is not exist, the command doesn't work")
+      return
+    }
+
+    updatePadMetadata({
+      id: currentPadId,
+      title: title,
+    })
+  }
 
   const execute = async (commands: ICommand[]) => {
-    console.log('running')
+    console.log("running")
     if (!user) return
 
-    console.log('calling addPad')
+    const options = extractOptions(commands)
+
+    if (options.edit) {
+      updatePad(options.title)
+      return
+    }
+
+    console.log("calling addPad", options)
     const planData = (await isPlanExceed()) as IPlan
     const id = await addPad({
       uid: user.uid,
-      title: "Untitled",
-      shortDesc: "descriptiont",
+      title: options.title,
+      shortDesc: options.desc,
     })
 
-    console.log('update plan by user and redirecting to pad')
+    console.log("update plan by user and redirecting to pad")
 
     updatePlanByUid({ currentRecord: planData.currentRecord + 1 })
     navigate(`/app/pad/${id}`)
     increaseNewPaddAdded()
 
-    console.log('end -------------')
-
-  
+    console.log("end -------------")
   }
 
   return {
