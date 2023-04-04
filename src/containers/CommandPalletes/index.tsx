@@ -1,19 +1,29 @@
 import React, { useEffect, useRef, useState } from "react"
-
-enum ECommandType {
-  COMMAND = "COMMAND",
-  OPTION = "OPTION",
-  CONTENT = "CONTENT",
-}
-interface ICommand {
-  type: ECommandType
-  text: string
-}
+import { ECommandType, ICommand } from "../../types"
+import { useCommand } from "./useCommand"
 
 export default function CommandPalletes() {
   const [visible, setvisible] = useState(false)
   const [inputs, setInputs] = useState<ICommand[]>([])
   const ref = useRef<HTMLInputElement>(null)
+  const { executeCommand } = useCommand()
+
+  const insertInput = (type: ECommandType, value: string) => {
+    setInputs((inp) => [
+      ...inp,
+      {
+        type,
+        text: value.trim(),
+      },
+    ])
+  }
+
+  const clearInput = (target: HTMLInputElement) => {
+    target.value = ""
+    setTimeout(() => {
+      target.value = ""
+    }, 50)
+  }
 
   useEffect(() => {
     const onTrigger = (ev: KeyboardEvent) => {
@@ -28,6 +38,7 @@ export default function CommandPalletes() {
         return
       }
 
+      !visible === false && setInputs([])
       setvisible(!visible)
     }
     document.addEventListener("keydown", onTrigger)
@@ -47,37 +58,55 @@ export default function CommandPalletes() {
     }
   }, [visible])
 
+  useEffect(() => {
+    if (!visible && inputs.length) {
+      // const commands = [...inputs]
+      // executeCommand(commands)
+      // setInputs([])
+    }
+  }, [inputs, visible, executeCommand])
+
   const onKeyPressed = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     const key = ev.key.toLowerCase()
     const target = ev.target as HTMLInputElement
     const value = target.value
+    const isSpace = key.match(/\s+$/)
 
     if (key === "backspace" && !value) {
       setInputs((inps) => inps.slice(0, -1))
       return
     }
 
-    if (key.match(/^\s+$/)) {
+    if (isSpace) {
       let type = ECommandType.CONTENT
       const isCommand = !inputs.length ? "command" : ""
       const isOption = value.match(/^-+/) ? "option" : ""
 
+      const isString = value.match(/^".+"$/)
+
       if (isCommand) {
         type = ECommandType.COMMAND
+        clearInput(target)
+        insertInput(type, value)
       }
 
       if (isOption) {
         type = ECommandType.OPTION
+        clearInput(target)
+        insertInput(type, value)
       }
 
-      setInputs((inp) => [
-        ...inp,
-        {
-          type,
-          text: value.trim(),
-        },
-      ])
-      target.value = ""
+      return
+    }
+
+    const isIncludedOption = value.match(/\s+-+/)
+    if (isIncludedOption) {
+      // type = ECommandType.CONTENT
+
+      const extractedValue = value.slice(0, -1).trim()
+      target.value = "-"
+      insertInput(ECommandType.CONTENT, extractedValue)
+      console.log(value)
       return
     }
 
@@ -85,29 +114,17 @@ export default function CommandPalletes() {
       return
     }
 
-    // setvisible(false)
+    // pressing Enter
     const commands = [
-      "doc",
-      "doc document",
-      'doc --title "Document 1"',
-      "doc -t hello2",
-      "doc --title hello --folder HR",
-      'doc --title doc1 --tag auth --folder "Video Scripts"',
-      'doc --edit "new document title"',
-
-      "dup",
-      "important",
-
-      'filter --tag auth,aws-s3 --folder "Recruiment"',
-
-      "folder newFolder",
-      'folder "mobile app"',
-
-      "tag android",
-      "tag android,ios",
-      'tag "dall-e, công thức"',
+      ...inputs,
+      {
+        type: ECommandType.CONTENT,
+        text: value.trim(),
+      },
     ]
-    console.log(value)
+    executeCommand(commands)
+    setInputs([])
+    setvisible(false)
   }
 
   return (
@@ -118,12 +135,14 @@ export default function CommandPalletes() {
           : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base flex items-center ">
+      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base flex items-center py-1.5">
         <span className="pl-3">$</span>
         {inputs.length ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 pl-1.5">
             {inputs.map((inp) => {
-              return <span>{inp.text}</span>
+              return (
+                <span className="whitespace-nowrap text-sm">{inp.text}</span>
+              )
             })}{" "}
           </div>
         ) : null}
@@ -131,7 +150,7 @@ export default function CommandPalletes() {
           ref={ref}
           type="text"
           onKeyDown={onKeyPressed}
-          className="w-full pl-1.5 bg-transparent border-transparent text-sm h-10 text-white focus:border-none focus:ring-0"
+          className="w-full pl-[5px] bg-transparent border-transparent text-sm h-[20px] text-color-base focus:border-transparent focus:ring-transparent"
         />
       </div>
     </div>
