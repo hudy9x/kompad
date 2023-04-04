@@ -249,10 +249,15 @@
   @apply mb-0;
 }
 
-.ProseMirror .code-language-title {
+.ProseMirror .code-lang-title:before {
   @apply text-xs absolute top-1.5 right-3 text-gray-500 transition-all;
+  content: attr(title);
 }
 
 .ProseMirror .code-mermaid .btn-preview {
   @apply cursor-pointer inline-flex items-center justify-center border border-gray-700 rounded-md p-0.5 text-sm text-gray-300 bg-gray-900 shadow absolute top-2.5 right-3 opacity-0 transition-all;
+}
+
+.ProseMirror .code-mermaid:hover .code-lang-title:before{
+  @apply opacity-0;
 }
