@@ -5,6 +5,8 @@ import { IPlan, isPlanExceed, updatePlanByUid } from "../../services/plans"
 import { usePadStore } from "../../store"
 import { CommandFunc, ICommand } from "../../types"
 
+
+
 export const useDocCommand: CommandFunc = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
