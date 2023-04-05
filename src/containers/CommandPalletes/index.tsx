@@ -6,7 +6,9 @@ export default function CommandPalletes() {
   const [visible, setvisible] = useState(false)
   const [inputs, setInputs] = useState<ICommand[]>([])
   const ref = useRef<HTMLInputElement>(null)
-  const { executeCommand } = useCommand()
+  const { executeCommand, suggestKeyword } = useCommand()
+  const [inpValue, setInpValue] = useState("")
+  const [suggestList, setSuggestList] = useState<string[]>([])
 
   const insertInput = (type: ECommandType, value: string) => {
     setInputs((inp) => [
@@ -59,12 +61,10 @@ export default function CommandPalletes() {
   }, [visible])
 
   useEffect(() => {
-    if (!visible && inputs.length) {
-      // const commands = [...inputs]
-      // executeCommand(commands)
-      // setInputs([])
-    }
-  }, [inputs, visible, executeCommand])
+    const suggestedKeywords = suggestKeyword(inputs, inpValue)
+    console.log(suggestedKeywords)
+    setSuggestList(suggestedKeywords || [])
+  }, [inpValue, inputs])
 
   const onKeyPressed = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     const key = ev.key.toLowerCase()
@@ -127,21 +127,25 @@ export default function CommandPalletes() {
     setvisible(false)
   }
 
+  console.log("inputValue", inpValue)
+
   return (
     <div
-      className={`fixed w-full h-screen flex bg-gray-500/30 items-center justify-center px-2 py-2 z-[200] transition-all ${
+      className={`command-pallete  ${
         visible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-transparent flex items-center py-1.5">
+      <div className="w-[500px] relative bg-dark text-color-base rounded-lg shadow-lg border border-transparent flex items-center py-1.5">
         <span className="pl-3">$</span>
         {inputs.length ? (
           <div className="flex items-center gap-1.5 pl-1.5">
-            {inputs.map((inp) => {
+            {inputs.map((inp, index) => {
               return (
-                <span className="whitespace-nowrap text-sm">{inp.text}</span>
+                <span key={index} className="whitespace-nowrap text-sm">
+                  {inp.text}
+                </span>
               )
             })}{" "}
           </div>
@@ -149,9 +153,23 @@ export default function CommandPalletes() {
         <input
           ref={ref}
           type="text"
+          onChange={(ev) => {
+            setInpValue(ev.target.value)
+          }}
           onKeyDown={onKeyPressed}
           className="w-full pl-[5px] bg-transparent border-transparent text-sm h-[20px] text-color-base focus:border-transparent focus:ring-transparent"
         />
+        {suggestList.length ? (
+          <div className="autosuggest-commands bg-dark text-color-base">
+            {suggestList.map((keyword) => {
+              return (
+                <div className="command-item" key={keyword}>
+                  {keyword}
+                </div>
+              )
+            })}
+          </div>
+        ) : null}
       </div>
     </div>
   )

@@ -45,7 +45,29 @@ export const useCommand = () => {
     dup: cmdDup,
     del: cmdDel,
     important: cmdImportant,
-    filter: cmdFilter
+    filter: cmdFilter,
+  }
+
+  const suggestKeyword = (cmds: ICommand[], value: string): string[] => {
+    const len = cmds.length
+
+    if (!len && value) {
+      const commandKeywords = Object.keys(commands)
+      return commandKeywords.filter((keyword) => keyword.includes(value))
+    }
+
+    if (!len) return []
+
+    const cmdKeyword = cmds[0].text
+    if (cmdKeyword in commands) {
+      console.log("command:", cmdKeyword)
+
+      // commands[cmdKeyword].execute(cmds.slice(1))
+
+      // commands[cmdKeyword]
+    }
+
+    return []
   }
 
   const executeCommand = (cmds: ICommand[]) => {
@@ -61,5 +83,5 @@ export const useCommand = () => {
       message.warning("Command not found !")
     }
   }
-  return { executeCommand }
+  return { executeCommand, suggestKeyword }
 }
