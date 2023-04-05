@@ -4,16 +4,13 @@ import { addPad, updatePadMetadata } from "../../services/pads"
 import { IPlan, isPlanExceed, updatePlanByUid } from "../../services/plans"
 import { usePadStore } from "../../store"
 import { CommandFunc, ECommandType, ICommand } from "../../types"
+import { isOptionNMatchedPreset } from "./util"
 
 export const useDocCommand: CommandFunc = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
   const increaseNewPaddAdded = usePadStore((state) => state.setNeedToUpdate)
   const { id: currentPadId } = useParams()
-
-  const isOption = (type: ECommandType) => type === ECommandType.OPTION
-  const isMatchedPresetOptions = (text: string, presetOptions: string[]) =>
-    presetOptions.some((option) => option === text)
 
   const extractOptions = (commands: ICommand[]) => {
     const options = {
@@ -33,20 +30,21 @@ export const useDocCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (
-        isOption(item.type) &&
-        isMatchedPresetOptions(item.text, ["--title", "-t"])
-      ) {
+      if (isOptionNMatchedPreset(item, ["--title", "-t"])) {
         const nextItem = commands[++i]
         options.title = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (
-        isOption(item.type) &&
-        isMatchedPresetOptions(item.text, ["--edit", "-e"])
-      ) {
+      if (isOptionNMatchedPreset(item, ["--desc", "-d"])) {
+        const nextItem = commands[++i]
+        options.desc = nextItem.text
+        // ignore the next item and jump to next option
+        continue
+      }
+
+      if (isOptionNMatchedPreset(item, ["--edit", "-e"])) {
         options.edit = true
       }
 

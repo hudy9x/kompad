@@ -135,7 +135,7 @@ export default function CommandPalletes() {
           : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-color-base flex items-center py-1.5">
+      <div className="w-[500px] bg-dark text-color-base rounded-lg shadow-lg border border-transparent flex items-center py-1.5">
         <span className="pl-3">$</span>
         {inputs.length ? (
           <div className="flex items-center gap-1.5 pl-1.5">

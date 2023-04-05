@@ -1,5 +1,10 @@
+import { message } from "../../components/message"
 import { CommandFunc, ICommand } from "../../types"
+import { useDeleteCommand } from "./useDeleteCommand"
 import { useDocCommand } from "./useDocCommand"
+import { useDupCommand } from "./useDupCommand"
+import { useFilterCommand } from "./useFilterCommand"
+import { useImportantCommand } from "./useImportantCommand"
 
 // const commands = [
 //   "doc",
@@ -30,8 +35,17 @@ interface ICommandList {
 }
 export const useCommand = () => {
   const cmdDoc = useDocCommand()
+  const cmdDup = useDupCommand()
+  const cmdDel = useDeleteCommand()
+  const cmdImportant = useImportantCommand()
+  const cmdFilter = useFilterCommand()
+
   const commands: ICommandList = {
     doc: cmdDoc,
+    dup: cmdDup,
+    del: cmdDel,
+    important: cmdImportant,
+    filter: cmdFilter
   }
 
   const executeCommand = (cmds: ICommand[]) => {
@@ -39,10 +53,12 @@ export const useCommand = () => {
     const cmdKeyword = cmds[0].text
     if (cmdKeyword in commands) {
       console.log("command:", cmdKeyword)
-      
+
       commands[cmdKeyword].execute(cmds.slice(1))
 
       // commands[cmdKeyword]
+    } else {
+      message.warning("Command not found !")
     }
   }
   return { executeCommand }
