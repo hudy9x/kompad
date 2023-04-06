@@ -58,7 +58,6 @@ export const shortCutAction = (
   editor?: Editor
 ) => {
   const key = ev.key.toLowerCase()
-  console.log(key)
   if (pressed && editor) {
     // pressed[key as keyof typeof pressed] = ev.type === "keydown"
     markKeyPress(pressed, ev)

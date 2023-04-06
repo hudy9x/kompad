@@ -38,6 +38,7 @@ function App() {
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
         <LockScreen />
+
         <ThemeSetting>
           <Routes>
             <Route path="/" element={<LayoutClear />}>

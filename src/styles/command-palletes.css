@@ -1,0 +1,25 @@
+.command-pallete {
+  @apply flex flex-col fixed w-full h-screen bg-gray-500/30 items-center justify-center px-2 py-2 z-[200] transition-all;
+}
+
+.autosuggest-commands {
+  @apply w-[500px] rounded-b-md shadow-lg absolute top-[37px] -left-[1px];
+  @apply max-h-56 overflow-y-auto border-t transition-all;
+  border-top-color: var(--common-border-light-color);
+}
+
+.command-item {
+  @apply w-full px-3 py-1.5 text-sm flex gap-2;
+}
+
+.command-item.active {
+  background-color: var(--common-light-bg-color);
+}
+
+.command-search-container {
+  @apply w-[500px] relative rounded-lg shadow-lg border border-transparent flex items-center py-1.5 transition-all;
+}
+
+.command-search-container.has-suggest-item {
+  @apply rounded-b-none;
+}

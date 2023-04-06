@@ -1,15 +1,17 @@
-import { Outlet } from "react-router-dom";
-import Autoupdate from "../Autoupdate";
-import Sidebar from "../../containers/Sidebar";
-import Shortcut from "../Shortcut/Shortcut";
-import { isDesktopApp } from "../../libs/utils";
-import ThemeSelection from "../../containers/Theme/ThemeSelection";
-import AppMiddleware from "../../providers/AppMiddleware";
+import { Outlet } from "react-router-dom"
+import Autoupdate from "../Autoupdate"
+import Sidebar from "../../containers/Sidebar"
+import Shortcut from "../Shortcut/Shortcut"
+import { isDesktopApp } from "../../libs/utils"
+import ThemeSelection from "../../containers/Theme/ThemeSelection"
+import AppMiddleware from "../../providers/AppMiddleware"
+import CommandPalletes from "../../containers/CommandPalletes"
 
 export default function Layout() {
   return (
     <AppMiddleware>
       <>
+        <CommandPalletes />
         <Sidebar />
         <main className="main-content">
           <Outlet />
@@ -19,5 +21,5 @@ export default function Layout() {
         {isDesktopApp() ? <Autoupdate /> : null}
       </>
     </AppMiddleware>
-  );
+  )
 }
