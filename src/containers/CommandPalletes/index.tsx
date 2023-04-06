@@ -91,6 +91,11 @@ export default function CommandPalletes() {
     const value = target.value
     const isSpace = key.match(/\s+$/)
 
+    // only execute command when the command pallete opens
+    if (!visible) {
+      return
+    }
+
     // delete prev input when hitting backspace
     if (key === "backspace" && !value) {
       setInputs((inps) => inps.slice(0, -1))

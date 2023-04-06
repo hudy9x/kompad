@@ -68,11 +68,11 @@ export const useCommand = () => {
   ): ICommandSuggestItem[] => {
     const suggestedOptions: ICommandSuggestItem[] = []
     for (const key in commandOptions) {
-      const option = commandOptions[key]
-      if (option.some((o) => o.includes(value))) {
+      const { options, desc } = commandOptions[key]
+      if (options.some((o) => o.includes(value))) {
         suggestedOptions.push({
-          title: option[0],
-          desc: "this option is doing something",
+          title: options[0],
+          desc,
         })
       }
     }

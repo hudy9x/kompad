@@ -12,9 +12,9 @@ import {
 import { isOptionNMatchedPreset } from "./util"
 
 const commandOptions: ICommandOptions = {
-  title: ["--title", "-t"],
-  desc: ["--desc", "-d"],
-  edit: ["--edit", "-e"],
+  title: { options: ["--title", "-t"], desc: "the title of document" },
+  desc: { options: ["--desc", "-d"], desc: "give document some description" },
+  edit: { options: ["--edit", "-e"], desc: "switch to edit mode" },
 }
 
 export const useDocCommand: CommandFunc = () => {
@@ -41,21 +41,21 @@ export const useDocCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, commandOptions.title)) {
+      if (isOptionNMatchedPreset(item, commandOptions.title.options)) {
         const nextItem = commands[++i]
         options.title = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.desc)) {
+      if (isOptionNMatchedPreset(item, commandOptions.desc.options)) {
         const nextItem = commands[++i]
         options.desc = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.edit)) {
+      if (isOptionNMatchedPreset(item, commandOptions.edit.options)) {
         options.edit = true
       }
 

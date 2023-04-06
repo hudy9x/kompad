@@ -15,7 +15,10 @@ export interface ICommandSuggestItem {
 }
 
 export interface ICommandOptions {
-  [key: string]: string[]
+  [key: string]: {
+    options: string[]
+    desc: string
+  }
 }
 
 export type CommandFunc = () => {

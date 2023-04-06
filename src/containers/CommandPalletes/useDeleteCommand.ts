@@ -9,8 +9,8 @@ import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
 
 const commandOptions: ICommandOptions = {
-  yes: ["--yes", "-y"],
-  id: ["--id", "-I"],
+  yes: { options: ["--yes", "-y"], desc: "delete document without confirmation" },
+  id: { options: ["--id", "-I"], desc: "document's id" },
 }
 
 // duplicate command
@@ -31,11 +31,11 @@ export const useDeleteCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, commandOptions.yes)) {
+      if (isOptionNMatchedPreset(item, commandOptions.yes.options)) {
         options.yes = true
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.id)) {
+      if (isOptionNMatchedPreset(item, commandOptions.id.options)) {
         const nextItem = commands[++i]
         options.id = nextItem.text
         // ignore the next item and jump to next option

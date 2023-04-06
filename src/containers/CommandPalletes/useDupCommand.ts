@@ -5,7 +5,10 @@ import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
 
 const commandOptions: ICommandOptions = {
-  id: ["--id", "-I"],
+  id: {
+    options: ["--id", "-I"],
+    desc: "document's id",
+  },
 }
 
 // duplicate command
@@ -25,7 +28,7 @@ export const useDupCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, commandOptions.id)) {
+      if (isOptionNMatchedPreset(item, commandOptions.id.options)) {
         const nextItem = commands[++i]
         options.id = nextItem.text
         // ignore the next item and jump to next option

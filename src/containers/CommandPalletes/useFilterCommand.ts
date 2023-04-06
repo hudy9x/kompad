@@ -11,12 +11,12 @@ import {
 import { isOptionNMatchedPreset } from "./util"
 
 const commandOptions: ICommandOptions = {
-  tag: ["--tag"],
-  folder: ["--folder"],
-  clear: ["--clear"],
-  all: ["--all"],
-  recent: ["--recent"],
-  important: ["--important", "-i"],
+  tag: { options: ["--tag"], desc: "filter documents by tag's name" },
+  folder: { options: ["--folder"], desc: "filter documents by folder's name" },
+  clear: { options: ["--clear"], desc: "remove all filter conditions" },
+  all: { options: ["--all"], desc: "show all documents" },
+  recent: { options: ["--recent"], desc: "show recently documents" },
+  important: { options: ["--important", "-i"], desc: "toggle a document to important and vice versa" },
 }
 
 export const useFilterCommand: CommandFunc = () => {
@@ -47,14 +47,14 @@ export const useFilterCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, commandOptions.tag)) {
+      if (isOptionNMatchedPreset(item, commandOptions.tag.options)) {
         const nextItem = commands[++i]
         options.tag = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.folder)) {
+      if (isOptionNMatchedPreset(item, commandOptions.folder.options)) {
         const nextItem = commands[++i]
         options.folder = nextItem.text
         // ignore the next item and jump to next option
@@ -62,19 +62,19 @@ export const useFilterCommand: CommandFunc = () => {
       }
 
       console.log("commandOptions.clear", commandOptions.clear)
-      if (isOptionNMatchedPreset(item, commandOptions.clear)) {
+      if (isOptionNMatchedPreset(item, commandOptions.clear.options)) {
         options.clear = true
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.all)) {
+      if (isOptionNMatchedPreset(item, commandOptions.all.options)) {
         options.all = true
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.recent)) {
+      if (isOptionNMatchedPreset(item, commandOptions.recent.options)) {
         options.recent = true
       }
 
-      if (isOptionNMatchedPreset(item, commandOptions.important)) {
+      if (isOptionNMatchedPreset(item, commandOptions.important.options)) {
         options.important = true
       }
 
@@ -130,11 +130,11 @@ export const useFilterCommand: CommandFunc = () => {
       return ""
     }
 
-    if (commandOptions.tag.some((o) => o.includes(command.text))) {
+    if (commandOptions.tag.options.some((o) => o.includes(command.text))) {
       return "tag"
     }
 
-    if (commandOptions.folder.some((o) => o.includes(command.text))) {
+    if (commandOptions.folder.options.some((o) => o.includes(command.text))) {
       return "folder"
     }
 
