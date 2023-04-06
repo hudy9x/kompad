@@ -1,5 +1,10 @@
 import { message } from "../../components/message"
-import { CommandFunc, ICommand } from "../../types"
+import {
+  CommandFunc,
+  ICommand,
+  ICommandOptions,
+  ICommandSuggestItem,
+} from "../../types"
 import { useDeleteCommand } from "./useDeleteCommand"
 import { useDocCommand } from "./useDocCommand"
 import { useDupCommand } from "./useDupCommand"
@@ -31,7 +36,10 @@ import { useImportantCommand } from "./useImportantCommand"
 // ]
 
 interface ICommandList {
-  [key: string]: ReturnType<CommandFunc>
+  [key: string]: {
+    cmd: ReturnType<CommandFunc>
+    desc: string
+  }
 }
 export const useCommand = () => {
   const cmdDoc = useDocCommand()
@@ -41,47 +49,87 @@ export const useCommand = () => {
   const cmdFilter = useFilterCommand()
 
   const commands: ICommandList = {
-    doc: cmdDoc,
-    dup: cmdDup,
-    del: cmdDel,
-    important: cmdImportant,
-    filter: cmdFilter,
+    doc: { cmd: cmdDoc, desc: "create or update a document" },
+    dup: { cmd: cmdDup, desc: "make a copy of document" },
+    del: { cmd: cmdDel, desc: "to delete a document" },
+    important: {
+      cmd: cmdImportant,
+      desc: "toggle a document to important and vice versa",
+    },
+    filter: {
+      cmd: cmdFilter,
+      desc: "sort for documents by tags, folders, categories",
+    },
   }
 
-  const suggestKeyword = (cmds: ICommand[], value: string): string[] => {
+  const suggestOptions = (
+    value: string,
+    commandOptions: ICommandOptions
+  ): ICommandSuggestItem[] => {
+    const suggestedOptions: ICommandSuggestItem[] = []
+    for (const key in commandOptions) {
+      const option = commandOptions[key]
+      if (option.some((o) => o.includes(value))) {
+        suggestedOptions.push({
+          title: option[0],
+          desc: "this option is doing something",
+        })
+      }
+    }
+
+    return suggestedOptions
+  }
+
+  const suggestKeyword = (
+    cmds: ICommand[],
+    value: string
+  ): ICommandSuggestItem[] => {
     const len = cmds.length
 
     if (!len && value) {
       const commandKeywords = Object.keys(commands)
-      return commandKeywords.filter((keyword) => keyword.includes(value))
+      const suggestedKeywords: ICommandSuggestItem[] = []
+      commandKeywords.forEach((keyword) => {
+        if (keyword.includes(value)) {
+          suggestedKeywords.push({
+            title: keyword,
+            desc: commands[keyword].desc,
+          })
+        }
+      })
+      return suggestedKeywords
     }
 
     if (!len) return []
 
     const cmdKeyword = cmds[0].text
-    if (cmdKeyword in commands) {
-      console.log("command:", cmdKeyword)
+    if (!(cmdKeyword in commands)) return []
 
-      // commands[cmdKeyword].execute(cmds.slice(1))
+    const command = commands[cmdKeyword]
+    const cmd = command.cmd
+    const lastCmd = cmds[cmds.length - 1]
 
-      // commands[cmdKeyword]
+    const option = cmd.hasSuggestValue ? cmd.hasSuggestValue(lastCmd) : ""
+    console.log("option", option)
+    if (option && cmd.suggestOptionValue) {
+      return cmd.suggestOptionValue(option, value)
     }
 
-    return []
+    return suggestOptions(value, cmd.commandOptions)
   }
 
   const executeCommand = (cmds: ICommand[]) => {
     console.log("execute command ! ------------------")
     const cmdKeyword = cmds[0].text
     if (cmdKeyword in commands) {
-      console.log("command:", cmdKeyword)
-
-      commands[cmdKeyword].execute(cmds.slice(1))
+      const command = commands[cmdKeyword]
+      command.cmd.execute(cmds.slice(1))
 
       // commands[cmdKeyword]
     } else {
       message.warning("Command not found !")
     }
   }
+
   return { executeCommand, suggestKeyword }
 }

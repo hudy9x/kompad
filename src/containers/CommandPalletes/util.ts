@@ -7,4 +7,3 @@ const isMatchedPresetOptions = (text: string, presetOptions: string[]) =>
 export const isOptionNMatchedPreset = (item: ICommand, preset: string[]) => {
   return isOption(item.type) && isMatchedPresetOptions(item.text, preset)
 }
-

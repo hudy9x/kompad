@@ -1,5 +1,10 @@
-import { CommandFunc, ICommand } from "../../types"
+import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  title: ["--title", "-t"],
+  edit: ["--edit", "-e"],
+}
 
 // duplicate command
 export const useExampleCommand: CommandFunc = () => {
@@ -16,14 +21,14 @@ export const useExampleCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--title", "-t"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.title)) {
         const nextItem = commands[++i]
         options.title = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, ["--edit", "-e"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.edit)) {
         options.edit = true
       }
 
@@ -38,5 +43,7 @@ export const useExampleCommand: CommandFunc = () => {
     // put your code here
   }
 
-  return { execute }
+  const needSuggestValue = (command: ICommand) => {}
+
+  return { execute, commandOptions }
 }

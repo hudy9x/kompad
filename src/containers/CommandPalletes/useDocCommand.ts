@@ -3,8 +3,19 @@ import { useAuth } from "../../hooks/useAuth"
 import { addPad, updatePadMetadata } from "../../services/pads"
 import { IPlan, isPlanExceed, updatePlanByUid } from "../../services/plans"
 import { usePadStore } from "../../store"
-import { CommandFunc, ECommandType, ICommand } from "../../types"
+import {
+  CommandFunc,
+  ECommandType,
+  ICommand,
+  ICommandOptions,
+} from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  title: ["--title", "-t"],
+  desc: ["--desc", "-d"],
+  edit: ["--edit", "-e"],
+}
 
 export const useDocCommand: CommandFunc = () => {
   const { user } = useAuth()
@@ -30,21 +41,21 @@ export const useDocCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--title", "-t"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.title)) {
         const nextItem = commands[++i]
         options.title = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, ["--desc", "-d"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.desc)) {
         const nextItem = commands[++i]
         options.desc = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, ["--edit", "-e"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.edit)) {
         options.edit = true
       }
 
@@ -96,5 +107,6 @@ export const useDocCommand: CommandFunc = () => {
 
   return {
     execute,
+    commandOptions: commandOptions,
   }
 }

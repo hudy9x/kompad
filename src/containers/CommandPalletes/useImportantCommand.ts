@@ -1,7 +1,11 @@
 import { useParams } from "react-router-dom"
 import { setImportant } from "../../services/pads"
-import { CommandFunc, ICommand } from "../../types"
+import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  id: ["--id", "-I"],
+}
 
 // duplicate command
 export const useImportantCommand: CommandFunc = () => {
@@ -18,7 +22,7 @@ export const useImportantCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--id", "-I"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.id)) {
         const nextItem = commands[++i]
         options.id = nextItem.text
         // ignore the next item and jump to next option
@@ -42,5 +46,5 @@ export const useImportantCommand: CommandFunc = () => {
     await setImportant(padId)
   }
 
-  return { execute }
+  return { execute, commandOptions }
 }

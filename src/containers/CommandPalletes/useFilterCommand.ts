@@ -1,14 +1,28 @@
 import { useFolderStore } from "../../store/folder"
 import { usePadListStore } from "../../store/pad"
 import { useTagStore } from "../../store/tags"
-import { CommandFunc, ICommand } from "../../types"
+import {
+  CommandFunc,
+  ECommandType,
+  ICommand,
+  ICommandOptions,
+  ICommandSuggestItem,
+} from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  tag: ["--tag"],
+  folder: ["--folder"],
+  clear: ["--clear"],
+  all: ["--all"],
+  recent: ["--recent"],
+  important: ["--important", "-i"],
+}
 
 export const useFilterCommand: CommandFunc = () => {
   const { tags } = useTagStore()
   const { folders } = useFolderStore()
   const {
-    query,
     filterByTag,
     filterByFolder,
     filterByRecently,
@@ -33,33 +47,34 @@ export const useFilterCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--tag"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.tag)) {
         const nextItem = commands[++i]
         options.tag = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, ["--folder"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.folder)) {
         const nextItem = commands[++i]
         options.folder = nextItem.text
         // ignore the next item and jump to next option
         continue
       }
 
-      if (isOptionNMatchedPreset(item, ["--clear"])) {
+      console.log("commandOptions.clear", commandOptions.clear)
+      if (isOptionNMatchedPreset(item, commandOptions.clear)) {
         options.clear = true
       }
 
-      if (isOptionNMatchedPreset(item, ["--all"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.all)) {
         options.all = true
       }
 
-      if (isOptionNMatchedPreset(item, ["--recent"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.recent)) {
         options.recent = true
       }
 
-      if (isOptionNMatchedPreset(item, ["--important", "-i"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.important)) {
         options.important = true
       }
 
@@ -72,9 +87,11 @@ export const useFilterCommand: CommandFunc = () => {
   const execute = async (commands: ICommand[]) => {
     const options = extractOptions(commands)
 
+    console.log("options", options)
+
     if (options.clear) {
-      filterByTag("")
-      filterByFolder("")
+      console.log("clear called")
+      clearFilter()
       return
     }
 
@@ -108,5 +125,48 @@ export const useFilterCommand: CommandFunc = () => {
     }
   }
 
-  return { execute }
+  const hasSuggestValue = (command: ICommand) => {
+    if (command.type !== ECommandType.OPTION) {
+      return ""
+    }
+
+    if (commandOptions.tag.some((o) => o.includes(command.text))) {
+      return "tag"
+    }
+
+    if (commandOptions.folder.some((o) => o.includes(command.text))) {
+      return "folder"
+    }
+
+    return ""
+  }
+
+  const suggestOptionValue = (option: string, value: string) => {
+    let suggestedOptionValue: ICommandSuggestItem[] = []
+
+    if (option === "tag") {
+      tags.forEach((t) => {
+        if (t.title.toLowerCase().includes(value.toLowerCase())) {
+          suggestedOptionValue.push({
+            title: t.title,
+            desc: "",
+          })
+        }
+      })
+    }
+
+    option === "folder" &&
+      folders.forEach((f) => {
+        if (f.title.toLowerCase().includes(value.toLowerCase())) {
+          suggestedOptionValue.push({
+            title: f.title,
+            desc: "",
+          })
+        }
+      })
+
+    return suggestedOptionValue
+  }
+
+  return { execute, commandOptions, hasSuggestValue, suggestOptionValue }
 }

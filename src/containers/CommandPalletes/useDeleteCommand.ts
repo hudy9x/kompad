@@ -5,8 +5,13 @@ import { deleteAllImageInOnePad } from "../../services/files"
 import { delPad } from "../../services/pads"
 import { decreasePlanRecord } from "../../services/plans"
 import { usePadStore } from "../../store"
-import { CommandFunc, ICommand } from "../../types"
+import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  yes: ["--yes", "-y"],
+  id: ["--id", "-I"],
+}
 
 // duplicate command
 export const useDeleteCommand: CommandFunc = () => {
@@ -26,11 +31,11 @@ export const useDeleteCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--yes", "-y"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.yes)) {
         options.yes = true
       }
 
-      if (isOptionNMatchedPreset(item, ["--id", "-I"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.id)) {
         const nextItem = commands[++i]
         options.id = nextItem.text
         // ignore the next item and jump to next option
@@ -74,5 +79,5 @@ export const useDeleteCommand: CommandFunc = () => {
     })
   }
 
-  return { execute }
+  return { execute, commandOptions }
 }

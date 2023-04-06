@@ -1,8 +1,12 @@
 import { useParams } from "react-router-dom"
 import { message } from "../../components/message"
 import { duplicatePad } from "../../services/pads"
-import { CommandFunc, ECommandType, ICommand } from "../../types"
+import { CommandFunc, ICommand, ICommandOptions } from "../../types"
 import { isOptionNMatchedPreset } from "./util"
+
+const commandOptions: ICommandOptions = {
+  id: ["--id", "-I"],
+}
 
 // duplicate command
 export const useDupCommand: CommandFunc = () => {
@@ -21,7 +25,7 @@ export const useDupCommand: CommandFunc = () => {
     while (i < len) {
       const item = commands[i]
 
-      if (isOptionNMatchedPreset(item, ["--id", "-I"])) {
+      if (isOptionNMatchedPreset(item, commandOptions.id)) {
         const nextItem = commands[++i]
         options.id = nextItem.text
         // ignore the next item and jump to next option
@@ -50,5 +54,5 @@ export const useDupCommand: CommandFunc = () => {
     // duplicatePad(currentPadId)
   }
 
-  return { execute }
+  return { execute, commandOptions }
 }
