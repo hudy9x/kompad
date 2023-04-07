@@ -4,6 +4,7 @@ import Layout from "./components/Layout"
 import LayoutClear from "./components/Layout/LayoutClear"
 // import LayoutSetting from "./components/Layout/LayoutSetting";
 import PrivateRoute from "./components/PrivateRoute"
+import CommandPalletesSetting from "./containers/AdvancedSettings/CommandPalletes"
 import FileManager from "./containers/AdvancedSettings/FileManager"
 import Privacy from "./containers/AdvancedSettings/Privacy"
 // import Profile from "./containers/AdvancedSettings/Profile";
@@ -82,6 +83,10 @@ function App() {
               <Route path="theme" element={<ThemeColor />}></Route>
               <Route path="file-manager" element={<FileManager />}></Route>
               <Route path="privacy" element={<Privacy />}></Route>
+              <Route
+                path="command-palletes"
+                element={<CommandPalletesSetting />}
+              ></Route>
               <Route path="*" element={<NotFound />}></Route>
             </Route>
             <Route path="*" element={<NotFound />}></Route>

@@ -68,6 +68,10 @@ body {
   background-color: var(--common-bg-color);
 }
 
+.bg-primary {
+  background-color: var(--common-primary-color)
+}
+
 .bg-dark {
   background-color: var(--common-dark-bg-color);
 }
