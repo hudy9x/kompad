@@ -4,6 +4,7 @@ import {
   HiOutlineDocumentText,
   HiOutlineKey,
   HiOutlineShieldCheck,
+  HiOutlineTerminal,
   HiOutlineUserCircle,
 } from "react-icons/hi"
 import { Link, NavLink, Outlet } from "react-router-dom"
@@ -38,6 +39,12 @@ const navigation = [
     name: "Privacy",
     href: "/setting/privacy",
     icon: HiOutlineShieldCheck,
+    current: false,
+  },
+  {
+    name: "Command Palletes",
+    href: "/setting/command-palletes",
+    icon: HiOutlineTerminal,
     current: false,
   },
 

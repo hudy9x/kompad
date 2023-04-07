@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import { COMMAND_PALLETES_STATUS, getCache } from "../../libs/localCache"
 import { ECommandType, ICommand, ICommandSuggestItem } from "../../types"
 import { useCommand } from "./useCommand"
 
@@ -33,6 +34,9 @@ export default function CommandPalletes() {
     const onTrigger = (ev: KeyboardEvent) => {
       const key = ev.key
       const isModalOpened = document.querySelector("#headlessui-portal-root")
+      const isTurnon = getCache(COMMAND_PALLETES_STATUS) === "1" ? true : false
+
+      if (!isTurnon) return
 
       // DO NOT open command pallete in case there's a modal is closing
       if (isModalOpened) {
