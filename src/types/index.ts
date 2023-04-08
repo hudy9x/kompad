@@ -27,3 +27,8 @@ export type CommandFunc = () => {
   suggestOptionValue?: (option: string, value: string) => ICommandSuggestItem[]
   commandOptions: ICommandOptions
 }
+
+export interface ICSSVariable {
+  name: string
+  value: string
+}

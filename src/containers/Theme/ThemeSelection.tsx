@@ -9,15 +9,21 @@ import {
   getUserSetting,
   selectTheme,
   setThemeConfigToStorage,
+  uninstallTheme,
 } from "../../services/user-settings"
 import { useAuth } from "../../hooks/useAuth"
 import { Link } from "react-router-dom"
+import { useSettingStore } from "../../store/settings"
+import { confirmDanger } from "../../components/Confirm"
+import { TbPencil } from "react-icons/tb"
+import { RiCloseFill } from "react-icons/ri"
 
 let currentTheme = ""
 let markAsThemeSelected = false
 export default function ThemeUser() {
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
+  const { toggleThemeCustomModal, themeCustomModal } = useSettingStore()
   const {
     visible,
     selectedTheme,
@@ -28,6 +34,7 @@ export default function ThemeUser() {
   } = useThemeStore()
   const [searchKey, setSearchKey] = useState("")
   const [preview, setPreview] = useState(selectedTheme)
+  const [updateCounter, setUpdateCounter] = useState(0)
 
   const setThemeSetting = (config: string) => {
     const themeSettingElem = getThemeSettingElem()
@@ -88,6 +95,29 @@ export default function ThemeUser() {
     currentTheme = ""
   }
 
+  const onEditTheme = (id: string) => {
+    toggleThemeCustomModal(id)
+  }
+
+  const onDelTheme = (id: string) => {
+    confirmDanger({
+      title: "Delete theme",
+      desc: "Are you sure to delete this theme ? Howerver you're still re-install it by visiting [Setting] > [Theme]",
+      yes: () => {
+        uninstallTheme(id).then(() => {
+          setUpdateCounter(updateCounter + 1)
+        })
+      },
+    })
+  }
+
+  const updateThemeList = () => {
+    getUserSetting().then((setting) => {
+      if (!setting || !setting.themes) return
+      setThemeList(setting.themes)
+    })
+  }
+
   useEffect(() => {
     // 3. Active selected theme at the first time
     setPreview(selectedTheme)
@@ -108,13 +138,14 @@ export default function ThemeUser() {
 
   useEffect(() => {
     // 2. Get user's setting that contains all installed themes and save it to store
-    getUserSetting().then((setting) => {
-      if (!setting || !setting.themes) return
-      setThemeList(setting.themes)
-    })
-
+    updateThemeList()
     // eslint-disable-next-line
   }, [user?.uid])
+
+  useEffect(() => {
+    updateCounter > 0 && updateThemeList()
+    // eslint-disable-next-line
+  }, [updateCounter])
 
   useEffect(() => {
     // 4. Register events that enable user to press
@@ -217,15 +248,40 @@ export default function ThemeUser() {
             return (
               <div
                 onClick={() => onSelect(theme.id, theme.config)}
-                className={`${isPreview} theme-item`}
+                className={`${isPreview} theme-item group`}
                 key={index}
               >
                 <h2 className="text-sm">{theme.name}</h2>
-                {selectedTheme === theme.id ? (
-                  <HiCheckCircle className="theme-status-active" />
-                ) : (
-                  <HiOutlineMinusCircle className="theme-status" />
-                )}
+
+                <div className="flex items-center gap-1">
+                  {theme.active ? null : (
+                    <kbd
+                      className="kbd-btn group-hover:opacity-100 opacity-0"
+                      onClick={(ev) => {
+                        ev.stopPropagation()
+                        onDelTheme(theme.themeId)
+                      }}
+                    >
+                      <RiCloseFill className="w-4 h-4 text-red-400" />
+                    </kbd>
+                  )}
+                  {themeCustomModal ? null : (
+                    <kbd
+                      className="kbd-btn group-hover:opacity-100 opacity-0"
+                      onClick={(ev) => {
+                        ev.stopPropagation()
+                        onEditTheme(theme.id)
+                      }}
+                    >
+                      <TbPencil className="w-4 h-4" />
+                    </kbd>
+                  )}
+                  {selectedTheme === theme.id ? (
+                    <HiCheckCircle className="theme-status-active group-hover:hidden" />
+                  ) : (
+                    <HiOutlineMinusCircle className="theme-status group-hover:hidden" />
+                  )}
+                </div>
               </div>
             )
           })}
@@ -236,9 +292,11 @@ export default function ThemeUser() {
             <kbd className="kbd-btn">↓</kbd>
             <kbd className="kbd-btn">Enter</kbd>
           </div>
-          <Link to="/setting/theme" className="inline-flex">
-            <kbd className="kbd-btn">+ New theme</kbd>
-          </Link>
+          <div className="space-x-2">
+            <Link to="/setting/theme" className="inline-flex">
+              <kbd className="kbd-btn">+ Install</kbd>
+            </Link>
+          </div>
         </div>
       </div>
     </Modal>
