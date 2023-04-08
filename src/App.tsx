@@ -20,6 +20,7 @@ import Signin from "./containers/Signin"
 import Signout from "./containers/Signout"
 import Signup from "./containers/Signup"
 import ThemeColor from "./containers/Theme"
+import ThemeCustom from "./containers/Theme/ThemeCustom"
 import ThemeSetting from "./containers/Theme/ThemeSetting"
 import { isDesktopApp } from "./libs/utils"
 import { AuthenProvider } from "./providers/Authenticator"
@@ -66,6 +67,10 @@ function App() {
                 <Route path=":id" element={<PadContent />}></Route>
               </Route>
             </Route>
+            <Route
+              path="/theme-customization"
+              element={<ThemeCustom />}
+            ></Route>
             <Route
               path="setting"
               element={

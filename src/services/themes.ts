@@ -22,6 +22,8 @@ export interface ITheme {
   updatedAt?: Timestamp
 }
 
+export type IThemeInstall = Pick<ITheme, "id" | "themes" | "author" | "name">
+
 const COLLECTION_NAME = "themes"
 
 export const getThemes = async (): Promise<ITheme[]> => {
@@ -32,8 +34,8 @@ export const getThemes = async (): Promise<ITheme[]> => {
   }
 
   const themes: ITheme[] = []
-  themeRef.forEach(theme => {
-    const themeData = theme.data() as ITheme;
+  themeRef.forEach((theme) => {
+    const themeData = theme.data() as ITheme
 
     themes.push({
       id: theme.id,
@@ -63,4 +65,3 @@ export const getThemes = async (): Promise<ITheme[]> => {
 //     return null;
 //   }
 // }
-

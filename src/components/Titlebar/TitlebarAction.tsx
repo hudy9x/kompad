@@ -1,33 +1,33 @@
-import { appWindow } from "@tauri-apps/api/window";
-import { useState } from "react";
+import { appWindow } from "@tauri-apps/api/window"
+import { useState } from "react"
 import {
   VscChromeClose,
   VscChromeMaximize,
   VscChromeMinimize,
   VscChromeRestore,
-} from "react-icons/vsc";
+} from "react-icons/vsc"
 
 function TitlebarAction() {
-  const [isMaximize, setIsMaximize] = useState(false);
+  const [isMaximize, setIsMaximize] = useState(false)
 
   const onMaximize = () => {
-    console.log("onMaximize");
-    setIsMaximize(true);
-    appWindow.toggleMaximize();
-  };
+    console.log("onMaximize")
+    setIsMaximize(true)
+    appWindow.toggleMaximize()
+  }
   const onRestore = () => {
-    console.log("onRestore");
-    setIsMaximize(false);
-    appWindow.toggleMaximize();
-  };
+    console.log("onRestore")
+    setIsMaximize(false)
+    appWindow.toggleMaximize()
+  }
 
   const onClose = () => {
-    appWindow.close();
-  };
+    appWindow.close()
+  }
 
   const onMinimize = () => {
-    appWindow.minimize();
-  };
+    appWindow.minimize()
+  }
 
   return (
     <div className="flex items-center">
@@ -50,7 +50,7 @@ function TitlebarAction() {
         <VscChromeClose />
       </span>
     </div>
-  );
+  )
 }
 
-export default TitlebarAction;
+export default TitlebarAction

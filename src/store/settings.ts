@@ -19,6 +19,9 @@ export interface ISettingStore {
   toggleSideBar: () => void
   documentZoom: number
   // updateDocumentZoom: (zoom: number) => void
+  themeCustomModal: boolean
+  themeCustomId: string
+  toggleThemeCustomModal: (id?: string) => void
 }
 
 // default values
@@ -26,6 +29,16 @@ const sidebar = getCache("SETTING_VIEW_SIDEBAR") === "0" ? false : true
 
 // configure store
 export const useSettingStore = create<ISettingStore>((set) => ({
+  themeCustomModal: false,
+  themeCustomId: "",
+  toggleThemeCustomModal: (id?: string) => {
+    set(
+      produce<ISettingStore>((state) => {
+        state.themeCustomModal = !state.themeCustomModal
+        state.themeCustomId = id ?? ""
+      })
+    )
+  },
   secondSidebarVisibility: false,
   toggleSecondSidebar: () => {
     if (isDesktopApp()) {
