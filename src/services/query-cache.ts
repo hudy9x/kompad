@@ -37,7 +37,7 @@ export const watchQuery = (cb: (data: IQueryCache) => void) => {
   const user = auth.currentUser
 
   if (!user) {
-    return null
+    throw new Error("User is null")
   }
 
   const q = doc(db, COLLECTION_NAME, user.uid)
@@ -58,7 +58,7 @@ export const watchQuery = (cb: (data: IQueryCache) => void) => {
 
 export const setQueryCounter = (
   name: string,
-  cb: (counter: number) => void
+  cb?: (counter: number) => void
 ) => {
   const user = auth.currentUser
   if (!user) return
@@ -78,6 +78,6 @@ export const setQueryCounter = (
 
     transaction.update(docRef, { [name]: counter })
 
-    cb(counter)
+    cb && cb(counter)
   })
 }
