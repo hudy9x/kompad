@@ -1,4 +1,4 @@
-import create from "zustand"
+import { create } from "zustand"
 import { IUserThemeSettings } from "../services/user-settings"
 
 export interface IThemeStore {
