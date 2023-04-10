@@ -16,6 +16,7 @@ import LockScreen from "./containers/LockScreen"
 import Pad from "./containers/Pad"
 import PadContent from "./containers/Pads/PadContent"
 import PadEmpty from "./containers/Pads/PadEmpty"
+import QueryCaching from "./containers/QueryCaching"
 import Signin from "./containers/Signin"
 import Signout from "./containers/Signout"
 import Signup from "./containers/Signup"
@@ -40,7 +41,7 @@ function App() {
     <div className={`App ${isWebversion ? "is-web-app" : ""}`}>
       <AuthenProvider>
         <LockScreen />
-
+        <QueryCaching />
         <ThemeSetting>
           <Routes>
             <Route path="/" element={<LayoutClear />}>
