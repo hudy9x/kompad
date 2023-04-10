@@ -100,7 +100,7 @@ export default function LockScreen() {
         return
       }
       const key = ev.key
-      if (key.toLowerCase() === "l" && ev.ctrlKey) {
+      if (key?.toLowerCase() === "l" && ev.ctrlKey) {
         lockScreen(true)
         setCache(LOCKING_SCREEN_STATUS, "1")
         resetTimer()
