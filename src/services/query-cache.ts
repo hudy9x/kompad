@@ -1,21 +1,23 @@
-import {
-  doc,
-  onSnapshot,
-  runTransaction,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore"
+import { doc, onSnapshot, runTransaction } from "firebase/firestore"
 import localforage from "localforage"
 import { auth, db } from "../libs/firebase"
 
-interface IQueryCache {
+// define cache name below ---------------
+export const QUERY_FOLDER_FIELD = "folders"
+export const QUERY_FOLDER = "QUERY_FOLDER"
+export const QUERY_FOLDER_TIME = "QUERY_FOLDER_TIME"
+
+export const QUERY_TAG_FIELD = "tags"
+export const QUERY_TAG = "QUERY_TAG"
+export const QUERY_TAG_TIME = "QUERY_TAG_TIME"
+// define cache name above --------------
+
+export interface IQueryCache {
   folders: number
   tags: number
 }
 
 const COLLECTION_NAME = "query-caching"
-export const QUERY_FOLDER = "QUERY_FOLDER"
-export const QUERY_FOLDER_TIME = "QUERY_FOLDER_TIME"
 
 const cacheDb = localforage.createInstance({
   name: "query-caching",
@@ -33,6 +35,10 @@ export const getQueryCache = (name: string) => {
   return cacheDb.getItem(name)
 }
 
+// at the first time, when the app loaded
+// it will be registered a watcher
+// for listening changes from `cache-query/:userId` document
+// everytime there's a change it will do the update process
 export const watchQuery = (cb: (data: IQueryCache) => void) => {
   const user = auth.currentUser
 
@@ -56,7 +62,12 @@ export const watchQuery = (cb: (data: IQueryCache) => void) => {
   return unsub
 }
 
-export const setQueryCounter = (
+// update the cache counter on `cache-query` collections
+// after update process finished
+// it will notify to all devices that
+// there's new update available
+// after that, app will re-fetch datas and update data to cache
+export const updateQueryCounterFor = (
   name: string,
   cb?: (counter: number) => void
 ) => {
@@ -73,7 +84,12 @@ export const setQueryCounter = (
     }
 
     const dt = queryDoc.data() as IQueryCache
-    let counter = +dt[name as keyof IQueryCache]
+    const n = dt[name as keyof IQueryCache]
+
+    // in case, `query-caching/:userId` not undefined
+    // but one of fields is undefined
+    // must checking isNaN
+    let counter = isNaN(n) ? 0 : n
     counter += 1
 
     transaction.update(docRef, { [name]: counter })
@@ -81,3 +97,7 @@ export const setQueryCounter = (
     cb && cb(counter)
   })
 }
+
+// update counter for each collections
+export const updateQueryCounterForFolders = () =>
+  updateQueryCounterFor("folders")

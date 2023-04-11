@@ -11,7 +11,7 @@ import {
   where,
 } from "firebase/firestore"
 import { auth, db } from "../libs/firebase"
-import { setQueryCounter } from "./query-cache"
+import { updateQueryCounterForFolders } from "./query-cache"
 
 export interface IFolder {
   id?: string
@@ -35,7 +35,7 @@ export const addFolder = async (folder: Partial<IFolder>) => {
 
   await addDoc(collection(db, COLLECTION_NAME), folder)
 
-  setQueryCounter("folders")
+  updateQueryCounterForFolders()
   return folder
 }
 
@@ -107,6 +107,7 @@ export const watchFolders = (
 export const delFolder = async (id: string) => {
   try {
     await deleteDoc(doc(db, COLLECTION_NAME, id))
+    updateQueryCounterForFolders()
   } catch (error) {
     console.log(error)
   }
@@ -122,12 +123,12 @@ export const editFolder = async ({
   color: string
 }) => {
   try {
-    const res = await updateDoc(doc(db, COLLECTION_NAME, id), {
+    await updateDoc(doc(db, COLLECTION_NAME, id), {
       title,
       color,
     })
 
-    console.log("res", res)
+    updateQueryCounterForFolders()
 
     return 1
   } catch (error) {
