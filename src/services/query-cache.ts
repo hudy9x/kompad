@@ -101,3 +101,5 @@ export const updateQueryCounterFor = (
 // update counter for each collections
 export const updateQueryCounterForFolders = () =>
   updateQueryCounterFor("folders")
+
+export const updateQueryCounterForTags = () => updateQueryCounterFor("tags")

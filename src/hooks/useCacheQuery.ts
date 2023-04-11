@@ -1,3 +1,4 @@
+import { Unsubscribe } from "firebase/auth"
 import { useEffect, useState } from "react"
 import {
   getQueryCache,
@@ -84,9 +85,10 @@ export function useCacheQuery<T>({
 
   // 2. trigget watcher
   useEffect(() => {
+    let unsubscribe: Unsubscribe
     if (cacheWatcher && user) {
       console.log("start watching query")
-      watchQuery((data) => {
+      unsubscribe = watchQuery((data) => {
         const cacheTime = data[queryCounterField as keyof IQueryCache]
         console.log("query data", data)
 
@@ -105,6 +107,10 @@ export function useCacheQuery<T>({
           updateDataNCacheTime()
         })
       })
+    }
+
+    return () => {
+      unsubscribe && unsubscribe()
     }
     // eslint-disable-next-line
   }, [cacheWatcher, user])

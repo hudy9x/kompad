@@ -11,6 +11,7 @@ import {
   where,
 } from "firebase/firestore"
 import { auth, db } from "../libs/firebase"
+import { updateQueryCounterForTags } from "./query-cache"
 
 export interface ITag {
   id?: string
@@ -31,6 +32,7 @@ export const addTag = async (tags: Partial<ITag>) => {
   tags.uid = user.uid
 
   await addDoc(collection(db, COLLECTION_NAME), tags)
+  updateQueryCounterForTags()
   return tags
 }
 
@@ -100,6 +102,7 @@ export const watchTags = (
 export const delTag = async (id: string) => {
   try {
     await deleteDoc(doc(db, COLLECTION_NAME, id))
+    updateQueryCounterForTags()
   } catch (error) {
     console.log(error)
   }

@@ -45,7 +45,7 @@ interface IUpdatedPad {
 }
 
 const COLLECTION_NAME = "pads"
-const RECENT_LIMIT = 20
+const RECENT_LIMIT = 15
 
 /**
  * Save current editting pad
