@@ -29,7 +29,7 @@ export default function LockScreen() {
     t = setTimeout(() => {
       lockScreen(true)
       // in case user closes the app or reload by F5 or Ctrl + R
-      // so we need to save lock screen status 
+      // so we need to save lock screen status
       // when user opens app again, lock screen must be displayed
       setCache(LOCKING_SCREEN_STATUS, "1")
     }, screenLockTime) as unknown as number
@@ -49,12 +49,11 @@ export default function LockScreen() {
   useEffect(() => {
     // show lock screen when status is not empty
     const isAppStillLocking = getCache(LOCKING_SCREEN_STATUS) || ""
-    console.log('isAppStillLocking', isAppStillLocking)
+    console.log("isAppStillLocking", isAppStillLocking)
     if (isAppStillLocking) {
       lockScreen(true)
     }
   }, [])
-
 
   // when the lock screen timer has updated
   // reset the timer
@@ -99,7 +98,7 @@ export default function LockScreen() {
       if (locked) {
         return
       }
-      const key = ev.key
+      const key = ev.key || ""
       if (key.toLowerCase() === "l" && ev.ctrlKey) {
         lockScreen(true)
         setCache(LOCKING_SCREEN_STATUS, "1")
