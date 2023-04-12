@@ -1,39 +1,27 @@
-import { Unsubscribe } from "firebase/firestore";
-import { useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { watchFolders } from "../../services/folders";
-import { useFolderStore } from "../../store/folder";
-import FolderItem from "./FolderItem";
+import { useCacheQuery } from "../../hooks/useCacheQuery"
+import { getFolders, IFolder } from "../../services/folders"
+import { QUERY_FOLDER, QUERY_FOLDER_FIELD, QUERY_FOLDER_TIME } from "../../services/query-cache"
+import { useFolderStore } from "../../store/folder"
+import FolderItem from "./FolderItem"
 
 function FolderList() {
-  const { user } = useAuth();
-  const { folders, updateFolders } = useFolderStore();
+  const { folders, updateFolders } = useFolderStore()
 
-  useEffect(() => {
-    let unsub: Unsubscribe | null;
-    if (user) {
-      unsub = watchFolders((err, data) => {
-        if (err) {
-          return;
-        }
-
-        updateFolders(data);
-      });
-    }
-
-    return () => {
-      unsub && unsub();
-    };
-    // eslint-disable-next-line
-  }, [user]);
+  useCacheQuery<IFolder[]>({
+    queryName: QUERY_FOLDER,
+    queryTimeName: QUERY_FOLDER_TIME,
+    updateDatas: (data) => updateFolders(data),
+    getDatas: getFolders,
+    queryCounterField: QUERY_FOLDER_FIELD,
+  })
 
   return (
     <>
       {folders.map((folder) => {
-        return <FolderItem key={folder.id} folder={folder} />;
+        return <FolderItem key={folder.id} folder={folder} />
       })}
     </>
-  );
+  )
 }
 
-export default FolderList;
+export default FolderList

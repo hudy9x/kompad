@@ -60,7 +60,7 @@
 
 .root-sidebar .sec-item {
   @apply px-4 py-1;
-  @apply flex gap-2 items-center text-sm ;
+  @apply flex gap-2 items-center text-sm cursor-pointer ;
   color: var(--sidebar-text-color);
 }
 

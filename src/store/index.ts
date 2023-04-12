@@ -1,14 +1,14 @@
-import create from "zustand";
+import { create } from "zustand"
 
 export interface IPadStore {
-  searchModalStatus: boolean;
-  setSearchModalStatus: (status: boolean) => void;
+  searchModalStatus: boolean
+  setSearchModalStatus: (status: boolean) => void
 
-  newPadModalStatus: boolean;
-  setNewPadModalStatus: (status: boolean) => void;
-  
-  needToUpdate: number; // just notify to pad list that a new pad was created
-  setNeedToUpdate: () => void;
+  newPadModalStatus: boolean
+  setNewPadModalStatus: (status: boolean) => void
+
+  needToUpdate: number // just notify to pad list that a new pad was created
+  setNeedToUpdate: () => void
 }
 
 export const usePadStore = create<IPadStore>((set) => ({
@@ -18,7 +18,7 @@ export const usePadStore = create<IPadStore>((set) => ({
       ...state,
       ...{ searchModalStatus: status },
     })),
-    
+
   newPadModalStatus: false,
   setNewPadModalStatus: (status: boolean) =>
     set((state) => ({
@@ -31,8 +31,8 @@ export const usePadStore = create<IPadStore>((set) => ({
     set((state) => {
       return {
         needToUpdate: state.needToUpdate + 1,
-      };
+      }
     }),
-}));
+}))
 
-export const { setState: setPadStoreState } = usePadStore;
+export const { setState: setPadStoreState } = usePadStore

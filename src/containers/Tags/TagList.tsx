@@ -1,39 +1,31 @@
-import { Unsubscribe } from "firebase/firestore";
-import { useEffect } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { watchTags } from "../../services/tags";
-import { useTagStore } from "../../store/tags";
-import TagItem from "./TagItem";
+import { useCacheQuery } from "../../hooks/useCacheQuery"
+import {
+  QUERY_TAG,
+  QUERY_TAG_FIELD,
+  QUERY_TAG_TIME,
+} from "../../services/query-cache"
+import { getTags, ITag } from "../../services/tags"
+import { useTagStore } from "../../store/tags"
+import TagItem from "./TagItem"
 
 function TagList() {
-  const { user } = useAuth();
-  const { tags, updateTags } = useTagStore();
+  const { tags, updateTags } = useTagStore()
 
-  useEffect(() => {
-    let unsub: Unsubscribe | null;
-    if (user) {
-      unsub = watchTags((err, data) => {
-        if (err) {
-          return;
-        }
-
-        updateTags(data);
-      });
-    }
-
-    return () => {
-      unsub && unsub();
-    };
-    // eslint-disable-next-line
-  }, [user]);
+  useCacheQuery<ITag[]>({
+    queryName: QUERY_TAG,
+    queryTimeName: QUERY_TAG_TIME,
+    updateDatas: (data) => updateTags(data),
+    getDatas: getTags,
+    queryCounterField: QUERY_TAG_FIELD,
+  })
 
   return (
     <>
       {tags.map((tag) => {
-        return <TagItem key={tag.id} tag={tag} />;
+        return <TagItem key={tag.id} tag={tag} />
       })}
     </>
-  );
+  )
 }
 
-export default TagList;
+export default TagList
