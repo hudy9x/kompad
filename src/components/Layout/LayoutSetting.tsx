@@ -91,7 +91,7 @@ export default function LayoutSetting() {
             </nav>
           </aside>
 
-          <div className="col-span-3 pr-6 w-full">
+          <div className="col-span-3 grow-0 w-full">
             <Outlet />
           </div>
         </div>

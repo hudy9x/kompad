@@ -114,8 +114,8 @@ const FileManager = () => {
         {files.map(file => {
           return <div key={file.id} className="file-item flex items-center gap-2">
             <HiOutlinePaperClip />
-            <span>{file.name}</span>
-            <small className="bg-light rounded-full px-2 py-0.5 text-2xs">{file.size.toFixed(2)} mb</small>
+            <span className="" >{file.name}</span>
+            <small className="bg-light rounded-full min-w-[50px] shrink-0 px-2 py-0.5 text-2xs">{file.size.toFixed(2)} mb</small>
           </div>
         })}
 
