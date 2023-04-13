@@ -100,7 +100,6 @@ export const updatePlanByUid = async (planData: Partial<IPlan>) => {
   }
 
   try {
-    const currentRecord = planData.currentRecord || 0
 
     const data: {
       [key: string]: any
@@ -113,6 +112,8 @@ export const updatePlanByUid = async (planData: Partial<IPlan>) => {
     if (planData.currentStorageSize) {
       data.currentStorageSize = planData.currentStorageSize
     }
+
+    if (data.currentStorageSize && data.currentRecord) return
 
     await updateDoc(doc(db, "/plans", uid), data)
 
