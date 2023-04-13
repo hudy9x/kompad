@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { COMMAND_PALLETES_STATUS, getCache } from "../../libs/localCache"
+import { COMMAND_PALLETES_STATUS, getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { ECommandType, ICommand, ICommandSuggestItem } from "../../types"
 import { useCommand } from "./useCommand"
 
@@ -35,11 +35,12 @@ export default function CommandPalletes() {
       const key = ev.key
       const isModalOpened = document.querySelector("#headlessui-portal-root")
       const isTurnon = getCache(COMMAND_PALLETES_STATUS) === "1" ? true : false
+      const isAppStillLocking = getCache(LOCKING_SCREEN_STATUS) || ""
 
       if (!isTurnon) return
 
       // DO NOT open command pallete in case there's a modal is closing
-      if (isModalOpened) {
+      if (isModalOpened || isAppStillLocking) {
         return
       }
 
@@ -172,16 +173,14 @@ export default function CommandPalletes() {
 
   return (
     <div
-      className={`command-pallete  ${
-        visible
+      className={`command-pallete  ${visible
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
-      }`}
+        }`}
     >
       <div
-        className={`command-search-container bg-dark text-color-base ${
-          hasSuggest ? "has-suggest-item" : ""
-        }`}
+        className={`command-search-container bg-dark text-color-base ${hasSuggest ? "has-suggest-item" : ""
+          }`}
       >
         <span className="pl-3">$</span>
         {inputs.length ? (
@@ -206,9 +205,8 @@ export default function CommandPalletes() {
           className="w-full pl-[5px] bg-transparent border-transparent text-sm h-[20px] text-color-base focus:border-transparent focus:ring-transparent"
         />
         <div
-          className={`autosuggest-commands bg-dark text-color-base ${
-            suggestList.length ? "" : "opacity-0"
-          }`}
+          className={`autosuggest-commands bg-dark text-color-base ${suggestList.length ? "" : "opacity-0"
+            }`}
         >
           {suggestList.map((keyword, index) => {
             const active = index === selectedSuggestItem

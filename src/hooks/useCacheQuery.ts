@@ -58,21 +58,17 @@ export function useCacheQuery<T>({
 
   // 1. get data from cache
   useEffect(() => {
-    console.log("get data from cache ================")
     getQueryCache(queryName).then((result: any) => {
       if (result) {
-        console.log("update data from cache")
         updateDatas(result)
       }
 
-      console.log("trigger cache watcher")
       triggerCacheWatcher(true)
     })
     // eslint-disable-next-line
   }, [])
 
   const updateDataNCacheTime = () => {
-    console.log("update data and cache time")
     getDatas().then((datas) => {
       updateDatas(datas)
 
@@ -87,23 +83,18 @@ export function useCacheQuery<T>({
   useEffect(() => {
     let unsubscribe: Unsubscribe
     if (cacheWatcher && user) {
-      console.log("start watching query")
       unsubscribe = watchQuery((data) => {
         const cacheTime = data[queryCounterField as keyof IQueryCache]
-        console.log("query data", data)
 
         if (!cacheTime) {
-          console.log("cache time is not exist")
           return updateDataNCacheTime()
         }
 
         getQueryCache(queryTimeName).then((localCacheTime) => {
           if (cacheTime === localCacheTime) {
-            console.log("cache time is new, ignroe")
             return
           }
 
-          console.log("cache time is staled, update")
           updateDataNCacheTime()
         })
       })
