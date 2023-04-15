@@ -5,8 +5,20 @@
 
 use tauri::Manager;
 use window_shadows::set_shadow;
+use std::path::Path;
+
+fn checkExistApplication() {
+    //Linux
+    let app_path = Path::new("/usr/local/bin/docker-compose");
+    if app_path.exists() {
+        println!("Ứng dụng đã được cài đặt trên máy tính của bạn.");
+    } else {
+        println!("Ứng dụng chưa được cài đặt trên máy tính của bạn.");
+    }
+}
 
 fn main() {
+    checkExistApplication();
     tauri::Builder::default()
         .setup(|app| {
             let splashscreen_window = app.get_window("splashscreen").unwrap();
