@@ -1,5 +1,5 @@
 import { updatePassword } from "firebase/auth";
-import { doc, getDoc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, query, Timestamp, updateDoc, collection, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../libs/firebase";
 
 export enum EUserStatus {
@@ -86,4 +86,12 @@ export const getUser = async (uid: string): Promise<IUser | null> => {
   } else {
     return null;
   }
+};
+
+export const getUserWithEmail = async (uid: string,email: string) => {
+
+  const q = query(collection(db, "users"), where("email", "==", email))
+  const snapshots = await getDocs(q)
+
+  console.log('snaps =============>', snapshots);
 };

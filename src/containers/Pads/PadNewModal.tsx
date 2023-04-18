@@ -57,6 +57,7 @@ export default function PadNewModal() {
   // watch shortcut key triggers
   useEffect(() => {
     setVisible(status);
+    console.log(status, "status new nodal")
   }, [status]);
 
   useEffect(() => {

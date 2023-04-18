@@ -8,6 +8,7 @@ import { IPad } from "../../services/pads"
 import ContextMenu, { useContextMenu } from "../../components/ContextMenu"
 import PadActions from "../PadActions/index"
 import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator"
+import { PadShareModal } from "../PadActions/PadShareModal"
 
 interface IPadItemProps {
   pad: IPad
@@ -58,6 +59,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
             <HiOutlineStar className="pad-unimportant-icon" />
           )}
         </div>
+      <PadShareModal/>
       </Link>
       <ContextMenu.Items>
         <PadActions data={pad} />
