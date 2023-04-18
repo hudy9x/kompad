@@ -43,11 +43,11 @@ export default function PadSearch() {
         if (!pads) {
           return
         }
-
+        console.log("pads =====>", pads);
         setPads(pads)
       })
     }
-  }, [user?.uid])
+  }, [open])
 
   return (
     <Transition.Root

@@ -7,6 +7,7 @@ import { PadArchive } from "./PadArchive";
 import { PadDuplicate } from "./PadDuplicate";
 import { PadEdit } from "./PadEdit";
 import PadDelete from "./PadDelete";
+import { PadShareModal } from "./PadShareModal";
 
 export default function PadActions({ data }: { data: IPad }) {
   return (

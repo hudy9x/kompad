@@ -19,17 +19,36 @@ export interface IPadStore {
   filterByRecently: () => void;
   updatePadList: (data: IPad[]) => void;
   filterByImportant: () => void;
+  title: string;
+  setTitle: (title: string) => void;
+  isShareModal: boolean;
+  setIsShareModal: (status: boolean) => void;
 }
 
 // configure store
 export const usePadListStore = create<IPadStore>((set) => ({
   pads: [],
+  title: '',
+  isShareModal: false,
   query: {
     tag: "",
     folder: "",
     recently: true,
     important: false,
   },
+
+  setTitle: (title: string) =>
+    set(
+      produce<IPadStore>((state) => {
+        state.title = title
+      })
+    ),
+
+  setIsShareModal: (status: boolean) =>
+    set((state) => ({
+      ...state,
+      ...{ isShareModal: status },
+    })),
 
   clearFilter: () =>
     set(

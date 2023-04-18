@@ -18,7 +18,7 @@ export const usePadStore = create<IPadStore>((set) => ({
       ...state,
       ...{ searchModalStatus: status },
     })),
-    
+
   newPadModalStatus: false,
   setNewPadModalStatus: (status: boolean) =>
     set((state) => ({
