@@ -30,7 +30,11 @@ export default function CommandPalletesSetting() {
 
         <div className="px-6">
           <div className="form-control col-span-3">
-            <label htmlFor="timer">Turn in on by switching the toggler to right and vice versa</label>
+            <label htmlFor="timer" className="mb-4" >
+              Turn in on by switching the toggler to right and vice versa
+              <br />
+              Using <kbd className="kbd-btn">Esc</kbd> to trigger command pallete 👈
+            </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <Switch
                 checked={enabled}
