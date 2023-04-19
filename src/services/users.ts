@@ -88,10 +88,18 @@ export const getUser = async (uid: string): Promise<IUser | null> => {
   }
 };
 
-export const getUserWithEmail = async (uid: string,email: string) => {
+export const getUserWithEmail = async (email: string) => {
+  try {
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
 
-  const q = query(collection(db, "users"), where("email", "==", email))
-  const snapshots = await getDocs(q)
-
-  console.log('snaps =============>', snapshots);
+    let user;
+    querySnapshot.forEach((doc) => {
+      user = doc.data()
+    })
+    
+    return user
+  } catch (error) {
+    console.log(error)
+  }
 };

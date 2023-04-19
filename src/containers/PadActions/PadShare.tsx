@@ -5,7 +5,7 @@ import { usePadListStore } from '../../store/pad';
 
 export const PadShare = ({ data }: { data: IPad }) => {
   const { setIsShareModal, setTitle } = usePadListStore()
-  const openModalPadShare = () => {
+  const openModalPadShare = async () => {
     setIsShareModal(true)
     setTitle(data.title)
   }
