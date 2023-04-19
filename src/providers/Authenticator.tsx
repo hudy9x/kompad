@@ -1,8 +1,12 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
-import { auth } from "../libs/firebase";
+import { onAuthStateChanged } from "firebase/auth"
+import { createContext, useEffect, useState } from "react"
+import { auth } from "../libs/firebase"
+import { usePadStore } from "../store"
+import { useNavigate } from "react-router-dom"
+import { usePadListStore } from "../store/pad"
+import { getIdUrl } from "../containers/PadActions/PadShareModal/utils"
 
-interface IAuthenUser {
+export interface IAuthenUser {
   email: string | null;
   displayName: string | null;
   uid: string;
@@ -26,10 +30,19 @@ export const AuthenProvider = ({ children }: AuthenProviderProps) => {
   const [authInfo, setAuthInfo] = useState<IAuthenContext>({
     checking: true,
     user: null,
-  });
+  })
+  const { filterByShared } = usePadListStore()
+  const navigate = useNavigate();
+  const setIdShared = usePadStore((state) => state.setIdShared)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const checkIdShared = window.location.href.includes("#share")
+      if (checkIdShared) {
+        const id = getIdUrl(window.location.href)
+        setIdShared(id)
+        filterByShared()
+      }
       if (user && user.emailVerified) {
         setAuthInfo({
           checking: false,
@@ -45,6 +58,7 @@ export const AuthenProvider = ({ children }: AuthenProviderProps) => {
           checking: false,
           user: null,
         });
+        navigate('/signin')
       }
     });
 

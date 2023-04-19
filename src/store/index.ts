@@ -9,6 +9,12 @@ export interface IPadStore {
 
   needToUpdate: number // just notify to pad list that a new pad was created
   setNeedToUpdate: () => void
+
+  idShared: string
+  setIdShared: (idShared: string) => void
+
+  isPadShareModal: boolean;
+  setIsPadShareModal: (status: boolean) => void;
 }
 
 export const usePadStore = create<IPadStore>((set) => ({
@@ -17,6 +23,13 @@ export const usePadStore = create<IPadStore>((set) => ({
     set((state) => ({
       ...state,
       ...{ searchModalStatus: status },
+    })),
+
+  isPadShareModal: false,
+  setIsPadShareModal: (status: boolean) =>
+    set((state) => ({
+      ...state,
+      ...{ isPadShareModal: status },
     })),
 
   newPadModalStatus: false,
@@ -33,6 +46,12 @@ export const usePadStore = create<IPadStore>((set) => ({
         needToUpdate: state.needToUpdate + 1,
       }
     }),
+  idShared: '',
+  setIdShared: (idShared: string) =>
+    set((state) => ({
+      ...state,
+      ...{ idShared: idShared },
+    })),
 }))
 
 export const { setState: setPadStoreState } = usePadStore

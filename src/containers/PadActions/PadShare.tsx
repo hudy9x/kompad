@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
 import { HiOutlineUserAdd } from 'react-icons/hi'
-import { IPad } from '../../services/pads'
-import { usePadListStore } from '../../store/pad';
+import { usePadStore } from '../../store/index';
 
-export const PadShare = ({ data }: { data: IPad }) => {
-  const { setIsShareModal, setTitle } = usePadListStore()
+export const PadShare = () => {
+  const { setIsPadShareModal } = usePadStore()
   const openModalPadShare = async () => {
-    setIsShareModal(true)
-    setTitle(data.title)
+    setIsPadShareModal(true)
   }
 
   return (

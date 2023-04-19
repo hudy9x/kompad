@@ -7,6 +7,7 @@ export interface IPadQuery {
   folder: string
   recently?: boolean
   important?: boolean
+  shared?: boolean
 }
 
 export interface IPadStore {
@@ -19,36 +20,19 @@ export interface IPadStore {
   filterByRecently: () => void;
   updatePadList: (data: IPad[]) => void;
   filterByImportant: () => void;
-  title: string;
-  setTitle: (title: string) => void;
-  isShareModal: boolean;
-  setIsShareModal: (status: boolean) => void;
+  filterByShared: () => void;
 }
 
 // configure store
 export const usePadListStore = create<IPadStore>((set) => ({
   pads: [],
-  title: '',
-  isShareModal: false,
   query: {
     tag: "",
     folder: "",
     recently: true,
     important: false,
+    shared: false,
   },
-
-  setTitle: (title: string) =>
-    set(
-      produce<IPadStore>((state) => {
-        state.title = title
-      })
-    ),
-
-  setIsShareModal: (status: boolean) =>
-    set((state) => ({
-      ...state,
-      ...{ isShareModal: status },
-    })),
 
   clearFilter: () =>
     set(
@@ -80,6 +64,7 @@ export const usePadListStore = create<IPadStore>((set) => ({
     set(
       produce<IPadStore>((state) => {
         state.query.important = false
+        state.query.shared = false
         state.query.recently = !state.query.recently
       })
     )
@@ -103,7 +88,18 @@ export const usePadListStore = create<IPadStore>((set) => ({
     set(
       produce<IPadStore>((state) => {
         state.query.recently = false
+        state.query.shared = false
         state.query.important = !state.query.important
+      })
+    )
+  },
+
+  filterByShared: () => {
+    set(
+      produce<IPadStore>((state) => {
+        state.query.recently = false
+        state.query.important = false
+        state.query.shared = !state.query.shared
       })
     )
   },

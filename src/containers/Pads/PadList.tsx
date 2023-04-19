@@ -32,7 +32,6 @@ function PadList() {
     return () => {
       unsub && unsub();
     };
-
     // eslint-disable-next-line
   }, [user?.uid, query]);
 

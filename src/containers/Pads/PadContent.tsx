@@ -8,20 +8,26 @@ import {
 } from "../../libs/localCache"
 import { decryptText } from "../../services/encryption"
 import { getPadById, IPad, saveCurrentPad } from "../../services/pads"
+import { usePadStore } from "../../store"
+import { usePadListStore } from "../../store/pad"
 
 function PadContent() {
   // rendering pad's content at first
+  const { idShared, setIdShared } = usePadStore((state) => state)
   const cachedPad = getCacheJSON(CURRENT_PAD_CONTENT) as IPad
   const { id } = useParams()
+  const { query } = usePadListStore()
   const [pad, setPad] = useState<IPad>(cachedPad)
 
   useEffect(() => {
-    if (id) {
-      saveCurrentPad(id)
+    let idx = idShared || id;
 
-      getPadById(id).then((res) => {
+    if (idx) {
+      saveCurrentPad(idx)
+
+      getPadById(idx).then((res) => {
         if (!res) return
-
+        console.log(res)
         const data = {
           content: res.content,
           cipherContent: res.cipherContent,
@@ -32,7 +38,8 @@ function PadContent() {
           updatedAt: res.updatedAt,
           folder: res.folder || "",
           cover: res.cover || "",
-          id: id,
+          id: idx,
+          shared: res.shared,
           shortDesc: res.shortDesc,
           important: res.important,
         }
@@ -41,14 +48,14 @@ function PadContent() {
           cachedPad &&
           cachedPad.updatedAt &&
           data.updatedAt.seconds <= cachedPad.updatedAt.seconds &&
-          cachedPad.id === id
+          cachedPad.id === idx
         ) {
           console.log("no changes, do nothing")
           return
         }
 
         setCacheJSON(CURRENT_PAD_CONTENT, data)
-
+        setIdShared("")
         setPad((prevPad) => ({
           ...prevPad,
           ...data,
@@ -56,9 +63,12 @@ function PadContent() {
       })
     }
     //eslint-disable-next-line
-  }, [id])
+  }, [id, idShared])
 
   const getContent = (pad: IPad) => {
+    // if(shared) {
+    //   return pad.shared.sharedContent
+    // }
     if (pad.cipherContent) {
       return decryptText(pad.cipherContent)
     }

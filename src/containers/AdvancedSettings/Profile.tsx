@@ -58,8 +58,6 @@ function Profile() {
           return
         }
 
-        console.log('userCre',userCre)
-
         const { address, dateOfBirth, email, fullname, photoURL } = userCre
         const dob = dayjs(dateOfBirth.toDate())
 

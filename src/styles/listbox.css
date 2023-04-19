@@ -1,0 +1,8 @@
+.option:hover{
+ background-color: var(--common-btn-bg-hover-color);
+ border-radius: 0.25rem;
+}
+
+.width-modal-share {
+ width: 30rem;
+}

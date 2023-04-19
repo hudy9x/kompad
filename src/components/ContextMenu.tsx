@@ -43,7 +43,7 @@ export default function ContextMenu({ children, condition }: IContextMenu) {
       setVisible(false);
     }
   };
-
+  
   return <MenuContext.Provider value={{ top, left, visible, setVisible }}>
     <div className="ctx-menu" onContextMenu={onContextMenu}>
       {children}
@@ -51,7 +51,7 @@ export default function ContextMenu({ children, condition }: IContextMenu) {
   </MenuContext.Provider>
 }
 
-ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Element | JSX.Element[] }) {
+ContextMenu.Items = function ContextMenuItems({ children, shouldHide }: { children: JSX.Element | JSX.Element[], shouldHide?: boolean }) {
   const ctxRef = useRef<HTMLDivElement>(null)
   const { top, left, visible, setVisible } = useContext(MenuContext)
 
@@ -113,7 +113,7 @@ ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Elem
   }
 
   useEffect(() => {
-    visible && displayContextMenu(top, left);
+   !shouldHide && visible && displayContextMenu(top, left);
   }, [top, left, visible])
 
 

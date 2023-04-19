@@ -58,3 +58,15 @@
   color: var(--common-text-color);
 }
 
+.btn-rule {
+  width: 29px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-rule:hover {
+  background-color: var(--common-btn-bg-hover-color);
+}
+

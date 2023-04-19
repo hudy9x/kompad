@@ -52,7 +52,6 @@ And not have spaces`);
       signUp(email, password)
         .then(async (userCredential) => {
           const { user } = userCredential;
-          console.log("user ===>", user);
           await addUser({
             uid: user.uid,
             fullname,

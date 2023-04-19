@@ -40,6 +40,12 @@ import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 import { useSettingStore } from "../../store/settings"
+import { PadShareModal } from "../../containers/PadActions/PadShareModal"
+import { IUser } from "../../services/users"
+import { useAuth } from "../../hooks/useAuth"
+import { IAuthenUser } from "../../providers/Authenticator"
+import { useParams } from "react-router-dom"
+import { message } from "../message"
 
 interface IPadEditorProp {
   id: string
@@ -139,11 +145,16 @@ const extensions = [
   Youtube.configure({}),
 ]
 
+const checkRuleEdit = (pad: IPad, currentUser: IAuthenUser): boolean => {
+  return currentUser.uid === pad.uid || pad.shared.edits.some((email) => email === currentUser.email)
+}
+
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const { documentZoom } = useSettingStore()
   const isLockingScreen = getCache(LOCKING_SCREEN_STATUS) || ""
   const [update, setUpdate] = useState(0)
   const { setOutlines } = useOutlineStore()
+  const { user } = useAuth();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -157,6 +168,11 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: () => {
+      const isEdit = checkRuleEdit(data, user!)
+      if(!isEdit) {
+        message.info("You don't have permission edit");
+        return;
+      }
       setOutlines()
       setUpdate((prevUpdate) => prevUpdate + 1)
     },
@@ -208,6 +224,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
         {editor ? <PadDropZone id={id} editor={editor} /> : null}
+
         <div className="tiptap-box" style={{ zoom: documentZoom }}>
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
@@ -226,6 +243,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                   }
                   shortCutAction(ev, pressed, editor)
                 }}
+                disabled={false}
               />
               <TableActions editor={editor} />
             </ContextMenu>
@@ -237,6 +255,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
             <OutlineButton />
 
             {editor && <WordCounter editor={editor} />}
+            {editor && <PadShareModal editor={editor} />}
           </div>
         </div>
       </div>

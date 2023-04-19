@@ -8,7 +8,7 @@ import { IPad } from "../../services/pads"
 import ContextMenu, { useContextMenu } from "../../components/ContextMenu"
 import PadActions from "../PadActions/index"
 import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator"
-import { PadShareModal } from "../PadActions/PadShareModal"
+import { usePadListStore } from "../../store/pad"
 
 interface IPadItemProps {
   pad: IPad
@@ -18,6 +18,7 @@ interface IPadItemProps {
 export default function PadItem({ active, pad }: IPadItemProps) {
   const { visible: isContextMenuDisplayed } = useContextMenu()
   const { setSecondSidebarVisible } = useMobileNavigator()
+  const { query: { shared  }} = usePadListStore()
   const d = dayjs(pad.updatedAt.toDate())
 
   const onClick = () => {
@@ -59,9 +60,9 @@ export default function PadItem({ active, pad }: IPadItemProps) {
             <HiOutlineStar className="pad-unimportant-icon" />
           )}
         </div>
-      <PadShareModal/>
       </Link>
-      <ContextMenu.Items>
+      
+      <ContextMenu.Items shouldHide={shared}>
         <PadActions data={pad} />
       </ContextMenu.Items>
     </div>

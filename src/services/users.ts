@@ -82,6 +82,7 @@ export const getUser = async (uid: string): Promise<IUser | null> => {
   const user = await getDoc(doc(db, "users", uid));
 
   if (user.exists()) {
+    console.log(user.data())
     return user.data() as IUser;
   } else {
     return null;
@@ -93,11 +94,11 @@ export const getUserWithEmail = async (email: string) => {
     const q = query(collection(db, "users"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
 
-    let user;
+    let user
     querySnapshot.forEach((doc) => {
       user = doc.data()
     })
-    
+        
     return user
   } catch (error) {
     console.log(error)

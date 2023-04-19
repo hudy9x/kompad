@@ -1,5 +1,6 @@
 import {
   addDoc,
+  and,
   collection,
   deleteDoc,
   doc,
@@ -7,6 +8,7 @@ import {
   getDocs,
   limit,
   onSnapshot,
+  or,
   orderBy,
   query,
   QueryConstraint,
@@ -19,6 +21,8 @@ import { auth, db } from "../libs/firebase"
 import { setCache } from "../libs/localCache"
 import { IPadQuery } from "../store/pad"
 import { message } from "../components/message"
+import { Rules } from "../containers/PadActions/PadShareModal/types"
+import { Editor } from "@tiptap/react"
 
 export interface IPad {
   id?: string
@@ -30,9 +34,11 @@ export interface IPad {
   cover?: string
   content: string
   cipherContent: string
+  sharedContent: string
   createdAt: Timestamp
   updatedAt: Timestamp
   important: boolean
+  shared: ISharedPad
 }
 
 interface IUpdatedPad {
@@ -44,6 +50,28 @@ interface IUpdatedPad {
   updatedAt?: Timestamp
 }
 
+export interface IUserShare {
+  fullName: string
+  email: string
+  photoURL: string
+  isEdit: boolean
+}
+
+export interface ISharedPad {
+  group: IUserShare[],
+  emails: string[],
+  edits: string[],
+  accessLevel: Rules,
+  note?: string,
+}
+
+export const defaultShared: ISharedPad = {
+  group: [],
+  emails: [],
+  edits: [],
+  accessLevel: Rules.Limit,
+  note: "",
+}
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15
 
@@ -82,9 +110,11 @@ export const getPadsByUidQuery = (
         tags: padData.tags,
         content: padData.content,
         cipherContent: padData.cipherContent,
+        sharedContent: padData.sharedContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
+        shared: defaultShared,
       })
     })
 
@@ -115,9 +145,11 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         tags: padData.tags,
         content: padData.content,
         cipherContent: padData.cipherContent,
+        sharedContent: padData.sharedContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
+        shared: defaultShared,
       })
     })
 
@@ -170,6 +202,7 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
       tags: [],
       content: "Write something 💪🏻",
       cipherContent: "",
+      shared: defaultShared,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     })
@@ -333,11 +366,21 @@ export const watchPads = (
   //   orderBy("updatedAt", "desc")
   // );
 
-  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+  let q
+  if(queries.shared) {
+    q = query(collection(db, COLLECTION_NAME), or(
+      where('shared.emails', 'array-contains', user.email),
+      and(
+        where('shared.accessLevel', '==', Rules.Anyone),
+        where('uid', '!=', user.uid),
+      ) 
+    ));   
+  } else {
+    q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+  }
 
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = []
-
     qSnapshot.docs.forEach((doc) => {
       const padData = doc.data() as IPad
       pads.push({
@@ -346,17 +389,17 @@ export const watchPads = (
         title: padData.title,
         tags: padData.tags,
         folder: padData.folder,
+        sharedContent: padData.sharedContent,
         content: padData.content,
         cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: padData.important,
+        shared: padData.shared,
       })
     })
-
     cb(false, pads)
   })
-
   return unsub
 }
 
@@ -375,6 +418,23 @@ export const setImportant = async (id: string) => {
     }
     await updateDoc(selectedIDRef, {
       important: !padData.important,
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}
+
+export const setShared = async (reqShared: ISharedPad, id: string, editor: Editor) => {
+  try {
+    const selectedIDRef = doc(db, "pads", id)
+
+    const pad = await getDoc(doc(db, "pads", id))
+    if (!pad.exists()) return 0
+
+    await updateDoc(selectedIDRef, {
+      sharedContent: editor.getText(),
+      shared: reqShared,
     })
   } catch (err) {
     console.log(err)
