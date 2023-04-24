@@ -90,7 +90,6 @@ function PadList() {
           )
         })}
       </div>
-      {loading ? <LoadingHorizontal /> : <></>}
     </ScrollBar>
   )
 }
