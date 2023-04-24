@@ -1,6 +1,6 @@
-import { Scrollbars } from "react-custom-scrollbars-2"
+import { Scrollbars, ScrollbarProps } from "react-custom-scrollbars-2"
 
-interface Props {
+interface Props extends ScrollbarProps {
   height: string
   className?: string
   autoHide?: boolean
@@ -13,14 +13,18 @@ export default function ScrollBar({
   className,
   children,
   onUpdate,
+  onScroll,
   autoHide = true,
+  ...rest
 }: Props) {
   return (
     <Scrollbars
       onUpdate={onUpdate}
+      onScroll={onScroll}
       className={className || ""}
       autoHide={autoHide}
       style={{ height }}
+      {...rest}
     >
       {children}
     </Scrollbars>

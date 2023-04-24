@@ -10,6 +10,8 @@ import {
   orderBy,
   query,
   QueryConstraint,
+  QueryDocumentSnapshot,
+  startAfter,
   Timestamp,
   Unsubscribe,
   updateDoc,
@@ -57,39 +59,47 @@ export const saveCurrentPad = (id: string) => {
   setCache("currentPad", id)
 }
 
-export const getPadsByUidQuery = (
+export const getPadsByUidQuery = async (
   uid: string,
-  callback: (pad: IPad[]) => void
-) => {
-  const q = query(
-    collection(db, "pads"),
-    where("uid", "==", uid),
-    orderBy("updatedAt", "desc")
-  )
+  queries: IPadQuery
+): Promise<{
+  lastDoc: QueryDocumentSnapshot<unknown> | null
+  data: IPad[]
+}> => {
+  const q = createQuery(queries, uid)
 
-  onSnapshot(q, (pads) => {
-    if (pads.empty) {
-      return []
+  const pads = await getDocs(q)
+
+  if (pads.empty) {
+    return {
+      lastDoc: null,
+      data: [],
     }
+  }
 
-    const padList: IPad[] = []
-    pads.forEach((pad) => {
-      const padData = pad.data() as IPad
-      padList.push({
-        id: pad.id,
-        uid: padData.uid,
-        title: padData.title,
-        tags: padData.tags,
-        content: padData.content,
-        cipherContent: padData.cipherContent,
-        createdAt: padData.createdAt,
-        updatedAt: padData.updatedAt,
-        important: false,
-      })
+  const padList: IPad[] = []
+  const lastDoc: QueryDocumentSnapshot<unknown> =
+    pads.docs[pads.docs.length - 1]
+
+  pads.forEach((pad) => {
+    const padData = pad.data() as IPad
+    padList.push({
+      id: pad.id,
+      uid: padData.uid,
+      title: padData.title,
+      tags: padData.tags,
+      content: padData.content,
+      cipherContent: padData.cipherContent,
+      createdAt: padData.createdAt,
+      updatedAt: padData.updatedAt,
+      important: false,
     })
-
-    callback(padList)
   })
+
+  return {
+    lastDoc,
+    data: padList,
+  }
 }
 
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
@@ -288,14 +298,54 @@ export const updatePadMetadata = async ({
   updateDoc(doc(db, "pads", id), data)
 }
 
+const createQuery = (queries: IPadQuery, uid: string) => {
+  const conds: QueryConstraint[] = [
+    where("uid", "==", uid),
+    //    orderBy("updatedAt", "desc"),
+  ]
+
+  if (queries.tag) {
+    conds.push(where("tags", "array-contains", queries.tag))
+  }
+
+  if (queries.folder) {
+    conds.push(where("folder", "==", queries.folder))
+  }
+
+  if (queries.important) {
+    conds.push(where("important", "==", true))
+  }
+
+  if (queries.recently) {
+    conds.push(orderBy("updatedAt", "desc"))
+    conds.push(limit(RECENT_LIMIT))
+  } else {
+    conds.push(orderBy("createdAt", "desc"))
+  }
+
+  if (queries.startAfter) {
+    conds.push(startAfter(queries.startAfter))
+  }
+
+  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+
+  return q
+}
+
+type TReturnedWatchPad = {
+  last: QueryDocumentSnapshot<unknown> | null
+  data: IPad[]
+}
+type IWatchDataCallback = (err: boolean, data: TReturnedWatchPad) => void
+
 export const watchPads = (
   queries: IPadQuery,
-  cb: (err: boolean, data: IPad[]) => void
+  cb: IWatchDataCallback
 ): Unsubscribe | null => {
   const user = auth.currentUser
 
   if (!user) {
-    cb(true, [])
+    cb(true, { last: null, data: [] })
     return null
   }
 
@@ -338,6 +388,7 @@ export const watchPads = (
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = []
 
+    const last = qSnapshot.docs[qSnapshot.docs.length - 1]
     qSnapshot.docs.forEach((doc) => {
       const padData = doc.data() as IPad
       pads.push({
@@ -354,7 +405,10 @@ export const watchPads = (
       })
     })
 
-    cb(false, pads)
+    cb(false, {
+      last,
+      data: pads,
+    })
   })
 
   return unsub
