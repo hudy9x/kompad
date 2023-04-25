@@ -104,6 +104,10 @@ body {
   border-color: var(--common-border-light-color);
 }
 
+.border-color-dark {
+  border-color: var(--common-border-color);
+}
+
 .btn-color-base {
   background-color: var(--common-btn-bg-color);
 }
