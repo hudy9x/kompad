@@ -349,41 +349,7 @@ export const watchPads = (
     return null
   }
 
-  const conds: QueryConstraint[] = [
-    where("uid", "==", user.uid),
-    //    orderBy("updatedAt", "desc"),
-  ]
-
-  if (queries.tag) {
-    conds.push(where("tags", "array-contains", queries.tag))
-  }
-
-  if (queries.folder) {
-    conds.push(where("folder", "==", queries.folder))
-  }
-
-  if (queries.important) {
-    conds.push(where("important", "==", true))
-  }
-
-  if (queries.recently) {
-    conds.push(orderBy("updatedAt", "desc"))
-    conds.push(limit(RECENT_LIMIT))
-  } else {
-    conds.push(orderBy("createdAt", "desc"))
-  }
-
-  // if (queries.tag) {
-  //   conds.push(where('tags', 'array-contains', queries.tag))
-  // }
-
-  // const q = query(
-  //   collection(db, COLLECTION_NAME),
-  //   where("uid", "==", user.uid),
-  //   orderBy("updatedAt", "desc")
-  // );
-
-  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+  const q = createQuery(queries, user.uid)
 
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = []
