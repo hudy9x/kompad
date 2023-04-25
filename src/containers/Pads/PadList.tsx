@@ -9,7 +9,6 @@ import { QueryDocumentSnapshot, Unsubscribe } from "firebase/firestore"
 import ContextMenu from "../../components/ContextMenu"
 import PadItem from "./PadItem"
 import ScrollBar from "../../components/ScrollBar"
-import LoadingHorizontal from "../../components/LoadingHorizontal"
 
 dayjs.extend(relativeTime)
 
@@ -26,10 +25,9 @@ function PadList() {
 
   const loadMore = () => {
     if (!needToLoadMoreData.current) {
-      console.log("a")
       return
     }
-    console.log("called", lastDoc)
+
     if (!user || !user?.uid || !lastDoc || isFetching.current) return
     const clonedQuery = { ...query }
 
@@ -61,7 +59,6 @@ function PadList() {
           setLastDoc(last)
         }
 
-        console.log("last", last)
         updatePadList(data)
       })
     }
@@ -90,6 +87,7 @@ function PadList() {
           )
         })}
       </div>
+      <div>{loading ? "Loading" : <></>}</div>
     </ScrollBar>
   )
 }
