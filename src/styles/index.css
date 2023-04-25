@@ -64,19 +64,19 @@ body {
   color: var(--common-text-color);
 }
 
-.bg{
+.bg {
   background-color: var(--common-bg-color);
 }
 
 .bg-primary {
-  background-color: var(--common-primary-color)
+  background-color: var(--common-primary-color);
 }
 
 .bg-dark {
   background-color: var(--common-dark-bg-color);
 }
 
-.bg-light{
+.bg-light {
   background-color: var(--common-light-bg-color);
 }
 
@@ -84,7 +84,7 @@ body {
   color: var(--common-primary-color);
 }
 
-.text-color-base{
+.text-color-base {
   color: var(--common-text-color);
 }
 
@@ -100,8 +100,12 @@ body {
   border-bottom: 1px solid var(--common-border-light-color);
 }
 
-.border-color-base{
+.border-color-base {
   border-color: var(--common-border-light-color);
+}
+
+.border-color-dark {
+  border-color: var(--common-border-color);
 }
 
 .btn-color-base {
@@ -143,5 +147,4 @@ body {
 @import url("./theme.css");
 @import url("./word-count.css");
 @import url("./mermaid.css");
-@import url("./command-palletes.css")
-
+@import url("./command-palletes.css");
