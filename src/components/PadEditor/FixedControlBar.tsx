@@ -1,6 +1,6 @@
-import { Popover } from "@headlessui/react";
-import { Editor } from "@tiptap/react";
-import { useCallback } from "react";
+import { Popover } from "@headlessui/react"
+import { Editor } from "@tiptap/react"
+import { useCallback } from "react"
 import {
   AiOutlineBold,
   AiOutlineCheckSquare,
@@ -12,30 +12,30 @@ import {
   AiOutlineStrikethrough,
   AiOutlineTable,
   AiOutlineUnorderedList,
-} from "react-icons/ai";
-import { BsCardImage, BsCodeSlash } from "react-icons/bs";
-import { IoLinkOutline } from "react-icons/io5";
+} from "react-icons/ai"
+import { BsCardImage, BsCodeSlash } from "react-icons/bs"
+import { IoLinkOutline } from "react-icons/io5"
 // import { MdRedo, MdUndo } from "react-icons/md";
-import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri";
-import PadVideoModal from "./PadVideoModal";
-import { QuickAddTableModal } from "./QuickAddTableModal";
+import { RiDoubleQuotesL, RiSingleQuotesL } from "react-icons/ri"
+import PadVideoModal from "./PadVideoModal"
+import { QuickAddTableModal } from "./QuickAddTableModal"
 
 export default function FixedControlBar({ editor }: { editor: Editor | null }) {
   const setLink = useCallback(() => {
     if (editor) {
-      const previousUrl = editor.getAttributes("link").href;
-      const url = window.prompt("URL", previousUrl);
+      const previousUrl = editor.getAttributes("link").href
+      const url = window.prompt("URL", previousUrl)
 
       // cancelled
       if (url === null) {
-        return;
+        return
       }
 
       // empty
       if (url === "") {
-        editor.chain().focus().extendMarkRange("link").unsetLink().run();
+        editor.chain().focus().extendMarkRange("link").unsetLink().run()
 
-        return;
+        return
       }
 
       // update link
@@ -44,25 +44,38 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         .focus()
         .extendMarkRange("link")
         .setLink({ href: url })
-        .run();
+        .run()
     }
-  }, [editor]);
+  }, [editor])
 
   if (!editor) {
-    return null;
+    return null
   }
 
   const addImage = () => {
-    const url = window.prompt("URL");
+    const url = window.prompt("URL")
 
     if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+      editor.chain().focus().setImage({ src: url }).run()
     }
-  };
+  }
 
   return (
     <div className="fixed-controlbar">
       <div className="controlbar-container flex flex-nowrap gap-1">
+        {/*
+        <button
+          onClick={() => {
+            console.log(editor.getJSON())
+            const id = "id-109283098"
+            editor.chain().focus().addUploading(id).run()
+            setTimeout(() => {
+              editor.commands.removeUploading(id, "https://image")
+            }, 2000)
+          }}
+        >
+          <span className="control-icon">Test</span>
+        </button> */}
         <button
           className={`${editor.isActive("bold") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -104,8 +117,9 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-            }`}
+          className={`control-icon flex items-center text-xs justify-center ${
+            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+          }`}
         >
           <span>h2</span>
         </button>
@@ -113,8 +127,9 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 3 }) ? "is-active" : ""
-            }`}
+          className={`control-icon flex items-center text-xs justify-center ${
+            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+          }`}
         >
           <span>h3</span>
         </button>
@@ -122,8 +137,9 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
-          className={`control-icon flex items-center text-xs justify-center ${editor.isActive("heading", { level: 4 }) ? "is-active" : ""
-            }`}
+          className={`control-icon flex items-center text-xs justify-center ${
+            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+          }`}
         >
           <span>h4</span>
         </button>
@@ -166,7 +182,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => {
-            editor.commands.toggleHighlight({ color: "#fef08a" });
+            editor.commands.toggleHighlight({ color: "#fef08a" })
           }}
         >
           <AiOutlineHighlight className="w-8 h-8 p-2 rounded-md text-gray-700 bg-yellow-200 hover:bg-yellow-300" />
@@ -174,7 +190,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => {
-            editor.commands.toggleHighlight({ color: "#99f6e4" });
+            editor.commands.toggleHighlight({ color: "#99f6e4" })
           }}
         >
           <AiOutlineHighlight className="w-8 h-8 p-2 rounded-md text-gray-700 bg-green-200 hover:bg-green-300" />
@@ -182,7 +198,7 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => {
-            editor.commands.toggleTaskList();
+            editor.commands.toggleTaskList()
           }}
         >
           <AiOutlineCheckSquare className="control-icon" />
@@ -197,7 +213,12 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
 
         <button
           onClick={() => editor.chain().focus().setCodeBlock().run()}
-          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language !== 'mermaid' ? "is-active" : ""}
+          className={
+            editor.isActive("codeBlock") &&
+            editor.getAttributes("codeBlock")?.language !== "mermaid"
+              ? "is-active"
+              : ""
+          }
         >
           <BsCodeSlash className="control-icon" />
         </button>
@@ -205,16 +226,27 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         <PadVideoModal editor={editor} />
 
         <button
-          onClick={() => editor.chain().focus().setCodeBlock({
-            language: "mermaid"
-          }).run()}
-          className={editor.isActive("codeBlock") && editor.getAttributes("codeBlock")?.language === 'mermaid' ? "is-active" : ""}
+          onClick={() =>
+            editor
+              .chain()
+              .focus()
+              .setCodeBlock({
+                language: "mermaid",
+              })
+              .run()
+          }
+          className={
+            editor.isActive("codeBlock") &&
+            editor.getAttributes("codeBlock")?.language === "mermaid"
+              ? "is-active"
+              : ""
+          }
         >
           <AiOutlinePartition className="control-icon" />
         </button>
         <div>
           <Popover as="div" className="relative flex">
-            <Popover.Button >
+            <Popover.Button>
               <AiOutlineTable className="control-icon" />
             </Popover.Button>
             <QuickAddTableModal editor={editor} />
@@ -222,5 +254,5 @@ export default function FixedControlBar({ editor }: { editor: Editor | null }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
