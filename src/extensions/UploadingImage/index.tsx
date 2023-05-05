@@ -13,6 +13,9 @@ declare module "@tiptap/core" {
 }
 
 export const UploadingImage = Paragraph.extend({
+  // addAttributes: append new attributes for Paragraph
+  // in the following code, we added `upload` and `uploadId` attributes
+  // with default values
   addAttributes() {
     return {
       upload: {
@@ -23,6 +26,9 @@ export const UploadingImage = Paragraph.extend({
       },
     }
   },
+
+  // addCommands: create new commands `addUploading` and `removeUploading`
+  // now you can call these commands by `editor.commands.addUploading()`
   addCommands() {
     return {
       addUploading:
@@ -43,15 +49,11 @@ export const UploadingImage = Paragraph.extend({
           const jsonContent = json.content || []
 
           const index = jsonContent.findIndex((content) => {
-            if (
+            return (
               content.type === "paragraph" &&
               content.attrs &&
               content.attrs.uploadId === id
-            ) {
-              return true
-            }
-
-            return false
+            )
           })
 
           if (jsonContent[index]) {
