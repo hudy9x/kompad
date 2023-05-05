@@ -215,7 +215,7 @@
   background-color: rgb(147 197 253) !important;
 }
 
-/* For uploading image animation */
+/* Image uploading status */
 p[upload="true"] {
   position: relative;
   display: inline-block;
@@ -226,8 +226,8 @@ p[upload="true"]:before {
   content: "";
   top: 8px;
   right: -20px;
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid var(--common-primary-color); /* Blue */
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--common-primary-color);
   border-radius: 50%;
   width: 10px;
   height: 10px;
