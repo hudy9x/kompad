@@ -21,7 +21,7 @@
 }
 
 .is-web-app .fixed-controlbar {
-  @apply fixed bottom-0 left-0 w-full overflow-x-auto overflow-y-hidden pb-1; 
+  @apply fixed bottom-0 left-0 w-full overflow-x-auto overflow-y-hidden pb-1;
   @apply sm:relative sm:py-4 sm:w-[700px] xl:w-[800px] sm:m-auto sm:overflow-x-hidden;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .is-web-app .open-document-btn {
-  @apply block m-auto mt-3 sm:hidden
+  @apply block m-auto mt-3 sm:hidden;
 }
 
 .tiptab-format-actions {
@@ -66,7 +66,7 @@
   color: var(--common-text-color);
 }
 
-.control-icon:hover{
+.control-icon:hover {
   background-color: var(--common-btn-bg-hover-color);
 }
 
@@ -78,128 +78,132 @@
 }
 
 .react-component {
-	 background: #faf594;
-	 border: 3px solid #0d0d0d;
-	 border-radius: 0.5rem;
-	 margin: 1rem 0;
-	 position: relative;
+  background: #faf594;
+  border: 3px solid #0d0d0d;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  position: relative;
 }
- .react-component .label {
-	 margin-left: 1rem;
-	 background-color: #0d0d0d;
-	 font-size: 0.6rem;
-	 letter-spacing: 1px;
-	 font-weight: bold;
-	 text-transform: uppercase;
-	 color: #fff;
-	 position: absolute;
-	 top: 0;
-	 padding: 0.25rem 0.75rem;
-	 border-radius: 0 0 0.5rem 0.5rem;
+.react-component .label {
+  margin-left: 1rem;
+  background-color: #0d0d0d;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0 0 0.5rem 0.5rem;
 }
- .react-component .content {
-	 margin-top: 1.5rem;
-	 padding: 1rem;
+.react-component .content {
+  margin-top: 1.5rem;
+  padding: 1rem;
 }
 
 /* Table-specific styling */
- .ProseMirror table {
-	 border-collapse: collapse;
-	 table-layout: fixed;
-	 width: 100%;
-	 margin: 0;
-	 overflow: hidden;
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
 }
- .ProseMirror table td, .ProseMirror table th {
-	 min-width: 1em;
-	 border: 2px solid #ced4da;
-	 padding: 3px 5px;
-	 vertical-align: top;
-	 box-sizing: border-box;
-	 position: relative;
+.ProseMirror table td,
+.ProseMirror table th {
+  min-width: 1em;
+  border: 2px solid #ced4da;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
 }
- .ProseMirror table td > *, .ProseMirror table th > * {
-	 margin-bottom: 0;
+.ProseMirror table td > *,
+.ProseMirror table th > * {
+  margin-bottom: 0;
 }
- .ProseMirror table th {
-	 font-weight: bold;
-	 text-align: left;
-	 background-color: #f1f3f5;
+.ProseMirror table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f1f3f5;
 }
- .ProseMirror table .selectedCell:after {
-	 z-index: 2;
-	 position: absolute;
-	 content: "";
-	 left: 0;
-	 right: 0;
-	 top: 0;
-	 bottom: 0;
-	 background: rgba(200, 200, 255, 0.4);
-	 pointer-events: none;
+.ProseMirror table .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
 }
- .ProseMirror table .column-resize-handle {
-	 position: absolute;
-	 right: -2px;
-	 top: 0;
-	 bottom: -2px;
-	 width: 4px;
-	 background-color: #adf;
-	 pointer-events: none;
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #adf;
+  pointer-events: none;
 }
 
 .tableWrapper {
   margin-top: 0;
   margin-bottom: 2rem;
-	 overflow-x: auto;
+  overflow-x: auto;
 }
 /* Table-specific styling */
- .ProseMirror table {
-	 border-collapse: collapse;
-	 table-layout: fixed;
-	 width: 100%;
-	 margin: 0;
-	 overflow: hidden;
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
 }
- .ProseMirror table td, .ProseMirror table th {
-	 min-width: 1em;
-	 border: 1px solid var(--common-border-light-color);
-	 padding: 3px 5px;
-	 vertical-align: top;
-	 box-sizing: border-box;
-	 position: relative;
+.ProseMirror table td,
+.ProseMirror table th {
+  min-width: 1em;
+  border: 1px solid var(--common-border-light-color);
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
 }
- .ProseMirror table td > *, .ProseMirror table th > * {
-	 margin-bottom: 0;
+.ProseMirror table td > *,
+.ProseMirror table th > * {
+  margin-bottom: 0;
 }
- .ProseMirror table th {
-	 font-weight: bold;
-	 text-align: left;
-	 background-color: var(--common-border-color);
-   opacity:0.4;
+.ProseMirror table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: var(--common-border-color);
+  opacity: 0.4;
 }
- .ProseMirror table .selectedCell:after {
-	 z-index: 2;
-	 position: absolute;
-	 content: "";
-	 left: 0;
-	 right: 0;
-	 top: 0;
-	 bottom: 0;
-	 background: rgba(200, 200, 255, 0.4);
-	 pointer-events: none;
+.ProseMirror table .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
 }
- .ProseMirror table .column-resize-handle {
-	 position: absolute;
-	 right: -2px;
-	 top: 0;
-	 bottom: -2px;
-	 width: 4px;
-	 background-color: var(--common-light-bg-color);
-	 pointer-events: none;
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: var(--common-light-bg-color);
+  pointer-events: none;
 }
 .resize-cursor {
-	 cursor: ew-resize;
-	 cursor: col-resize;
+  cursor: ew-resize;
+  cursor: col-resize;
 }
 
 .column {
@@ -208,5 +212,33 @@
   border: 1px solid rgb(237, 230, 230);
 }
 .mouse-moving {
-  background-color:rgb(147 197 253)!important;
+  background-color: rgb(147 197 253) !important;
+}
+
+/* Image uploading status */
+p[upload="true"] {
+  position: relative;
+  display: inline-block;
+}
+
+p[upload="true"]:before {
+  position: absolute;
+  content: "";
+  top: 8px;
+  right: -20px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--common-primary-color);
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

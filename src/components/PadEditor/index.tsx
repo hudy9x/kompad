@@ -40,6 +40,7 @@ import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 import { useSettingStore } from "../../store/settings"
+import { UploadingImage } from "../../extensions/UploadingImage"
 
 interface IPadEditorProp {
   id: string
@@ -137,6 +138,7 @@ const extensions = [
     lowlight,
   }),
   Youtube.configure({}),
+  UploadingImage,
 ]
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
