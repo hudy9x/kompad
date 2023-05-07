@@ -19,8 +19,10 @@ import {
 } from "firebase/firestore"
 import { auth, db } from "../libs/firebase"
 import { setCache } from "../libs/localCache"
+import { guidGenerator } from "../libs/utils"
 import { IPadQuery } from "../store/pad"
 import { message } from "../components/message"
+import { seAddNewObject, seDeleteObject, seUpdateObject } from "../libs/search"
 
 export interface IPad {
   id?: string
@@ -29,6 +31,7 @@ export interface IPad {
   shortDesc?: string
   tags: string[]
   folder?: string
+  searchId?: string
   cover?: string
   content: string
   cipherContent: string
@@ -42,6 +45,7 @@ interface IUpdatedPad {
   title?: string
   tags?: string[]
   folder?: string
+  searchId?: string
   cover?: string
   updatedAt?: Timestamp
 }
@@ -173,9 +177,11 @@ export const watchPadById = (
 
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
+    const searchId = guidGenerator()
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
       uid,
       title: title,
+      searchId,
       shortDesc,
       tags: [],
       content: "Write something 💪🏻",
@@ -184,14 +190,19 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
       updatedAt: Timestamp.now(),
     })
 
+    seAddNewObject({ title, uid, objectID: searchId, padId: docRef.id })
+
     return docRef.id
   } catch (error) {
+    console.log("errror", error)
     return null
   }
 }
 
 export const delPad = async (id: string) => {
   try {
+    const pad = await getPadById(id)
+    pad && pad.searchId && seDeleteObject(pad.searchId)
     await deleteDoc(doc(db, "pads", id))
   } catch (error) {
     console.log(error)
@@ -271,6 +282,7 @@ export const updatePad = async ({
 export const updatePadMetadata = async ({
   id,
   title,
+  searchId,
   tags,
   folder,
   cover,
@@ -281,6 +293,16 @@ export const updatePadMetadata = async ({
 
   if (title) {
     data.title = title
+  }
+
+  console.log(searchId, title)
+
+  if (title && searchId) {
+    console.log("update search ")
+    seUpdateObject({
+      objectID: searchId,
+      title,
+    })
   }
 
   if (tags && tags.length) {

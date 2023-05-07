@@ -31,6 +31,7 @@ function PadContent() {
           uid: res.uid,
           updatedAt: res.updatedAt,
           folder: res.folder || "",
+          searchId: res.searchId || "",
           cover: res.cover || "",
           id: id,
           shortDesc: res.shortDesc,

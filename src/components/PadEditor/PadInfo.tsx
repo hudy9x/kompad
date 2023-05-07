@@ -30,6 +30,7 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
       }
       updatePadMetadata({
         id,
+        searchId: info.searchId,
         title: inpRef.current.value ? inpRef.current.value : EMPTY_TITLE,
       })
     }, 500) as unknown as number
