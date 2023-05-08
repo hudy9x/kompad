@@ -77,6 +77,7 @@ export default function PadSearch() {
               <Combobox
                 onChange={(value) => {
                   const pad = value as unknown as IPad
+                  console.log("select", pad)
                   setOpen(false)
                   navigate(`/app/pad/${pad.id}`)
                   setSecondSidebarVisible()

@@ -25,10 +25,10 @@ export const searchByUser = (
       .then(({ hits }) => {
         const results: IPadFromSearch[] = []
         hits.forEach((hit) => {
-          const dt = hit as unknown as IPadFromSearch
+          const dt = hit as unknown as { title: string; padId: string }
           results.push({
             title: dt.title,
-            id: dt.id,
+            id: dt.padId,
           })
         })
 
