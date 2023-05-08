@@ -2,4 +2,4 @@
 
 release 0.29.0
 
-upgrade tauri
+upgrade tauri 1
