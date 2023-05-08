@@ -62,6 +62,7 @@ body {
 
 #theme-setting {
   color: var(--common-text-color);
+  border: 1px solid var(--common-border-light-color);
 }
 
 .bg {
