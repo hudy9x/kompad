@@ -21,13 +21,14 @@ export const PadDelete = ({ idx }: { idx: string }) => {
 
     setDeleting(true);
 
+    // redirect to empty page after user clicks on yes button
+    // the following process still work
+    navigate("/app/pad/");
     await Promise.all([delPad(idx), deleteAllImageInOnePad(idx)]);
-    // await Promise.all([deleteAllImageInOnePad(idx)]);
     await decreasePlanRecord();
 
     setNeedToUpdate();
     setDeleting(false);
-    navigate("/app/pad/");
     message.success("Deleted pad successfully");
   }
 
