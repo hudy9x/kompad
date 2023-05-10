@@ -31,6 +31,9 @@ function ShortcutModal() {
     { title: "Open theme selection modal", kbds: ["Ctrl", "T"] },
     { title: "Close modal window", kbds: ["Esc"] },
     { title: "Lock screen", kbds: ["Ctrl", "L"] },
+    { title: "Zoom in", kbds: ["Ctrl", "+"] },
+    { title: "Zoom out", kbds: ["Ctrl", "-"] },
+    { title: "Zoom reset", kbds: ["Ctrl", "0"] },
   ]
 
   return (

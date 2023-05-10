@@ -210,7 +210,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
         {editor ? <PadDropZone id={id} editor={editor} /> : null}
-        <div className="tiptap-box" style={{ zoom: documentZoom }}>
+        <div className={`tiptap-box zoom-level-${documentZoom}`}>
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
             <ContextMenu
@@ -237,7 +237,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="character-count">
           <div className="bottom-bar">
             <OutlineButton />
-
+            <div>{documentZoom > 1 ? documentZoom * 0.1 * 100 + 100 : 100}%</div>
             {editor && <WordCounter editor={editor} />}
           </div>
         </div>

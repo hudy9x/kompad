@@ -1,12 +1,13 @@
 // import { appWindow, LogicalSize } from "@tauri-apps/api/window";
 import { Editor } from "@tiptap/react"
 import produce from "immer"
-import { setCache } from "../../libs/localCache"
+import { DOCUMENT_ZOOM, setCache } from "../../libs/localCache"
 import { IPadStore, setPadStoreState } from "../../store"
 import { ISettingStore, setSettingState } from "../../store/settings"
 import { IThemeStore, setThemeStoreState } from "../../store/themes"
 import { IOutline, setIsOpen } from "../../store/outlines"
 import { appWindow, LogicalSize } from "@tauri-apps/api/window"
+import { message } from "../message"
 
 export interface KeyBoardProps {
   shift: boolean
@@ -42,6 +43,8 @@ const markKeyPress = (
 ) => {
   const key = ev.key.toLowerCase()
 
+  console.log("key pressed", key)
+
   if (["-", "=", "0"].includes(key)) {
     pressed.minus = key === "-"
     pressed.equal = key === "="
@@ -51,6 +54,9 @@ const markKeyPress = (
 
   pressed[key as keyof typeof pressed] = ev.type === "keydown"
 }
+
+let zoomTimeout = 0
+const MAX_ZOOM_LEVEL = 5
 
 export const shortCutAction = (
   ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent,
@@ -184,33 +190,50 @@ export const shortCutAction = (
 
     // zoom out editor
     if (pressed.control && pressed.minus) {
-      console.log("--")
-      setSettingState(
-        produce<ISettingStore>((state) => {
-          // const oldDocZoom = state.documentZoom
-          // const newDocZoom = oldDocZoom - 0.1
-          // state.documentZoom = newDocZoom
-        })
-      )
+      zoomTimeout && clearTimeout(zoomTimeout)
+      zoomTimeout = setTimeout(() => {
+        console.log("--")
+        setSettingState(
+          produce<ISettingStore>((state) => {
+            const oldDocZoom = state.documentZoom
+            const newDocZoom = oldDocZoom - 1
+            if (newDocZoom < 1) {
+              message.warning("Minimum zoom level")
+              return
+            }
+            setCache(DOCUMENT_ZOOM, newDocZoom + "")
+            state.documentZoom = newDocZoom
+          })
+        )
+      }, 250) as unknown as number
     }
 
     // zoom in editor
     if (pressed.control && pressed.equal) {
       console.log("++")
-      setSettingState(
-        produce<ISettingStore>((state) => {
-          // const oldDocZoom = state.documentZoom
-          // const newDocZoom = oldDocZoom + 0.1
-          // state.documentZoom = newDocZoom
-        })
-      )
+      zoomTimeout && clearTimeout(zoomTimeout)
+      zoomTimeout = setTimeout(() => {
+        setSettingState(
+          produce<ISettingStore>((state) => {
+            const oldDocZoom = state.documentZoom
+            const newDocZoom = oldDocZoom + 1
+            if (newDocZoom > MAX_ZOOM_LEVEL) {
+              message.warning("Maximum zoom level")
+              return
+            }
+            setCache(DOCUMENT_ZOOM, newDocZoom + "")
+            state.documentZoom = newDocZoom
+          })
+        )
+      }, 250) as unknown as number
     }
 
     // reset zoom mode
     if (pressed.control && pressed.zero) {
       setSettingState(
         produce<ISettingStore>((state) => {
-          // state.documentZoom = 1
+          setCache(DOCUMENT_ZOOM, "1")
+          state.documentZoom = 1
         })
       )
     }
