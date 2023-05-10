@@ -116,3 +116,23 @@
   color: var(--tag-text-color);
 }
 
+/* Zoom level from 1 */
+.zoom-level-2 .tiptap-main-content {
+  zoom: 1.1;
+  width: 733px;
+}
+
+.zoom-level-3 .tiptap-main-content {
+  zoom: 1.2;
+  width: 677px;
+}
+
+.zoom-level-4 .tiptap-main-content {
+  zoom: 1.3;
+  width: 640px;
+}
+
+.zoom-level-5 .tiptap-main-content {
+  zoom: 1.4;
+  width: 599px;
+}
