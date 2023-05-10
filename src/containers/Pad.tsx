@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom";
-import Titlebar from "../components/Titlebar";
+import { Outlet } from "react-router-dom"
+import Titlebar from "../components/Titlebar"
 
 function Pad() {
   return (
@@ -7,7 +7,7 @@ function Pad() {
       <Titlebar />
       <Outlet />
     </>
-  );
+  )
 }
 
-export default Pad;
+export default Pad

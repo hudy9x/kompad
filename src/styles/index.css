@@ -63,6 +63,8 @@ body {
 #theme-setting {
   color: var(--common-text-color);
   border: 1px solid var(--common-border-light-color);
+  height: calc(100vh - 0px);
+  overflow: hidden;
 }
 
 .bg {
