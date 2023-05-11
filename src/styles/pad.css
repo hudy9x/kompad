@@ -101,8 +101,8 @@
 }
 
 .pad-cover-upload label {
-  background-color: var(--common-primary-color);
-  color: var(--common-primary-text-color);
+  /* background-color: var(--common-primary-color); */
+  /* color: var(--common-primary-text-color); */
 }
 
 .pad-info-wrapper:hover .pad-cover-upload {
