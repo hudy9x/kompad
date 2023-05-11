@@ -17,11 +17,6 @@
   @apply flex uppercase;
 }
 
-.pad-list {
-  /* @apply divide-y; */
-  /* @apply divide-gray-200 dark:divide-gray-900; */
-}
-
 .pad-list > :not([hidden]):not(:last-child) {
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -98,11 +93,6 @@
 
 .pad-cover-upload {
   @apply transition opacity-0;
-}
-
-.pad-cover-upload label {
-  background-color: var(--common-primary-color);
-  color: var(--common-primary-text-color);
 }
 
 .pad-info-wrapper:hover .pad-cover-upload {
