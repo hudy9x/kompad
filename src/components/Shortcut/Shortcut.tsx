@@ -13,6 +13,7 @@ const baseKeys: KeyBoardProps = {
   i: false,
   v: false,
   d: false,
+  s: false,
   c: false,
   r: false,
   n: false,
