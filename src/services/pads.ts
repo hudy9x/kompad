@@ -191,6 +191,12 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
     })
 
     seAddNewObject({ title, uid, objectID: searchId, padId: docRef.id })
+      .then(() => {
+        console.log("ALGOLIA: add successfully")
+      })
+      .catch((err) => {
+        console.log("ALGOLIA: add failed", err)
+      })
 
     return docRef.id
   } catch (error) {
@@ -287,6 +293,9 @@ export const updatePadMetadata = async ({
   folder,
   cover,
 }: IUpdatedPad) => {
+  const user = auth.currentUser
+  if (!user) return
+
   const data: Partial<IUpdatedPad> = {
     updatedAt: Timestamp.now(),
   }
@@ -295,14 +304,28 @@ export const updatePadMetadata = async ({
     data.title = title
   }
 
-  console.log(searchId, title)
-
   if (title && searchId) {
     console.log("update search ")
     seUpdateObject({
       objectID: searchId,
       title,
     })
+      .then(() => console.log("ALGOLIA: update successfully"))
+      .catch((err) => console.log("ALGOLIA: update failed", err))
+  } else {
+    console.log("ALGOLIA: update not started")
+    console.log("title:", title)
+    console.log("searchId", searchId)
+  }
+
+  if (title && !searchId) {
+    const searchId = guidGenerator()
+    data.searchId = searchId
+    seAddNewObject({
+      title,
+      uid: user.uid,
+      objectID: searchId,
+    }).then(() => console.log("ALGOLIA: searchID not exist => update note's title"))
   }
 
   if (tags && tags.length) {
