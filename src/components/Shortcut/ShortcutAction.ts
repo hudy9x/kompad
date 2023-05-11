@@ -20,6 +20,7 @@ export interface KeyBoardProps {
   p: boolean
   i: boolean
   v: boolean
+  s: boolean
   c: boolean
   r: boolean
   n: boolean
@@ -56,6 +57,7 @@ const markKeyPress = (
 }
 
 let zoomTimeout = 0
+let ctrlSTimeout = 0
 const MAX_ZOOM_LEVEL = 5
 
 export const shortCutAction = (
@@ -137,6 +139,14 @@ export const shortCutAction = (
           state.view.sidebar = !state.view.sidebar
         })
       )
+    }
+
+    if (pressed.control && pressed.s) {
+      ctrlSTimeout && clearTimeout(ctrlSTimeout)
+      ctrlSTimeout = setTimeout(() => {
+        message.info("😎 Kompad auto-saves your work")
+      }, 250) as unknown as number
+      return
     }
 
     //Open new pad modal
