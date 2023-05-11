@@ -9,10 +9,12 @@ import { QueryDocumentSnapshot, Unsubscribe } from "firebase/firestore"
 import ContextMenu from "../../components/ContextMenu"
 import PadItem from "./PadItem"
 import ScrollBar from "../../components/ScrollBar"
+import LoadingSpinner from "../../components/LoadingSpinner"
 
 dayjs.extend(relativeTime)
 
 function PadList() {
+  const [loading, setLoading] = useState(false)
   const { user } = useAuth()
   const { id } = useParams()
   const { pads, query, updatePadList, appendPads } = usePadListStore()
@@ -38,6 +40,7 @@ function PadList() {
 
     clonedQuery.startAfter = lastDoc
     isFetching.current = true
+    setLoading(true)
 
     getPadsByUidQuery(user.uid, clonedQuery)
       .then(({ lastDoc, data }) => {
@@ -47,13 +50,18 @@ function PadList() {
       })
       .finally(() => {
         isFetching.current = false
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
       })
   }
 
   useEffect(() => {
     let unsub: Unsubscribe | null
     if (user?.uid) {
+      setLoading(true)
       unsub = watchPads(query, (err, { last, data }) => {
+        setLoading(false)
         if (err) {
           return
         }
@@ -75,7 +83,10 @@ function PadList() {
   }, [user?.uid, query])
 
   return (
-    <>
+    <div className="relative" >
+      <div className={`absolute top-[40%] left-[45%] z-30 ${loading ? "" : "invisible pointer-events-none"}`}>
+        <LoadingSpinner />
+      </div>
       <ScrollBar
         height="calc(100vh - 80px)"
         onScrollStop={loadMore}
@@ -97,7 +108,7 @@ function PadList() {
         <span>{end === "END" ? "Reached Limit" : ""}</span>
         <span>Total: {pads.length}</span>
       </div>
-    </>
+    </div>
   )
 }
 
