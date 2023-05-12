@@ -1,22 +1,20 @@
 import { useContext, useEffect, useState } from "react"
 import { useFormik } from "formik"
 import { IUser, getUserWithEmail } from "../../../services/users"
-import { classNames } from "../../../libs/utils"
 import { message } from "../../../components/message"
 import { ButtonShareModal } from "./ButtonShareModal"
-import { Switch } from "@headlessui/react"
 import { IoMdArrowBack } from "react-icons/io"
 import { GrFormClose } from "react-icons/gr"
 import { OutsideClickHandler } from "../../../components/OutsideClickHandler"
 import { IOption, ListBoxOptions } from "../../../components/ListBox"
 import { ProviderProps, Rules } from "./types"
-import { IPad, ISharedPad, IUserShare, setShared } from "../../../services/pads"
-import { useParams } from "react-router-dom"
-import { CURRENT_PAD_CONTENT, getCacheJSON } from "../../../libs/localCache"
+import { ISharedPad, IUserShare, setShared } from "../../../services/pads"
 import { useCurrentUser } from "../../../hooks/useCurrentUser"
 import { useCopyToClipboard } from "../../../hooks/useCopyToClipboard"
 import { getCurrentURL, updateAllUser } from "./utils"
 import { Context } from "./context"
+import { decryptText } from "../../../services/encryption"
+import { usePadStore } from "../../../store"
 
 export const rules: IOption[] = [
   {
@@ -37,7 +35,7 @@ export const PadShareListUser = () => {
     group,
     isOpenListUser,
     selectedUser,
-    editor,
+    padShared,
   } = useContext(Context) as ProviderProps
   const [isSearch, setIsSearch] = useState<boolean>(false)
   const [searchUser, setSearchUser] = useState<IUser | null>(null)
@@ -45,9 +43,8 @@ export const PadShareListUser = () => {
   const copy = useCopyToClipboard()
   const [users, setUsers] = useState<IUserShare[]>([])
   const [note, setNote] = useState<string>("")
-  const { id } = useParams()
+  const { idShared } = usePadStore()
   const { info } = useCurrentUser()
-  const cachedPad = getCacheJSON(CURRENT_PAD_CONTENT) as IPad
 
   const formik = useFormik({
     initialValues: {
@@ -116,17 +113,12 @@ export const PadShareListUser = () => {
     }
   }
 
-  const onOutsideClick = () => {
-    setIsSearch(false)
-  }
-
   const handleSelectedRule = (rule: Rules) => {
     setPermissionLevel(rule)
     message.success("Access privileges have been modified")
   }
 
   const handleClickShare = async () => {
-    setVisible(false)
     const usersUpdate = updateAllUser(users, permissionLevel);
     const emails = [...group, ...usersUpdate].map((user) => user.email)
     const sharedEmails = [...emails]
@@ -139,8 +131,12 @@ export const PadShareListUser = () => {
       note,
     }
     try {
-      await setShared(reqShared, id!, editor)
+      const contentPad = padShared && decryptText(padShared.cipherContent)
+      if (!contentPad) return;
+      
+      await setShared(reqShared, idShared, contentPad)
       message.success("Shared successfully")
+      setVisible(false)
     } catch {
       message.error("Shared error")
     }
@@ -148,8 +144,8 @@ export const PadShareListUser = () => {
 
   const handleClickCopy = () => {
     copy(getCurrentURL())
-    setVisible(false)
     message.success("Copy link successfully")
+    setVisible(false)
   }
 
   useEffect(() => {
@@ -166,7 +162,7 @@ export const PadShareListUser = () => {
     >
       <div className="flex items-center pb-4">
         <IoMdArrowBack className="w-6 h-6 mr-4" onClick={handleClickBack} />
-        <h2 className="text-lg leading-6">{`Share "${cachedPad.title}"`}</h2>
+        <h2 className="text-lg leading-6">{`Share "${padShared?.title}"`}</h2>
       </div>
       <div className="mb-4">
         {users.map((user, index) => (
@@ -181,11 +177,11 @@ export const PadShareListUser = () => {
       </div>
       <div className="flex justify-between">
         <div className="form-control no-icon mr-4 grow relative w-full">
-          <OutsideClickHandler onOutsideClick={onOutsideClick}>
+          <OutsideClickHandler onOutsideClick={() => setIsSearch(false)}>
             <input
               type="text"
               name="email"
-              id="pad-share"
+              id="pad-share-list-user"
               placeholder="Add people and groups"
               value={formik.values.email}
               onChange={formik.handleChange}

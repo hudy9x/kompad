@@ -1,9 +1,8 @@
 import { useFormik } from "formik"
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AiTwotoneLock } from "react-icons/ai"
 import { IoMdArrowDropdown } from "react-icons/io"
 import { IoEarth } from "react-icons/io5"
-import { useParams } from "react-router-dom"
 import { IOption, ListBoxOptions } from "../../../components/ListBox"
 import { message } from "../../../components/message"
 import { OutsideClickHandler } from "../../../components/OutsideClickHandler"
@@ -12,18 +11,18 @@ import {
   IPad,
   ISharedPad,
   IUserShare,
-  getPadById,
   setShared,
 } from "../../../services/pads"
 import { getUserWithEmail, IUser } from "../../../services/users"
 import { ButtonShareModal } from "./ButtonShareModal"
 import { rules } from "./PadShareListUser"
 import { ProviderProps, Rules } from "./types"
-import { CURRENT_PAD_CONTENT, getCacheJSON } from "../../../libs/localCache"
 import { useCopyToClipboard } from "../../../hooks/useCopyToClipboard"
 import { createNewUserShare, getCurrentURL, getEdits, isSearchAndAccountSame, isUserAlreadyInGroup } from "./utils"
 import { Context } from "./context"
 import { useAuth } from "../../../hooks/useAuth"
+import { decryptText } from "../../../services/encryption"
+import { usePadStore } from "../../../store"
 
 const accessOptions: IOption[] = [
   {
@@ -36,6 +35,16 @@ const accessOptions: IOption[] = [
   },
 ]
 
+export const ALL_USERS_CAN_EDIT = 'ALL'
+
+const initialPermissionLevel = (padShared: IPad | undefined) => {
+  return padShared && padShared.shared.edits === ALL_USERS_CAN_EDIT ? Rules.Edit : Rules.View
+}
+
+const initialAccessLevel = (padShared: IPad) => {
+  return padShared && padShared?.shared.accessLevel
+}
+
 export const PadShareUser = () => {
   const {
     setSelectedUser,
@@ -43,19 +52,18 @@ export const PadShareUser = () => {
     setIsOpenListUser,
     setIsOpenUser,
     setGroup,
+    padShared,
     group,
     isOpenUser,
-    editor,
   } = useContext(Context) as ProviderProps
-  const [accessLevel, setAccessLevel] = useState<Rules>(Rules.Limit)
-  const [permissionLevel, setPermissionLevel] = useState<Rules>(Rules.View)
+  const [accessLevel, setAccessLevel] = useState<Rules>(initialAccessLevel(padShared!))
+  const [permissionLevel, setPermissionLevel] = useState<Rules>(initialPermissionLevel(padShared))
   const [userSearch, setUserSearch] = useState<IUser | null>(null)
   const [isSearch, setIsSearch] = useState<boolean>(false)
   const copy = useCopyToClipboard()
+  const { idShared } = usePadStore()
   const { info } = useCurrentUser()
   const { user } = useAuth()
-  const { id } = useParams()
-  const cachedPad = getCacheJSON(CURRENT_PAD_CONTENT) as IPad
 
   const handleClickUser = (user: IUser) => {
     if (isSearchAndAccountSame(user, info!)) {
@@ -76,10 +84,6 @@ export const PadShareUser = () => {
     setIsSearch(true)
   }
 
-  const onOutsideClick = () => {
-    setIsSearch(false)
-  }
-
   const handleSelectedRule = async (rule: Rules, email: string) => {
     switch (rule) {
       case Rules.Anyone:
@@ -87,8 +91,7 @@ export const PadShareUser = () => {
         setAccessLevel(rule)
         break
       case Rules.Limit:
-        const pad = await getPadById(id!)
-        pad?.shared.group ? setGroup([...pad.shared.group]) : setGroup([])
+        padShared?.shared.group ? setGroup([...padShared.shared.group]) : setGroup([])
         setAccessLevel(rule)
         break
       case Rules.Edit:
@@ -111,16 +114,20 @@ export const PadShareUser = () => {
   }
 
   const handleClickShare = async () => {
-    setVisible(false)
     try {
       const reqShared: ISharedPad = {
         group: group,
         accessLevel: accessLevel,
         emails: group.map((item) => item.email),
-        edits: getEdits(group),
+        edits: accessLevel === Rules.Anyone && permissionLevel === Rules.Edit ? ALL_USERS_CAN_EDIT : getEdits(group),
       }
-      await setShared(reqShared, id!, editor)
+      const contentPad = padShared && decryptText(padShared.cipherContent)
+      if (!contentPad) return;
+      
+      await setShared(reqShared, idShared, contentPad)
+
       message.success("Shared successfully")
+      setVisible(false)
     } catch (err) {
       message.error("Shared error")
     }
@@ -153,35 +160,20 @@ export const PadShareUser = () => {
     setVisible(false)
   }
 
-  useEffect(() => {
-    void (async () => {
-      const pad = await getPadById(id!)
-      if (!pad) return
-      pad.shared.group ? setGroup([...pad.shared.group]) : setGroup([])
-
-      if (pad.shared.edits.length < 0) {
-        setPermissionLevel(Rules.Edit)
-      } else {
-        setPermissionLevel(Rules.View)
-      }
-      setAccessLevel(pad.shared.accessLevel)
-    })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [info])
   return (
     <form
       onSubmit={formik.handleSubmit}
       className={`${isOpenUser ? "width-modal-share text-color-base" : "hidden"
         }`}
     >
-      <p className="text-lg leading-6 pb-4">{`Share: "${cachedPad.title}"`}</p>
+      <p className="text-lg leading-6 pb-4">{`Share: "${padShared?.title}"`}</p>
       <div className="pb-4">
-        <OutsideClickHandler onOutsideClick={onOutsideClick}>
+        <OutsideClickHandler onOutsideClick={() => setIsSearch(false)}>
           <div className="form-control no-icon">
             <input
               type="text"
               name="email"
-              id="pad-share"
+              id="pad-share-user"
               placeholder="Add people and groups"
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -221,7 +213,7 @@ export const PadShareUser = () => {
       <div className="pb-10">
         <p className="text-lg leading-6 pb-4">People with access rights</p>
         <ul>
-          {cachedPad.uid === user?.uid && <li className="flex justify-between">
+          {padShared?.uid === user?.uid && <li className="flex justify-between">
             <div className="flex">
               <div className="m-auto pr-4">
                 <img
@@ -239,8 +231,8 @@ export const PadShareUser = () => {
               Owner
             </div>
           </li>}
-          {group.map((user) => (
-            <li className="flex justify-between">
+          {group.map((user, id) => (
+            <li key={id} className="flex justify-between">
               <div className="flex">
                 <div className="m-auto pr-4">
                   <img

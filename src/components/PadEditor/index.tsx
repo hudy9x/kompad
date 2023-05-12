@@ -40,12 +40,11 @@ import { mermaid } from "../../extensions/CustomCodeBlock/language"
 import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 import { useSettingStore } from "../../store/settings"
-import { PadShareModal } from "../../containers/PadActions/PadShareModal"
-import { IUser } from "../../services/users"
+import { UploadingImage } from "../../extensions/UploadingImage"
 import { useAuth } from "../../hooks/useAuth"
-import { IAuthenUser } from "../../providers/Authenticator"
-import { useParams } from "react-router-dom"
-import { message } from "../message"
+import { ALL_USERS_CAN_EDIT } from "../../containers/PadActions/PadShareModal/PadShareUser"
+import { Rules } from "../../containers/PadActions/PadShareModal/types"
+
 
 interface IPadEditorProp {
   id: string
@@ -143,11 +142,8 @@ const extensions = [
     lowlight,
   }),
   Youtube.configure({}),
+  UploadingImage,
 ]
-
-const checkRuleEdit = (pad: IPad, currentUser: IAuthenUser): boolean => {
-  return currentUser.uid === pad.uid || pad.shared.edits.some((email) => email === currentUser.email)
-}
 
 export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const { documentZoom } = useSettingStore()
@@ -168,11 +164,6 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
     //     Crash --> [*]
     // "></diagram-component>`,
     onUpdate: () => {
-      const isEdit = checkRuleEdit(data, user!)
-      if(!isEdit) {
-        message.info("You don't have permission edit");
-        return;
-      }
       setOutlines()
       setUpdate((prevUpdate) => prevUpdate + 1)
     },
@@ -204,7 +195,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         setOutlines()
       }, 200)
     }
-    // eslint-disable-next-line
+    
   }, [content])
 
   useEffect(() => {
@@ -224,8 +215,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       <div className="tiptap-container">
         <FixedControlBar editor={editor} />
         {editor ? <PadDropZone id={id} editor={editor} /> : null}
-
-        <div className="tiptap-box" style={{ zoom: documentZoom }}>
+        <div className={`tiptap-box zoom-level-${documentZoom}`}>
           <ScrollBar height="calc(100vh - 64px - 20px)">
             <PadInfo />
             <ContextMenu
@@ -241,9 +231,13 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                   if (!editor) {
                     return
                   }
+                  const disabledEdit = data.shared.edits.length <= 0 || 
+                  (data.shared.edits !== ALL_USERS_CAN_EDIT && data.shared.accessLevel === Rules.Anyone)
+                  if (disabledEdit && data.uid !== user?.uid) {
+                    ev.preventDefault()
+                  }
                   shortCutAction(ev, pressed, editor)
                 }}
-                disabled={false}
               />
               <TableActions editor={editor} />
             </ContextMenu>
@@ -253,9 +247,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         <div className="character-count">
           <div className="bottom-bar">
             <OutlineButton />
-
+            <div>{documentZoom > 1 ? documentZoom * 0.1 * 100 + 100 : 100}%</div>
             {editor && <WordCounter editor={editor} />}
-            {editor && <PadShareModal editor={editor} />}
           </div>
         </div>
       </div>

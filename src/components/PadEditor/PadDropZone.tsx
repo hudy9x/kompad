@@ -78,6 +78,8 @@ export default function PadDropZone({ id, editor }: Props) {
       const randomID = new Date().getTime()
       const randName = `${randomID}-${name}`
 
+      editor.chain().focus().addUploading(randName).run()
+
       uploadFileToPad(randName, blob)
         .then((res) => {
           toggleDragOverEffect(false)
@@ -95,7 +97,7 @@ export default function PadDropZone({ id, editor }: Props) {
               source: "CONTENT-IMAGE",
             })
 
-            editor.chain().focus().setImage({ src }).run()
+            editor.chain().removeUploading(randName, src).run()
           })
         })
         .catch(() => {
@@ -123,7 +125,6 @@ export default function PadDropZone({ id, editor }: Props) {
           (s) => name.lastIndexOf(`.${s}`) !== -1
         )
       ) {
-        console.log("aasdfasdf")
         message.error("Only accept images")
         return
       }
@@ -140,6 +141,8 @@ export default function PadDropZone({ id, editor }: Props) {
 
         const randomID = new Date().getTime()
         const randName = `${randomID}-${name}`
+
+        editor.chain().focus().addUploading(randName).run()
 
         uploadFileToPad(randName, blob)
           .then((res) => {
@@ -158,7 +161,7 @@ export default function PadDropZone({ id, editor }: Props) {
                 source: "CONTENT-IMAGE",
               })
 
-              editor.chain().focus().setImage({ src }).run()
+              editor.chain().removeUploading(randName, src).run()
             })
           })
           .catch(() => {

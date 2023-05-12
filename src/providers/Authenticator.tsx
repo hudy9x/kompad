@@ -1,6 +1,6 @@
-import { onAuthStateChanged } from "firebase/auth"
-import { createContext, useEffect, useState } from "react"
-import { auth } from "../libs/firebase"
+import { onAuthStateChanged } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { auth } from "../libs/firebase";
 import { usePadStore } from "../store"
 import { useNavigate } from "react-router-dom"
 import { usePadListStore } from "../store/pad"
@@ -65,6 +65,7 @@ export const AuthenProvider = ({ children }: AuthenProviderProps) => {
     return () => {
       unsubscribe();
     };
+  // eslint-disable-next-line 
   }, []);
 
   return (

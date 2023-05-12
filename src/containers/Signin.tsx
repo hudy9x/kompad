@@ -3,6 +3,7 @@ import { HiOutlineMail, HiOutlineLockClosed, HiKey } from "react-icons/hi";
 import { signIn } from "../services/sign";
 import { useFormik } from "formik";
 import { message } from "../components/message";
+import { sendNotification } from "../libs/notify";
 
 function Signin() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Signin() {
       signIn(email, password).then((user) => {
         if (user) {
           message.success("Signing in successfully ! 😎")
+          sendNotification(`🐽 ${email} just signed in !`)
           navigate("/");
         } else {
           alert("username or password invalid");

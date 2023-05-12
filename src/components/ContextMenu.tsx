@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, createContext, useContext } from "react";
 interface IContextMenu {
   children: JSX.Element | JSX.Element[],
   condition?: (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => boolean
+  enabled?: boolean 
 }
 
 interface IMenuStore {
@@ -19,15 +20,16 @@ const MenuContext = createContext<IMenuStore>({
   setVisible: (bool) => { console.log(bool) }
 })
 
-export default function ContextMenu({ children, condition }: IContextMenu) {
+export default function ContextMenu({ children, condition, enabled }: IContextMenu) {
   const [visible, setVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const { top, left } = position;
 
   const onContextMenu = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if(!enabled) return
     const { clientX, clientY } = ev
-    try {
 
+    try {
       if (condition && !condition(ev)) {
         return;
       }
@@ -51,7 +53,7 @@ export default function ContextMenu({ children, condition }: IContextMenu) {
   </MenuContext.Provider>
 }
 
-ContextMenu.Items = function ContextMenuItems({ children, shouldHide }: { children: JSX.Element | JSX.Element[], shouldHide?: boolean }) {
+ContextMenu.Items = function ContextMenuItems({ children }: { children: JSX.Element | JSX.Element[] }) {
   const ctxRef = useRef<HTMLDivElement>(null)
   const { top, left, visible, setVisible } = useContext(MenuContext)
 
@@ -113,7 +115,7 @@ ContextMenu.Items = function ContextMenuItems({ children, shouldHide }: { childr
   }
 
   useEffect(() => {
-   !shouldHide && visible && displayContextMenu(top, left);
+    visible && displayContextMenu(top, left);
   }, [top, left, visible])
 
 

@@ -1,29 +1,29 @@
 .mermaid-showcase {
- background: #faf594;
- border: 3px solid #0d0d0d;
- border-radius: 0.5rem;
- display: flex;
- justify-content: center;
- width: 100%;
- font-size: 16px;
- font-weight: 400;
- color: #000;
+  background: #faf594;
+  border: 3px solid #0d0d0d;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
 }
 
 .block-code-icon {
- @apply w-8 h-8 p-2 rounded-md border transition;
- @apply text-gray-600 bg-white hover:bg-gray-50;
- background-color: #111827;
- border-color: var(--common-border-color);
- color: var(--common-text-color);
+  @apply w-8 h-8 p-2 rounded-md border transition;
+  @apply text-gray-600 bg-white hover:bg-gray-50;
+  background-color: #111827;
+  border-color: var(--common-border-color);
+  color: var(--common-text-color);
 }
 
 .code-mermaid {
   padding: 0px !important;
 }
 
-.block-code-icon:hover{
- background-color: #455579;
+.block-code-icon:hover {
+  background-color: #455579;
 }
 
 .block-code-mermaid {
@@ -34,7 +34,7 @@
 
 .block-code-mermaid .is-active .block-code-icon,
 .block-code-mermaid .block-code-icon.is-active {
- background-color:#12203f;
+  background-color: #12203f;
   border-color: var(--button-border-active-color);
   color: var(--button-text-active-color);
 }

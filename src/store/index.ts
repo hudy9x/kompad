@@ -13,8 +13,8 @@ export interface IPadStore {
   idShared: string
   setIdShared: (idShared: string) => void
 
-  isPadShareModal: boolean;
-  setIsPadShareModal: (status: boolean) => void;
+  isOpenPadShareModal: boolean;
+  openPadSharedModal: (status: boolean) => void;
 }
 
 export const usePadStore = create<IPadStore>((set) => ({
@@ -25,11 +25,11 @@ export const usePadStore = create<IPadStore>((set) => ({
       ...{ searchModalStatus: status },
     })),
 
-  isPadShareModal: false,
-  setIsPadShareModal: (status: boolean) =>
+  isOpenPadShareModal: false,
+  openPadSharedModal: (status: boolean) =>
     set((state) => ({
       ...state,
-      ...{ isPadShareModal: status },
+      ...{ isOpenPadShareModal: status },
     })),
 
   newPadModalStatus: false,
@@ -46,6 +46,7 @@ export const usePadStore = create<IPadStore>((set) => ({
         needToUpdate: state.needToUpdate + 1,
       }
     }),
+
   idShared: '',
   setIdShared: (idShared: string) =>
     set((state) => ({

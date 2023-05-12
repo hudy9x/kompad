@@ -4,30 +4,36 @@ import Modal from "../../../components/Modal"
 import { PadShareUser } from "./PadShareUser"
 import { PadShareListUser } from "./PadShareListUser"
 import { Provider } from "./context"
-import { IUserShare } from "../../../services/pads"
-import { Editor } from "@tiptap/react"
+import { IPad, IUserShare, getPadById } from "../../../services/pads"
 
-export const PadShareModal = ({ editor }: {
-  editor: Editor
-}) => {
+export const PadShareModal = () => {
   const [visible, setVisible] = useState(false)
-  const { isPadShareModal, setIsPadShareModal } = usePadStore()
+  const { isOpenPadShareModal, openPadSharedModal } = usePadStore()
   const [selectedUser, setSelectedUser] = useState<IUserShare | null>(null)
   const [isOpenUser, setIsOpenUser] = useState<boolean>(true)
   const [isOpenListUser, setIsOpenListUser] = useState<boolean>(false)
   const [group, setGroup] = useState<IUserShare[]>([])
+  const [padShared, setPadShared] = useState<IPad>()
+  const { idShared } = usePadStore() 
 
   useEffect(() => {
-    setVisible(isPadShareModal)
-  }, [isPadShareModal])
+    void (async () => {
+      const pad = await getPadById(idShared!)
+      if (!pad) return
+      setPadShared(pad)
+      setVisible(isOpenPadShareModal)
+      pad.shared.group ? setGroup([...pad.shared.group]) : setGroup([])
+    })()
+  // eslint-disable-next-line    
+  }, [isOpenPadShareModal])
 
   useEffect(() => {
     if (visible) {
       setIsOpenUser(true)
       setIsOpenListUser(false)
     }
-    setIsPadShareModal(visible)
-  }, [visible, setIsPadShareModal])
+    openPadSharedModal(visible)
+  }, [visible, openPadSharedModal])
 
   return (
     <div>
@@ -39,11 +45,11 @@ export const PadShareModal = ({ editor }: {
             setIsOpenUser,
             setIsOpenListUser,
             setGroup,
+            padShared,
             group,
             isOpenUser,
             isOpenListUser,
             selectedUser,
-            editor,
           }}
         >
           <PadShareUser />

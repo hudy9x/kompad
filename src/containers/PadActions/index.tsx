@@ -37,7 +37,7 @@ export default function PadActions({ data }: { data: IPad }) {
           </div>
           <div className="py-1">
             <Menu.Item as="div">
-              <PadShare />
+              <PadShare id={data.id!}/>
             </Menu.Item>
             <Menu.Item>
               <PadImportant data={data} />

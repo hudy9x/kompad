@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import { IUserShare } from "../../../services/pads"
-import { Editor } from "@tiptap/react"
+import { IPad, IUserShare } from "../../../services/pads"
 
 export enum Rules {
  None = 'None',
@@ -16,9 +15,9 @@ export interface ProviderProps {
  setIsOpenListUser: Dispatch<SetStateAction<boolean>>
  setVisible: Dispatch<SetStateAction<boolean>>
  setGroup: Dispatch<SetStateAction<IUserShare[]>>
+ padShared: IPad | undefined
  group: IUserShare[]
  isOpenUser: boolean
  isOpenListUser: boolean
- editor: Editor
  selectedUser: IUserShare | null
 }

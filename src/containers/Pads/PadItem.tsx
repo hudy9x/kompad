@@ -8,7 +8,6 @@ import { IPad } from "../../services/pads"
 import ContextMenu, { useContextMenu } from "../../components/ContextMenu"
 import PadActions from "../PadActions/index"
 import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator"
-import { usePadListStore } from "../../store/pad"
 
 interface IPadItemProps {
   pad: IPad
@@ -18,7 +17,6 @@ interface IPadItemProps {
 export default function PadItem({ active, pad }: IPadItemProps) {
   const { visible: isContextMenuDisplayed } = useContextMenu()
   const { setSecondSidebarVisible } = useMobileNavigator()
-  const { query: { shared  }} = usePadListStore()
   const d = dayjs(pad.updatedAt.toDate())
 
   const onClick = () => {
@@ -61,8 +59,7 @@ export default function PadItem({ active, pad }: IPadItemProps) {
           )}
         </div>
       </Link>
-      
-      <ContextMenu.Items shouldHide={shared}>
+      <ContextMenu.Items>
         <PadActions data={pad} />
       </ContextMenu.Items>
     </div>

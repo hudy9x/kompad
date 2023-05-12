@@ -13,22 +13,19 @@ import { usePadListStore } from "../../store/pad"
 
 function PadContent() {
   // rendering pad's content at first
-  const { idShared, setIdShared } = usePadStore((state) => state)
+  const { setIdShared } = usePadStore((state) => state)
   const cachedPad = getCacheJSON(CURRENT_PAD_CONTENT) as IPad
-  const { id } = useParams()
   const { query } = usePadListStore()
+  const { id } = useParams()
   const [pad, setPad] = useState<IPad>(cachedPad)
 
   useEffect(() => {
-    let idx = idShared || id;
+    if (id) {
+      saveCurrentPad(id)
 
-    if (idx) {
-      saveCurrentPad(idx)
-
-      getPadById(idx).then((res) => {
+      getPadById(id).then((res) => {
         if (!res) return
-        console.log(res)
-        const data = {
+        const data: IPad = {
           content: res.content,
           cipherContent: res.cipherContent,
           createdAt: res.createdAt,
@@ -37,8 +34,10 @@ function PadContent() {
           uid: res.uid,
           updatedAt: res.updatedAt,
           folder: res.folder || "",
+          searchId: res.searchId || "",
           cover: res.cover || "",
-          id: idx,
+          id: id,
+          sharedContent: res.sharedContent,
           shared: res.shared,
           shortDesc: res.shortDesc,
           important: res.important,
@@ -48,7 +47,7 @@ function PadContent() {
           cachedPad &&
           cachedPad.updatedAt &&
           data.updatedAt.seconds <= cachedPad.updatedAt.seconds &&
-          cachedPad.id === idx
+          cachedPad.id === id
         ) {
           console.log("no changes, do nothing")
           return
@@ -63,16 +62,15 @@ function PadContent() {
       })
     }
     //eslint-disable-next-line
-  }, [id, idShared])
+  }, [id])
 
   const getContent = (pad: IPad) => {
-    // if(shared) {
-    //   return pad.shared.sharedContent
-    // }
-    if (pad.cipherContent) {
+    const enabledIfShared = query.shared;
+    if(enabledIfShared && pad.sharedContent) {
+      return pad.sharedContent
+    } else {
       return decryptText(pad.cipherContent)
     }
-    return pad.content
   }
 
   return (

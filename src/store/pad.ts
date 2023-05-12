@@ -1,26 +1,29 @@
 import { create } from "zustand"
 import produce from "immer"
 import { IPad } from "../services/pads"
+import { QueryDocumentSnapshot } from "firebase/firestore"
 
 export interface IPadQuery {
   tag: string
   folder: string
   recently?: boolean
+  startAfter?: QueryDocumentSnapshot<unknown>
   important?: boolean
   shared?: boolean
 }
 
 export interface IPadStore {
-  pads: IPad[];
-  query: IPadQuery;
-  clearFilter: () => void;
-  filterByAll: (query: IPadQuery) => void;
-  filterByTag: (id: string) => void;
-  filterByFolder: (id: string) => void;
-  filterByRecently: () => void;
-  updatePadList: (data: IPad[]) => void;
-  filterByImportant: () => void;
-  filterByShared: () => void;
+  pads: IPad[]
+  query: IPadQuery
+  clearFilter: () => void
+  filterByAll: (query: IPadQuery) => void
+  filterByTag: (id: string) => void
+  filterByFolder: (id: string) => void
+  filterByRecently: () => void
+  updatePadList: (data: IPad[]) => void
+  filterByImportant: () => void
+  appendPads: (data: IPad[]) => void
+  filterByShared: () => void
 }
 
 // configure store
@@ -81,6 +84,13 @@ export const usePadListStore = create<IPadStore>((set) => ({
     set(
       produce<IPadStore>((state) => {
         state.pads = data
+      })
+    ),
+
+  appendPads: (data: IPad[]) =>
+    set(
+      produce<IPadStore>((state) => {
+        state.pads = [...state.pads, ...data]
       })
     ),
 

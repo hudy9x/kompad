@@ -12,6 +12,8 @@ import {
   orderBy,
   query,
   QueryConstraint,
+  QueryDocumentSnapshot,
+  startAfter,
   Timestamp,
   Unsubscribe,
   updateDoc,
@@ -19,10 +21,11 @@ import {
 } from "firebase/firestore"
 import { auth, db } from "../libs/firebase"
 import { setCache } from "../libs/localCache"
+import { guidGenerator } from "../libs/utils"
 import { IPadQuery } from "../store/pad"
 import { message } from "../components/message"
 import { Rules } from "../containers/PadActions/PadShareModal/types"
-import { Editor } from "@tiptap/react"
+import { seAddNewObject, seDeleteObject, seUpdateObject } from "../libs/search"
 
 export interface IPad {
   id?: string
@@ -31,6 +34,7 @@ export interface IPad {
   shortDesc?: string
   tags: string[]
   folder?: string
+  searchId?: string
   cover?: string
   content: string
   cipherContent: string
@@ -46,6 +50,7 @@ interface IUpdatedPad {
   title?: string
   tags?: string[]
   folder?: string
+  searchId?: string
   cover?: string
   updatedAt?: Timestamp
 }
@@ -60,7 +65,7 @@ export interface IUserShare {
 export interface ISharedPad {
   group: IUserShare[],
   emails: string[],
-  edits: string[],
+  edits: string[] | string,
   accessLevel: Rules,
   note?: string,
 }
@@ -85,41 +90,49 @@ export const saveCurrentPad = (id: string) => {
   setCache("currentPad", id)
 }
 
-export const getPadsByUidQuery = (
+export const getPadsByUidQuery = async (
   uid: string,
-  callback: (pad: IPad[]) => void
-) => {
-  const q = query(
-    collection(db, "pads"),
-    where("uid", "==", uid),
-    orderBy("updatedAt", "desc")
-  )
+  queries: IPadQuery
+): Promise<{
+  lastDoc: QueryDocumentSnapshot<unknown> | null
+  data: IPad[]
+}> => {
+  const q = createQuery(queries, uid)
 
-  onSnapshot(q, (pads) => {
-    if (pads.empty) {
-      return []
+  const pads = await getDocs(q)
+
+  if (pads.empty) {
+    return {
+      lastDoc: null,
+      data: [],
     }
+  }
 
-    const padList: IPad[] = []
-    pads.forEach((pad) => {
-      const padData = pad.data() as IPad
-      padList.push({
-        id: pad.id,
-        uid: padData.uid,
-        title: padData.title,
-        tags: padData.tags,
-        content: padData.content,
-        cipherContent: padData.cipherContent,
-        sharedContent: padData.sharedContent,
-        createdAt: padData.createdAt,
-        updatedAt: padData.updatedAt,
-        important: false,
-        shared: defaultShared,
-      })
+  const padList: IPad[] = []
+  const lastDoc: QueryDocumentSnapshot<unknown> =
+    pads.docs[pads.docs.length - 1]
+
+  pads.forEach((pad) => {
+    const padData = pad.data() as IPad
+    padList.push({
+      id: pad.id,
+      uid: padData.uid,
+      title: padData.title,
+      tags: padData.tags,
+      content: padData.content,
+      cipherContent: padData.cipherContent,
+      sharedContent: padData.sharedContent,
+      createdAt: padData.createdAt,
+      updatedAt: padData.updatedAt,
+      important: false,
+      shared: defaultShared,
     })
-
-    callback(padList)
   })
+
+  return {
+    lastDoc,
+    data: padList,
+  }
 }
 
 export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
@@ -195,9 +208,11 @@ export const watchPadById = (
 
 export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
   try {
+    const searchId = guidGenerator()
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
       uid,
       title: title,
+      searchId,
       shortDesc,
       tags: [],
       content: "Write something 💪🏻",
@@ -207,14 +222,25 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
       updatedAt: Timestamp.now(),
     })
 
+    seAddNewObject({ title, uid, objectID: searchId, padId: docRef.id })
+      .then(() => {
+        console.log("ALGOLIA: add successfully")
+      })
+      .catch((err) => {
+        console.log("ALGOLIA: add failed", err)
+      })
+
     return docRef.id
   } catch (error) {
+    console.log("errror", error)
     return null
   }
 }
 
 export const delPad = async (id: string) => {
   try {
+    const pad = await getPadById(id)
+    pad && pad.searchId && seDeleteObject(pad.searchId)
     await deleteDoc(doc(db, "pads", id))
   } catch (error) {
     console.log(error)
@@ -294,16 +320,44 @@ export const updatePad = async ({
 export const updatePadMetadata = async ({
   id,
   title,
+  searchId,
   tags,
   folder,
   cover,
 }: IUpdatedPad) => {
+  const user = auth.currentUser
+  if (!user) return
+
   const data: Partial<IUpdatedPad> = {
     updatedAt: Timestamp.now(),
   }
 
   if (title) {
     data.title = title
+  }
+
+  if (title && searchId) {
+    console.log("update search ")
+    seUpdateObject({
+      objectID: searchId,
+      title,
+    })
+      .then(() => console.log("ALGOLIA: update successfully"))
+      .catch((err) => console.log("ALGOLIA: update failed", err))
+  } else {
+    console.log("ALGOLIA: update not started")
+    console.log("title:", title)
+    console.log("searchId", searchId)
+  }
+
+  if (title && !searchId) {
+    const searchId = guidGenerator()
+    data.searchId = searchId
+    seAddNewObject({
+      title,
+      uid: user.uid,
+      objectID: searchId,
+    }).then(() => console.log("ALGOLIA: searchID not exist => update note's title"))
   }
 
   if (tags && tags.length) {
@@ -321,19 +375,10 @@ export const updatePadMetadata = async ({
   updateDoc(doc(db, "pads", id), data)
 }
 
-export const watchPads = (
-  queries: IPadQuery,
-  cb: (err: boolean, data: IPad[]) => void
-): Unsubscribe | null => {
+const createQuery = (queries: IPadQuery, uid: string) => {
   const user = auth.currentUser
-
-  if (!user) {
-    cb(true, [])
-    return null
-  }
-
   const conds: QueryConstraint[] = [
-    where("uid", "==", user.uid),
+    where("uid", "==", uid),
     //    orderBy("updatedAt", "desc"),
   ]
 
@@ -356,31 +401,49 @@ export const watchPads = (
     conds.push(orderBy("createdAt", "desc"))
   }
 
-  // if (queries.tag) {
-  //   conds.push(where('tags', 'array-contains', queries.tag))
-  // }
-
-  // const q = query(
-  //   collection(db, COLLECTION_NAME),
-  //   where("uid", "==", user.uid),
-  //   orderBy("updatedAt", "desc")
-  // );
+  if (queries.startAfter) {
+    conds.push(startAfter(queries.startAfter))
+  }
 
   let q
   if(queries.shared) {
     q = query(collection(db, COLLECTION_NAME), or(
-      where('shared.emails', 'array-contains', user.email),
+      where('shared.emails', 'array-contains', user?.email),
       and(
         where('shared.accessLevel', '==', Rules.Anyone),
-        where('uid', '!=', user.uid),
+        where('uid', '!=', user?.uid),
       ) 
     ));   
   } else {
     q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
   }
 
+  return q
+}
+
+type TReturnedWatchPad = {
+  last: QueryDocumentSnapshot<unknown> | null
+  data: IPad[]
+}
+type IWatchDataCallback = (err: boolean, data: TReturnedWatchPad) => void
+
+export const watchPads = (
+  queries: IPadQuery,
+  cb: IWatchDataCallback
+): Unsubscribe | null => {
+  const user = auth.currentUser
+
+  if (!user) {
+    cb(true, { last: null, data: [] })
+    return null
+  }
+
+  const q = createQuery(queries, user.uid)
+
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = []
+    const last = qSnapshot.docs[qSnapshot.docs.length - 1]
+
     qSnapshot.docs.forEach((doc) => {
       const padData = doc.data() as IPad
       pads.push({
@@ -398,7 +461,11 @@ export const watchPads = (
         shared: padData.shared,
       })
     })
-    cb(false, pads)
+
+    cb(false, {
+      last,
+      data: pads,
+    })
   })
   return unsub
 }
@@ -425,15 +492,14 @@ export const setImportant = async (id: string) => {
   }
 }
 
-export const setShared = async (reqShared: ISharedPad, id: string, editor: Editor) => {
+export const setShared = async (reqShared: ISharedPad, id: string, contentPad: string) => {
   try {
     const selectedIDRef = doc(db, "pads", id)
 
     const pad = await getDoc(doc(db, "pads", id))
     if (!pad.exists()) return 0
-
     await updateDoc(selectedIDRef, {
-      sharedContent: editor.getText(),
+      sharedContent: contentPad,
       shared: reqShared,
     })
   } catch (err) {

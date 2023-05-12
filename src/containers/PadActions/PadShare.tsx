@@ -1,10 +1,11 @@
 import { HiOutlineUserAdd } from 'react-icons/hi'
 import { usePadStore } from '../../store/index';
 
-export const PadShare = () => {
-  const { setIsPadShareModal } = usePadStore()
+export const PadShare = ({ id }: {id: string}) => {
+  const { openPadSharedModal, setIdShared } = usePadStore()
   const openModalPadShare = async () => {
-    setIsPadShareModal(true)
+    openPadSharedModal(true)
+    setIdShared(id)
   }
 
   return (

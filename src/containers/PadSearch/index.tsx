@@ -6,12 +6,14 @@ import { IPad, getPadsByUid } from "../../services/pads"
 import { useNavigate } from "react-router-dom"
 import { usePadStore } from "../../store"
 import useMobileNavigator from "../../components/MobileNavigator/useMobileNavigator"
+import { IPadFromSearch, searchByUser } from "../../libs/search"
 
+let timeout = 0
 export default function PadSearch() {
   const { user } = useAuth()
   const [query, setQuery] = useState("")
   const [open, setOpen] = useState(false)
-  const [pads, setPads] = useState<IPad[]>([])
+  const [pads, setPads] = useState<IPadFromSearch[]>([])
 
   const navigate = useNavigate()
   const { setSecondSidebarVisible } = useMobileNavigator()
@@ -20,12 +22,16 @@ export default function PadSearch() {
     (state) => state.setSearchModalStatus
   )
 
-  const filteredPads =
-    query === ""
-      ? []
-      : pads.filter((pad) => {
-          return pad.title.toLowerCase().includes(query.toLowerCase())
+  useEffect(() => {
+    if (user && user.uid) {
+      timeout && clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        searchByUser(query, user.uid).then((result) => {
+          setPads(result)
         })
+      }, 250) as unknown as number
+    }
+  }, [query, user])
 
   useEffect(() => {
     setOpen(searchModalStatus)
@@ -36,17 +42,6 @@ export default function PadSearch() {
 
     // eslint-disable-next-line
   }, [open])
-
-  useEffect(() => {
-    if (user?.uid) {
-      getPadsByUid(user.uid).then((pads) => {
-        if (!pads) {
-          return
-        }
-        setPads(pads)
-      })
-    }
-  }, [user?.uid])
 
   return (
     <Transition.Root
@@ -82,6 +77,7 @@ export default function PadSearch() {
               <Combobox
                 onChange={(value) => {
                   const pad = value as unknown as IPad
+                  console.log("select", pad)
                   setOpen(false)
                   navigate(`/app/pad/${pad.id}`)
                   setSecondSidebarVisible()
@@ -100,12 +96,12 @@ export default function PadSearch() {
                   />
                 </div>
 
-                {filteredPads.length > 0 && (
+                {pads.length > 0 && (
                   <Combobox.Options
                     static
                     className="bg max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800"
                   >
-                    {filteredPads.map((pad) => (
+                    {pads.map((pad) => (
                       <Combobox.Option key={pad.id} value={pad}>
                         {/* {person.name} */}
                         {({ active, selected }) => (
@@ -125,7 +121,7 @@ export default function PadSearch() {
                   </Combobox.Options>
                 )}
 
-                {query !== "" && filteredPads.length === 0 && (
+                {query !== "" && pads.length === 0 && (
                   <p className="p-4 text-sm text-gray-500">No pad found.</p>
                 )}
               </Combobox>
