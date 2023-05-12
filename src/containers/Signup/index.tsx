@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
 import {
   HiOutlineMail,
   HiOutlineLockClosed,
@@ -6,20 +6,21 @@ import {
   HiOutlineCalendar,
   HiOutlineUser,
   HiOutlineGlobe,
-} from "react-icons/hi";
-import { useFormik } from "formik";
-import { signIn, signUp, verifyEmail } from "../../services/sign";
-import { addUser } from "../../services/users";
-import { toTimestame } from "../../libs/date";
-import { message } from "../../components/message";
-import { useState } from "react";
-import AvatarForm from "../AvatarForm";
-import { isValidPassword } from "../../libs/password";
-import { createFreePlan } from "../../services/plans";
+} from "react-icons/hi"
+import { useFormik } from "formik"
+import { signIn, signUp, verifyEmail } from "../../services/sign"
+import { addUser } from "../../services/users"
+import { toTimestame } from "../../libs/date"
+import { message } from "../../components/message"
+import { useState } from "react"
+import AvatarForm from "../AvatarForm"
+import { isValidPassword } from "../../libs/password"
+import { createFreePlan } from "../../services/plans"
+import { sendNotification } from "../../libs/notify"
 
 function Signup() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -31,28 +32,28 @@ function Signup() {
       dateOfBirth: new Date().toDateString(),
     },
     onSubmit: (user) => {
-      const { email, password, address, dateOfBirth, fullname, photoURL } =
-        user;
+      const { email, password, address, dateOfBirth, fullname, photoURL } = user
 
-      if (loading) return;
+      if (loading) return
 
-      setLoading(true);
+      setLoading(true)
 
       if (!isValidPassword(password)) {
         message.error(`Should be 8-16 characters
 Have uppercase letter
 Have lowercase letter
 Have at least 1 digit
-And not have spaces`);
+And not have spaces`)
 
-        setLoading(false);
-        return;
+        setLoading(false)
+        return
       }
 
       signUp(email, password)
         .then(async (userCredential) => {
-          const { user } = userCredential;
+          const { user } = userCredential
 
+          sendNotification(`🐣 ${email} just signed up !`)
           await addUser({
             uid: user.uid,
             fullname,
@@ -60,50 +61,50 @@ And not have spaces`);
             address,
             photoURL,
             dateOfBirth: toTimestame(dateOfBirth),
-          });
+          })
 
-          const res = await signIn(email, password);
+          const res = await signIn(email, password)
 
-          await createFreePlan();
-          await verifyEmail();
+          await createFreePlan()
+          await verifyEmail()
 
           if (res) {
-            navigate(`/email-verification?email=${email}`);
+            navigate(`/email-verification?email=${email}`)
           }
         })
         .catch((error) => {
-          console.dir(error.code);
+          console.dir(error.code)
 
           switch (error.code) {
             case "auth/invalid-email":
-              message.error("Email already in use");
-              break;
+              message.error("Email already in use")
+              break
 
             case "auth/internal-error":
-              message.error("Internal error");
-              break;
+              message.error("Internal error")
+              break
 
             case "auth/email-already-in-use":
-              message.error("Email already in use");
-              break;
+              message.error("Email already in use")
+              break
 
             default:
-              message.error("Something went wrong");
-              break;
+              message.error("Something went wrong")
+              break
           }
         })
         .finally(() => {
-          setLoading(false);
-        });
+          setLoading(false)
+        })
     },
-  });
+  })
 
   return (
     <div>
       <div className="sign-container flex-col gap-8">
         <AvatarForm
           onSelect={(selected) => {
-            formik.setFieldValue("photoURL", selected);
+            formik.setFieldValue("photoURL", selected)
           }}
         />
         <div className="sign sign-up">
@@ -123,10 +124,7 @@ And not have spaces`);
               </label> */}
               <div className="form-control">
                 <div className="form-icon">
-                  <HiOutlineUser
-                    className="h-5 w-5 "
-                    aria-hidden="true"
-                  />
+                  <HiOutlineUser className="h-5 w-5 " aria-hidden="true" />
                 </div>
                 <input
                   type="text"
@@ -146,10 +144,7 @@ And not have spaces`);
               </label> */}
               <div className="form-control">
                 <div className="form-icon">
-                  <HiOutlineMail
-                    className="h-5 w-5 "
-                    aria-hidden="true"
-                  />
+                  <HiOutlineMail className="h-5 w-5 " aria-hidden="true" />
                 </div>
                 <input
                   type="email"
@@ -190,10 +185,7 @@ And not have spaces`);
               </label> */}
               <div className="form-control">
                 <div className="form-icon">
-                  <HiOutlineCalendar
-                    className="h-5 w-5 "
-                    aria-hidden="true"
-                  />
+                  <HiOutlineCalendar className="h-5 w-5 " aria-hidden="true" />
                 </div>
                 <input
                   type="date"
@@ -201,7 +193,7 @@ And not have spaces`);
                   id="date"
                   placeholder="Date of birth"
                   onChange={(ev) => {
-                    formik.setFieldValue("dateOfBirth", ev.target.value);
+                    formik.setFieldValue("dateOfBirth", ev.target.value)
                   }}
                   value={formik.values.dateOfBirth}
                 />
@@ -214,10 +206,7 @@ And not have spaces`);
               </label> */}
               <div className="form-control">
                 <div className="form-icon">
-                  <HiOutlineGlobe
-                    className="h-5 w-5 "
-                    aria-hidden="true"
-                  />
+                  <HiOutlineGlobe className="h-5 w-5 " aria-hidden="true" />
                 </div>
                 <input
                   type="text"
@@ -241,7 +230,7 @@ And not have spaces`);
 
             <div className="input-group">
               <p className="text-xs">
-                <span className="opacity-80">Already have an account?  </span>
+                <span className="opacity-80">Already have an account? </span>
                 <Link
                   to={"/signin"}
                   className="text-color-primary hover:underline"
@@ -254,7 +243,7 @@ And not have spaces`);
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Signup;
+export default Signup
