@@ -17,6 +17,7 @@ import AvatarForm from "../AvatarForm"
 import { isValidPassword } from "../../libs/password"
 import { createFreePlan } from "../../services/plans"
 import { sendNotification } from "../../libs/notify"
+import { seAddNewEmailObject, seAddNewObject } from "../../libs/search"
 
 function Signup() {
   const navigate = useNavigate()
@@ -61,6 +62,13 @@ And not have spaces`)
             address,
             photoURL,
             dateOfBirth: toTimestame(dateOfBirth),
+          })
+
+          seAddNewEmailObject({
+            uid: user.uid,
+            email,
+            fullname,
+            photoURL,
           })
 
           const res = await signIn(email, password)
