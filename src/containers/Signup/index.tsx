@@ -11,13 +11,14 @@ import { useFormik } from "formik"
 import { signIn, signUp, verifyEmail } from "../../services/sign"
 import { addUser } from "../../services/users"
 import { toTimestame } from "../../libs/date"
+import { guidGenerator } from "../../libs/utils";
 import { message } from "../../components/message"
 import { useState } from "react"
 import AvatarForm from "../AvatarForm"
 import { isValidPassword } from "../../libs/password"
 import { createFreePlan } from "../../services/plans"
 import { sendNotification } from "../../libs/notify"
-import { seAddNewEmailObject, seAddNewObject } from "../../libs/search"
+import { seAddNewEmailObject } from "../../libs/search"
 
 function Signup() {
   const navigate = useNavigate()
@@ -54,9 +55,11 @@ And not have spaces`)
         .then(async (userCredential) => {
           const { user } = userCredential
 
+          const objectID = guidGenerator()
           sendNotification(`🐣 ${email} just signed up !`)
           await addUser({
             uid: user.uid,
+            searchID: objectID,
             fullname,
             email,
             address,
@@ -65,6 +68,7 @@ And not have spaces`)
           })
 
           seAddNewEmailObject({
+            objectID,
             uid: user.uid,
             email,
             fullname,
