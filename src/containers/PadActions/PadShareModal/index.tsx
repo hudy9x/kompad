@@ -2,17 +2,16 @@ import { useState, useEffect } from "react"
 import { usePadStore } from "../../../store/index"
 import Modal from "../../../components/Modal"
 import { PadShareUser } from "./PadShareUser"
-import { PadShareListUser } from "./PadShareListUser"
 import { Provider } from "./context"
-import { IPad, IUserShare, getPadById } from "../../../services/pads"
+import { IPad, IUserShared, getPadById } from "../../../services/pads"
 
 export const PadShareModal = () => {
   const [visible, setVisible] = useState(false)
   const { isOpenPadShareModal, openPadSharedModal } = usePadStore()
-  const [selectedUser, setSelectedUser] = useState<IUserShare | null>(null)
+  const [selectedUser, setSelectedUser] = useState<IUserShared | null>(null)
   const [isOpenUser, setIsOpenUser] = useState<boolean>(true)
   const [isOpenListUser, setIsOpenListUser] = useState<boolean>(false)
-  const [group, setGroup] = useState<IUserShare[]>([])
+  const [sharedUsers, setSharedUsers] = useState<IUserShared[]>([])
   const [padShared, setPadShared] = useState<IPad>()
   const { idShared } = usePadStore() 
 
@@ -22,7 +21,7 @@ export const PadShareModal = () => {
       if (!pad) return
       setPadShared(pad)
       setVisible(isOpenPadShareModal)
-      pad.shared.group ? setGroup([...pad.shared.group]) : setGroup([])
+      pad.shared.sharedUsers ? setSharedUsers([...pad.shared.sharedUsers]) : setSharedUsers([])
     })()
   // eslint-disable-next-line    
   }, [isOpenPadShareModal])
@@ -44,16 +43,16 @@ export const PadShareModal = () => {
             setSelectedUser,
             setIsOpenUser,
             setIsOpenListUser,
-            setGroup,
+            setSharedUsers,
             padShared,
-            group,
+            sharedUsers,
             isOpenUser,
             isOpenListUser,
             selectedUser,
           }}
         >
           <PadShareUser />
-          <PadShareListUser />
+          {/* <PadShareListUser /> */}
         </Provider>
       </Modal>
     </div>

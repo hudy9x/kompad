@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { AiTwotoneLock } from "react-icons/ai"
 import { IoMdArrowDropdown } from "react-icons/io"
 import { IoEarth } from "react-icons/io5"
@@ -10,15 +10,15 @@ import { useCurrentUser } from "../../../hooks/useCurrentUser"
 import {
   IPad,
   ISharedPad,
-  IUserShare,
+  IUserShared,
   setShared,
 } from "../../../services/pads"
 import { getUserWithEmail, IUser } from "../../../services/users"
 import { ButtonShareModal } from "./ButtonShareModal"
-import { rules } from "./PadShareListUser"
+import { rules } from "./PadShareListUsers"
 import { ProviderProps, Rules } from "./types"
 import { useCopyToClipboard } from "../../../hooks/useCopyToClipboard"
-import { createNewUserShare, getCurrentURL, getEdits, isSearchAndAccountSame, isUserAlreadyInGroup } from "./utils"
+import { createNewUserShare, getCurrentURL, getEmailsRuleEdit, isSearchAndAccountSame, isUserAlreadyInGroup } from "./utils"
 import { Context } from "./context"
 import { useAuth } from "../../../hooks/useAuth"
 import { decryptText } from "../../../services/encryption"
@@ -38,7 +38,7 @@ const accessOptions: IOption[] = [
 export const ALL_USERS_CAN_EDIT = 'ALL'
 
 const initialPermissionLevel = (padShared: IPad | undefined) => {
-  return padShared && padShared.shared.edits === ALL_USERS_CAN_EDIT ? Rules.Edit : Rules.View
+  return padShared && padShared.shared.editedUsers === ALL_USERS_CAN_EDIT ? Rules.Edit : Rules.View
 }
 
 const initialAccessLevel = (padShared: IPad) => {
@@ -51,9 +51,9 @@ export const PadShareUser = () => {
     setVisible,
     setIsOpenListUser,
     setIsOpenUser,
-    setGroup,
+    setSharedUsers,
     padShared,
-    group,
+    sharedUsers,
     isOpenUser,
   } = useContext(Context) as ProviderProps
   const [accessLevel, setAccessLevel] = useState<Rules>(initialAccessLevel(padShared!))
@@ -71,12 +71,12 @@ export const PadShareUser = () => {
       return
     }
 
-    if(isUserAlreadyInGroup(user, group)) {
+    if(isUserAlreadyInGroup(user, sharedUsers)) {
       message.error("Sorry,this user is already in the shared list")
       return
     }
 
-    const userShare: IUserShare = createNewUserShare(user)
+    const userShare: IUserShared = createNewUserShare(user)
 
     setIsOpenListUser(true)
     setIsOpenUser(false)
@@ -87,11 +87,11 @@ export const PadShareUser = () => {
   const handleSelectedRule = async (rule: Rules, email: string) => {
     switch (rule) {
       case Rules.Anyone:
-        setGroup([])
+        setSharedUsers([])
         setAccessLevel(rule)
         break
       case Rules.Limit:
-        padShared?.shared.group ? setGroup([...padShared.shared.group]) : setGroup([])
+        padShared?.shared.sharedUsers ? setSharedUsers([...padShared.shared.sharedUsers]) : setSharedUsers([])
         setAccessLevel(rule)
         break
       case Rules.Edit:
@@ -99,12 +99,12 @@ export const PadShareUser = () => {
         if (accessLevel === Rules.Anyone) {
           setPermissionLevel(rule)
         } else {
-          const updateUser = group.map((user) => user.email === email ? {
+          const updateUser = sharedUsers.map((user) => user.email === email ? {
             ...user,
             isEdit: rule === Rules.Edit ? true : false,
           } : user)
           
-          setGroup(updateUser)
+          setSharedUsers(updateUser)
         }
         break;
       default:
@@ -116,10 +116,10 @@ export const PadShareUser = () => {
   const handleClickShare = async () => {
     try {
       const reqShared: ISharedPad = {
-        group: group,
+        sharedUsers: sharedUsers,
         accessLevel: accessLevel,
-        emails: group.map((item) => item.email),
-        edits: accessLevel === Rules.Anyone && permissionLevel === Rules.Edit ? ALL_USERS_CAN_EDIT : getEdits(group),
+        viewedUsers: sharedUsers.map((item) => item.email),
+        editedUsers: accessLevel === Rules.Anyone && permissionLevel === Rules.Edit ? ALL_USERS_CAN_EDIT : getEmailsRuleEdit(sharedUsers),
       }
       const contentPad = padShared && decryptText(padShared.cipherContent)
       if (!contentPad) return;
@@ -231,7 +231,7 @@ export const PadShareUser = () => {
               Owner
             </div>
           </li>}
-          {group.map((user, id) => (
+          {sharedUsers.map((user, id) => (
             <li key={id} className="flex justify-between">
               <div className="flex">
                 <div className="m-auto pr-4">

@@ -45,7 +45,6 @@ import { useAuth } from "../../hooks/useAuth"
 import { ALL_USERS_CAN_EDIT } from "../../containers/PadActions/PadShareModal/PadShareUser"
 import { Rules } from "../../containers/PadActions/PadShareModal/types"
 
-
 interface IPadEditorProp {
   id: string
   content: string
@@ -196,6 +195,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       }, 200)
     }
     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])
 
   useEffect(() => {
@@ -231,9 +231,18 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                   if (!editor) {
                     return
                   }
-                  const disabledEdit = data.shared.edits.length <= 0 || 
-                  (data.shared.edits !== ALL_USERS_CAN_EDIT && data.shared.accessLevel === Rules.Anyone)
-                  if (disabledEdit && data.uid !== user?.uid) {
+
+                  const limitDisabledEdit =
+                    data.shared &&
+                    data.shared.editedUsers.length <= 0 &&
+                    data.shared.accessLevel === Rules.Limit &&
+                    data.uid !== user?.uid
+                  const anyOneDisabledEdit =
+                    data.shared &&
+                    data.shared.editedUsers !== ALL_USERS_CAN_EDIT &&
+                    data.shared.accessLevel === Rules.Anyone &&
+                    data.uid !== user?.uid
+                  if (limitDisabledEdit || anyOneDisabledEdit) {
                     ev.preventDefault()
                   }
                   shortCutAction(ev, pressed, editor)

@@ -55,7 +55,7 @@ interface IUpdatedPad {
   updatedAt?: Timestamp
 }
 
-export interface IUserShare {
+export interface IUserShared {
   fullName: string
   email: string
   photoURL: string
@@ -63,19 +63,17 @@ export interface IUserShare {
 }
 
 export interface ISharedPad {
-  group: IUserShare[],
-  emails: string[],
-  edits: string[] | string,
+  sharedUsers: IUserShared[],
+  viewedUsers: string[],
+  editedUsers: string[] | string,
   accessLevel: Rules,
-  note?: string,
 }
 
 export const defaultShared: ISharedPad = {
-  group: [],
-  emails: [],
-  edits: [],
+  sharedUsers: [],
+  viewedUsers: [],
+  editedUsers: [],
   accessLevel: Rules.Limit,
-  note: "",
 }
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15
