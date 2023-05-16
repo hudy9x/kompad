@@ -56,7 +56,7 @@ interface IUpdatedPad {
 }
 
 export interface IUserShared {
-  fullName: string
+  fullname: string
   email: string
   photoURL: string
   isEdit: boolean
@@ -174,11 +174,16 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
 export const getPadById = async (id: string): Promise<IPad | null> => {
   try {
     const pad = await getDoc(doc(db, COLLECTION_NAME, id))
-    if (pad.exists()) {
-      return pad.data() as IPad
+    if (!pad.exists()) {
+      return null
     }
-
-    return null
+    if (!pad.data().shared) {
+      return {
+        ...pad.data() as IPad,
+        shared: defaultShared
+      }
+    }
+    return pad.data() as IPad
   } catch (error) {
     console.log(error)
     return null

@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react"
-import { IconType } from "react-icons/lib"
+import { IoMdArrowDropdown } from "react-icons/io"
 import { Rules } from "../../containers/PadActions/PadShareModal/types"
 
 export interface IOption {
@@ -11,10 +11,9 @@ interface IListBoxOptions {
   options: IOption[]
   data?: string
   selected?: string
-  customContainer: string
-  customButton: string
-  customOptions: string
-  Icon?: IconType
+  customContainer?: string
+  customButton?: string
+  customOptions?: string
   onSelected: (rule: Rules, data: string) => void
 }
 
@@ -26,23 +25,24 @@ export const ListBoxOptions = ({
   customButton,
   customOptions,
   onSelected,
-  Icon,
 }: IListBoxOptions) => {
   return (
-    <div className={customContainer}>
+    <div className={customContainer ?? "relative"}>
       <Listbox>
-        <Listbox.Button className={customButton}>
-          {selected ? selected : Icon && <Icon />}
+        <Listbox.Button className={customButton ?? "btn btn-sm"}>
+          {selected ? selected : <IoMdArrowDropdown/>}
         </Listbox.Button>
-        <Listbox.Options className={customOptions}>
+        <Listbox.Options
+          className={`${customOptions} dropdown absolute w-36 rounded z-50 cursor-pointer`}
+        >
           {options.map((option, index) => (
             <Listbox.Option
               key={index}
               value={selected}
-              className="option px-2 py-2 text-xs leading-6"
+              className="dropdown-content px-2 py-2 text-xs leading-6"
               onClick={() => onSelected(option.name, data!)}
             >
-              {option.name}
+              <p className="dropdown-text">{option.name}</p>
             </Listbox.Option>
           ))}
         </Listbox.Options>

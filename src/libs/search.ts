@@ -1,4 +1,5 @@
 import algoliasearch, { SearchIndex } from "algoliasearch"
+import { IUserSearch } from "../containers/PadActions/PadShareModal/types"
 
 const client = algoliasearch("VPARLWAPW5", "3b8f99f90ace69032e40466dc58bd049")
 const index = client.initIndex("kompad-notes")
@@ -50,13 +51,14 @@ export const searchByUser = (
   })
 }
 
-export const searchEmail = (term: string) => {
+export const searchEmail = (term: string): Promise<IUserSearch[]> => {
   return new Promise((resolve) => {
     emailIndex.search(term).then(({ hits }) => {
       const results: IUserFromSearch[] = []
 
       hits.forEach((hit) => {
         const dt = hit as unknown as IUserFromSearch
+        console.log(hit)
         results.push({
           uid: dt.uid,
           email: dt.email,

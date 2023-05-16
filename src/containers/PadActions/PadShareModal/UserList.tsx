@@ -1,10 +1,11 @@
 import { useContext } from "react"
 import { ListBoxOptions } from "../../../components/ListBox"
-import { ProviderProps, Rules } from "./types"
+import { ProviderProps, Rules, permissionLevelOption } from "./types"
 import { Context } from "./context"
 import { useCurrentUser } from "../../../hooks/useCurrentUser"
 import { message } from "../../../components/message"
 import { useAuth } from "../../../hooks/useAuth"
+import { AiOutlineUserDelete } from "react-icons/ai"
 
 export const UserList = () => {
   const {
@@ -25,55 +26,68 @@ export const UserList = () => {
     message.success("Access privileges have been modified")
   }
 
-return (
-  <div className="pb-10">
-    <p className="text-lg leading-6 pb-4">People with access rights</p>
-    <ul>
-      {padShared?.uid === user?.uid && <li className="flex justify-between">
-        <div className="flex">
-          <div className="m-auto pr-4">
-            <img
-              className="inline-block h-9 w-9 rounded-full"
-              src={info?.photoURL}
-              alt=""
-            />
-          </div>
-          <div>
-            <p className="text-sm leading-6 font-semibold">{`${info?.fullname} (you)`}</p>
-            <p className="text-sm leading-6">{info?.email}</p>
-          </div>
-        </div>
-        <div className="flex items-center text-sm leading-6 pb-4">
-          Owner
-        </div>
-      </li>}
-      {sharedUsers.map((user, id) => (
-        <li key={id} className="flex justify-between">
+  const handleDeleteUser = (index: number) => {
+    if (!sharedUsers) return
+    const newUsers = sharedUsers.filter((user, i) => i !== index)
+
+    message.success("Delete user successfully")
+    setSharedUsers(newUsers)
+  }
+
+  return (
+    <div className="pb-10">
+      <p className="text-lg leading-6 pb-4">People with access rights</p>
+      <ul>
+        {padShared?.uid === user?.uid && <li className="flex justify-between">
           <div className="flex">
-            <div className="m-auto pr-4">
+            <div className="m-auto pr-3">
               <img
                 className="inline-block h-9 w-9 rounded-full"
-                src={user.photoURL}
+                src={info?.photoURL}
                 alt=""
               />
             </div>
             <div>
-              <p className="text-sm leading-6 font-semibold">{user.fullName}</p>
-              <p className="text-sm leading-6">{user.email}</p>
+              <p className="text-sm leading-6 font-semibold">{`${info?.fullname} (you)`}</p>
+              <p className="text-sm leading-6">{info?.email}</p>
             </div>
           </div>
-          <ListBoxOptions
-            options={rules}
-            selected={user.isEdit ? Rules.Edit : Rules.View}
-            data={user.email}
-            customContainer="relative"
-            customButton="btn btn-sm"
-            customOptions="bg-light absolute right-0 w-36 rounded z-50 cursor-pointer"
-            onSelected={handleSelectedRule}
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
-)
+          <div className="flex items-center text-sm leading-6 pb-4">
+            Owner
+          </div>
+        </li>}
+        {sharedUsers.map((user, id) => (
+          <li key={id} className="flex justify-between">
+            <div className="flex">
+              <div className="m-auto pr-4">
+                <img
+                  className="inline-block h-9 w-9 rounded-full"
+                  src={user.photoURL}
+                  alt=""
+                />
+              </div>
+              <div>
+                <div className="flex items-center">
+                  <p className="text-sm leading-6 font-semibold">{user.fullname}</p>
+                </div>
+                <p className="text-sm leading-6">{user.email}</p>
+              </div>
+            </div>
+            <div className="flex">
+              <button className="btn btn-delete btn-sm mr-1" onClick={() => handleDeleteUser(id)}>
+                <AiOutlineUserDelete/>
+              </button>
+              <ListBoxOptions
+                options={permissionLevelOption}
+                selected={user.isEdit ? Rules.Edit : Rules.View}
+                data={user.email}
+                onSelected={handleSelectedRule}
+                customOptions="container-permissionLevel"
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }

@@ -1,22 +1,20 @@
 import { IUserShared } from "../../../services/pads"
 import { IUser } from "../../../services/users"
-import { Rules } from "./types"
+import { IUserSearch, Rules } from "./types"
 
 export const getCurrentURL = () => {
   return window.location.href
 }
 
-export const isSearchAndAccountSame = (user: IUser, info: IUser) => {
-  return user.email === info?.email
-}
+export const checkUserSearchMatch = (user: IUserSearch, info: IUser | null, sharedUsers: IUserShared[]) => {
+  if(!info) return
 
-export const isUserAlreadyInGroup = (user: IUser, group: IUserShared[]) => {
-  return group.some((item) => item.email === user.email)
+  return sharedUsers.some((item) => item.email === user.email) || info.email === user.email
 }
 
 export const createNewUserShare = (user: IUser): IUserShared => {
   return {
-    fullName: user.fullname,
+    fullname: user.fullname,
     email: user.email,
     photoURL: user.photoURL,
     isEdit: false,

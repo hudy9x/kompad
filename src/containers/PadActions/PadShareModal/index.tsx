@@ -10,7 +10,9 @@ import { UserRuleAssignment } from "./UserRuleAssignment"
 import { UserShareActions } from "./UserShareActions"
 
 const updatePermissionLevel = (padShared: IPad) => {
-  return padShared && padShared.shared.editedUsers === ALL_USERS_CAN_EDIT ? Rules.Edit : Rules.View
+  return padShared && padShared.shared.editedUsers === ALL_USERS_CAN_EDIT
+    ? Rules.Edit
+    : Rules.View
 }
 
 const updateAccessLevel = (padShared: IPad) => {
@@ -25,7 +27,7 @@ export const PadShareModal = () => {
   const [accessLevel, setAccessLevel] = useState<Rules>(Rules.Anyone)
   const [permissionLevel, setPermissionLevel] = useState<Rules>(Rules.View)
   const [sharedUsers, setSharedUsers] = useState<IUserShared[]>([])
-  const { idShared } = usePadStore() 
+  const { idShared } = usePadStore()
 
   useEffect(() => {
     void (async () => {
@@ -36,9 +38,11 @@ export const PadShareModal = () => {
       setPermissionLevel(updatePermissionLevel(pad))
       setAccessLevel(updateAccessLevel(pad))
       setVisible(isOpenPadShareModal)
-      pad.shared.sharedUsers ? setSharedUsers([...pad.shared.sharedUsers]) : setSharedUsers([])
+      pad.shared.sharedUsers
+        ? setSharedUsers([...pad.shared.sharedUsers])
+        : setSharedUsers([])
     })()
-  // eslint-disable-next-line    
+    // eslint-disable-next-line
   }, [isOpenPadShareModal])
 
   useEffect(() => {
@@ -64,11 +68,14 @@ export const PadShareModal = () => {
             sharedUsers,
             isOpenUser,
           }}
-        > 
-          <UserSearch/>
-          <UserList/>
-          <UserRuleAssignment/>
-          <UserShareActions/>
+        >
+          <div className="container-modal-share">
+            <p className="text-lg leading-6 pb-4">{`Share: "${padShared?.title}"`}</p>
+            <UserSearch />
+            <UserList />
+            <UserRuleAssignment />
+            <UserShareActions />
+          </div>
         </Provider>
       </Modal>
     </div>

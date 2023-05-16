@@ -1,27 +1,41 @@
 import { AiTwotoneLock } from "react-icons/ai"
 import { IoEarth } from "react-icons/io5"
-import { IoMdArrowDropdown } from "react-icons/io"
 import { ListBoxOptions } from "../../../components/ListBox"
 import { ProviderProps, Rules, accessLevelOption, permissionLevelOption } from "./types"
 import { useContext } from "react"
 import { Context } from "./context"
 import { message } from "../../../components/message"
+import { getPadById } from "../../../services/pads"
+import { usePadStore } from "../../../store"
 
 export const UserRuleAssignment = () => {
   const {
     permissionLevel,
+    accessLevel,
     setAccessLevel,
     setPermissionLevel,
-    accessLevel,
+    setSharedUsers,
   } = useContext(Context) as ProviderProps
+  const { idShared } = usePadStore()
 
   const handlePermissionLevel = async (rule: Rules, email: string) => {
     setPermissionLevel(rule)
     message.success("Access privileges have been modified")
   }
 
-  const handleAccessLevel = (rule: Rules) => {
-    setAccessLevel(rule)
+  const handleAccessLevel = async (rule: Rules) => {
+    if (rule === Rules.Anyone) {
+      setSharedUsers([])
+      setAccessLevel(rule)
+    } else {
+      const pad = await getPadById(idShared!)
+      if(!pad) return
+      
+      pad.shared.sharedUsers
+        ? setSharedUsers([...pad.shared.sharedUsers])
+        : setSharedUsers([])
+      setAccessLevel(rule)
+    }
     message.success("Access privileges have been modified")
   }
 
@@ -31,7 +45,7 @@ export const UserRuleAssignment = () => {
       <div className="flex justify-between">
         <div className="flex items-center">
           <div
-            className={`w-8 h-8 rounded-full flex justify-center flex-col items-center back ${
+            className={`w-9 h-9 rounded-full flex justify-center flex-col items-center back ${
               accessLevel === Rules.Anyone ? "bg-green-200" : "bg-slate-200"
             }`}
           >
@@ -41,15 +55,13 @@ export const UserRuleAssignment = () => {
               <AiTwotoneLock className="text-slate-950" />
             )}
           </div>
-          <div className="ml-2">
+          <div className="pl-3">
             <div className="flex items-center">
               <p className="text-sm leading-6">{accessLevel}</p>
               <ListBoxOptions
                 options={accessLevelOption}
-                Icon={IoMdArrowDropdown}
-                customContainer="pl-2"
-                customButton="btn-rule rounded-sm"
-                customOptions="bg-light absolute w-36 rounded z-50 cursor-pointer"
+                customContainer="container-accessLevel"
+                customButton="btn-accessLevel"
                 onSelected={handleAccessLevel}
               />
             </div>
@@ -64,10 +76,8 @@ export const UserRuleAssignment = () => {
           <ListBoxOptions
             options={permissionLevelOption}
             selected={permissionLevel}
-            customContainer="relative"
-            customButton="btn btn-sm"
-            customOptions="bg-light absolute right-0 w-36 rounded z-50 cursor-pointer"
             onSelected={handlePermissionLevel}
+            customOptions="container-permissionLevel"
           />
         )}
       </div>

@@ -42,8 +42,7 @@ import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 import { useSettingStore } from "../../store/settings"
 import { UploadingImage } from "../../extensions/UploadingImage"
 import { useAuth } from "../../hooks/useAuth"
-import { ALL_USERS_CAN_EDIT } from "../../containers/PadActions/PadShareModal/PadShareUser"
-import { Rules } from "../../containers/PadActions/PadShareModal/types"
+import { ALL_USERS_CAN_EDIT, Rules } from "../../containers/PadActions/PadShareModal/types"
 
 interface IPadEditorProp {
   id: string

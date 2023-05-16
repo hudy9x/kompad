@@ -25,6 +25,13 @@ export interface ProviderProps {
   isOpenUser: boolean
  }
 
+export interface IUserSearch {
+  uid?: string
+  fullname: string
+  email: string
+  photoURL: string
+}
+
  export const permissionLevelOption: IOption[] = [
   {
     name: Rules.View,
