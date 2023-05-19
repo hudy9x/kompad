@@ -9,6 +9,7 @@ export interface IPadQuery {
   recently?: boolean
   startAfter?: QueryDocumentSnapshot<unknown>
   important?: boolean
+  shared?: boolean
 }
 
 export interface IPadStore {
@@ -20,8 +21,9 @@ export interface IPadStore {
   filterByFolder: (id: string) => void
   filterByRecently: () => void
   updatePadList: (data: IPad[]) => void
-  appendPads: (data: IPad[]) => void
   filterByImportant: () => void
+  appendPads: (data: IPad[]) => void
+  filterByShared: () => void
 }
 
 // configure store
@@ -32,6 +34,7 @@ export const usePadListStore = create<IPadStore>((set) => ({
     folder: "",
     recently: true,
     important: false,
+    shared: false,
   },
 
   clearFilter: () =>
@@ -64,6 +67,7 @@ export const usePadListStore = create<IPadStore>((set) => ({
     set(
       produce<IPadStore>((state) => {
         state.query.important = false
+        state.query.shared = false
         state.query.recently = !state.query.recently
       })
     )
@@ -94,8 +98,19 @@ export const usePadListStore = create<IPadStore>((set) => ({
     set(
       produce<IPadStore>((state) => {
         state.query.recently = false
+        state.query.shared = false
         state.query.important = !state.query.important
       })
     )
   },
-}))
+
+  filterByShared: () => {
+    set(
+      produce<IPadStore>((state) => {
+        state.query.recently = false
+        state.query.important = false
+        state.query.shared = !state.query.shared
+      })
+    )
+  },
+}));

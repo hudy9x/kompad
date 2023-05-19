@@ -1,5 +1,6 @@
 import {
   addDoc,
+  and,
   collection,
   deleteDoc,
   doc,
@@ -7,6 +8,7 @@ import {
   getDocs,
   limit,
   onSnapshot,
+  or,
   orderBy,
   query,
   QueryConstraint,
@@ -22,6 +24,7 @@ import { setCache } from "../libs/localCache"
 import { guidGenerator } from "../libs/utils"
 import { IPadQuery } from "../store/pad"
 import { message } from "../components/message"
+import { Rules } from "../containers/PadActions/PadShareModal/types"
 import { seAddNewObject, seDeleteObject, seUpdateObject } from "../libs/search"
 
 export interface IPad {
@@ -35,9 +38,11 @@ export interface IPad {
   cover?: string
   content: string
   cipherContent: string
+  sharedContent: string
   createdAt: Timestamp
   updatedAt: Timestamp
   important: boolean
+  shared: ISharedPad
 }
 
 interface IUpdatedPad {
@@ -50,6 +55,26 @@ interface IUpdatedPad {
   updatedAt?: Timestamp
 }
 
+export interface IUserShared {
+  fullname: string
+  email: string
+  photoURL: string
+  isEdit: boolean
+}
+
+export interface ISharedPad {
+  sharedUsers: IUserShared[],
+  viewedUsers: string[],
+  editedUsers: string[] | string,
+  accessLevel: Rules,
+}
+
+export const defaultShared: ISharedPad = {
+  sharedUsers: [],
+  viewedUsers: [],
+  editedUsers: [],
+  accessLevel: Rules.Anyone,
+}
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15
 
@@ -94,9 +119,11 @@ export const getPadsByUidQuery = async (
       tags: padData.tags,
       content: padData.content,
       cipherContent: padData.cipherContent,
+      sharedContent: padData.sharedContent,
       createdAt: padData.createdAt,
       updatedAt: padData.updatedAt,
       important: false,
+      shared: defaultShared,
     })
   })
 
@@ -129,9 +156,11 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
         tags: padData.tags,
         content: padData.content,
         cipherContent: padData.cipherContent,
+        sharedContent: padData.sharedContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: false,
+        shared: defaultShared,
       })
     })
 
@@ -145,11 +174,16 @@ export const getPadsByUid = async (uid: string): Promise<IPad[] | null> => {
 export const getPadById = async (id: string): Promise<IPad | null> => {
   try {
     const pad = await getDoc(doc(db, COLLECTION_NAME, id))
-    if (pad.exists()) {
-      return pad.data() as IPad
+    if (!pad.exists()) {
+      return null
     }
-
-    return null
+    if (!pad.data().shared) {
+      return {
+        ...pad.data() as IPad,
+        shared: defaultShared
+      }
+    }
+    return pad.data() as IPad
   } catch (error) {
     console.log(error)
     return null
@@ -186,6 +220,7 @@ export const addPad = async ({ uid, title, shortDesc }: Partial<IPad>) => {
       tags: [],
       content: "Write something 💪🏻",
       cipherContent: "",
+      shared: defaultShared,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     })
@@ -344,6 +379,7 @@ export const updatePadMetadata = async ({
 }
 
 const createQuery = (queries: IPadQuery, uid: string) => {
+  const user = auth.currentUser
   const conds: QueryConstraint[] = [
     where("uid", "==", uid),
     //    orderBy("updatedAt", "desc"),
@@ -372,7 +408,18 @@ const createQuery = (queries: IPadQuery, uid: string) => {
     conds.push(startAfter(queries.startAfter))
   }
 
-  const q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+  let q
+  if(queries.shared) {
+    q = query(collection(db, COLLECTION_NAME), or(
+      where('shared.viewedUsers', 'array-contains', user?.email),
+      and(
+        where('shared.accessLevel', '==', Rules.Anyone),
+        where('uid', '!=', user?.uid),
+      ) 
+    ));   
+  } else {
+    q = query.apply(query, [collection(db, COLLECTION_NAME), ...conds])
+  }
 
   return q
 }
@@ -398,8 +445,8 @@ export const watchPads = (
 
   const unsub = onSnapshot(q, (qSnapshot) => {
     const pads: IPad[] = []
-
     const last = qSnapshot.docs[qSnapshot.docs.length - 1]
+
     qSnapshot.docs.forEach((doc) => {
       const padData = doc.data() as IPad
       pads.push({
@@ -408,11 +455,13 @@ export const watchPads = (
         title: padData.title,
         tags: padData.tags,
         folder: padData.folder,
+        sharedContent: padData.sharedContent,
         content: padData.content,
         cipherContent: padData.cipherContent,
         createdAt: padData.createdAt,
         updatedAt: padData.updatedAt,
         important: padData.important,
+        shared: padData.shared,
       })
     })
 
@@ -421,7 +470,6 @@ export const watchPads = (
       data: pads,
     })
   })
-
   return unsub
 }
 
@@ -440,6 +488,22 @@ export const setImportant = async (id: string) => {
     }
     await updateDoc(selectedIDRef, {
       important: !padData.important,
+    })
+  } catch (err) {
+    console.log(err)
+    return 0
+  }
+}
+
+export const setShared = async (reqShared: ISharedPad, id: string, contentPad: string) => {
+  try {
+    const selectedIDRef = doc(db, "pads", id)
+
+    const pad = await getDoc(doc(db, "pads", id))
+    if (!pad.exists()) return 0
+    await updateDoc(selectedIDRef, {
+      sharedContent: contentPad,
+      shared: reqShared,
     })
   } catch (err) {
     console.log(err)

@@ -42,7 +42,7 @@ const markKeyPress = (
   pressed: KeyBoardProps,
   ev: React.KeyboardEvent<HTMLDivElement> | KeyboardEvent
 ) => {
-  const key = ev.key.toLowerCase()
+  const key = ev.key?.toLowerCase()
 
   console.log("key pressed", key)
 

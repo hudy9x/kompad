@@ -88,4 +88,5 @@ export const getUser = async (uid: string): Promise<IUser | null> => {
   } else {
     return null
   }
-}
+};
+

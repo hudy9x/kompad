@@ -24,6 +24,7 @@ function PadList() {
   const [end, setEnd] = useState("NONE")
   const isFetching = useRef(false)
   const needToLoadMoreData = useRef(false)
+  const enabledIfNotShared = !query.shared
 
   const loadMore = () => {
     if (!needToLoadMoreData.current) {
@@ -97,7 +98,7 @@ function PadList() {
         <div className="pad-list">
           {pads.map((pad) => {
             return (
-              <ContextMenu key={pad.id}>
+              <ContextMenu key={pad.id} enabled={enabledIfNotShared}>
                 <PadItem active={id === pad.id} pad={pad} />
               </ContextMenu>
             )
