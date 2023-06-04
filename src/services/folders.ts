@@ -13,11 +13,14 @@ import {
 import { auth, db } from "../libs/firebase"
 import { updateQueryCounterForFolders } from "./query-cache"
 
+
+
 export interface IFolder {
   id?: string
   title: string
   color: string
   parentId: string
+  child: IFolder
   uid: string
 }
 
@@ -64,6 +67,7 @@ export const getFolders = async (): Promise<IFolder[]> => {
       title: data.title,
       color: data.color,
       parentId: data.parentId,
+      child: data.child,
       uid: data.uid,
     })
   })
@@ -94,6 +98,7 @@ export const watchFolders = (
         title: data.title,
         color: data.color,
         parentId: data.parentId,
+        child: data.child,
         uid: data.uid,
       })
     })

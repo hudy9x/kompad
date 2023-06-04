@@ -3,14 +3,14 @@ import ColorSelection from "../../components/ColorSelection";
 import { editFolder } from "../../services/folders";
 
 interface IFolderEditProps {
-  setVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  visible?: boolean;
+  setVisible?: React.Dispatch<React.SetStateAction<boolean | null>>;
+  visible?: boolean | null;
   id: string;
   title: string;
   color: string;
 }
 
-function FolderEdit({
+function FolderEditOrAdd({
   visible = false,
   setVisible,
   id,
@@ -19,6 +19,7 @@ function FolderEdit({
 }: IFolderEditProps) {
   const [text, setText] = useState(title);
   const [newColor, setNewColor] = useState(color);
+
   const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const target = ev.target;
     setText(target.value);
@@ -32,23 +33,22 @@ function FolderEdit({
     if (!id) return;
 
     editFolder({ id, title: text, color: newColor }).finally(() => {
-      setVisible && setVisible(false);
+      setVisible && setVisible(null);
     });
   };
 
   const onClose = () => {
-    setVisible && setVisible(false);
+    setVisible && setVisible(null);
   };
 
   return (
     <div
-      className={`${visible ? "" : "hidden"
-        } form-edit`}
+      className={"form-edit"}
     >
       <input
         className=""
         type="text"
-        value={text}
+        value={visible ? text : ''}
         onChange={onChange}
       />
 
@@ -77,4 +77,4 @@ function FolderEdit({
   );
 }
 
-export default FolderEdit;
+export default FolderEditOrAdd;

@@ -3,15 +3,16 @@ import { FaRegFolder } from "react-icons/fa";
 import { delFolder, IFolder } from "../../services/folders";
 import { usePadListStore } from "../../store/pad";
 import { FiEdit3 } from "react-icons/fi";
-import FolderEdit from "./FolderEdit";
+import FolderEditOrAdd from "./FolderEditOrAdd";
 import { useState } from "react";
+import { AiOutlineFolderAdd } from "react-icons/ai";
 
 interface IFolderItemProps {
   folder: IFolder;
 }
 
 function FolderItem({ folder }: IFolderItemProps) {
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState<boolean | null>(null);
   const { filterByFolder, query } = usePadListStore();
 
   const isActive = folder.id === query.folder ? "font-bold" : "";
@@ -35,6 +36,10 @@ function FolderItem({ folder }: IFolderItemProps) {
           <span className={`${isActive} whitespace-nowrap w-32 text-ellipsis overflow-hidden`}>{folder.title}</span>
         </div>
         <div className="absolute top-1.5 right-0 group-hover:flex hidden gap-1 px-1 mr-5">
+          <AiOutlineFolderAdd
+            onClick={() => setEditMode(false)}
+            className="w-3 text-color-base"
+          />
           <FiEdit3
             onClick={() => setEditMode(true)}
             className="w-3 text-color-base"
@@ -45,15 +50,17 @@ function FolderItem({ folder }: IFolderItemProps) {
           />
         </div>
       </div>
-      <FolderEdit
-        setVisible={setEditMode}
-        visible={editMode}
-        id={folder.id || ""}
-        title={folder.title}
-        color={folder.color}
-      />
+      {editMode !== null && (
+        <FolderEditOrAdd
+          setVisible={setEditMode}
+          visible={editMode}
+          id={folder.id || ""}
+          title={folder.title}
+          color={folder.color}
+        />
+      )}
     </>
-  );
+  )
 }
 
-export default FolderItem;
+export default FolderItem
