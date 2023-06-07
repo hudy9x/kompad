@@ -34,6 +34,9 @@ export const PadShareModal = () => {
       const pad = await getPadById(idShared!)
       if (!pad) return
 
+
+			console.log('update access lelve',updateAccessLevel(pad))
+
       setPadShared(pad)
       setPermissionLevel(updatePermissionLevel(pad))
       setAccessLevel(updateAccessLevel(pad))
@@ -51,6 +54,9 @@ export const PadShareModal = () => {
     }
     openPadSharedModal(visible)
   }, [visible, openPadSharedModal])
+
+
+	console.log('accessLevel', accessLevel)
 
   return (
     <div>

@@ -7,6 +7,7 @@ import { IUserShared } from "../../../services/pads"
 import { checkUserSearchMatch } from "./utils"
 import { useCurrentUser } from "../../../hooks/useCurrentUser"
 import { message } from "../../../components/message"
+import ScrollBar from "../../../components/ScrollBar"
 
 export const UserSearch = () => {
 	const { setSharedUsers, sharedUsers, accessLevel, visible } = useContext(Context) as ProviderProps
@@ -67,43 +68,48 @@ export const UserSearch = () => {
 						className=""
 					/>
 					{isSearch && (
-						<ul className="dropdown absolute top-11 w-full max-h-52">
-							{usersSearch.map((user) => {
-								const noPhoto = !user.photoURL
-								let shortName = user.fullname.split(/\s+/)
+						<div className="dropdown absolute top-11 w-full">
+							<ScrollBar height="200px">
+								<ul className="w-full">
+									{usersSearch.map((user) => {
+										const noPhoto = !user.photoURL
+										let shortName = user.fullname.split(/\s+/)
 
-								shortName = shortName
-									.slice(shortName.length - 2, shortName.length)
-									.filter(Boolean)
-									.map(n => n[0].toUpperCase())
+										shortName = shortName
+											.slice(shortName.length - 2, shortName.length)
+											.filter(Boolean)
+											.map(n => n[0].toUpperCase())
 
-								return (
-									<li
-										className="dropdown-content px-0 py-0"
-										onClick={() => handleClick(user)}
-									>
-										<div className="flex ml-4">
-											<div className="m-auto pr-4">
-												{noPhoto ? <div
-													className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-50 bg-indigo-400">
-													{shortName.join('')}</div>
-													: <img
-														className="inline-block h-9 w-9 rounded-full"
-														src={user.photoURL}
-														alt=""
-													/>}
-											</div>
-											<div className="py-1">
-												<p className="text-sm leading-6 font-semibold dropdown-text">{`${user.fullname}`}</p>
-												<p className="text-sm leading-6 dropdown-text">
-													{user.email}
-												</p>
-											</div>
-										</div>
-									</li>
-								)
-							})}
-						</ul>
+										return (
+											<li
+												className="dropdown-content px-0 py-0"
+												onClick={() => handleClick(user)}
+											>
+												<div className="flex ml-4">
+													<div className="m-auto pr-4">
+														{noPhoto ? <div
+															className="inline-flex items-center justify-center h-9 w-9 rounded-full text-gray-50 bg-indigo-400">
+															{shortName.join('')}</div>
+															: <img
+																className="inline-block h-9 w-9 rounded-full"
+																src={user.photoURL}
+																alt=""
+															/>}
+													</div>
+													<div className="py-1">
+														<p className="text-sm leading-6 font-semibold dropdown-text">{`${user.fullname}`}</p>
+														<p className="text-sm leading-6 dropdown-text">
+															{user.email}
+														</p>
+													</div>
+												</div>
+											</li>
+										)
+									})}
+								</ul>
+							</ScrollBar>
+						</div>
+
 					)}
 				</div>
 			</OutsideClickHandler>

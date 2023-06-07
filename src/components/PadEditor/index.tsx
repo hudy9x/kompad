@@ -189,7 +189,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
       editor.commands.clearContent()
       editor.commands.setContent(content)
       setTimeout(() => {
-        editor.commands.focus()
+        // editor.commands.focus('start')
         setOutlines()
       }, 200)
     }

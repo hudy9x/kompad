@@ -73,7 +73,7 @@ export const defaultShared: ISharedPad = {
   sharedUsers: [],
   viewedUsers: [],
   editedUsers: [],
-  accessLevel: Rules.Anyone,
+  accessLevel: Rules.Limit,
 }
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15
