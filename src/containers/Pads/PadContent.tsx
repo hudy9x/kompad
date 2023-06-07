@@ -8,10 +8,14 @@ import {
 } from "../../libs/localCache"
 import { decryptText } from "../../services/encryption"
 import { getPadById, IPad, saveCurrentPad } from "../../services/pads"
+import { usePadStore } from "../../store"
+import { usePadListStore } from "../../store/pad"
 
 function PadContent() {
   // rendering pad's content at first
+  const { setIdShared } = usePadStore((state) => state)
   const cachedPad = getCacheJSON(CURRENT_PAD_CONTENT) as IPad
+  const { query } = usePadListStore()
   const { id } = useParams()
   const [pad, setPad] = useState<IPad>(cachedPad)
 
@@ -21,8 +25,7 @@ function PadContent() {
 
       getPadById(id).then((res) => {
         if (!res) return
-
-        const data = {
+        const data: IPad = {
           content: res.content,
           cipherContent: res.cipherContent,
           createdAt: res.createdAt,
@@ -34,6 +37,8 @@ function PadContent() {
           searchId: res.searchId || "",
           cover: res.cover || "",
           id: id,
+          sharedContent: res.sharedContent,
+          shared: res.shared,
           shortDesc: res.shortDesc,
           important: res.important,
         }
@@ -49,7 +54,7 @@ function PadContent() {
         }
 
         setCacheJSON(CURRENT_PAD_CONTENT, data)
-
+        setIdShared("")
         setPad((prevPad) => ({
           ...prevPad,
           ...data,
@@ -60,10 +65,12 @@ function PadContent() {
   }, [id])
 
   const getContent = (pad: IPad) => {
-    if (pad.cipherContent) {
+    const enabledIfShared = query.shared;
+    if(enabledIfShared && pad.sharedContent) {
+      return pad.sharedContent
+    } else {
       return decryptText(pad.cipherContent)
     }
-    return pad.content
   }
 
   return (

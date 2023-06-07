@@ -41,6 +41,8 @@ import { getCache, LOCKING_SCREEN_STATUS } from "../../libs/localCache"
 import { CustomCodeBlock } from "../../extensions/CustomCodeBlock"
 import { useSettingStore } from "../../store/settings"
 import { UploadingImage } from "../../extensions/UploadingImage"
+import { useAuth } from "../../hooks/useAuth"
+import { ALL_USERS_CAN_EDIT, Rules } from "../../containers/PadActions/PadShareModal/types"
 
 interface IPadEditorProp {
   id: string
@@ -146,6 +148,7 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
   const isLockingScreen = getCache(LOCKING_SCREEN_STATUS) || ""
   const [update, setUpdate] = useState(0)
   const { setOutlines } = useOutlineStore()
+  const { user } = useAuth();
   const editor = useEditor({
     extensions: extensions,
     content: content,
@@ -190,7 +193,8 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
         setOutlines()
       }, 200)
     }
-    // eslint-disable-next-line
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])
 
   useEffect(() => {
@@ -225,6 +229,20 @@ export default function PadEditor({ id, content, data }: IPadEditorProp) {
                 onKeyDown={(ev: React.KeyboardEvent<HTMLDivElement>) => {
                   if (!editor) {
                     return
+                  }
+
+                  const limitDisabledEdit =
+                    data.shared &&
+                    data.shared.editedUsers.length <= 0 &&
+                    data.shared.accessLevel === Rules.Limit &&
+                    data.uid !== user?.uid
+                  const anyOneDisabledEdit =
+                    data.shared &&
+                    data.shared.editedUsers !== ALL_USERS_CAN_EDIT &&
+                    data.shared.accessLevel === Rules.Anyone &&
+                    data.uid !== user?.uid
+                  if (limitDisabledEdit || anyOneDisabledEdit) {
+                    ev.preventDefault()
                   }
                   shortCutAction(ev, pressed, editor)
                 }}

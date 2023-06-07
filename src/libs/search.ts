@@ -1,4 +1,5 @@
 import algoliasearch, { SearchIndex } from "algoliasearch"
+import { IUserSearch } from "../containers/PadActions/PadShareModal/types"
 
 const client = algoliasearch("VPARLWAPW5", "3b8f99f90ace69032e40466dc58bd049")
 const index = client.initIndex("kompad-notes")
@@ -50,7 +51,7 @@ export const searchByUser = (
   })
 }
 
-export const searchEmail = (term: string) => {
+export const searchEmail = (term: string): Promise<IUserSearch[]> => {
   return new Promise((resolve) => {
     emailIndex.search(term).then(({ hits }) => {
       const results: IUserFromSearch[] = []
@@ -92,7 +93,7 @@ export const seAddNewEmailObject = (data: any) => {
 
 export const seAddNewObject = (data: any, indexName?: TSearchIndexName) => {
   const searchIndex = getSearchIndex(indexName)
-  https://www.algolia.com/doc/api-reference/api-methods/save-objects/
+  //https://www.algolia.com/doc/api-reference/api-methods/save-objects/
   return searchIndex.saveObject(data, {
     autoGenerateObjectIDIfNotExist: true,
   })

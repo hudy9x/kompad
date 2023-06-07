@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, createContext, useContext } from "react";
 interface IContextMenu {
   children: JSX.Element | JSX.Element[],
   condition?: (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => boolean
+  enabled?: boolean 
 }
 
 interface IMenuStore {
@@ -19,15 +20,16 @@ const MenuContext = createContext<IMenuStore>({
   setVisible: (bool) => { console.log(bool) }
 })
 
-export default function ContextMenu({ children, condition }: IContextMenu) {
+export default function ContextMenu({ children, condition, enabled }: IContextMenu) {
   const [visible, setVisible] = useState(false)
   const [position, setPosition] = useState({ top: 0, left: 0 })
   const { top, left } = position;
 
   const onContextMenu = (ev: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if(!enabled) return
     const { clientX, clientY } = ev
-    try {
 
+    try {
       if (condition && !condition(ev)) {
         return;
       }
@@ -43,7 +45,7 @@ export default function ContextMenu({ children, condition }: IContextMenu) {
       setVisible(false);
     }
   };
-
+  
   return <MenuContext.Provider value={{ top, left, visible, setVisible }}>
     <div className="ctx-menu" onContextMenu={onContextMenu}>
       {children}

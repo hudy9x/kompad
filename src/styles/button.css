@@ -58,3 +58,11 @@
   color: var(--common-text-color);
 }
 
+.btn-rule:hover {
+  background-color: var(--common-btn-bg-hover-color);
+}
+
+.btn-delete {
+  width: 45px;
+  height: 27px;
+}

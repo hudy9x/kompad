@@ -1,0 +1,27 @@
+.option:hover{
+ background-color: var(--common-btn-bg-hover-color);
+ border-radius: 0.25rem;
+}
+
+.width-modal-share {
+ width: 30rem;
+}
+
+.container-accessLevel {
+  @apply pl-2
+}
+
+.container-permissionLevel {
+  @apply right-0
+}
+
+.container-modal-share {
+  width: 450px;
+}
+
+.btn-accessLevel {
+  @apply rounded-sm flex items-center justify-center;
+  width: 29px;
+  height: 30px;
+}
+

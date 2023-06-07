@@ -6,6 +6,7 @@ import { isDesktopApp } from "../../libs/utils"
 import ThemeSelection from "../../containers/Theme/ThemeSelection"
 import AppMiddleware from "../../providers/AppMiddleware"
 import CommandPalletes from "../../containers/CommandPalletes"
+import { PadShareModal } from "../../containers/PadActions/PadShareModal"
 
 export default function Layout() {
   return (
@@ -18,6 +19,7 @@ export default function Layout() {
         </main>
         <Shortcut />
         <ThemeSelection />
+        <PadShareModal />
         {isDesktopApp() ? <Autoupdate /> : null}
       </>
     </AppMiddleware>
