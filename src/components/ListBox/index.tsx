@@ -30,7 +30,7 @@ export const ListBoxOptions = ({
     <div className={customContainer ?? "relative"}>
       <Listbox>
         <Listbox.Button className={customButton ?? "btn btn-sm"}>
-          {selected ? selected : <IoMdArrowDropdown/>}
+          {selected ? selected : null}<IoMdArrowDropdown/>
         </Listbox.Button>
         <Listbox.Options
           className={`${customOptions} dropdown absolute w-36 rounded z-50 cursor-pointer mt-1`}

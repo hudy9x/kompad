@@ -93,7 +93,7 @@ export const seAddNewEmailObject = (data: any) => {
 
 export const seAddNewObject = (data: any, indexName?: TSearchIndexName) => {
   const searchIndex = getSearchIndex(indexName)
-  https://www.algolia.com/doc/api-reference/api-methods/save-objects/
+  //https://www.algolia.com/doc/api-reference/api-methods/save-objects/
   return searchIndex.saveObject(data, {
     autoGenerateObjectIDIfNotExist: true,
   })

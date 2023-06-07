@@ -41,7 +41,7 @@ export const UserRuleAssignment = () => {
 
   return (
     <div className="pb-10">
-      <p className="text-lg leading-6 pb-4">General Access</p>
+      <p className="leading-6 pb-3">General Access</p>
       <div className="flex justify-between">
         <div className="flex items-center">
           <div

@@ -52,7 +52,7 @@ export const UserShareActions = () => {
     <div className="flex justify-between">
       <button type="button" className="btn btn-lg" onClick={handleClickCopy}>
         <BsLink />
-        <p className="pl-5">Copy link</p>
+        <p className="pl-3">Copy link</p>
       </button>
       <button
         type="button"

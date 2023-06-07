@@ -24,7 +24,7 @@ export const PadShareModal = () => {
   const { isOpenPadShareModal, openPadSharedModal } = usePadStore()
   const [isOpenUser, setIsOpenUser] = useState<boolean>(true)
   const [padShared, setPadShared] = useState<IPad>()
-  const [accessLevel, setAccessLevel] = useState<Rules>(Rules.Anyone)
+  const [accessLevel, setAccessLevel] = useState<Rules>(Rules.Limit)
   const [permissionLevel, setPermissionLevel] = useState<Rules>(Rules.View)
   const [sharedUsers, setSharedUsers] = useState<IUserShared[]>([])
   const { idShared } = usePadStore()
