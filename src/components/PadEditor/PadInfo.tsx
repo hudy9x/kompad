@@ -2,7 +2,9 @@ import dayjs from "dayjs"
 import { Unsubscribe } from "firebase/firestore"
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useAuth } from "../../hooks/useAuth"
 import { IPad, updatePadMetadata, watchPadById } from "../../services/pads"
+import { getUser } from "../../services/users"
 import { MobileDocListNavButton } from "../MobileNavigator"
 import PadCoverImage from "./PadCoverImage"
 import PadFolder from "./PadFolder"
@@ -19,7 +21,8 @@ export const EMPTY_TITLE = "Untitled"
 function PadInfoContent({ info }: IPadInfoContentProps) {
   const inpRef = useRef<HTMLInputElement>(null)
   const { id } = useParams()
-
+  const { user } = useAuth()
+  const [ sharer, setSharer ] = useState<string>('')
   const updateTitle = () => {
     if (timeout) {
       clearTimeout(timeout)
@@ -37,9 +40,20 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
   }
 
   useEffect(() => {
-    if (inpRef.current && info) {
-      inpRef.current.value = info.title === EMPTY_TITLE ? "" : info.title
-    }
+    void(async () => {
+      if (inpRef.current && info) {
+        inpRef.current.value = info.title === EMPTY_TITLE ? "" : info.title
+      }
+  
+      if (info.uid !== user?.uid && Boolean(info.shared.accessLevel)) {
+        const sharer = await getUser(info.uid)
+        if(!sharer) return
+
+        setSharer(sharer.email)
+        return
+      }
+      setSharer('')
+    })()
   }, [info])
 
   const created = dayjs(info.createdAt.toDate()).format("YYYY/MM/DD")
@@ -73,6 +87,12 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
               />
             </div>
           </div>
+          {sharer && (
+            <div className="flex items-center text-sm">
+              <span className="text-gray-400 pr-3">Sharer:</span>
+              <span className="text-gray-500">{sharer}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
