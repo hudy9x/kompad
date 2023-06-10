@@ -16,14 +16,15 @@ export interface ProviderProps {
   setIsOpenUser: Dispatch<SetStateAction<boolean>>
   setSharedUsers: Dispatch<SetStateAction<IUserShared[]>>
   setVisible: Dispatch<SetStateAction<boolean>>
-  setAccessLevel: Dispatch<SetStateAction<Rules>>
+  setAccessLevel: Dispatch<SetStateAction<Rules | string>>
   setPermissionLevel: Dispatch<SetStateAction<Rules>>
   permissionLevel: Rules
-  accessLevel: Rules
+  accessLevel: Rules | string
   padShared: IPad | undefined
   sharedUsers: IUserShared[]
   isOpenUser: boolean
   visible: boolean
+  hasBeenShared: boolean
  }
 
 export interface IUserSearch {

@@ -23,8 +23,9 @@ export const PadShareModal = () => {
   const [visible, setVisible] = useState(false)
   const { isOpenPadShareModal, openPadSharedModal } = usePadStore()
   const [isOpenUser, setIsOpenUser] = useState<boolean>(true)
+  const [hasBeenShared, setHasBeenShared] = useState<boolean>(false)
   const [padShared, setPadShared] = useState<IPad>()
-  const [accessLevel, setAccessLevel] = useState<Rules>(Rules.Limit)
+  const [accessLevel, setAccessLevel] = useState<Rules | string>(Rules.Limit)
   const [permissionLevel, setPermissionLevel] = useState<Rules>(Rules.View)
   const [sharedUsers, setSharedUsers] = useState<IUserShared[]>([])
   const { idShared } = usePadStore()
@@ -33,10 +34,11 @@ export const PadShareModal = () => {
     void (async () => {
       const pad = await getPadById(idShared!)
       if (!pad) return
-
+      
+      setHasBeenShared(Boolean(pad.shared.accessLevel))
       setPadShared(pad)
       setPermissionLevel(updatePermissionLevel(pad))
-      setAccessLevel(updateAccessLevel(pad))
+      setAccessLevel(updateAccessLevel(pad) || Rules.Limit)
       setVisible(isOpenPadShareModal)
       pad.shared.sharedUsers
         ? setSharedUsers([...pad.shared.sharedUsers])
@@ -68,6 +70,7 @@ export const PadShareModal = () => {
             sharedUsers,
             isOpenUser,
             visible,
+            hasBeenShared,
           }}
         >
           <div className="container-modal-share">
