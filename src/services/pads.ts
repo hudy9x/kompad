@@ -66,14 +66,14 @@ export interface ISharedPad {
   sharedUsers: IUserShared[],
   viewedUsers: string[],
   editedUsers: string[] | string,
-  accessLevel: Rules | string,
+  accessLevel: Rules,
 }
 
 export const defaultShared: ISharedPad = {
   sharedUsers: [],
   viewedUsers: [],
   editedUsers: [],
-  accessLevel: '',
+  accessLevel: Rules.None,
 }
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15

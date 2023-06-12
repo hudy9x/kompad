@@ -9,6 +9,7 @@ import { MobileDocListNavButton } from "../MobileNavigator"
 import PadCoverImage from "./PadCoverImage"
 import PadFolder from "./PadFolder"
 import PadTag from "./PadTag"
+import { Rules } from "../../containers/PadActions/PadShareModal/types"
 
 let timeout: number
 
@@ -22,7 +23,7 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
   const inpRef = useRef<HTMLInputElement>(null)
   const { id } = useParams()
   const { user } = useAuth()
-  const [ sharer, setSharer ] = useState<string>('')
+  const [ sharedBy, setSharedBy ] = useState<string>('')
   const updateTitle = () => {
     if (timeout) {
       clearTimeout(timeout)
@@ -45,16 +46,16 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
         inpRef.current.value = info.title === EMPTY_TITLE ? "" : info.title
       }
   
-      if (info.uid !== user?.uid && Boolean(info.shared.accessLevel)) {
-        const sharer = await getUser(info.uid)
-        if(!sharer) return
+      if (info.uid !== user?.uid && info.shared.accessLevel !== Rules.None) {
+        const sharedBy = await getUser(info.uid)
+        if(!sharedBy) return
 
-        setSharer(sharer.email)
+        setSharedBy(sharedBy.email)
         return
       }
-      setSharer('')
+      setSharedBy('')
     })()
-  }, [info])
+  }, [info, user])
 
   const created = dayjs(info.createdAt.toDate()).format("YYYY/MM/DD")
 
@@ -87,10 +88,10 @@ function PadInfoContent({ info }: IPadInfoContentProps) {
               />
             </div>
           </div>
-          {sharer && (
+          {sharedBy && (
             <div className="flex items-center text-sm">
-              <span className="text-gray-400 pr-3">Sharer:</span>
-              <span className="text-gray-500">{sharer}</span>
+              <span className="text-gray-400 pr-3">Shared by:</span>
+              <span className="text-gray-500">{sharedBy}</span>
             </div>
           )}
         </div>
