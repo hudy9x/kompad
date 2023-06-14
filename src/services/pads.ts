@@ -73,7 +73,7 @@ export const defaultShared: ISharedPad = {
   sharedUsers: [],
   viewedUsers: [],
   editedUsers: [],
-  accessLevel: Rules.Anyone,
+  accessLevel: Rules.None,
 }
 const COLLECTION_NAME = "pads"
 const RECENT_LIMIT = 15
@@ -495,14 +495,14 @@ export const setImportant = async (id: string) => {
   }
 }
 
-export const setShared = async (reqShared: ISharedPad, id: string, contentPad: string) => {
+export const setShared = async (reqShared: ISharedPad, id: string, contentPad?: string) => {
   try {
     const selectedIDRef = doc(db, "pads", id)
 
     const pad = await getDoc(doc(db, "pads", id))
     if (!pad.exists()) return 0
     await updateDoc(selectedIDRef, {
-      sharedContent: contentPad,
+      sharedContent: contentPad || '',
       shared: reqShared,
     })
   } catch (err) {

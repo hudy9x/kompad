@@ -24,6 +24,7 @@ export interface ProviderProps {
   sharedUsers: IUserShared[]
   isOpenUser: boolean
   visible: boolean
+  hasBeenShared: boolean
  }
 
 export interface IUserSearch {
