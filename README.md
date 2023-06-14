@@ -1,5 +1,5 @@
 ## Kompad
 
-release 0.32.0
+release 0.31.6
 
 upgrade tauri 123
