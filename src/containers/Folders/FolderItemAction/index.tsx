@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import ColorSelection from "../../components/ColorSelection";
-import { editFolder } from "../../services/folders";
+import { editFolder } from "../../../services/folders";
+import ColorSelection from "../../../components/ColorSelection";
+import { EFolderMode } from "../FolderItem";
+
 
 interface IFolderEditProps {
-  setVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  visible?: boolean;
+  setMode?: React.Dispatch<React.SetStateAction<EFolderMode>>;
+  mode?: EFolderMode;
   id: string;
   title: string;
   color: string;
 }
 
-function FolderEdit({
-  visible = false,
-  setVisible,
+function FolderItemAction({
+  mode = EFolderMode.CLOSE,
+  setMode,
   id,
   title,
   color,
@@ -28,27 +30,30 @@ function FolderEdit({
     setNewColor(color);
   };
 
-  const onEdit = () => {
+  const onAction = () => {
     if (!id) return;
-
-    editFolder({ id, title: text, color: newColor }).finally(() => {
-      setVisible && setVisible(false);
-    });
+    
+    if (mode === EFolderMode.EDIT) {
+     editFolder({ id, title: text, color: newColor })
+    } else {
+     
+    }
+    setMode && setMode(mode)
   };
 
   const onClose = () => {
-    setVisible && setVisible(false);
+    setMode && setMode(EFolderMode.CLOSE);
   };
 
   return (
     <div
-      className={`${visible ? "" : "hidden"
+      className={`${mode === EFolderMode.CLOSE ? "hidden" : ""
         } form-edit`}
     >
       <input
         className=""
         type="text"
-        value={text}
+        value={mode === EFolderMode.EDIT ? text : ''}
         onChange={onChange}
       />
 
@@ -66,7 +71,7 @@ function FolderEdit({
           Cancel
         </button>
         <button
-          onClick={onEdit}
+          onClick={onAction}
           type="button"
           className="btn btn-xs"
         >
@@ -77,4 +82,4 @@ function FolderEdit({
   );
 }
 
-export default FolderEdit;
+export default FolderItemAction;
