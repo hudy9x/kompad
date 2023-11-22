@@ -24,7 +24,7 @@ What i use to build this app
 
 ### Installation
 
-If you guys want to use it, please take a look at this [instruction](./docs/INSTRUCTION.md) here.
+If you guys want to use it, please take a look at this [vietnamese instruction](./docs/INSTRUCTION.md) or [english instruction](./docs/INSTRUCTION-EN.md).
 
 ### Contributes
 
