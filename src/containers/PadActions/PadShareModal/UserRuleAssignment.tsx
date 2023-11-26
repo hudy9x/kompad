@@ -1,5 +1,7 @@
 import { AiTwotoneLock } from "react-icons/ai"
 import { IoEarth } from "react-icons/io5"
+import { Listbox } from "@headlessui/react"
+import { IoMdArrowDropdown } from "react-icons/io"
 import { ListBoxOptions } from "../../../components/ListBox"
 import { ProviderProps, Rules, accessLevelOption, permissionLevelOption } from "./types"
 import { useContext } from "react"
@@ -61,9 +63,12 @@ export const UserRuleAssignment = () => {
               <ListBoxOptions
                 options={accessLevelOption}
                 customContainer="container-accessLevel"
-                customButton="btn-accessLevel"
                 onSelected={handleAccessLevel}
-              />
+              >
+                <Listbox.Button className={"btn-accessLevel"}>
+                  <IoMdArrowDropdown />
+                </Listbox.Button>
+              </ListBoxOptions>
             </div>
             <p className="text-xs leading-6">
               {accessLevel === Rules.Anyone
@@ -78,7 +83,11 @@ export const UserRuleAssignment = () => {
             selected={permissionLevel}
             onSelected={handlePermissionLevel}
             customOptions="container-permissionLevel"
-          />
+          >
+            <Listbox.Button className={"btn btn-sm"}>
+              {permissionLevel}<IoMdArrowDropdown />
+            </Listbox.Button>
+          </ListBoxOptions>
         )}
       </div>
     </div>
