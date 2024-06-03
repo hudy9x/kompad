@@ -11,7 +11,7 @@ This is a simple note-taking app that i built for myself last year. It includes 
 - Autoupdate
 - Word counting
 - Theme customization
-- ...more features. [see here](https://www.kompad.app/)
+- ...more features. [see here](https://kompad.vercel.app/)
 
 ### Techstacks
 What i use to build this app
