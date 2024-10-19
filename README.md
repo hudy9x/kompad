@@ -26,7 +26,9 @@ What i use to build this app
 
 If you guys want to use it, please take a look at this [vietnamese instruction](./docs/INSTRUCTION.md) or [english instruction](./docs/INSTRUCTION-EN.md).
 
-Or you can try the web version using Vercel Button. However you have to follow the above setup to create project setting on Firebase first. The app requires these config to build.
+### Deploy web version
+
+Or you can try the web version using Vercel Button. However you have to follow the above installation to create project setting on Firebase first. The app requires these config to build.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhudy9x%2Fkompad%2Ftree%2Fmain&env=REACT_APP_FIREBASE_APP_ID,REACT_APP_FIREBASE_MESSAGE_SENDER_ID,REACT_APP_FIREBASE_STORAGE_BUCKET,REACT_APP_FIREBASE_PROJECT_ID,REACT_APP_FIREBASE_AUTH_DOMAIN,REACT_APP_FIREBASE_API_KEY)
 
