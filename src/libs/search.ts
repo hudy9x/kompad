@@ -1,7 +1,7 @@
 import algoliasearch, { SearchIndex } from "algoliasearch"
 import { IUserSearch } from "../containers/PadActions/PadShareModal/types"
 
-const client = algoliasearch("VPARLWAPW5", "3b8f99f90ace69032e40466dc58bd049")
+const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID || '', process.env.REACT_APP_ALGOLIA_API_KEY || '')
 const index = client.initIndex("kompad-notes")
 const emailIndex = client.initIndex("kompad-emails")
 
