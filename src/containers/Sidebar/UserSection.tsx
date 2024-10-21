@@ -34,7 +34,7 @@ function UserSection() {
   }, [isApp]);
 
   return (
-    <div className="user-settings">
+    <div className="user-settings h-[66px]">
       <div className="flex-shrink-0 group block">
         <div className="flex items-center">
           <div>

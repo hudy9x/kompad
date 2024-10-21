@@ -8,10 +8,7 @@ import UserSection from "./UserSection";
 function RootSidebar() {
   return (
     <div className="root-sidebar">
-      <div className="flex justify-between items-center px-4">
-        {/* <div className="h-8 w-8 p-1 rounded bg-gray-500">
-          <img src="/logo128.png" alt="" className="w-full" />
-        </div> */}
+      <div className="flex justify-between items-center px-4 h-[44px]">
         <h2 className="brand-name">Kompad</h2>
       </div>
 

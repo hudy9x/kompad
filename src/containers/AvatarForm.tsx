@@ -12,7 +12,7 @@ interface IAvatarFormProps {
 
 function AvatarForm({
   onSelect,
-  defaultValue = "https://firebasestorage.googleapis.com/v0/b/kompad-a9b60.appspot.com/o/avatars%2Fpublic%2Fmen-6.png?alt=media&token=37e2e899-6cbb-4ed3-b2d8-b3fcb86dedad",
+  defaultValue = "",
 }: IAvatarFormProps) {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(defaultValue);
@@ -36,43 +36,44 @@ function AvatarForm({
     <div>
       <img
         onClick={() => setVisible(true)}
-        className="inline-block h-14 w-14 rounded-md shadow-md cursor-pointer hover:opacity-90"
+        className="inline-block h-14 w-14 bg-zinc-600 rounded-md shadow-md cursor-pointer hover:opacity-90"
         src={selected}
+        title="Your avatar here"
         alt=""
       />
 
       <Modal visible={visible} setVisible={setVisible}>
         <OutsideClickHandler onOutsideClick={onOutsideClick}>
-        <div className="flex gap-3 flex-wrap w-[260px]">
-          {publicAvatars.map((avatar, index) => {
-            const selectedStatus = avatar === selected ? "selected-avatar" : "";
-            return (
-              <div
-                key={index}
-                onClick={() => setSelected(avatar)}
-                className="h-14 w-14 flex-shrink-0 cursor-pointer group"
-              >
-                <img
-                  className={`inline-block w-full h-full rounded-md outline outline-offset-2 outline-2 outline-transparent opacity-90 group-hover:opacity-100 ${selectedStatus}`}
-                  src={avatar}
-                  alt=""
-                />
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-5 sm:mt-6">
-          <button
-            type="button"
-            onClick={() => {
-              onSelect(selected);
-              setVisible(false);
-            }}
-            className="btn btn-lg btn-block"
+          <div className="flex gap-3 flex-wrap w-[260px]">
+            {publicAvatars.map((avatar, index) => {
+              const selectedStatus = avatar === selected ? "selected-avatar" : "";
+              return (
+                <div
+                  key={index}
+                  onClick={() => setSelected(avatar)}
+                  className="h-14 w-14 flex-shrink-0 cursor-pointer group"
+                >
+                  <img
+                    className={`inline-block w-full h-full rounded-md outline outline-offset-2 outline-2 outline-transparent opacity-90 group-hover:opacity-100 ${selectedStatus}`}
+                    src={avatar}
+                    alt=""
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-5 sm:mt-6">
+            <button
+              type="button"
+              onClick={() => {
+                onSelect(selected);
+                setVisible(false);
+              }}
+              className="btn btn-lg btn-block"
             >
-            Select it
-          </button>
-        </div>
+              Select it
+            </button>
+          </div>
         </OutsideClickHandler>
       </Modal>
     </div>

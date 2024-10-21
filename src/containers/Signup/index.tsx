@@ -36,9 +36,17 @@ function Signup() {
     onSubmit: (user) => {
       const { email, password, address, dateOfBirth, fullname, photoURL } = user
 
+      console.log('sending', loading)
+
       if (loading) return
 
       setLoading(true)
+
+      if (!photoURL) {
+        setLoading(false)
+        message.error('Please select an avatar');
+        return
+      }
 
       if (!isValidPassword(password)) {
         message.error(`Should be 8-16 characters
@@ -50,6 +58,8 @@ And not have spaces`)
         setLoading(false)
         return
       }
+
+      console.log('sign in sent')
 
       signUp(email, password)
         .then(async (userCredential) => {

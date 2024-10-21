@@ -82,6 +82,11 @@ function Prompt({ title, desc, onOk, onCancel, closePrompt, onValidate, trailing
       <div className="form-control pt-4">
         <input
           ref={inpRef}
+          onKeyUp={ev => {
+            if (ev.key === 'Enter') {
+              onSubmitHandler()
+            }
+          }}
           type="password"
           name="promptInput"
           id="promptInput"

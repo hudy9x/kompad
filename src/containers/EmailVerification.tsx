@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Email from "../assets/email.png";
 
 export default function EmailVerification() {
@@ -24,9 +24,9 @@ export default function EmailVerification() {
         </div>
         <div className="mt-2 text-xs text-gray-400">
           If your email verified,{" "}
-          <Link to={"/"} className="text-yellow-500 hover:underline">
+          <span onClick={() => window.location.href = '/'} className="cursor-pointer text-yellow-500 hover:underline">
             back to home
-          </Link>
+          </span>
         </div>
       </div>
     </div>
