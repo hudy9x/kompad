@@ -1,17 +1,37 @@
 ## Kompad
 
+![App preview](https://github.com/hudy9x/kompad/assets/95471659/f5e532b2-cc8e-4f70-bbfc-f236341cccc9)
+
+This is a simple note-taking app that i built for myself last year. It includes some features as follows:
+
+- File organizations
+- Note list
+- Folder group
+- Tagging
+- Autoupdate
+- Word counting
+- Theme customization
+- ...more features. [see here](https://kompad.vercel.app/)
+
+### Techstacks
+What i use to build this app
+- [Tauri](https://tauri.app/v1/guides/): a toolkit that lets you build desktop app
+- Reactjs
+- Zustand: the best state management for me now - simple, easy to use
+- Firebase
+- [Tiptap](https://tiptap.dev/): the main text editor
+- [Algolia](https://www.algolia.com/): Fulltext search service
+
 ### Installation
 
-Make sure that use installed tauri first
+If you guys want to use it, please take a look at this [vietnamese instruction](./docs/INSTRUCTION.md) or [english instruction](./docs/INSTRUCTION-EN.md).
 
-If you dont have tauri, see installation [here](https://tauri.studio/v1/guides/getting-started/prerequisites)
+### Deploy web version
 
-Next, create a Firebase app and replace to `src/libs/firebase.js`
+Or you can try the web version using Vercel Button. However you have to follow the above installation to create project setting on Firebase first. The app requires these config to build.
 
-### How to start kompad
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhudy9x%2Fkompad%2Ftree%2Fmain&env=REACT_APP_FIREBASE_APP_ID,REACT_APP_FIREBASE_MESSAGE_SENDER_ID,REACT_APP_FIREBASE_STORAGE_BUCKET,REACT_APP_FIREBASE_PROJECT_ID,REACT_APP_FIREBASE_AUTH_DOMAIN,REACT_APP_FIREBASE_API_KEY)
 
-```shell
-$ yarn install
-$ yarn tauri dev
-``` 
-![unknown](https://user-images.githubusercontent.com/95471659/199690844-b77d80d9-bd73-41b5-8fe4-611f1c62174e.png)
+### Contributes
+
+Feel free to folk the repo and request a new PR for your refactoring or features
