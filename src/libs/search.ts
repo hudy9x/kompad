@@ -1,13 +1,16 @@
 import algoliasearch, { SearchIndex } from "algoliasearch"
 import { IUserSearch } from "../containers/PadActions/PadShareModal/types"
 
-const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APP_ID || '', process.env.REACT_APP_ALGOLIA_API_KEY || '')
-const index = client.initIndex("kompad-notes")
+const appId = process.env.REACT_APP_ALGOLIA_APP_ID || ''
+const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY || '' // only use this app on Desktop, if you public it on the browser, this api key is not secure
+
+const client = algoliasearch(appId, apiKey)
+const noteIndex = client.initIndex("kompad-notes")
 const emailIndex = client.initIndex("kompad-emails")
 
 type TSearchIndexName = "main" | "email"
 
-index.setSettings({
+noteIndex.setSettings({
   attributesForFaceting: ["filterOnly(uid)"],
 })
 
@@ -28,7 +31,7 @@ export const searchByUser = (
   uid: string
 ): Promise<IPadFromSearch[]> => {
   return new Promise((resolve) => {
-    index
+    noteIndex
       .search(term, {
         filters: `uid:${uid}`,
         // facetFilters: conds,
@@ -80,7 +83,7 @@ export const getSearchIndex = (name?: string) => {
       break
 
     default:
-      searchIndex = index
+      searchIndex = noteIndex
       break
   }
 
