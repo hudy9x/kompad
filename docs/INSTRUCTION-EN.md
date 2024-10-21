@@ -51,8 +51,7 @@ yarn install
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-      
+  
     function checkOwner() {
     	return request.auth.uid == resource.data.uid;
     }
@@ -74,6 +73,13 @@ service cloud.firestore {
       return resource.data.shared.accessLevel == 'Limit'
       && request.auth.tokem.email in resource.data.shared.editedUsers 
     }
+
+    match /users/{userId} {
+    	allow create: if true;
+      allow update: if request.auth.uid == userId
+      allow get: if request.auth.uid == userId
+      allow read: if true;
+    }
     
     match /pads/{padId} {
       allow read: if checkOwner() || 
@@ -85,15 +91,8 @@ service cloud.firestore {
       || checkLimitEditedUsers() 
       || checkAnyoneEditedUsers()
     }
-
     
-    match /users/{userId} {
-    	allow create: if true;
-      allow update: if request.auth.uid == userId
-      allow get: if request.auth.uid == userId
-      allow read: if true;
-    }
-          
+    
     match /files/{fileId} {
       allow list: if request.auth.uid == resource.data.createdBy;
     	allow create: if true;
@@ -113,9 +112,7 @@ service cloud.firestore {
     match /transactions/{transactionId} {
       allow list: if request.auth.uid == resource.data.uid;
     	allow create: if true;
-      // allow update: if request.auth.uid == resource.data.uid
       allow get: if request.auth.uid == resource.data.uid
-      // allow delete: if request.auth.uid == resource.data.uid
     }     
     
     match /folders/{folderId} {
