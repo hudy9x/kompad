@@ -1,7 +1,7 @@
 export const sendNotification = (message: string) => {
-  console.log("called")
-  const url =
-    "https://discord.com/api/webhooks/1090899588883415152/Yv4P_AbsmB-sPTTkuryCadLVm9cFjdiRUGqvEA9qaKxOSp-Gp2n0-X_wPIHEXHp-l4lr"
+  const url = process.env.REACT_APP_DISCORD_WEBHOOK || ''
+
+  if (!url) return
 
   console.log("start sending webhook discord")
   return fetch(url, {
