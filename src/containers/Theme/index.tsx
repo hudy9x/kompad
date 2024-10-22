@@ -12,6 +12,7 @@ import {
   uninstallTheme,
 } from "../../services/user-settings"
 import { useSettingStore } from "../../store/settings"
+import ThemeDefaultCreation from "./ThemeDefaulCreation"
 
 interface IInstalledTheme {
   [key: string]: number
@@ -41,6 +42,12 @@ export default function ThemeListing() {
       return
     }
     toggleThemeCustomModal()
+  }
+
+  const updateThemeList = () => {
+    getThemes().then((themes) => {
+      setThemes(themes)
+    })
   }
 
   useEffect(() => {
@@ -85,6 +92,10 @@ export default function ThemeListing() {
       </div>
 
       <div className="" style={{ minHeight: 100 }}>
+        {!themes.length ?
+          <ThemeDefaultCreation updateHandler={updateThemeList} />
+          : null
+        }
         <ScrollBar height="600px">
           {themes.map((theme) => {
             if (

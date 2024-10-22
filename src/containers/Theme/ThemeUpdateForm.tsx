@@ -13,6 +13,7 @@ import { useAuth } from "../../hooks/useAuth"
 import { guidGenerator } from "../../libs/utils"
 import { message } from "../../components/message"
 import { varLanguages } from "./cssVarLanguages"
+// import { addTheme } from "../../services/themes"
 
 let timeout = 0
 let cachedTheme = ""
@@ -58,7 +59,7 @@ export default function ThemeUpdateForm({
       })
   }
 
-  const createNewTheme = (uid: string) => {
+  const createNewTheme = async (uid: string) => {
     const themeId = guidGenerator()
     const themeSettingId = guidGenerator()
     const mergedVariable = `{${variables
@@ -66,6 +67,20 @@ export default function ThemeUpdateForm({
       .join(",")}}`
 
     console.log("create new theme")
+
+    // await addTheme({
+    //   name: title,
+    //   author: uid,
+    //   desc: '',
+    //   version: '0.1.0',
+    //   themes: [
+    //     {
+    //       id: themeSettingId,
+    //       name: title,
+    //       config: mergedVariable,
+    //     },
+    //   ]
+    // })
 
     installTheme({
       id: themeId,
