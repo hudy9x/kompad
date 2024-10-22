@@ -1,5 +1,9 @@
 # Những bước cài đặt phần mềm Kompad
 
+Hướng dẫn cài đặt qua video cho người mới
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aBVF-3NE_1Q/0.jpg)](https://www.youtube.com/watch?v=aBVF-3NE_1Q)
+
 ### Bước 1: Sao chép Repository dự án về máy tính của bạn
 - Mở terminal và chạy lệnh sau để sao chép dự án từ GitHub về máy tính của bạn:
   
