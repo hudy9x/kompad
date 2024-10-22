@@ -1,5 +1,10 @@
 # Guide to install Kompad
 
+Video setup for newbie
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aBVF-3NE_1Q/0.jpg)](https://www.youtube.com/watch?v=aBVF-3NE_1Q)
+
+
 ### Step 1: Clone the project repository to your computer
 - Open a terminal and run the following command to clone the project from GitHub to your computer:
   
