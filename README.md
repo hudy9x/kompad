@@ -32,6 +32,10 @@ Or you can try the web version using Vercel Button. However you have to follow t
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhudy9x%2Fkompad%2Ftree%2Fmain&env=REACT_APP_FIREBASE_APP_ID,REACT_APP_FIREBASE_MESSAGE_SENDER_ID,REACT_APP_FIREBASE_STORAGE_BUCKET,REACT_APP_FIREBASE_PROJECT_ID,REACT_APP_FIREBASE_AUTH_DOMAIN,REACT_APP_FIREBASE_API_KEY,REACT_APP_ALGOLIA_APP_ID,REACT_APP_ALGOLIA_API_KEY)
 
+For newbie, go to my setup video on Youtube
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aBVF-3NE_1Q/0.jpg)](https://www.youtube.com/watch?v=aBVF-3NE_1Q)
+
 ### Contributes
 
 Feel free to folk the repo and request a new PR for your refactoring or features
