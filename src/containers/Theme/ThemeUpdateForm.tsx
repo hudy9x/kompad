@@ -70,7 +70,7 @@ export default function ThemeUpdateForm({
 
     // await addTheme({
     //   name: title,
-    //   author: uid,
+    //   author: 'authorName',
     //   desc: '',
     //   version: '0.1.0',
     //   themes: [

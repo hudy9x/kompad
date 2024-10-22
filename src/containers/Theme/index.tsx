@@ -13,6 +13,8 @@ import {
 } from "../../services/user-settings"
 import { useSettingStore } from "../../store/settings"
 import ThemeDefaultCreation from "./ThemeDefaulCreation"
+import { isDesktopApp } from "../../libs/utils"
+import { message } from "../../components/message"
 
 interface IInstalledTheme {
   [key: string]: number
@@ -41,6 +43,12 @@ export default function ThemeListing() {
     if (themeCustomModal) {
       return
     }
+
+    if (!isDesktopApp()) {
+      message.warning('Only support Desktop App')
+      return
+    }
+
     toggleThemeCustomModal()
   }
 

@@ -6,7 +6,7 @@ import { defaultThemes } from "./defaultThemes";
 export default function ThemeDefaultCreation({ updateHandler }: { updateHandler: () => void }) {
   const onImport = async () => {
     const promise: Promise<string | null>[] = []
-    defaultThemes.map(theme => {
+    defaultThemes.forEach(theme => {
       promise.push(addTheme(theme))
     })
 
