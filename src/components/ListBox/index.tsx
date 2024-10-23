@@ -12,8 +12,8 @@ interface IListBoxOptions {
   data?: string
   selected?: string
   customContainer?: string
-  customButton?: string
   customOptions?: string
+  children?: JSX.Element | JSX.Element[],
   onSelected: (rule: Rules, data: string) => void
 }
 
@@ -22,16 +22,14 @@ export const ListBoxOptions = ({
   data,
   selected,
   customContainer,
-  customButton,
   customOptions,
   onSelected,
+  children,
 }: IListBoxOptions) => {
   return (
     <div className={customContainer ?? "relative"}>
       <Listbox>
-        <Listbox.Button className={customButton ?? "btn btn-sm"}>
-          {selected ? selected : null}<IoMdArrowDropdown/>
-        </Listbox.Button>
+        {children}
         <Listbox.Options
           className={`${customOptions} dropdown absolute w-36 rounded z-50 cursor-pointer mt-1`}
         >

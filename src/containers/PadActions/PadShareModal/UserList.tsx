@@ -6,6 +6,8 @@ import { useCurrentUser } from "../../../hooks/useCurrentUser"
 import { message } from "../../../components/message"
 import { useAuth } from "../../../hooks/useAuth"
 import { AiOutlineUserDelete } from "react-icons/ai"
+import { Listbox } from "@headlessui/react"
+import { IoMdArrowDropdown } from "react-icons/io"
 
 export const UserList = () => {
 	const {
@@ -97,7 +99,12 @@ export const UserList = () => {
 									data={user.email}
 									onSelected={handleSelectedRule}
 									customOptions="container-permissionLevel"
-								/>
+								>
+									<Listbox.Button className={"btn btn-sm"}>
+           {user.isEdit ? Rules.Edit : Rules.View}
+											<IoMdArrowDropdown />
+         </Listbox.Button>
+								</ListBoxOptions>
 							</div>
 						</li>
 					)
